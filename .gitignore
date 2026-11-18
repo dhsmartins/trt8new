@@ -11,3 +11,7 @@ Thumbs.db
 .DS_Store
 *.log
 .env
+
+# --- Segredos locais (não versionar) ---
+supabase-config.js
+**/supabase-config.js
