@@ -6,7 +6,7 @@ Apostilas de estudo baseadas no edital do concurso **TRT8 — Analista Judiciár
 
 | Pasta | Conteúdo |
 |---|---|
-| `APOSTILAS GERADAS/` | Apostilas em Markdown (`.md`) e HTML (`.html`), geradoras (`make_html.py`, `make_portal.py`) e o portal de estudos (`Portal_de_Estudos_TRT8.html`) |
+| `APOSTILAS_GERADAS/` | Apostilas em Markdown (`.md`) e HTML (`.html`), geradoras (`make_html.py`, `make_portal.py`) e o portal de estudos (`Portal_de_Estudos_TRT8.html`) |
 | `Conteudo_Programatico_TRT8_Analista_TI.md` | Conteúdo programático do edital |
 
 ## Como usar as apostilas
@@ -20,7 +20,7 @@ Cada tópico tem um `.md` (fonte) e um `.html` (estudo). Os HTMLs abrem direto n
 ### Gerar um HTML a partir de um `.md`
 
 ```bash
-cd APOSTILAS GERADAS
+cd APOSTILAS_GERADAS
 python -I make_html.py "Apostila_T8_PDPJ-Br_TRT8_v2.md" "Título curto"
 ```
 
@@ -28,7 +28,7 @@ O `python -I` é intencional: impede que módulos locais sombreados sejam carreg
 
 ## Portal de estudos
 
-Abra `APOSTILAS GERADAS/Portal_de_Estudos_TRT8.html` no navegador:
+Abra `APOSTILAS_GERADAS/Portal_de_Estudos_TRT8.html` no navegador:
 
 - Menu lateral com categorias e submenus suspensos por apostila
 - Checkbox para marcar subtópicos como estudados (salvo no `localStorage`)
