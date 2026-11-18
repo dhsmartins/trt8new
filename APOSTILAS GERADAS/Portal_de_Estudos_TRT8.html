@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Portal de Estudos — TRT8 | Analista de TI</title>
+<!-- Supabase client (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --bg:#f4f6fb; --card:#ffffff; --side:#10162a; --side2:#1a2340; --text:#1c2333;
@@ -180,6 +182,7 @@ h2.cat-title{margin:6px 0 4px;font-size:1.12rem;color:var(--accent2);border-left
   <div class="side-foot">
     <button class="side-link" data-page="revisao">🔁 Revisão <em style="margin-left:auto;font-style:normal;font-size:.7rem;color:#6b7694">em breve</em></button>
     <button class="side-link" data-page="exercicios">✏️ Exercícios <em style="margin-left:auto;font-style:normal;font-size:.7rem;color:#6b7694">em breve</em></button>
+    <button class="side-link" data-page="anotacoes">🗒️ Anotações</button>
     <div class="side-actions">
       <button id="btn-expandir">▾ expandir tudo</button>
       <button id="btn-reset">limpar progresso</button>
@@ -248,7 +251,19 @@ h2.cat-title{margin:6px 0 4px;font-size:1.12rem;color:var(--accent2);border-left
       <h2>Portal de Estudos TRT8</h2>
       <p>Abra o menu lateral, expanda uma apostila e comece a estudar.<br>
       Marque os subtópicos conforme avança — o progresso fica salvo neste navegador.</p>
-    <p class="note small">Versão do portal: 1.1.0</p>
+    <p class="note small">Versão do portal: 1.2.0</p>
+    </div>
+  </div>
+
+  <div class="view hidden" id="view-anotacoes">
+    <div class="ph-wrap">
+      <h2 class="cat-title">🗒️ Anotações por Apostila</h2>
+      <div id="anotacoes-content">
+        <p class="note">Selecione uma apostila no menu lateral para criar/editar suas anotações.</p>
+        <div class="note" style="margin-top:8px;font-size:.8rem;color:var(--muted)">
+          <strong>Integração Supabase:</strong> Configure <code>SUPABASE_URL</code> e <code>SUPABASE_ANON_KEY</code> no arquivo <code>supabase-config.js</code> (não versionado) para sincronizar na nuvem.
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -508,10 +523,17 @@ document.querySelectorAll('.side-link[data-page]').forEach(function (btn) {
     document.querySelectorAll('.side-link').forEach(function (l) { l.classList.remove('active'); });
     btn.classList.add('active');
     const name = btn.dataset.page;
-    document.getElementById('page-title').innerHTML =
-      (name === 'revisao' ? 'Área de Revisão<small>espaço reservado — em breve</small>' : 'Exercícios<small>espaço reservado — em breve</small>');
-    document.getElementById('ver-tabs').textContent = '';
-    showView(name);
+    if (name === 'revisao' || name === 'exercicios') {
+      document.getElementById('page-title').innerHTML =
+        (name === 'revisao' ? 'Área de Revisão<small>espaço reservado — em breve</small>' : 'Exercícios<small>espaço reservado — em breve</small>');
+      document.getElementById('ver-tabs').textContent = '';
+      showView(name);
+    } else if (name === 'anotacoes') {
+      document.getElementById('page-title').innerHTML = 'Anotações<small>por apostila — sincroniza com Supabase se configurado</small>';
+      document.getElementById('ver-tabs').textContent = '';
+      showView('anotacoes');
+      loadAnotacoes();
+    }
   });
 });
 
@@ -519,6 +541,172 @@ document.querySelectorAll('.side-link[data-page]').forEach(function (btn) {
 renderSidebar();
 refreshGlobal();
 showView('welcome');
+
+/* ---------- SUPABASE / ANOTAÇÕES ---------- */
+// Configuração: criar arquivo supabase-config.js na mesma pasta com:
+// window.SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
+// window.SUPABASE_ANON_KEY = 'SUA-ANON-KEY';
+let supabaseClient = null;
+let currentAnotacaoTopic = null;
+
+function initSupabase() {
+  if (typeof window.SUPABASE_URL === 'string' && typeof window.SUPABASE_ANON_KEY === 'string' && window.supabase) {
+    supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    return true;
+  }
+  return false;
+}
+
+async function loadAnotacoes() {
+  const container = document.getElementById('anotacoes-content');
+  const hasSupabase = initSupabase();
+
+  if (!currentAnotacaoTopic) {
+    container.innerHTML = '<p class="note">Selecione uma apostila no menu lateral para criar/editar suas anotações.</p>' +
+      (hasSupabase ? '' : '<div class="note" style="margin-top:8px;font-size:.8rem;color:var(--muted)"><strong>Supabase não configurado:</strong> crie <code>supabase-config.js</code> com <code>SUPABASE_URL</code> e <code>SUPABASE_ANON_KEY</code> para sincronizar na nuvem. As anotações ficarão apenas no <code>localStorage</code>.</div>');
+    return;
+  }
+
+  const topicId = currentAnotacaoTopic.id;
+  const storageKey = 'anotacoes_trt8_' + topicId;
+
+  // Tenta carregar do Supabase se configurado
+  let content = '';
+  let fromSupabase = false;
+
+  if (hasSupabase && supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('anotacoes')
+        .select('conteudo')
+        .eq('topic_id', topicId)
+        .maybeSingle();
+      if (!error && data) {
+        content = data.conteudo || '';
+        fromSupabase = true;
+      }
+    } catch (e) {
+      console.warn('Erro ao carregar do Supabase:', e);
+    }
+  }
+
+  // Fallback: localStorage
+  if (!fromSupabase) {
+    content = localStorage.getItem(storageKey) || '';
+  }
+
+  // Renderiza editor
+  container.innerHTML = `
+    <div style="margin-bottom:12px">
+      <label style="display:block;font-weight:600;margin-bottom:6px">Anotações para: <strong>${currentAnotacaoTopic.title}</strong></label>
+      <textarea id="anotacoes-textarea" style="width:100%;min-height:350px;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);font-family:inherit;font-size:.85rem;line-height:1.6;resize:vertical;box-sizing:border-box" placeholder="Digite suas anotações aqui... (Markdown básico suportado)">${content}</textarea>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <button id="anotacoes-save" style="padding:10px 16px;border-radius:8px;border:0;background:var(--accent);color:#fff;font-weight:600;cursor:pointer">💾 Salvar</button>
+      <button id="anotacoes-clear" style="padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer">🗑️ Limpar</button>
+      <span id="anotacoes-status" style="align-self:center;font-size:.8rem;color:var(--muted)"></span>
+    </div>
+    <div style="font-size:.75rem;color:var(--muted);border-top:1px solid var(--border);padding-top:8px">
+      <strong>Origem:</strong> ${fromSupabase ? '☁️ Supabase (nuvem)' : '💾 localStorage (navegador)'} |
+      <strong>Última sincronização:</strong> ${fromSupabase ? 'agora' : (localStorage.getItem(storageKey + '_ts') ? new Date(parseInt(localStorage.getItem(storageKey + '_ts'))).toLocaleString() : 'nunca')}
+    </div>
+  `;
+
+  // Eventos
+  document.getElementById('anotacoes-save').addEventListener('click', () => saveAnotacoes(topicId, storageKey, hasSupabase));
+  document.getElementById('anotacoes-clear').addEventListener('click', () => clearAnotacoes(topicId, storageKey, hasSupabase));
+}
+
+async function saveAnotacoes(topicId, storageKey, hasSupabase) {
+  const textarea = document.getElementById('anotacoes-textarea');
+  const status = document.getElementById('anotacoes-status');
+  const content = textarea.value;
+
+  status.textContent = 'Salvando...';
+  status.style.color = 'var(--muted)';
+
+  let savedToSupabase = false;
+
+  if (hasSupabase && supabaseClient) {
+    try {
+      const { error } = await supabaseClient
+        .from('anotacoes')
+        .upsert({ topic_id: topicId, conteudo: content, updated_at: new Date().toISOString() });
+      if (!error) {
+        savedToSupabase = true;
+      } else {
+        console.warn('Erro ao salvar no Supabase:', error);
+      }
+    } catch (e) {
+      console.warn('Erro ao salvar no Supabase:', e);
+    }
+  }
+
+  // Sempre salva no localStorage como backup
+  localStorage.setItem(storageKey, content);
+  localStorage.setItem(storageKey + '_ts', Date.now().toString());
+
+  status.textContent = savedToSupabase ? '✅ Salvo no Supabase + localStorage' : '✅ Salvo no localStorage (Supabase indisponível)';
+  status.style.color = savedToSupabase ? 'var(--ok)' : 'var(--accent)';
+  setTimeout(() => { status.textContent = ''; }, 3000);
+}
+
+async function clearAnotacoes(topicId, storageKey, hasSupabase) {
+  if (!confirm('Apagar todas as anotações desta apostila?')) return;
+
+  const status = document.getElementById('anotacoes-status');
+  status.textContent = 'Apagando...';
+  status.style.color = 'var(--muted)';
+
+  let deletedFromSupabase = false;
+
+  if (hasSupabase && supabaseClient) {
+    try {
+      const { error } = await supabaseClient
+        .from('anotacoes')
+        .delete()
+        .eq('topic_id', topicId);
+      if (!error) deletedFromSupabase = true;
+    } catch (e) {
+      console.warn('Erro ao apagar do Supabase:', e);
+    }
+  }
+
+  localStorage.removeItem(storageKey);
+  localStorage.removeItem(storageKey + '_ts');
+
+  document.getElementById('anotacoes-textarea').value = '';
+  status.textContent = deletedFromSupabase ? '🗑️ Apagado do Supabase + localStorage' : '🗑️ Apagado do localStorage';
+  status.style.color = 'var(--ok)';
+  setTimeout(() => { status.textContent = ''; }, 3000);
+}
+
+// Modifica openTopic para também carregar anotações quando a aba "Anotações" for aberta depois
+const originalOpenTopic = openTopic;
+openTopic = function(id) {
+  originalOpenTopic(id);
+  // Se a view de anotações estiver ativa, recarrega
+  if (!document.getElementById('view-anotacoes').classList.contains('hidden')) {
+    loadAnotacoes();
+  }
+};
+
+// Guarda o tópico atual para as anotações
+const originalShowView = showView;
+showView = function(name) {
+  if (name === 'anotacoes') {
+    currentAnotacaoTopic = currentTopic;
+  }
+  // Estende para incluir 'anotacoes'
+  ['apostila', 'revisao', 'exercicios', 'welcome', 'anotacoes'].forEach(function (n) {
+    const el = document.getElementById('view-' + n);
+    if (el) el.classList.toggle('hidden', n !== name);
+  });
+  // Para as outras views, usa o original
+  if (name !== 'anotacoes') {
+    originalShowView(name);
+  }
+};
 </script>
 </body>
 </html>
