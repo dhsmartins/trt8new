@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T10 — Business Intelligence (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T10 — Business Intelligence</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-hierarquia-dikw">1. Hierarquia DIKW</a></li>
+<li class="toc-h2"><a href="#2-tipos-de-dados">2. Tipos de dados</a></li>
+<li class="toc-h2"><a href="#3-sistemas-de-informacao-si">3. Sistemas de informação (SI)</a></li>
+<li class="toc-h2"><a href="#1-business-intelligence">1. Business Intelligence</a></li>
+<li class="toc-h2"><a href="#2-data-warehouse-dw">2. Data Warehouse (DW)</a></li>
+<li class="toc-h2"><a href="#3-modelagem-multidimensional">3. Modelagem multidimensional</a></li>
+<li class="toc-h2"><a href="#1-definicao-e-arquitetura">1. Definição e arquitetura</a></li>
+<li class="toc-h2"><a href="#2-as-4-etapas-kimball">2. As 4 etapas (Kimball)</a></li>
+<li class="toc-h2"><a href="#3-etl-elt">3. ETL × ELT</a></li>
+<li class="toc-h2"><a href="#4-pipeline-de-dados-e-orquestracao-complemento">4. Pipeline de dados e orquestração (complemento)</a></li>
+<li class="toc-h2"><a href="#1-olap">1. OLAP</a></li>
+<li class="toc-h2"><a href="#2-olap-oltp">2. OLAP × OLTP</a></li>
+<li class="toc-h2"><a href="#3-operacoes-olap">3. Operações OLAP</a></li>
+<li class="toc-h2"><a href="#4-arquiteturas-de-servidor-olap">4. Arquiteturas de servidor OLAP</a></li>
+<li class="toc-h2"><a href="#5-mineracao-de-dados-e-big-data">5. Mineração de dados e Big Data</a></li>
+<li class="toc-h2"><a href="#6-dashboards-e-kpis-complemento-esparsos-na-base">6. Dashboards e KPIs (complemento — esparsos na base)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-10-business-intelligence-bi">APOSTILA — TÓPICO 10: BUSINESS INTELLIGENCE (BI)</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Business Intelligence (BI): Pipeline de dados; Fundamentos, orquestração, integração, ETL. Business Intelligence; Processo de coleta, organização, análise e compartilhamento de informações.</p>
+<p><strong>Base de conhecimento:</strong> <code>11.Business Intelligence</code> (Aulas 00–11 — Curso Regular TI 2020.2, Prof. Thiago Rodrigues Cavalcanti) + <strong>complemento</strong> (orquestração moderna de pipelines, dashboards/KPIs, ELT).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-fundamentos-dikw-e-tipos-de-dados">MÓDULO I — FUNDAMENTOS: DIKW E TIPOS DE DADOS</h1>
+<h2 id="1-hierarquia-dikw">1. Hierarquia DIKW</h2>
+<ul>
+<li><strong>Dado</strong> → <strong>Informação</strong> → <strong>Conhecimento</strong> → <strong>Inteligência</strong> → (Experiência).</li>
+<li><strong>Dado</strong>: fatos brutos, não organizados/interpretados ("sinais que não foram processados, correlacionados, integrados, avaliados ou interpretados"). Matéria-prima da informação.</li>
+<li><strong>Informação</strong>: dado + contexto, relevância e propósito (ex.: "Idade de Thiago = 34"). Geração muito automatizável (formatação, tradução, fusão).</li>
+<li><strong>Conhecimento</strong>: informação contextual, relevante e acionável ("informação em ação" — Turban); inclui reflexão e síntese; frequentemente <strong>tácito</strong>, difícil de estruturar/capturar/transmitir. Resulta da avaliação da informação quanto a confiabilidade e relevância.</li>
+<li><strong>Inteligência</strong>: conhecimento que permite <strong>agir com vantagem</strong> no ambiente; síntese humana (julgamento + intuição). <strong>Experiência</strong> = efetividade da inteligência da organização.</li>
+<li><em>Pegadinha CESPE (TCM-BA/2018)</em>: relatório de vendas por faixa/região = <strong>informação</strong> (ainda não avaliado quanto a confiabilidade/relevância — o gestor faz isso depois).</li>
+</ul>
+<h2 id="2-tipos-de-dados">2. Tipos de dados</h2>
+<ul>
+<li><strong>Estruturados</strong> (tabelas/BD relacional), <strong>semiestruturados</strong> (XML, tags), <strong>não estruturados</strong> (texto, imagem, som).</li>
+<li><strong>Dados abertos</strong>: 3 leis + 8 princípios (2007, Califórnia); <strong>Instrução Normativa nº 4/2012 (INDA)</strong>; publicados "na forma coletada na fonte, com a mais fina granularidade possível".</li>
+</ul>
+<h2 id="3-sistemas-de-informacao-si">3. Sistemas de informação (SI)</h2>
+<ul>
+<li>SI = componentes que <strong>coletam, processam, armazenam e distribuem</strong> informações para apoiar decisão, coordenação e controle. Atividades: entrada (coleta) → processamento → saída (distribuição). <strong>Dimensões</strong>: organização, gestão e tecnologia. Vantagem competitiva via modelo de forças de Porter.</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-data-warehouse-data-marts-e-modelagem-multidimensional">MÓDULO II — DATA WAREHOUSE, DATA MARTS E MODELAGEM MULTIDIMENSIONAL</h1>
+<h2 id="1-business-intelligence">1. Business Intelligence</h2>
+<ul>
+<li><strong>BI</strong>: técnicas, métodos e ferramentas de <strong>análise de dados</strong> para subsidiar processos de <strong>decisão</strong> (gabarito clássico de questão). Componentes (Turban); <strong>Self-BI</strong> (usuário final explora dados); governança de dados; <strong>inteligência competitiva (CI)</strong>.</li>
+</ul>
+<h2 id="2-data-warehouse-dw">2. Data Warehouse (DW)</h2>
+<ul>
+<li><strong>DW</strong>: repositório <strong>orientado a assunto, integrado, histórico e não volátil</strong> (Kimball/Inmon) para apoio à decisão.</li>
+<li><strong>Granularidade</strong> (nível de sumarização) = <strong>"o mais importante aspecto do projeto de um DW"</strong> (Kimball). Granularidade alta (mais detalhe) ⇒ mais disco; granularidade baixa (sumarizado) ⇒ menos disco/índices, menos detalhe.</li>
+<li><strong>Kimball × Inmon</strong>:</li>
+<li><strong>Kimball</strong>: <strong>bottom-up</strong> — <strong>Data Marts</strong> primeiro (por assunto/área), DW incremental; produção em 2–3 meses.</li>
+<li><strong>Inmon</strong>: <strong>top-down</strong> — <strong>DW corporativo</strong> primeiro; dele extraem-se dados/metadata para Data Marts, mais sumarizados.</li>
+<li><strong>Data Mart</strong>: subconjunto do DW por <strong>assunto/departamento</strong>; também citado como área intermediária criada pelo ETL na transição OLTP→DW.</li>
+</ul>
+<h2 id="3-modelagem-multidimensional">3. Modelagem multidimensional</h2>
+<ul>
+<li><strong>Medidas</strong>: <strong>aditivas</strong> (somam em qualquer dimensão — ex.: lucro líquido); <strong>semiaditivas</strong> (somáveis só em algumas dimensões — ex.: saldo em conta, que <strong>não soma no tempo</strong>); <strong>não aditivas</strong> (nunca somáveis — ex.: taxas/percentuais).</li>
+<li><strong>Esquema estrela</strong>: 1 tabela <strong>fato</strong> central + <strong>dimensões</strong> em relação <strong>1-N</strong> (PK da fato composta pelas FKs das dimensões).</li>
+<li><strong>Floco de neve</strong>: dimensões <strong>normalizadas</strong> em múltiplos níveis (3FN).</li>
+<li><strong>Constelação (galáxia)</strong>: <strong>várias tabelas fato</strong> compartilhando dimensões.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-etl-extract-transform-load-e-pipeline-de-dados">MÓDULO III — ETL (EXTRACT, TRANSFORM, LOAD) E PIPELINE DE DADOS</h1>
+<h2 id="1-definicao-e-arquitetura">1. Definição e arquitetura</h2>
+<ul>
+<li><strong>ETL</strong>: conjunto de processos que traz dados de sistemas <strong>OLTP</strong> (e hoje websites, e-mails, redes sociais, planilhas) para um DW; <strong>integra</strong>, <strong>transforma</strong> para o formato desejado e <strong>carrega</strong> no destino. Funciona em lote ou tempo real, síncrono/assíncrono, físico/virtual.</li>
+<li><strong>Back room × front room</strong> (analogia do restaurante): a "cozinha" (<strong>staging</strong>) é acessível só à equipe de ETL — <strong>nenhum serviço de consulta</strong> é fornecido na back room. O ETL consome <strong>~70% dos recursos</strong> de implementação/manutenção de um DW e <strong>80% do tempo</strong> de desenvolvimento (~1/3 do orçamento é ETL + limpeza).</li>
+</ul>
+<h2 id="2-as-4-etapas-kimball">2. As 4 etapas (Kimball)</h2>
+<ol>
+<li><strong>Extração</strong>: dados brutos em disco, mínima reestruturação, restart fácil.</li>
+<li><strong>Limpeza</strong>: valores válidos, consistência, deduplicação, regras de negócio; pode exigir julgamento humano; <strong>irreversível</strong> (salvar resultados).</li>
+<li><strong>Conformidade</strong>: mesclar fontes (rótulos idênticos, medidas racionalizadas; acordo corporativo de domínios/medidas).</li>
+<li>
+<p><strong>Entrega</strong>: estruturar em modelos dimensionais/estrela — base para cubos OLAP.</p>
+</li>
+<li>
+<p><strong>34 subsistemas Kimball</strong> (agrupados): extração (1–3: data profiling, <strong>CDC – Change Data Capture</strong> com audit columns, timed extracts, full diff compare, database log scraping, message queue monitoring); limpeza/conformidade (4–8: limpeza, esquema de eventos de erro, dimensão de auditoria, deduplicação/sobrevivência, conformidade); entrega (9–21: <strong>SCD</strong>, <strong>gerador de chave substituta</strong> — mantém integridade referencial fato↔dimensão —, hierarquias, dimensões especiais); <strong>gestão/orquestração</strong> (22–34: agendamento por tempo/evento, captura de metadados, <strong>logging para recuperação/reinicialização</strong>, notificação sem intervenção humana, controle de versão, ambientes dev/teste/prod, backup, monitor de fluxo de trabalho com painel de status/desempenho).</p>
+</li>
+</ol>
+<h2 id="3-etl-elt">3. ETL × ELT</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>ETL</th>
+<th>ELT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ordem</td>
+<td>Extrai → <strong>transforma fora</strong> → carrega</td>
+<td>Extrai → <strong>carrega</strong> → transforma <strong>no destino</strong></td>
+</tr>
+<tr>
+<td>Onde transforma</td>
+<td>Área de staging separada</td>
+<td>Dentro do DW de destino (staging tables lá)</td>
+</tr>
+<tr>
+<td>Papel do DW</td>
+<td>Recebe dados já conformados</td>
+<td>É <strong>também</strong> o motor de transformação</td>
+</tr>
+</tbody>
+</table>
+<p><em>Gabarito FEPESE/JUCESC-2017: ELT transforma no DW de destino.</em></p>
+<h2 id="4-pipeline-de-dados-e-orquestracao-complemento">4. Pipeline de dados e orquestração <em>(complemento)</em></h2>
+<ul>
+<li><strong>Pipeline</strong> = fluxo contínuo de coleta → integração → transformação → carga → consumo. <strong>Orquestração</strong> = agendamento, dependências, reexecução e monitoramento dos fluxos (no material: subsistemas 22–34; na prática moderna: <strong>Airflow, Luigi, Prefect, dbt</strong> — ausentes da base).</li>
+<li><strong>Metadados</strong>: dados sobre dados (linhagem, dicionário) — essenciais para governança e recuperação.</li>
+<li>Ciclo do edital: <strong>coletar → organizar → analisar → compartilhar</strong> informações (relaciona-se ao SI e ao BI).</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-olap-e-analise">MÓDULO IV — OLAP E ANÁLISE</h1>
+<h2 id="1-olap">1. OLAP</h2>
+<ul>
+<li><strong>OLAP</strong> (On-Line Analytical Processing): processamento dedicado ao <strong>suporte à decisão</strong> via visualização de dados <strong>agregados em múltiplas dimensões</strong> (tempo, espaço, produto...) sobre DW/DM. <strong>Não é banco de dados</strong> e <strong>não registra dados</strong> (é ferramenta de manipulação/análise).</li>
+</ul>
+<h2 id="2-olap-oltp">2. OLAP × OLTP</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>OLTP</th>
+<th>OLAP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Função</td>
+<td><strong>Atualização</strong> de transações</td>
+<td><strong>Análise</strong> para decisão</td>
+</tr>
+<tr>
+<td>Dados</td>
+<td>Atualizados, atomizados</td>
+<td>Sumarizados, <strong>históricos</strong></td>
+</tr>
+<tr>
+<td>Modelo</td>
+<td><strong>Normalizado</strong></td>
+<td><strong>Dimensional</strong> (estrela/floco)</td>
+</tr>
+<tr>
+<td>Volume</td>
+<td>Poucos registros/consulta</td>
+<td>Muitos registros</td>
+</tr>
+<tr>
+<td>Consultas</td>
+<td>Simples, &lt; 1 s</td>
+<td>Complexas, ad hoc</td>
+</tr>
+<tr>
+<td>Ferramenta MS</td>
+<td>SSMS</td>
+<td><strong>SSAS</strong> (Analysis Services)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><em>Outras ferramentas citadas na base: Cognos, Business Objects.</em></li>
+</ul>
+<h2 id="3-operacoes-olap">3. Operações OLAP</h2>
+<ul>
+<li><strong>Granularidade</strong> (quanto mais detalhe, <strong>menor</strong> a granularidade); <strong>roll-up</strong> (drill-up: sobe a hierarquia, agrega); <strong>drill-down</strong> (desce a hierarquia ou adiciona dimensão); <strong>slice</strong> (seleciona <strong>1</strong> dimensão → subcubo) e <strong>dice</strong> (2+ dimensões); <strong>pivot/rotate</strong> (gira eixos).</li>
+</ul>
+<h2 id="4-arquiteturas-de-servidor-olap">4. Arquiteturas de servidor OLAP</h2>
+<ul>
+<li><strong>MOLAP</strong>: multidimensional proprietário (arrays/matriz esparsa), cubos <strong>pré-calculados</strong>, melhor desempenho; risco de <strong>explosão de dados</strong>; indicado a Data Marts.</li>
+<li><strong>ROLAP</strong>: BD <strong>relacional</strong> (estrela/floco), SQL otimizado; escala mais dados; tecnologia madura.</li>
+<li><strong>HOLAP</strong>: híbrido (relacional para menor granularidade + dimensional para agregados).</li>
+<li><strong>DOLAP</strong> (desktop/portabilidade), <strong>SOLAP</strong> (espacial + SIG), WOLAP/MOLAP mobile.</li>
+<li><strong>12 regras de avaliação de produtos OLAP</strong> (Codd): visão multidimensional, transparência, acessibilidade, desempenho consistente, cliente-servidor, dimensionalidade genérica, matriz esparsa dinâmica, multiusuário, cruzamento irrestrito, manipulação intuitiva, relatório flexível, dimensões/agregações ilimitadas.</li>
+</ul>
+<h2 id="5-mineracao-de-dados-e-big-data">5. Mineração de dados e Big Data</h2>
+<ul>
+<li><strong>Mineração (data mining)</strong>: descoberta (auto/semiautomática) de <strong>padrões significativos</strong> (previsões não triviais, vantagem econômica). Fases: seleção/coleta, avaliação de qualidade, preparação (coleta, limpeza, transformação, integração, formatação). Noções de aprendizado de máquina (ver tópico 9).</li>
+<li><strong>Big Data</strong>: dimensões dos dados; <strong>8 falácias</strong> (ex.: "Big Data pode prever o futuro" — falsa). Tipos de análise.</li>
+</ul>
+<h2 id="6-dashboards-e-kpis-complemento-esparsos-na-base">6. Dashboards e KPIs <em>(complemento — esparsos na base)</em></h2>
+<ul>
+<li><strong>KPI</strong> (Key Performance Indicator): indicador-chave de desempenho ligado a objetivo; <strong>scorecard</strong> = painel comparativo com metas. <strong>Dashboard</strong> = painel visual para monitoramento (no material, só "painel" no monitor de fluxo do ETL e menções a indicadores).</li>
+<li><strong>Compartilhamento</strong>: relatórios, dashboards, portais de self-service BI.</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>DIKW</strong>: dado → informação → conhecimento → inteligência. Relatório pronto = <strong>informação</strong>, não conhecimento.</li>
+<li><strong>Granularidade</strong> é o aspecto <strong>mais importante</strong> do projeto de DW.</li>
+<li><strong>ETL = ~70% dos recursos e 80% do tempo</strong> de DW; <strong>back room não serve consultas</strong>.</li>
+<li><strong>ELT transforma no DW de destino</strong> (staging tables lá).</li>
+<li><strong>Kimball = bottom-up</strong> (Data Marts primeiro); <strong>Inmon = top-down</strong> (DW corporativo primeiro).</li>
+<li><strong>Medidas semiaditivas</strong> não somam em todas as dimensões (saldo × tempo).</li>
+<li><strong>OLAP não é banco de dados</strong> e <strong>não registra dados</strong>; MOLAP = cubos pré-calculados; ROLAP = relacional/estrela.</li>
+<li><strong>Slice = 1 dimensão</strong>; <strong>dice = 2+</strong>; roll-up sobe; drill-down desce.</li>
+<li><strong>Limpeza (ETL) é irreversível</strong> — salvar resultados.</li>
+<li><strong>SCD</strong> e <strong>chave substituta</strong> mantêm integridade referencial fato↔dimensão (subsistemas Kimball 9–21).</li>
+<li><strong>Estrela</strong> = fato + dimensões não normalizadas; <strong>floco</strong> = dimensões normalizadas (3FN); <strong>constelação</strong> = várias fatos.</li>
+<li><strong>CDC</strong> = Change Data Capture (captura de mudanças via audit columns/logs).</li>
+<li><strong>SI coleta, processa, armazena e distribui</strong> — dimensões: organização, gestão, tecnologia.</li>
+<li><strong>Big Data</strong>: "pode prever o futuro" = falácia clássica.</li>
+<li><strong>Inmon</strong> gera Data Marts <strong>do DW</strong>; <strong>Kimball</strong> constrói o DW <strong>dos Data Marts</strong>.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) Um relatório de vendas por faixa etária, região e modelo de produto constitui conhecimento organizacional, pois já está processado e formatado.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> É <strong>informação</strong> (dado + contexto/formatação). <strong>Conhecimento</strong> exige avaliação quanto a confiabilidade/relevância e aplicação — tarefa do gestor.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) No projeto de um Data Warehouse, o aspecto considerado o mais importante por Kimball é:
+a) a escolha do SGBD.
+b) a granularidade dos dados.
+c) o número de usuários.
+d) o tipo de OLAP.
+e) a localização física do servidor.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Granularidade</strong> = nível de sumarização — decisão que define volume, detalhe e desempenho de todo o DW.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) O processo de ETL representa aproximadamente 70% dos recursos de implementação e manutenção de um Data Warehouse.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> ETL consome <strong>~70% dos recursos</strong> e <strong>~80% do tempo</strong> de desenvolvimento. A back room (staging) não atende consultas.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) Na abordagem ELT (Extract, Load, Transform), as transformações ocorrem:
+a) em área de staging separada do DW.
+b) dentro do próprio DW de destino, após o carregamento.
+c) exclusivamente no sistema de origem (OLTP).
+d) na estação do usuário final.
+e) em servidor de aplicação web.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>ELT</strong> carrega primeiro e transforma <strong>no destino</strong> (staging tables no DW). <strong>ETL</strong> transforma fora, antes de carregar.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O modelo proposto por Kimball para construção de Data Warehouse é top-down, partindo do DW corporativo para a criação de Data Marts.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> É o inverso: <strong>Kimball = bottom-up</strong> (Data Marts → DW incremental); <strong>Inmon = top-down</strong> (DW corporativo → Data Marts).</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) Em modelagem multidimensional, o saldo de uma conta bancária é exemplo de medida:
+a) aditiva.
+b) semiaditiva.
+c) não aditiva.
+d) derivada.
+e) degenerada.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Semiaditiva</strong>: soma em algumas dimensões (ex.: agência), mas <strong>não no tempo</strong> (somar saldos mensais não faz sentido).</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) O OLAP é um tipo de banco de dados multidimensional que registra e armazena as transações do dia a dia da organização.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> OLAP <strong>não é BD</strong> nem registra dados — é ferramenta de <strong>análise/agregação</strong> sobre dados do DW. Quem registra transações é o <strong>OLTP</strong>.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) A operação OLAP que seleciona uma única dimensão de um cubo, gerando um subcubo, é:
+a) roll-up.
+b) drill-down.
+c) slice.
+d) dice.
+e) pivot.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Slice</strong> = 1 dimensão; <strong>dice</strong> = 2+ dimensões; roll-up sobe hierarquia; drill-down desce; pivot gira eixos.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) No esquema estrela, as dimensões são normalizadas em múltiplos níveis, conforme a Terceira Forma Normal.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> No <strong>estrela</strong>, dimensões são <strong>desnormalizadas</strong> (uma tabela por dimensão). A normalização (3FN) em múltiplos níveis é do <strong>floco de neve</strong>.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O subsistema do ETL responsável por gerar chaves substitutas, garantindo a integridade referencial entre tabelas fato e dimensão, integra o grupo de:
+a) extração.
+b) limpeza.
+c) entrega.
+d) orquestração.
+e) backup.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Entrega</strong> (subsistemas 9–21): SCD, <strong>gerador de chave substituta</strong>, hierarquias e dimensões especiais.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A arquitetura OLAP do tipo ROLAP utiliza banco de dados multidimensional proprietário com cubos pré-calculados em matrizes esparsas.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Isso é <strong>MOLAP</strong>. <strong>ROLAP</strong> usa <strong>BD relacional</strong> (esquema estrela/floco) com SQL otimizado.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre a hierarquia DIKW, é correto afirmar:
+a) dado é sinônimo de informação.
+b) conhecimento é informação acrescida de contexto, relevância e acionabilidade, frequentemente tácito.
+c) inteligência é gerada automaticamente por sistemas, sem julgamento humano.
+d) experiência antecede dado na hierarquia.
+e) informação exige avaliação de confiabilidade para existir.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Conhecimento</strong> = "informação em ação" (Turban), inclui reflexão/síntese e é tácito. <strong>Inteligência</strong> exige julgamento humano; <strong>experiência</strong> vem depois.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) No modelo da arquitetura back room/front room de ETL, a área de staging (back room) é acessada diretamente pelos usuários finais para consultas analíticas.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A <strong>back room</strong> (staging) é exclusiva da equipe de ETL — <strong>nenhum serviço de consulta</strong> é fornecido lá. As consultas usam o DW/DM (front room).</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) O CDC (Change Data Capture) é um subsistema de extração do ETL que:
+a) apaga dados antigos do DW.
+b) captura apenas as mudanças ocorridas na origem (via audit columns, logs etc.).
+c) cria cubos OLAP.
+d) gera relatórios para a diretoria.
+e) normaliza as dimensões.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>CDC</strong> identifica e extrai só as <strong>mudanças</strong> (audit columns, database log scraping, message queue monitoring) — eficiência na extração.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) Segundo as falácias do Big Data, o volume de dados garante, por si só, previsões precisas do futuro da organização.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> "Big Data pode prever o futuro" é uma das <strong>8 falácias</strong> — volume não substitui qualidade, contexto e método analítico.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique o pipeline de dados ETL, suas quatro etapas segundo Kimball e a diferença entre ETL e ELT.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O ETL é o conjunto de processos que <strong>integra</strong> dados de sistemas operacionais (OLTP e outras fontes) para o Data Warehouse: <strong>Extração</strong> (dados brutos com mínima reestruturação e restart fácil), <strong>Limpeza</strong> (consistência, deduplicação, regras de negócio — etapa irreversível), <strong>Conformidade</strong> (mesclar fontes e racionalizar medidas) e <strong>Entrega</strong> (estruturar em modelo dimensional/estrela). Consome ~70% dos recursos do DW. Em <strong>ETL</strong>, as transformações ocorrem <strong>fora</strong> do destino (staging); em <strong>ELT</strong>, os dados são carregados primeiro e transformados <strong>dentro do DW de destino</strong>.</p></details>
+<p><strong>D2.</strong> Diferencie OLTP de OLAP e explique os esquemas estrela, floco de neve e constelação.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> <strong>OLTP</strong> suporta transações do dia a dia: dados atualizados, normalizados, consultas simples e rápidas. <strong>OLAP</strong> suporta <strong>decisão</strong>: dados sumarizados/históricos, modelo dimensional, consultas complexas multidimensionais (roll-up, drill-down, slice, dice, pivot) — e não registra dados. <strong>Estrela</strong>: uma tabela fato central com dimensões desnormalizadas (relação 1-N). <strong>Floco de neve</strong>: dimensões normalizadas em vários níveis (3FN). <strong>Constelação</strong>: várias tabelas fato compartilhando dimensões comuns.</p></details>
+<hr />
+<p><em>Base: <code>11.Business Intelligence</code> (Aulas 00–06: DIKW, SI, DW/Kimball-Inmon, ETL/34 subsistemas, OLAP, mineração, Big Data) do material local (2020). Complemento: dashboards/KPIs, orquestração moderna de pipelines (Airflow/dbt) e ELT como tópico próprio — ausentes ou esparsos na base.</em></p>
+<script>
+(function () {
+  const key = 'apostila-t10-business-intelligence-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

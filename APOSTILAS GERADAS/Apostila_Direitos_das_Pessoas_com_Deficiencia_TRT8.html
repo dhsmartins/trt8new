@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direitos das Pessoas com Deficiência (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>Direitos das Pessoas com Deficiência</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-conceito-biopsicossocial">1. Conceito (biopsicossocial)</a></li>
+<li class="toc-h2"><a href="#2-convencao-da-onu-e-status-constitucional">2. Convenção da ONU e status constitucional</a></li>
+<li class="toc-h2"><a href="#3-garantias-constitucionais-cf88">3. Garantias constitucionais (CF/88)</a></li>
+<li class="toc-h2"><a href="#4-lei-131462015-estatuto-da-pessoa-com-deficiencia-lbi">4. Lei 13.146/2015 — Estatuto da Pessoa com Deficiência (LBI)</a></li>
+<li class="toc-h2"><a href="#1-lei-111262005-estacionamento-e-sinalizacao">1. Lei 11.126/2005 — estacionamento e sinalização</a></li>
+<li class="toc-h2"><a href="#2-lei-100982000-decreto-52962004-acessibilidade">2. Lei 10.098/2000 + Decreto 5.296/2004 — acessibilidade</a></li>
+<li class="toc-h2"><a href="#3-lei-100482000-prioridade">3. Lei 10.048/2000 — prioridade</a></li>
+<li class="toc-h2"><a href="#4-lei-81601991-simbolo-de-deficiencia-auditiva">4. Lei 8.160/1991 — símbolo de deficiência auditiva</a></li>
+<li class="toc-h2"><a href="#5-lei-78531989-decreto-32981999-apoio-e-integracao">5. Lei 7.853/1989 + Decreto 3.298/1999 — apoio e integração</a></li>
+<li class="toc-h2"><a href="#1-resolucao-csjt-no-3862024-complemento">1. Resolução CSJT nº 386/2024 (complemento)</a></li>
+<li class="toc-h2"><a href="#2-praticas-no-trt8-resumo">2. Práticas no TRT8 (resumo)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-nocoes-sobre-direitos-das-pessoas-com-deficiencia">APOSTILA — NOÇÕES SOBRE DIREITOS DAS PESSOAS COM DEFICIÊNCIA</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Resolução CSJT nº 386/2024 – Art. 6º. Inclusão, direitos e garantias legais e constitucionais das pessoas com deficiência. Lei nº 13.146/2015 (Estatuto da Pessoa com Deficiência); Lei nº 11.126/2005 e Constituição Federal de 1988. Normas gerais e critérios básicos para promoção da acessibilidade (Lei nº 10.098/2000 e Decreto 5.296/2004). Prioridade de atendimento (Lei nº 10.048/2000 e Decreto 5.296/2004). Símbolo de identificação de pessoas com deficiência auditiva (Lei nº 8.160/1991). Normas de apoio e integração social (Lei nº 7.853/1989 e Decreto 3.298/1999 e alterações).</p>
+<p><strong>Base de conhecimento:</strong> <code>05.Direito Constitucional</code> (arts. 7º XXXI, 37 VIII, 203 IV, 208, 227 §2º, 244; Convenção da PcD Decreto 6.949/2009), apostilas ESTRATEGIA/SEFA — Curso 2020 + <strong>complemento</strong> (Leis 11.126/2005, 10.098/2000, 10.048/2000, 8.160/1991, 7.853/1989; Decretos 5.296/2004, 3.298/1999; Res. CSJT 386/2024).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-conceito-convencao-e-constituicao">MÓDULO I — CONCEITO, CONVENÇÃO E CONSTITUIÇÃO</h1>
+<h2 id="1-conceito-biopsicossocial">1. Conceito (biopsicossocial)</h2>
+<ul>
+<li><strong>Deficiência</strong> (Lei 13.146/2015 art. 2º): <strong>impedimento de longo prazo</strong> de natureza física, mental, intelectual ou sensorial, que, em interação com uma ou mais barreiras, <strong>pode obstruir sua participação plena e efetiva</strong> na sociedade em igualdade de condições com as demais pessoas. <strong>Modelo biopsicossocial</strong> (interação pessoa × barreiras), substituindo o modelo médico/biológico.</li>
+<li>Barreiras: <strong>urbanísticas, arquitetônicas, nos transportes, na comunicação, atitudinais, tecnológicas</strong> (Lei 13.146/2015 art. 3º).</li>
+<li><strong>Diversidade funcional</strong>: linguagem inclusiva; pessoa com deficiência <strong>não</strong> é "doente".</li>
+</ul>
+<h2 id="2-convencao-da-onu-e-status-constitucional">2. Convenção da ONU e status constitucional</h2>
+<ul>
+<li><strong>Convenção sobre os Direitos das Pessoas com Deficiência</strong> (Nova York, 2006) e <strong>Protocolo Facultativo</strong> = incorporados pelo <strong>Decreto 6.949/2009</strong> com status de <strong>EMENDA CONSTITUCIONAL</strong> (art. 5º §3º — 1º tratado com esse status). Art. 2º da Convenção = definição oficial de deficiência e acessibilidade.</li>
+<li><strong>Objetivo da Convenção</strong>: promover, proteger e assegurar o exercício pleno e igualitário de <strong>todos os direitos humanos e liberdades fundamentais</strong> das pessoas com deficiência, respeitando sua <strong>dignidade inerente</strong>, autonomia, independência e participação.</li>
+</ul>
+<h2 id="3-garantias-constitucionais-cf88">3. Garantias constitucionais (CF/88)</h2>
+<table>
+<thead>
+<tr>
+<th>Artigo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>7º XXXI</strong></td>
+<td>Proibição de diferença de salários, de exercício de funções e de <strong>critério de admissão</strong> por motivo de deficiência</td>
+</tr>
+<tr>
+<td><strong>37 VIII</strong></td>
+<td>Reserva de <strong>20%</strong> dos cargos e empregos públicos para PcD — <strong>concurso com vagas reservadas</strong>; <strong>sempre obrigatório</strong> (não é faculdade da administração)</td>
+</tr>
+<tr>
+<td><strong>203 IV</strong></td>
+<td>Assistência à família e à pessoa com deficiência, com <strong>integração social</strong>, garantido <strong>salário mínimo</strong> ao deficiente incapaz de trabalhar</td>
+</tr>
+<tr>
+<td><strong>208 III / IV</strong></td>
+<td>Educação especial (preferencialmente na rede regular)</td>
+</tr>
+<tr>
+<td><strong>227 §2º</strong></td>
+<td>Prioridade absoluta e proteção integral da criança/adolescente com deficiência</td>
+</tr>
+<tr>
+<td><strong>244</strong></td>
+<td>Lei disporá sobre adaptações razoáveis, <strong>vagas em estacionamentos</strong>, acessibilidade</td>
+</tr>
+<tr>
+<td><strong>5º §3º</strong></td>
+<td>Convenção da PcD + Protocolo = status de <strong>Emenda</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Prioridade absoluta</strong>: crianças, adolescentes, <strong>gestantes, idosos e pessoas com deficiência</strong> (Lei 8.069/1990 art. 3º; CF art. 227).</li>
+</ul>
+<h2 id="4-lei-131462015-estatuto-da-pessoa-com-deficiencia-lbi">4. Lei 13.146/2015 — Estatuto da Pessoa com Deficiência (LBI)</h2>
+<ul>
+<li><strong>Art. 6º</strong> (o mais cobrado): a deficiência <strong>não afeta a plenitude da capacidade civil</strong> da pessoa. <strong>Equipara-se a absolutamente incapaz</strong>, para os atos da vida civil, a pessoa que <strong>não puder exprimir sua vontade</strong> (art. 3º II c/c art. 6º parágrafo único). <em>Antes da LBI</em> (Código Civil de 2002, art. 3º II): a deficiência mental/auditiva/visual era causa de <strong>relativa</strong> incapacidade — <strong>superado</strong> para o regime da LBI/Convenção.</li>
+<li><strong>Adaptações razoáveis</strong> (art. 3º VI): modificações/ajustes necessários e adequados, <strong>sem onerosidade desproporcional</strong>, para garantir à pessoa com deficiência o exercício de direitos em igualdade.</li>
+<li><strong>Vida comunitária</strong> (art. 23): direito à moradia com família/núcleo familiar, com autonomia. <strong>Família</strong> (art. 25). <strong>Educação</strong> (art. 27): inclusão na rede regular; educação bilíngue (Libras/Português) para surdos. <strong>Trabalho</strong> (arts. 33–43): <strong>política de cotas</strong> (Lei 8.213/1991 art. 93: empresas com 100+ empregados: 2%, 3%, 4%, 5%); emprego com apoio; <strong>não substitui</strong> a reserva de 20% no setor público (CF art. 37 VIII).</li>
+<li><strong>Acessibilidade</strong> (art. 61–68): desenho universal; adaptações razoáveis; projeto de acessibilidade urbana.</li>
+<li><strong>Violência</strong> (art. 6): medidas de prevenção, atendimento multidisciplinar e responsabilização — alinhado à Política de Prevenção da Violência (Res. TRT8 067/2021 — ver Legislação).</li>
+<li><strong>Art. 101</strong>: responsabilidade civil quando alguém <strong>impedir ou dificultar o exercício dos direitos</strong> da pessoa com deficiência — indenização. <strong>Art. 102</strong>: vinga o art. 88 da Lei 7.853/1989 (punir quem impede direitos).</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-legislacao-especifica-do-edital">MÓDULO II — LEGISLAÇÃO ESPECÍFICA DO EDITAL</h1>
+<h2 id="1-lei-111262005-estacionamento-e-sinalizacao">1. Lei 11.126/2005 — estacionamento e sinalização</h2>
+<ul>
+<li><strong>Prioridade de estacionamento a PcD</strong> portadora de deficiência física (com <strong>distinção oficial</strong> — ver Lei 8.160/1991 e legislação correlata), com <strong>vagas reservadas próximas ao acesso</strong> (vagas com "cadeira rodas"), percentual fixado em norma municipal; <strong>não</strong> se aplica a estacionamentos privados sem adesão — em vias públicas e estacionamentos de uso público, a reserva é obrigatória (normas municipais regulamentam percentual; a CF art. 244 impõe o dever geral).</li>
+<li><strong>Decreto 5.296/2004 art. 47–48</strong>: <strong>vagas próximas</strong> ao acesso principal; sinalização internacional (Símbolo Internacional de Acesso — ISA).</li>
+<li><em>Acesso</em>: vagas em <strong>estacionamentos de uso coletivo</strong>, sinalizadas e fiscalizadas (infração de trânsito).</li>
+</ul>
+<h2 id="2-lei-100982000-decreto-52962004-acessibilidade">2. Lei 10.098/2000 + Decreto 5.296/2004 — acessibilidade</h2>
+<ul>
+<li><strong>Lei 10.098/2000</strong> ("Normas gerais e critérios básicos para a promoção da acessibilidade das pessoas portadoras de deficiência ou com mobilidade reduzida"): <strong>acessibilidade</strong> = possibilidade e condição de alcance para utilização, com segurança e autonomia, de espaços, mobiliários, edificações, transportes, comunicação (comunicação ampliada/alternativa).</li>
+<li><strong>Objetivos</strong>: eliminar barreiras arquitetônicas/urbanísticas, nos transportes, <strong>comunicacionais</strong> (Libras, subtitulação, audiodescrição, <strong>braile</strong>), atitudinais.</li>
+<li><strong>Decreto 5.296/2004</strong> regulamenta as Leis 10.048/2000 e 10.098/2000; define <strong>Símbolo Internacional de Acesso (SIA)</strong>; padrões de acessibilidade em edifícios, sanitários, <strong>plataformas elevatórias</strong>, pisos táteis de orientação e de alerta, semáforos sonoros, alarmes sonoros e visuais.</li>
+<li><strong>Diretrizes</strong>: <strong>desenho universal</strong> (soluções para o maior número de pessoas, sem necessidade de adaptação); adaptações razoáveis quando o desenho universal não for possível.</li>
+</ul>
+<h2 id="3-lei-100482000-prioridade">3. Lei 10.048/2000 — prioridade</h2>
+<ul>
+<li>Prioridade de atendimento a <strong>crianças com deficiência, gestantes, idosos e PcD</strong> em repartições públicas, estabelecimentos comerciais, bancos, correios, transporte e aeroportos.</li>
+<li><strong>Decreto 5.296/2004</strong> regulamenta: <strong>ordem de prioridade</strong> (filas preferenciais, guichês, transporte); sinais de alerta (<strong>sinalização com o símbolo</strong> de acesso); estacionamento (vagas preferenciais).</li>
+<li><strong>Não confundir</strong>: <strong>10.048/2000</strong> = prioridade; <strong>10.098/2000</strong> = acessibilidade; <strong>11.126/2005</strong> = estacionamento; <strong>8.160/1991</strong> = símbolo de surdez.</li>
+</ul>
+<h2 id="4-lei-81601991-simbolo-de-deficiencia-auditiva">4. Lei 8.160/1991 — símbolo de deficiência auditiva</h2>
+<ul>
+<li>Dispõe sobre a <strong>identificação e sinalização</strong> de pessoas portadoras de <strong>deficiência auditiva</strong>: <strong>símbolo de identificação</strong> (imagem de uma orelha com uma diagonal — o "sinal de surdez"), distintivo obrigatório, de uso gratuito, por pessoas com <strong>deficiência auditiva</strong>, em todo o território nacional.</li>
+<li><strong>Obrigação</strong>: os órgãos públicos e privados devem assegurar a identificação; infrações administrativas (perda da autorização de trabalho em veículo, em caso de transporte público).</li>
+<li><strong>Audiodescrição, Libras, sinalização visual</strong> — correlatos (Lei 10.436/2002 = Libras).</li>
+</ul>
+<h2 id="5-lei-78531989-decreto-32981999-apoio-e-integracao">5. Lei 7.853/1989 + Decreto 3.298/1999 — apoio e integração</h2>
+<ul>
+<li><strong>Lei 7.853/1989</strong> ("Normas de apoio às pessoas portadoras de deficiência e sua integração social"): define <strong>PcD</strong> (art. 2º); <strong>discriminação</strong> é crime (art. 3º — pena 2–5 anos, tipo com efeito específico: <strong>exclusão, segregação, humilhação</strong>); <strong>acesso</strong> a edifícios públicos, transporte, comunicação (Libras); <strong>Programa Nacional de Apoio à Saúde</strong> (art. 4º); o Poder Público deve <strong>promover condições</strong>; <strong>multas</strong> pelo descumprimento.</li>
+<li><strong>Decreto 3.298/1999</strong> (com alterações): regulamenta a Lei 7.853/1989; conceituação de <strong>deficiência</strong> (art. 2º, <strong>modelo médico</strong> — "anormalidade completa/parcial", substituído pelo modelo biopsicossocial da LBI/Convenção); <strong>reabilitação profissional</strong> (art. 35); <strong>serviços de educação especial</strong>; <strong>ajudas técnicas</strong>; <strong>multas</strong> (arts. 72–77: R$ 5.000 a R$ 50.000); <strong>diretrizes do Plano Nacional</strong>.</li>
+<li><strong>Havendo conflito</strong>: <strong>LBI (2015) prevalece</strong> sobre o Decreto 3.298/1999 (conceito e capacidade civil); o Decreto permanece em vigor no que for compatível (reabilitação, ajudas técnicas, multas).</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-resolucao-csjt-3862024-art-6o-e-politicas-do-trt8">MÓDULO III — RESOLUÇÃO CSJT 386/2024 (ART. 6º) E POLÍTICAS DO TRT8</h1>
+<h2 id="1-resolucao-csjt-no-3862024-complemento">1. Resolução CSJT nº 386/2024 <em>(complemento)</em></h2>
+<ul>
+<li>Dispõe sobre <strong>inclusão, direitos e garantias</strong> das pessoas com deficiência no âmbito da Justiça do Trabalho (e do CSJT): <strong>art. 6º</strong> = <strong>direitos e garantias legais e constitucionais</strong> das PcD (prioridade absoluta, acessibilidade, adaptações razoáveis, reserva de cargos/vagas, atendimento humanizado, comunicação acessível).</li>
+<li><strong>Políticas de inclusão</strong>: capacitação de servidores, <strong>audiodescrição/Libras</strong> em atos judiciais e eventos, <strong>ajudas técnicas</strong>, acessibilidade física e digital, sinalização.</li>
+<li>Alinhamento: <strong>Res. CNJ 492/2023</strong> (perspectiva de gênero), <strong>Res. TRT8 067/2021</strong> (violência/assédio), <strong>Res. CSJT 368/2023</strong> (equidade, raça, gênero e diversidade) — ver apostila de <strong>Legislação</strong>.</li>
+</ul>
+<h2 id="2-praticas-no-trt8-resumo">2. Práticas no TRT8 (resumo)</h2>
+<ul>
+<li><strong>Prioridade absoluta</strong> no atendimento; filas e guichês preferenciais; <strong>sinalização</strong> (SIA, símbolo de surdez); <strong>sítio eletrônico acessível</strong>; <strong>audiodescrição</strong>; Libras; <strong>plataformas elevatórias</strong>; cadeiras de rodas em ementas/auditorias; <strong>servidores PcD</strong> com adaptações razoáveis no cargo (Lei 13.146/2015 art. 3º VI).</li>
+<li><strong>Capacitação contínua</strong>; atuação do <strong>Comitê de Incentivo à Participação Institucional Feminina</strong> (Res. CNJ 492/2023) e do Programa de Equidade (Res. CSJT 368/2023) — <strong>interseccionalidade</strong> (gênero, raça, deficiência).</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>Modelo biopsicossocial</strong> (interação × barreiras) — <strong>não</strong> o modelo médico (Decreto 3.298/1999 art. 2º).</li>
+<li><strong>LBI art. 6º</strong>: deficiência <strong>NÃO afeta a plenitude da capacidade civil</strong>; só "equipara-se a absolutamente incapaz" quem <strong>não puder exprimir sua vontade</strong>.</li>
+<li><strong>CF art. 37 VIII</strong>: <strong>20%</strong> dos cargos/empregos públicos — <strong>obrigatório</strong> (concurso com vagas reservadas).</li>
+<li><strong>CF art. 7º XXXI</strong>: proibição de diferença de salários/critério de admissão por deficiência.</li>
+<li><strong>CF art. 244</strong>: adaptações razoáveis, <strong>vagas em estacionamentos</strong>, acessibilidade — por <strong>lei</strong>.</li>
+<li><strong>Convenção da PcD + Protocolo (Decreto 6.949/2009)</strong> = <strong>status de Emenda Constitucional</strong> (art. 5º §3º — 1º do tipo).</li>
+<li><strong>10.098/2000</strong> = acessibilidade; <strong>10.048/2000</strong> = prioridade; <strong>11.126/2005</strong> = estacionamento; <strong>8.160/1991</strong> = símbolo de surdez.</li>
+<li><strong>Desenho universal</strong> × <strong>adaptações razoáveis</strong> (sem onerosidade desproporcional).</li>
+<li><strong>Prioridade absoluta</strong>: crianças, adolescentes, gestantes, idosos e PcD (Lei 8.069/1990 art. 3º).</li>
+<li><strong>Decreto 5.296/2004</strong> regulamenta as Leis <strong>10.048/2000 e 10.098/2000</strong> (e a Lei 11.126/2005 quanto a vagas).</li>
+<li><strong>Lei 7.853/1989 art. 3º</strong>: discriminação contra PcD é <strong>crime</strong> (2–5 anos); <strong>art. 88</strong>: punir quem impede o exercício de direitos (LBI art. 102).</li>
+<li><strong>Decreto 3.298/1999</strong> = reabilitação, ajudas técnicas, multas (R$ 5.000–50.000); conceito <strong>superado</strong> pela LBI.</li>
+<li><strong>Cotas</strong> (Lei 8.213/1991 art. 93): 2%–5% conforme nº de empregados — <strong>empregados</strong>, não cargos públicos.</li>
+<li><strong>Res. CSJT 386/2024 art. 6º</strong> = direitos e garantias das PcD na Justiça do Trabalho (inclusão, acessibilidade, comunicação).</li>
+<li><strong>Símbolo da surdez</strong> = Lei <strong>8.160/1991</strong> (orelha com diagonal); <strong>SIA</strong> (cadeira rodas) = Decreto 5.296/2004.</li>
+<li><strong>LBI prevalece</strong> sobre o Decreto 3.298/1999 (conceito de deficiência e capacidade civil).</li>
+<li><strong>Acessibilidade</strong> = arquitetônica, comunicacional, atitudinal, metodológica, instrumental, programática, <strong>tecnológica</strong>.</li>
+<li><strong>Mulheres com deficiência</strong> = <strong>interseccionalidade</strong> (gênero × deficiência — Res. CNJ 492/2023, Res. CSJT 368/2023).</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) A deficiência mental, sensorial ou física torna a pessoa relativamente incapaz, nos termos do art. 3º do Código Civil, sendo aplicável esse regime à plenitude de sua capacidade civil.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>LBI art. 6º</strong>: a deficiência <strong>não</strong> afeta a <strong>plenitude da capacidade civil</strong>. Só "equipara-se a absolutamente incapaz" quem <strong>não puder exprimir sua vontade</strong>. O regime do Código Civil (art. 3º II) está <strong>superado</strong> para esses fins.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) A Lei nº 13.146/2015 adota o conceito de deficiência baseado no modelo:
+a) médico, em que a deficiência é uma anormalidade biológica.
+b) biopsicossocial, em que a deficiência resulta da interação entre a pessoa e barreiras ambientais/atitudeis.
+c) econômico, baseado na renda.
+d) jurídico, baseado na incapacidade civil.
+e) estatístico.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Modelo biopsicossocial</strong> (Convenção da ONU/LBI art. 2º): impedimento de longo prazo <strong>em interação com barreiras</strong> (arquitetônicas, comunicacionais, atitudinais...).</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) A Convenção sobre os Direitos das Pessoas com Deficiência, incorporada pelo Decreto nº 6.949/2009, possui status de emenda constitucional.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Convenção + Protocolo (Decreto <strong>6.949/2009</strong>) = <strong>1º tratado</strong> com status de <strong>Emenda</strong> (art. 5º §3º).</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) A reserva de cargos e empregos públicos para pessoas com deficiência, prevista na CF/88, é de:
+a) 5%.
+b) 10%.
+c) 15%.
+d) 20%.
+e) 30%.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> <strong>20%</strong> (CF art. 37 VIII) — <strong>obrigatório</strong>, com vagas reservadas em concurso.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) A Lei nº 10.098/2000 versa sobre prioridade de atendimento; a Lei nº 10.048/2000 versa sobre acessibilidade.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Está invertido: <strong>10.098/2000</strong> = <strong>acessibilidade</strong>; <strong>10.048/2000</strong> = <strong>prioridade de atendimento</strong>. (11.126/2005 = estacionamento; 8.160/1991 = símbolo de surdez.)</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) O Decreto nº 5.296/2004 regulamenta:
+a) apenas a Lei nº 10.048/2000.
+b) apenas a Lei nº 10.098/2000.
+c) as Leis nº 10.048/2000 e 10.098/2000 (e normas de acessibilidade correlatas).
+d) a Lei nº 13.146/2015.
+e) a Convenção da ONU.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Decreto 5.296/2004</strong> = regulamenta as Leis <strong>10.048/2000 e 10.098/2000</strong> (sinalização SIA, vagas, prioridades).</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) A Lei nº 8.160/1991 dispõe sobre o símbolo de identificação de pessoas com deficiência auditiva, sinalização obrigatória e gratuita.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>8.160/1991</strong> = <strong>símbolo de surdez</strong> (orelha com diagonal), uso obrigatório e gratuito em todo o território nacional.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) O Decreto nº 3.298/1999 regulamenta:
+a) a Lei nº 13.146/2015.
+b) a Lei nº 7.853/1989 (normas de apoio e integração social).
+c) a Lei nº 10.048/2000.
+d) a Lei nº 11.126/2005.
+e) o Estatuto do Idoso.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Decreto 3.298/1999</strong> = regulamenta a <strong>Lei 7.853/1989</strong> (reabilitação, ajudas técnicas, multas). Seu conceito (art. 2º) foi <strong>superado</strong> pela LBI.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) A Lei nº 7.853/1989 estabelece que a discriminação contra pessoa portadora de deficiência constitui crime, com pena de reclusão de 2 a 5 anos.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Lei 7.853/1989 art. 3º</strong>: <strong>crime</strong> (reclusão 2–5 anos) de <strong>exclusão, segregação, humilhação</strong> de PcD.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) A prioridade absoluta de atendimento, prevista na CF/88 e na legislação, alcança:
+a) apenas idosos.
+b) crianças, adolescentes, gestantes, idosos e pessoas com deficiência.
+c) apenas pessoas com deficiência.
+d) apenas gestantes.
+e) apenas servidores públicos.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Prioridade absoluta</strong> = crianças/adolescentes (Lei 8.069/1990 art. 3º), gestantes, <strong>idosos</strong> e <strong>PcD</strong>.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A adaptação razoável pode ser exigida pela pessoa com deficiência ainda que implique em onerosidade desproporcional para o órgão ou empresa.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Adaptações razoáveis devem ser <strong>sem onerosidade desproporcional</strong> (LBI art. 3º VI) — a CF art. 244 exige "adaptações razoáveis", mas com razoabilidade.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre a Lei nº 13.146/2015 (LBI), é correto afirmar:
+a) a deficiência implica a perda da capacidade civil.
+b) a deficiência não afeta a plenitude da capacidade civil; equipara-se a absolutamente incapaz apenas a pessoa que não puder exprimir sua vontade.
+c) o conceito de deficiência é o do Decreto 3.298/1999.
+d) a LBI não trata de acessibilidade.
+e) a LBI revogou a CF art. 37 VIII.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>LBI art. 6º</strong> + parágrafo único (capacidade plena; só "não puder exprimir sua vontade"). <strong>Conceito biopsicossocial</strong> (art. 2º) — diferente do Decreto 3.298/1999.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) A Lei nº 11.126/2005 destina-se a assegurar prioridade de estacionamento a pessoas com deficiência, com vagas reservadas próximas ao acesso.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>11.126/2005</strong> = <strong>estacionamento</strong> (vagas preferenciais próximas ao acesso, com sinalização); regulamentada pelo Decreto 5.296/2004.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) A Resolução CSJT nº 386/2024 (art. 6º) versa sobre:
+a) o Estatuto do Idoso.
+b) inclusão, direitos e garantias das pessoas com deficiência no âmbito da Justiça do Trabalho.
+c) o Código de Ética do TRT8.
+d) sustentabilidade.
+e) o Regimento Interno.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Res. CSJT 386/2024</strong> = inclusão, direitos e garantias das <strong>PcD na Justiça do Trabalho</strong> (acessibilidade, comunicação, adaptações razoáveis).</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) O desenho universal implica criar soluções específicas para cada tipo de deficiência, sem contemplar o público em geral.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Desenho universal</strong> = soluções para o <strong>maior número de pessoas</strong> possível (sem adaptação); se não possível, <strong>adaptações razoáveis</strong> para a pessoa específica.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique o conceito biopsicossocial de deficiência (Lei 13.146/2015), a Convenção da ONU e as garantias constitucionais (CF art. 7º XXXI, 37 VIII, 203 IV, 244).</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>LBI (Lei 13.146/2015)</strong> adota o <strong>modelo biopsicossocial</strong>: deficiência é impedimento de longo prazo (física, mental, intelectual ou sensorial) que, <strong>em interação com barreiras</strong>, obstrui a participação plena e efetiva em igualdade (art. 2º). A <strong>Convenção da ONU</strong> e seu Protocolo (Decreto 6.949/2009) têm status de <strong>Emenda Constitucional</strong> (art. 5º §3º), promovendo direitos humanos e acessibilidade. Garantias: <strong>CF art. 7º XXXI</strong> proíbe diferença de salários/critério de admissão por deficiência; <strong>art. 37 VIII</strong> reserva <strong>20%</strong> dos cargos/empregos públicos; <strong>art. 203 IV</strong> assegura assistência e integração social (salário mínimo ao incapaz); <strong>art. 244</strong> impõe adaptações razoáveis, vagas em estacionamentos e acessibilidade.</p></details>
+<p><strong>D2.</strong> Diferencie as Leis 10.098/2000, 10.048/2000, 11.126/2005, 8.160/1991 e 7.853/1989 e explique o papel do Decreto 5.296/2004 e da Resolução CSJT 386/2024.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>Lei 10.098/2000</strong> trata de <strong>acessibilidade</strong> (barreiras arquitetônicas, comunicacionais, atitudinais; desenho universal; comunicação ampliada). A <strong>Lei 10.048/2000</strong> trata de <strong>prioridade de atendimento</strong> (filas, guichês, transporte, serviços públicos e privados). A <strong>Lei 11.126/2005</strong> assegura <strong>prioridade de estacionamento</strong> (vagas reservadas próximas ao acesso, com sinalização). A <strong>Lei 8.160/1991</strong> institui o <strong>símbolo de identificação de pessoas com deficiência auditiva</strong> (obrigatório e gratuito). A <strong>Lei 7.853/1989</strong> estabelece normas de <strong>apoio e integração social</strong>, tipifica a <strong>discriminação</strong> como crime e prevê o apoio do Poder Público. O <strong>Decreto 5.296/2004</strong> regulamenta as Leis 10.048/2000 e 10.098/2000 (sinalização SIA, vagas, adaptações). A <strong>Resolução CSJT 386/2024</strong> (art. 6º) trata da <strong>inclusão e dos direitos das PcD na Justiça do Trabalho</strong>, com foco em acessibilidade, adaptações razoáveis e comunicação acessível.</p></details>
+<hr />
+<p><em>Base: <code>05.Direito Constitucional</code> (art. 5º §3º e Convenção da PcD Decreto 6.949/2009; arts. 7º XXXI, 37 VIII, 203 IV, 244), apostilas ESTRATEGIA/SEFA. Complemento: Leis 13.146/2015, 11.126/2005, 10.098/2000, 10.048/2000, 8.160/1991, 7.853/1989; Decretos 5.296/2004 e 3.298/1999; Res. CSJT 386/2024 — detalhamento ausente na base de 2020. Ver também apostilas de Direitos Humanos e de Legislação.</em></p>
+<script>
+(function () {
+  const key = 'apostila-direitos-das-pessoas-com-deficiencia-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T13 — Serviços de Rede (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T13 — Serviços de Rede</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-e-mail">1. E-mail</a></li>
+<li class="toc-h2"><a href="#2-dns">2. DNS</a></li>
+<li class="toc-h2"><a href="#3-dhcp">3. DHCP</a></li>
+<li class="toc-h2"><a href="#4-web-proxy">4. Web Proxy</a></li>
+<li class="toc-h2"><a href="#1-apache-http-server-iis">1. Apache HTTP Server × IIS</a></li>
+<li class="toc-h2"><a href="#2-jboss-eap-wildfly">2. JBoss EAP / WildFly</a></li>
+<li class="toc-h2"><a href="#1-analise-de-desempenho-e-trafego">1. Análise de desempenho e tráfego</a></li>
+<li class="toc-h2"><a href="#2-configuracao-administracao-e-logs">2. Configuração, administração e logs</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-13-servicos-de-rede">APOSTILA — TÓPICO 13: SERVIÇOS DE REDE</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Serviços de rede: e-mail, DNS, DHCP, Web Proxy; servidor de aplicações JBoss EAP/WildFly; servidores web Apache HTTP Server e IIS; análise de desempenho; gerenciamento de usuários; configuração, administração e logs.</p>
+<p><strong>Base de conhecimento:</strong> <code>02.Redes de Computadores</code> (Aulas 08–10, 12), <code>01.Sistemas Operacionais e Arquitetura</code> (Aulas 08 — LDAP/AD; 15 — JBoss/WildFly), <code>02.Básico.para.Concursos.2020/04.Informática</code> (Aulas 05, 08) — Curso Regular TI 2020.2 + <strong>complemento</strong> (IIS atual, administração de logs).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-servicos-de-aplicacao-e-mail-dns-dhcp-e-proxy">MÓDULO I — SERVIÇOS DE APLICAÇÃO: E-MAIL, DNS, DHCP E PROXY</h1>
+<h2 id="1-e-mail">1. E-mail</h2>
+<ul>
+<li><strong>MUA</strong> (cliente: Outlook, webmail) × <strong>MTA</strong> (servidor↔servidor). Fluxo: MUA → SMTP → MTA → SMTP → MTA → POP3/IMAP → MUA.</li>
+<li><strong>SMTP (25)</strong>: envio, <strong>ASCII 7-bit</strong>, <strong>store-and-forward</strong>, persistente (QUIT, timeout 5 min). Portas: 25 (MTA↔MTA), <strong>587</strong> (submissão, anti-spam), 465 (SMTPS). <strong>MIME</strong> estende RFC 822 (anexos/binários).</li>
+<li><strong>POP3 (110)</strong>: baixa e <strong>remove</strong> do servidor (1 dispositivo; APOP/MD5). <strong>IMAP (143/993 IMAPS)</strong>: mensagens <strong>permanecem no servidor</strong> (vários dispositivos, pastas remotas, leitura offline, v4).</li>
+</ul>
+<h2 id="2-dns">2. DNS</h2>
+<ul>
+<li>Hierárquico (raiz ".", FQDN); <strong>porta 53</strong> (UDP consultas; TCP &gt;512 B e transferências <strong>AXFR</strong>). Zonas master/slave; zonas reversas/<strong>PTR</strong>; Root Hints; forwarders; consultas <strong>iterativa × recursiva</strong> (mais usada).</li>
+<li>Registros: <strong>A</strong> (host→IP), <strong>CNAME</strong> (apelido), <strong>PTR</strong> (IP→nome), <strong>NS</strong>, <strong>MX</strong> (mail), <strong>SOA</strong> (serial, refresh 3600, retry 600). <strong>BIND</strong> (v9): padrão em Linux (Red Hat/Oracle Linux).</li>
+</ul>
+<h2 id="3-dhcp">3. DHCP</h2>
+<ul>
+<li><strong>DORA</strong>: Discovery → Offer (por MAC) → Request → ACK (lease). <strong>Portas: servidor 67/UDP, cliente 68/UDP</strong>. Hierárquico com <strong>relay agents</strong>; reserva estática por MAC (servidores/impressoras); pools, máscara, gateway, DNS.</li>
+</ul>
+<h2 id="4-web-proxy">4. Web Proxy</h2>
+<ul>
+<li>Servidor <strong>intermediário</strong> entre cliente e servidores externos. <strong>Componentes básicos</strong>: acesso à Internet + acesso à rede interna (questão PETROBRÁS 2008). Funções: esconder IP do usuário, <strong>cache</strong>, filtragem de conteúdo/URL, auditoria. Método <strong>CONNECT</strong> do HTTP associado a proxies.</li>
+<li><strong>Proxy direto</strong> (cliente → proxy → Internet) × <strong>proxy reverso</strong> (Internet → proxy → servidor interno: proteção, balanceamento e cache). <em>Ver apostila T16 (firewall/proxy).</em></li>
+</ul>
+<hr />
+<h1 id="modulo-ii-servidores-web-e-de-aplicacoes">MÓDULO II — SERVIDORES WEB E DE APLICAÇÕES</h1>
+<h2 id="1-apache-http-server-iis">1. Apache HTTP Server × IIS</h2>
+<ul>
+<li><strong>Apache HTTP Server</strong>: open source, multiplataforma, modular (módulos <code>mod_ssl</code>, <code>mod_rewrite</code>...), configuração por <code>httpd.conf</code>/<code>.htaccess</code>. <strong>Mais utilizado</strong> ao lado do IIS.</li>
+<li><strong>IIS (Internet Information Services)</strong>: Microsoft, integrado ao Windows Server; configuração via Gerenciador/IIS Manager e PowerShell; sites, aplicações ASP.NET, certificados.</li>
+<li><em>Questão CESPE TRT-DF/GO 2013</em>: os mais utilizados são <strong>Apache HTTP Server</strong> e <strong>IIS</strong> (e "Enterprise Server" como conceito genérico aceito pela banca).</li>
+</ul>
+<h2 id="2-jboss-eap-wildfly">2. JBoss EAP / WildFly</h2>
+<ul>
+<li><strong>Servidor de aplicações JEE</strong> (Java). <strong>JBoss AS</strong> (comunitário) × <strong>JBoss EAP</strong> (Enterprise Application Platform, suportado pela Red Hat). <strong>WildFly</strong> = continuação comunitária do JBoss AS.</li>
+<li>Modos de execução: <strong>standalone</strong> (instância única) × <strong>domain</strong> (gerenciamento centralizado de várias instâncias). Servidor web embutido: Tomcat (até v7) e <strong>Undertow</strong> (a partir da v8). Implantação de WAR/EAR; datasources JBoss; logs em <code>server.log</code>.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-gerenciamento-de-usuarios">MÓDULO III — GERENCIAMENTO DE USUÁRIOS</h1>
+<ul>
+<li><strong>LDAP</strong> (389/TCP): protocolo de acesso a diretórios (base X.500); <strong>DN/RDN</strong> (DC/O/OU); operações Bind/Search/Add/Delete/Modify/Compare/StartTLS.</li>
+<li><strong>Active Directory</strong> (ver tópico 11): serviço de diretório Microsoft (contas, grupos, OUs, políticas GPO, Catálogo Global); autenticação Kerberos/NTLM; <strong>exige NTFS</strong>; arquivo Ntds.dit.</li>
+<li>Administração: criação/alteração de contas, grupos (globais/universais/dominiais), políticas de senha, auditoria de logon; em Linux: usuários/grupos (<code>/etc/passwd</code>, <code>/etc/shadow</code>, <code>useradd</code>, <code>sudo</code>).</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-analise-de-desempenho-logs-e-administracao">MÓDULO IV — ANÁLISE DE DESEMPENHO, LOGS E ADMINISTRAÇÃO</h1>
+<h2 id="1-analise-de-desempenho-e-trafego">1. Análise de desempenho e tráfego</h2>
+<ul>
+<li><strong>Sniffers</strong> (modo promíscuo): <strong>Wireshark</strong> (gráfico), <strong>TCPDump</strong> (Unix), <strong>WinDump</strong> (Windows). Interpretação de capturas: números de sequência, retransmissões, <strong>gaps vs. fora de ordem</strong> (= rotas diferentes).</li>
+<li>Métricas: largura de banda/taxa/vazão, perda de pacotes, atraso/latência/retardo, <strong>jitter</strong>, disponibilidade (ver tópico 14).</li>
+<li>Monitoramento de servidores: uso de CPU/memória/discos, conexões ativas, tempo de resposta; ferramentas: <strong>Zabbix, Nagios, Cacti, NetFlow/sFlow</strong> (ver tópico 14).</li>
+</ul>
+<h2 id="2-configuracao-administracao-e-logs">2. Configuração, administração e logs</h2>
+<ul>
+<li><strong>Syslog</strong>: logs centralizados, <strong>TCP/UDP 514</strong>, SSL/TLS <strong>6514</strong>; 3 papéis: <strong>origem, armazenamento e análise</strong>. Níveis de severidade (emerg, alert, crit, err, warning, notice, info, debug).</li>
+<li><strong>Logs de servidores web</strong>: Apache (<code>access.log</code>, <code>error.log</code>, <code>CustomLog</code>); IIS (W3C format); JBoss (<code>server.log</code>). Rotação/retenção de logs, análise de acessos, detecção de erros.</li>
+<li><strong>SIEM</strong> (complemento): agregação e correlação de logs (Elasticsearch/Logstash/Kibana — ver tópico 14).</li>
+<li><em>Boas práticas de administração</em>: menor privilégio, backups, atualizações (WSUS/patching — tópico 11), monitoramento contínuo, documentação de configuração.</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>SMTP envia (25/587)</strong>; <strong>POP3 baixa e remove (110)</strong>; <strong>IMAP mantém no servidor (143)</strong>.</li>
+<li><strong>DNS 53</strong>: UDP consultas, TCP transferências de zona (<strong>AXFR</strong>). Registros A/CNAME/PTR/MX/SOA/NS.</li>
+<li><strong>DHCP: 67 servidor / 68 cliente</strong>; DORA (Discovery→Offer→Request→ACK).</li>
+<li><strong>Proxy</strong> = intermediário (duas conexões: cliente-proxy e proxy-servidor); <strong>proxy reverso</strong> protege/balanceia o servidor.</li>
+<li><strong>CONNECT</strong> do HTTP é método associado a proxies.</li>
+<li><strong>Apache e IIS</strong> = os dois servidores web mais utilizados (CESPE TRT-DF/GO 2013).</li>
+<li><strong>JBoss EAP/WildFly</strong> = servidor <strong>JEE</strong>; <strong>Undertow</strong> a partir da v8; modos <strong>standalone × domain</strong>.</li>
+<li><strong>LDAP = protocolo (389)</strong>, não é o diretório; AD <strong>usa</strong> LDAP e <strong>exige NTFS</strong>.</li>
+<li><strong>Syslog: 514 (TCP/UDP), 6514 (TLS)</strong>; papéis: origem/armazenamento/análise.</li>
+<li><strong>Sniffers</strong>: Wireshark/TCPDump/WinDump em modo <strong>promíscuo</strong>.</li>
+<li><strong>Zabbix suporta SNMP</strong> (falso dizer o contrário).</li>
+<li><strong>Gaps × fora de ordem</strong> em capturas: fora de ordem = rotas diferentes; gaps podem indicar perda.</li>
+<li><strong>WildFly</strong> = continuação comunitária do JBoss AS; <strong>EAP</strong> = versão corporativa (Red Hat).</li>
+<li><strong>POP3 = 1 dispositivo; IMAP = vários</strong>.</li>
+<li><strong>IIS</strong> é Microsoft/Windows Server; <strong>Apache</strong> é open source/multiplataforma.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) O protocolo IMAP baixa as mensagens de e-mail para o cliente e as remove do servidor, sendo indicado para usuários que acessam a caixa de entrada em um único dispositivo.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Isso é o <strong>POP3</strong>. <strong>IMAP</strong> <strong>mantém</strong> as mensagens no servidor (vários dispositivos, pastas remotas).</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) As portas utilizadas pelo servidor e pelo cliente DHCP são, respectivamente:
+a) 53 e 54.
+b) 67 e 68.
+c) 68 e 67.
+d) 25 e 110.
+e) 161 e 162.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> DHCP: <strong>servidor 67/UDP</strong>, <strong>cliente 68/UDP</strong>. (53 = DNS; 25 = SMTP; 110 = POP3; 161/162 = SNMP.)</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) O servidor web mais utilizado na Internet, juntamente com o Internet Information Services (IIS) da Microsoft, é o Apache HTTP Server.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Apache</strong> e <strong>IIS</strong> são os dois mais utilizados (questão CESPE TRT-DF/GO 2013).</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) O servidor de aplicações JBoss EAP/WildFly destina-se a:
+a) hospedar páginas HTML estáticas apenas.
+b) executar aplicações Java EE (WAR/EAR).
+c) gerenciar endereços IP.
+d) servir DNS.
+e) controlar impressoras de rede.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>JBoss/WildFly</strong> = servidor de aplicações <strong>JEE</strong> (Java). Apache/IIS servem web; DHCP = IP; DNS = nomes.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O Web Proxy atua como intermediário entre o cliente e servidores externos, podendo ocultar o IP do usuário, armazenar cache e filtrar conteúdo.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Proxy = intermediário (duas conexões); esconde IP, cache, filtra URL/conteúdo, audita.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) O registro DNS responsável por apontar um nome de domínio para um endereço IPv4 é o registro:
+a) PTR.
+b) MX.
+c) A.
+d) SOA.
+e) CNAME.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>A</strong> = nome→IPv4. <strong>PTR</strong> = IP→nome; <strong>MX</strong> = mail; <strong>CNAME</strong> = apelido; <strong>SOA</strong> = autoridade da zona.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) As transferências de zona DNS (AXFR) ocorrem via UDP na porta 53, dispensando TCP.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Transferências de zona usam <strong>TCP</strong> na porta 53 (UDP é para consultas; TCP também acima de 512 B).</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) O proxy reverso difere do proxy direto por:
+a) esconder o IP do cliente.
+b) posicionar-se à frente do servidor interno, oferecendo proteção, balanceamento e cache.
+c) funcionar exclusivamente em rede wireless.
+d) substituir o firewall.
+e) operar apenas na camada física.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Reverso</strong>: protege/balanceia o <strong>servidor</strong> (cache de objetos estáticos). <strong>Direto</strong>: intermedia o <strong>cliente</strong> na saída.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) O servidor WildFly é a versão corporativa suportada pela Red Hat do JBoss AS.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> É o inverso: <strong>WildFly</strong> = continuação <strong>comunitária</strong>; <strong>JBoss EAP</strong> = versão <strong>corporativa</strong> (Red Hat).</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O protocolo LDAP opera na porta:
+a) 23.
+b) 25.
+c) 80.
+d) 389.
+e) 443.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> <strong>LDAP = 389/TCP</strong> (LDAPv3; LDAPS = 636). 23 = Telnet; 25 = SMTP; 80 = HTTP; 443 = HTTPS.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) O Syslog pode operar nas portas TCP e UDP 514, e o envio criptografado usa a porta 6514.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Syslog: <strong>514</strong> (TCP/UDP); <strong>6514</strong> (TLS/SSL). Papéis: origem, armazenamento e análise.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre análise de tráfego com sniffers, é correto afirmar:
+a) Wireshark e TCPDump capturam apenas tráfego criptografado.
+b) o modo promíscuo permite capturar todos os quadros da interface, inclusive os não endereçados à máquina.
+c) gaps em capturas indicam sempre rotas diferentes.
+d) sniffers são exclusivos de Windows.
+e) WinDump é exclusivo de Linux.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Modo <strong>promíscuo</strong> captura tudo na interface. Wireshark (gráfico), TCPDump (Unix), WinDump (Windows). <strong>Fora de ordem</strong> = rotas diferentes; gaps podem indicar perda.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) No servidor de aplicações JBoss, o modo standalone é destinado ao gerenciamento centralizado de múltiplas instâncias distribuídas.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Standalone</strong> = instância única. O <strong>domain</strong> é que gerencia centralizadamente várias instâncias.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) O método HTTP CONNECT é tipicamente associado a qual serviço de rede?
+a) DNS.
+b) DHCP.
+c) Web Proxy.
+d) SMTP.
+e) FTP.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>CONNECT</strong> abre túnel via <strong>proxy</strong> (ex.: HTTPS através do proxy).</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) O Active Directory pode ser implantado em sistemas de arquivos FAT32 e não depende de protocolo de diretório.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> AD <strong>exige NTFS</strong> e <strong>usa LDAP</strong> (389) como protocolo de diretório (Kerberos para autenticação).</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique o funcionamento dos serviços de e-mail (SMTP, POP3 e IMAP) e as diferenças entre POP3 e IMAP.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O envio de e-mail usa <strong>SMTP</strong> (portas 25/587), com modelo <strong>store-and-forward</strong> entre MTAs; o cliente (MUA) submete mensagens ao MTA. A retirada das mensagens usa <strong>POP3</strong> ou <strong>IMAP</strong>. <strong>POP3 (110)</strong> baixa as mensagens e as <strong>remove</strong> do servidor, sendo adequado a um único dispositivo. <strong>IMAP (143/993)</strong> mantém as mensagens <strong>no servidor</strong>, permitindo acesso simultâneo de múltiplos dispositivos, organização em pastas remotas e leitura offline.</p></details>
+<p><strong>D2.</strong> Descreva o processo DHCP (DORA) e explique o papel do Web Proxy e do Syslog na administração de rede.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O <strong>DHCP</strong> configura endereços IP automaticamente pelo processo <strong>DORA</strong>: <strong>Discovery</strong> (broadcast do cliente), <strong>Offer</strong> (oferta do servidor por MAC), <strong>Request</strong> (aceite do cliente) e <strong>ACK</strong> (concessão do lease), nas portas 67 (servidor) e 68 (cliente), com suporte a relay agents e reservas por MAC. O <strong>Web Proxy</strong> é um intermediário que oculta o IP do usuário, armazena cache e filtra conteúdo (proxy direto), podendo atuar como proxy reverso para proteger e balancear servidores. O <strong>Syslog</strong> centraliza registros de eventos (portas 514; TLS em 6514), com papéis de origem, armazenamento e análise, essencial para auditoria, diagnóstico e conformidade.</p></details>
+<hr />
+<p><em>Base: <code>02.Redes de Computadores</code> (Aulas 08–10, 12), <code>01.Sistemas Operacionais e Arquitetura</code> (Aula08 — LDAP/AD; Aula15 — JBoss/WildFly), <code>02.Básico.para.Concursos.2020/04.Informática</code> (Aulas 05 e 08 — e-mail e proxy). Complemento: SIEM e administração moderna de logs — ver também apostila T14.</em></p>
+<script>
+(function () {
+  const key = 'apostila-t13-servicos-de-rede-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matemática e Raciocínio Lógico (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>Matemática e Raciocínio Lógico</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-estrutura-de-relacoes-e-raciocinio-sequencial">1. Estrutura de relações e raciocínio sequencial</a></li>
+<li class="toc-h2"><a href="#2-logica-proposicional">2. Lógica proposicional</a></li>
+<li class="toc-h2"><a href="#3-argumentos">3. Argumentos</a></li>
+<li class="toc-h2"><a href="#1-conjuntos">1. Conjuntos</a></li>
+<li class="toc-h2"><a href="#2-numeros-inteiros-e-racionais">2. Números inteiros e racionais</a></li>
+<li class="toc-h2"><a href="#3-fracoes">3. Frações</a></li>
+<li class="toc-h2"><a href="#1-razoes-e-proporcoes">1. Razões e proporções</a></li>
+<li class="toc-h2"><a href="#2-regra-de-tres">2. Regra de três</a></li>
+<li class="toc-h2"><a href="#3-porcentagem">3. Porcentagem</a></li>
+<li class="toc-h2"><a href="#1-medidas-de-tendencia-central">1. Medidas de tendência central</a></li>
+<li class="toc-h2"><a href="#2-medidas-de-dispersao">2. Medidas de dispersão</a></li>
+<li class="toc-h2"><a href="#3-graficos-e-tabelas">3. Gráficos e tabelas</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-matematica-e-raciocinio-logico">APOSTILA — MATEMÁTICA E RACIOCÍNIO LÓGICO</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Estrutura lógica de relações arbitrárias; dedução de novas informações e avaliação de condições. Raciocínio verbal, matemático e sequencial; orientação espacial e temporal; formação de conceitos; discriminação de elementos. Processo lógico de hipóteses a conclusões. Números inteiros e racionais: operações, potenciação, expressões numéricas, múltiplos e divisores, problemas. Frações e operações. Razões e proporções; divisão em partes proporcionais; regra de três; porcentagem (acréscimos e descontos). Estatística: tendência central (moda, mediana, média aritmética simples e ponderada) e dispersão (desvio médio, amplitude, variância, desvio padrão); leitura e interpretação de gráficos (histogramas, setores, infográficos) e tabelas.</p>
+<p><strong>Base de conhecimento:</strong> <code>02.Raciocínio Lógico</code> (Aulas 00–05 — lógica proposicional, conectivos, argumentos), <code>03.Matemática</code> (Aulas 00–07 — conjuntos, frações, razões, regra de três, porcentagem, juros, médias, gráficos), <code>matematica e raciocinio logico</code> (SEFA) — Curso 2020 + <strong>complemento</strong> (fórmulas de mediana/moda/variância/desvio padrão, interpretação de gráficos).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-raciocinio-logico">MÓDULO I — RACIOCÍNIO LÓGICO</h1>
+<h2 id="1-estrutura-de-relacoes-e-raciocinio-sequencial">1. Estrutura de relações e raciocínio sequencial</h2>
+<ul>
+<li><strong>Problemas de lógica posicional/relacional</strong>: organizar pessoas/objetos em fila, mesa, ordem de chegada. <strong>Técnica</strong>: montar tabela/esquema; usar <strong>dicas positivas</strong> (é) e <strong>negativas</strong> (não é); <strong>transitividade</strong> (se A &gt; B e B &gt; C, então A &gt; C).</li>
+<li><strong>Raciocínio sequencial</strong> (sequências): padrões numéricos (PA, PG, Fibonacci — ver Módulo III), letras (próxima letra), formas (rotação/reflexão). <strong>Orientação espacial</strong>: planos, vistas (planta, lateral), giros (90°, 180°). <strong>Orientação temporal</strong>: calendários, relógios, ordem cronológica.</li>
+<li><strong>Formação de conceitos e discriminação de elementos</strong>: classificar por atributos (cor, forma, tamanho); identificar o elemento que <strong>não</strong> pertence ao grupo.</li>
+</ul>
+<h2 id="2-logica-proposicional">2. Lógica proposicional</h2>
+<ul>
+<li><strong>Proposição</strong>: frase declarativa com valor <strong>verdadeiro (V)</strong> ou <strong>falso (F)</strong>. <strong>Conectivos lógicos</strong>:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Conectivo</th>
+<th>Símbolo</th>
+<th>Nome</th>
+<th>Regra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>e</strong></td>
+<td>∧</td>
+<td>conjunção</td>
+<td>V só se <strong>ambos</strong> V</td>
+</tr>
+<tr>
+<td><strong>ou</strong></td>
+<td>∨</td>
+<td>disjunção inclusiva</td>
+<td>F só se <strong>ambos</strong> F</td>
+</tr>
+<tr>
+<td><strong>ou...ou</strong></td>
+<td>⊕</td>
+<td>disjunção exclusiva</td>
+<td>V se <strong>exatamente um</strong> V</td>
+</tr>
+<tr>
+<td><strong>não</strong></td>
+<td>¬</td>
+<td>negação</td>
+<td>inverte V/F</td>
+</tr>
+<tr>
+<td><strong>se...então</strong></td>
+<td>→</td>
+<td>condicional (implicação)</td>
+<td>F só se V→F</td>
+</tr>
+<tr>
+<td><strong>se e somente se</strong></td>
+<td>↔</td>
+<td>bicondicional</td>
+<td>V se <strong>iguais</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Tabela-verdade de p → q</strong>:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>p</th>
+<th>q</th>
+<th>p→q</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V</td>
+<td>V</td>
+<td><strong>V</strong></td>
+</tr>
+<tr>
+<td>V</td>
+<td>F</td>
+<td><strong>F</strong></td>
+</tr>
+<tr>
+<td>F</td>
+<td>V</td>
+<td><strong>V</strong></td>
+</tr>
+<tr>
+<td>F</td>
+<td>F</td>
+<td><strong>V</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Pegadinha clássica</strong>: <strong>p → q ≠ q → p</strong> (a recíproca não é equivalente). "Se chove, a rua molha" ≠ "se a rua molha, chove".</li>
+<li><strong>Necessária × suficiente</strong>: q é <strong>condição necessária</strong> de p se p→q (sem q não há p); q é <strong>condição suficiente</strong> de p se q→p (q basta para p). <strong>Equivale</strong>: p→q ≡ ¬q→¬p (<strong>contrapositiva</strong> — sempre use nas questões).</li>
+<li><strong>Equivalências</strong>: De Morgan: ¬(p∧q) = ¬p∨¬q; ¬(p∨q) = ¬p∧¬q. <strong>Contradição</strong> (sempre F) × <strong>tautologia</strong> (sempre V).</li>
+</ul>
+<h2 id="3-argumentos">3. Argumentos</h2>
+<ul>
+<li><strong>Validade</strong>: a conclusão <strong>decorre necessariamente</strong> das premissas (estrutura), independentemente do conteúdo. <strong>Modus ponens</strong>: p→q, p ∴ q. <strong>Modus tollens</strong>: p→q, ¬q ∴ ¬p. <strong>Falácias</strong>: afirmar o consequente (q, p→q ∴ p — <strong>inválido</strong>); negar o antecedente (¬p, p→q ∴ ¬q — <strong>inválido</strong>).</li>
+<li><strong>Premissas</strong>: universais ("todos A são B") × particulares ("alguns A são B"). <strong>Silogismos</strong>: premissa maior, menor, conclusão.</li>
+<li><strong>Condicional</strong> "se p então q": as <strong>contrárias</strong> de "se p então q" são "se p então não q"; as <strong>contraditórias</strong> são "p e não q". <em>Regra de ouro: negação de "se p então q" = "p e não q"</em>.</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-numeros-conjuntos-e-expressoes">MÓDULO II — NÚMEROS, CONJUNTOS E EXPRESSÕES</h1>
+<h2 id="1-conjuntos">1. Conjuntos</h2>
+<ul>
+<li><strong>Operações</strong>: união (A∪B), interseção (A∩B), diferença (A−B), complementar (Ac). <strong>Fórmula</strong>: n(A∪B) = n(A) + n(B) − n(A∩B). <strong>Conjuntos disjuntos</strong> (A∩B = ∅). <strong>Partes de um conjunto</strong>: 2ⁿ (n = nº de elementos).</li>
+</ul>
+<h2 id="2-numeros-inteiros-e-racionais">2. Números inteiros e racionais</h2>
+<ul>
+<li><strong>Inteiros</strong>: ..., −2, −1, 0, 1, 2, ... (operações com sinais: × e ÷: mesmos sinais = +; diferentes = −). <strong>Racionais</strong>: p/q (q ≠ 0); decimais exatos ou periódicos.</li>
+<li><strong>Potenciação</strong>: aᵐ × aⁿ = aᵐ⁺ⁿ; aᵐ ÷ aⁿ = aᵐ⁻ⁿ; (aᵐ)ⁿ = aᵐⁿ; a⁰ = 1; a⁻ⁿ = 1/aⁿ.</li>
+<li><strong>Expressões numéricas</strong>: PEMDAS/ordem: <strong>parênteses, potências/raízes, multiplicação/divisão, adição/subtração</strong> (da esquerda para a direita). <strong>Valor absoluto</strong>: |x| (distância a zero).</li>
+<li><strong>MMC/MDC</strong>:</li>
+<li><strong>Fatoração</strong> em primos; <strong>MMC</strong> = produto dos primos com <strong>maior</strong> expoente; <strong>MDC</strong> = produto dos primos com <strong>menor</strong> expoente.</li>
+<li><strong>Problemas clássicos</strong>: "A cada quanto tempo se encontram?" → <strong>MMC</strong>; "maior bloco que cabe em todos" → <strong>MDC</strong>. <em>Ex.: ônibus a cada 12 min, outro a cada 18 min → MMC(12,18) = 36 min.</em></li>
+</ul>
+<h2 id="3-fracoes">3. Frações</h2>
+<ul>
+<li><strong>Operações</strong>: soma/subtração → <strong>MMC dos denominadores</strong>; multiplicação → numerador×numerador, denominador×denominador; divisão → <strong>inverter o divisor</strong> e multiplicar. <strong>Fração equivalente</strong>: multiplicar/dividir num. e denom. pelo mesmo número. <strong>Decimal ↔ fração</strong>: 0,25 = 25/100 = 1/4.</li>
+<li><strong>Problemas</strong>: parte × total; "1/3 de 60" = 20; <strong>porcentagem de fração</strong>: 50% de 1/4 = 1/8.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-razoes-proporcoes-regra-de-tres-e-porcentagem">MÓDULO III — RAZÕES, PROPORÇÕES, REGRA DE TRÊS E PORCENTAGEM</h1>
+<h2 id="1-razoes-e-proporcoes">1. Razões e proporções</h2>
+<ul>
+<li><strong>Razão</strong>: a/b (comparação). <strong>Proporção</strong>: a/b = c/d → <strong>produto dos meios = produto dos extremos</strong> (a·d = b·c).</li>
+<li><strong>Divisão em partes proporcionais</strong>: dividir um total segundo razões (ex.: 2:3:5 → soma das partes = 10; cada parte = total × (parte/10)). <em>Ex.: dividir R$ 1.000 na razão 2:3:5 → 200, 300, 500.</em></li>
+</ul>
+<h2 id="2-regra-de-tres">2. Regra de três</h2>
+<ul>
+<li><strong>Simples direta</strong>: as grandezas são <strong>diretamente proporcionais</strong> (aumentam juntas). Montar: "x está para 10 assim como 3 está para 6" → x/10 = 3/6 → x = 5.</li>
+<li><strong>Simples inversa</strong>: grandezas <strong>inversamente proporcionais</strong> (uma aumenta, a outra diminui). <em>Ex.: 4 operários fazem em 10 dias; 5 operários fazem em x dias → 4×10 = 5×x → x = 8.</em></li>
+<li><strong>Composta</strong>: 3+ grandezas; decompor em sucessivas regras de três.</li>
+<li><strong>Identificar</strong>: "quanto mais...mais" = direta; "quanto mais...menos" = inversa.</li>
+</ul>
+<h2 id="3-porcentagem">3. Porcentagem</h2>
+<ul>
+<li><strong>Cálculo</strong>: x% de N = (x/100)×N. <strong>Fração de porcentagem</strong>: 25% = 1/4; 12,5% = 1/8; 20% = 1/5.</li>
+<li><strong>Acréscimo</strong>: valor × (1 + i/100). <strong>Desconto</strong>: valor × (1 − i/100). <strong>Sucessivos</strong>: multiplicar (ex.: 20% + 10% de desconto = ×0,8×0,9 = 0,72 → 28% de desconto real, <strong>não</strong> 30%).</li>
+<li><strong>Variação percentual</strong>: (valor final − inicial)/inicial × 100. <strong>Pegadinha</strong>: aumento de 50% + desconto de 50% <strong>não</strong> volta ao original (100→150→75).</li>
+<li><strong>Juros simples</strong>: J = C·i·t (não há juros sobre juros). <strong>Juros compostos</strong>: M = C·(1+i)ᵗ (juros sobre juros).</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-estatistica-e-graficos">MÓDULO IV — ESTATÍSTICA E GRÁFICOS</h1>
+<h2 id="1-medidas-de-tendencia-central">1. Medidas de tendência central</h2>
+<ul>
+<li><strong>Média aritmética simples</strong>: soma dos valores ÷ nº de valores (x̄ = Σxᵢ/n). <em>Ex.: 4, 6, 8, 10 → (4+6+8+10)/4 = 7.</em></li>
+<li><strong>Média aritmética ponderada</strong>: soma dos (valor × peso) ÷ soma dos pesos (x̄ = Σ(xᵢ·pᵢ)/Σpᵢ). <em>Ex.: nota 6 (peso 2) e 8 (peso 3) → (12+24)/5 = 7,2.</em> <strong>Usar quando</strong> os valores têm <strong>importâncias diferentes</strong> (provas com pesos).</li>
+<li><strong>Mediana</strong>: valor que <strong>divide a distribuição ao meio</strong> (50% abaixo, 50% acima).</li>
+<li><strong>n ímpar</strong> (após ordenar): mediana = valor central. <em>Ex.: 2, 5, 7, 9, 12 → mediana = 7.</em></li>
+<li><strong>n par</strong>: mediana = <strong>média dos dois valores centrais</strong>. <em>Ex.: 2, 5, 7, 9 → (5+7)/2 = 6.</em></li>
+<li><strong>Pegadinha</strong>: ordenar os dados <strong>antes</strong>; a mediana <strong>não</strong> é afetada por valores extremos.</li>
+<li><strong>Moda</strong>: valor que <strong>mais se repete</strong> (pode haver <strong>mais de uma</strong> — "bimodal/multimodal"; pode <strong>não haver</strong> moda; a moda <strong>não</strong> precisa estar na média nem na mediana).</li>
+<li><em>Comparação</em>: a <strong>média</strong> é sensível a outliers; a <strong>mediana</strong>, não; a <strong>moda</strong> é a mais frequente. <em>Ex.: 1, 2, 2, 3, 100 → média = 21,6; mediana = 2; moda = 2.</em></li>
+</ul>
+<h2 id="2-medidas-de-dispersao">2. Medidas de dispersão</h2>
+<ul>
+<li><strong>Amplitude</strong>: diferença entre o <strong>maior e o menor</strong> valor (A = xₘₐₓ − xₘᵢₙ). <em>Ex.: 2, 5, 7, 12 → amplitude = 10.</em></li>
+<li><strong>Desvio médio</strong>: média dos <strong>módulos</strong> das diferenças em relação à média (DM = Σ|xᵢ − x̄|/n). <em>Ex.: 2, 4, 6, 8 → média = 5; desvios: 3, 1, 1, 3 → DM = 8/4 = 2.</em></li>
+<li><strong>Variância</strong>: média dos <strong>quadrados</strong> dos desvios em relação à média (s² = Σ(xᵢ − x̄)²/n — para <strong>população</strong>; para <strong>amostra</strong>, dividir por n−1). <em>Ex.: 2, 4, 6, 8 → variância = (9+1+1+9)/4 = 5.</em></li>
+<li><strong>Desvio padrão</strong>: <strong>raiz quadrada da variância</strong> (s = √s²) — está <strong>na mesma unidade</strong> dos dados. <em>Ex.: √5 ≈ 2,24.</em></li>
+<li><em>Pegadinha</em>: <strong>variância</strong> usa <strong>quadrados</strong> (unidade ao quadrado); <strong>desvio médio</strong> usa <strong>módulos</strong>; <strong>desvio padrão</strong> = √variância. Quanto <strong>maior</strong> o desvio padrão, <strong>mais dispersos</strong> os dados.</li>
+</ul>
+<h2 id="3-graficos-e-tabelas">3. Gráficos e tabelas</h2>
+<ul>
+<li><strong>Histograma</strong>: barras <strong>encostadas</strong> (variáveis contínuas em intervalos); altura = <strong>frequência</strong>; leitura de moda/mediana aproximadas.</li>
+<li><strong>Gráfico de setores (pizza)</strong>: partes de um total (<strong>%</strong>); ângulo = (valor/total)×360°. <em>Ex.: 25% = 90°.</em></li>
+<li><strong>Gráfico de colunas/barras</strong>: barras <strong>separadas</strong> (variáveis discretas); comparar categorias.</li>
+<li><strong>Linha/temporal</strong>: evolução ao longo do tempo.</li>
+<li><strong>Infográficos</strong>: gráficos + texto + ícones; ler <strong>título, fonte, legenda, unidade</strong>.</li>
+<li><strong>Tabelas</strong>: cruzar linhas e colunas; atenção a <strong>unidades</strong> (%, mil, milhar) e <strong>escalas</strong> dos eixos (o eixo pode começar em 100 — "truncado" — e exagerar diferenças).</li>
+<li><strong>Pegadinha clássica</strong>: <strong>eixo truncado</strong> (não começa em 0) distorce a leitura; sempre ler <strong>título, fonte, unidade e escala</strong>.</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>p → q ≠ q → p</strong> (recíproca não equivale). Usar <strong>contrapositiva</strong>: p→q ≡ ¬q→¬p.</li>
+<li><strong>Negação de "se p então q"</strong> = "<strong>p e não q</strong>" (não "se p então não q").</li>
+<li><strong>Condicional</strong> p→q é <strong>F só</strong> quando p=V e q=F; nos demais casos, <strong>V</strong>.</li>
+<li><strong>Modus ponens</strong> (p→q, p ∴ q) e <strong>modus tollens</strong> (p→q, ¬q ∴ ¬q) são válidos; <strong>afirmar o consequente</strong> e <strong>negar o antecedente</strong> são <strong>falácias</strong>.</li>
+<li><strong>MMC</strong> para "quando se encontram"; <strong>MDC</strong> para "maior bloco comum".</li>
+<li><strong>Regra de três inversa</strong>: "quanto mais...menos"; <strong>direta</strong>: "quanto mais...mais".</li>
+<li><strong>Acréscimo e desconto sucessivos</strong> não se somam: multiplicar (50% + 50% ≠ 0).</li>
+<li><strong>Juros simples</strong> = C·i·t; <strong>compostos</strong> = C·(1+i)ᵗ.</li>
+<li><strong>Mediana</strong> exige <strong>ordenar</strong> os dados; n par = média dos 2 centrais; n ímpar = central.</li>
+<li><strong>Média ponderada</strong> quando há <strong>pesos</strong>; <strong>moda</strong> = mais frequente (pode haver várias ou nenhuma).</li>
+<li><strong>Variância</strong> = média dos <strong>quadrados</strong>; <strong>desvio padrão</strong> = <strong>raiz</strong> da variância (mesma unidade); <strong>desvio médio</strong> = média dos <strong>módulos</strong>; <strong>amplitude</strong> = máx − mín.</li>
+<li><strong>Histograma</strong> = barras encostadas (contínuas); <strong>pizza</strong> = % do total (ângulo = valor/total×360).</li>
+<li><strong>Eixo truncado</strong> distorce; ler <strong>título, fonte, unidade, escala</strong>.</li>
+<li><strong>Valor absoluto</strong> |x| = distância a zero (sempre ≥ 0).</li>
+<li><strong>Ordem de operações</strong>: parênteses → potências → ×/÷ → +/−.</li>
+<li><strong>Partes de um conjunto</strong>: 2ⁿ. <strong>n(A∪B)</strong> = n(A)+n(B)−n(A∩B).</li>
+<li><strong>Necessária × suficiente</strong>: p→q = q é <strong>necessário</strong> a p; q→p = q é <strong>suficiente</strong> para p.</li>
+<li><strong>De Morgan</strong>: ¬(p∧q) = ¬p∨¬q; ¬(p∨q) = ¬p∧¬q.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) A proposição "se chove, então a rua molha" é equivalente a "se a rua molha, então chove".
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>p→q ≠ q→p</strong>. A recíproca não é equivalente. A equivalente é a <strong>contrapositiva</strong>: "se a rua <strong>não</strong> molha, então <strong>não</strong> chove".</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) A negação da proposição "se estudo, então passo" é:
+a) se não estudo, então não passo.
+b) se estudo, então não passo.
+c) estudo e não passo.
+d) não estudo e não passo.
+e) não estudo ou não passo.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> Negação de <strong>p→q</strong> = <strong>p ∧ ¬q</strong> ("<strong>estudo e não passo</strong>"). <strong>a</strong> é a <strong>contrapositiva de ¬p→¬q</strong> (não é a negação).</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) O valor da expressão 2³ × 2⁴ ÷ 2² é:
+a) 2⁵.
+b) 2⁶.
+c) 2⁹.
+d) 2¹.
+e) 2⁴.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> 2³⁺⁴⁻² = 2⁵. (Regra: somar expoentes na ×, subtrair na ÷.)</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) O MMC de 12 e 18 é:
+a) 6.
+b) 12.
+c) 18.
+d) 36.
+e) 72.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> 12 = 2²·3; 18 = 2·3² → <strong>MMC</strong> = 2²·3² = <strong>36</strong>. (<strong>MDC</strong> = 2·3 = 6.)</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) Cinco operários fazem um serviço em 12 dias. Quantos dias levarão 4 operários, com a mesma produtividade?
+a) 9,6 dias.
+b) 15 dias.
+c) 10 dias.
+d) 16 dias.
+e) 20 dias.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Regra de três <strong>inversa</strong> (mais operários → menos dias): 5×12 = 4×x → x = <strong>15 dias</strong>.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) O preço de um produto aumenta 20% e depois sofre desconto de 20%. O preço final em relação ao original:
+a) é igual.
+b) aumenta 4%.
+c) diminui 4%.
+d) diminui 40%.
+e) aumenta 40%.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> 1,20 × 0,80 = 0,96 → <strong>diminui 4%</strong> (acréscimos/descontos sucessivos <strong>não</strong> se anulam).</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) A média aritmética ponderada das notas 6 (peso 2) e 8 (peso 3) é:
+a) 7,0.
+b) 7,2.
+c) 6,5.
+d) 7,5.
+e) 6,8.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> (6×2 + 8×3)/(2+3) = (12+24)/5 = <strong>7,2</strong>. (Média simples seria 7,0.)</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) A mediana do conjunto {2, 5, 7, 9, 12} é:
+a) 5.
+b) 6.
+c) 7.
+d) 9.
+e) 12.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> n = 5 (ímpar) → mediana = valor central (ordenado) = <strong>7</strong>.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) A mediana do conjunto {2, 5, 7, 9} é:
+a) 5.
+b) 5,5.
+c) 6.
+d) 7.
+e) 6,5.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> n = 4 (par) → média dos 2 centrais: (5+7)/2 = <strong>6</strong>.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) A moda do conjunto {1, 2, 2, 3, 100} é:
+a) 1.
+b) 2.
+c) 3.
+d) 100.
+e) 21,6.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Moda</strong> = valor mais frequente = <strong>2</strong>. (Média = 21,6; mediana = 2.)</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A variância do conjunto {2, 4, 6, 8} é:
+a) 2.
+b) 4.
+c) 5.
+d) 6.
+e) 8.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> Média = 5; desvios: −3, −1, 1, 3; quadrados: 9, 1, 1, 9 → soma = 20 → variância = 20/4 = <strong>5</strong>. (<strong>Desvio padrão</strong> = √5 ≈ 2,24; <strong>desvio médio</strong> = 2.)</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre medidas de dispersão, é correto afirmar:
+a) a amplitude é a média dos desvios.
+b) o desvio padrão é a raiz quadrada da variância e tem a mesma unidade dos dados.
+c) a variância tem a mesma unidade dos dados.
+d) o desvio médio usa quadrados.
+e) amplitude = soma dos valores.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Desvio padrão</strong> = √variância (mesma unidade). Variância = unidade <strong>ao quadrado</strong>; desvio médio = <strong>módulos</strong>; amplitude = <strong>máx − mín</strong>.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) No gráfico de setores, um setor que representa 25% do total corresponde a um ângulo central de:
+a) 45°.
+b) 60°.
+c) 90°.
+d) 120°.
+e) 180°.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> Ângulo = (valor/total)×360° = 0,25×360 = <strong>90°</strong>.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) O desvio médio do conjunto {2, 4, 6, 8} é:
+a) 1.
+b) 2.
+c) 2,5.
+d) 5.
+e) 8.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Média = 5; |desvios|: 3, 1, 1, 3 → soma = 8 → DM = 8/4 = <strong>2</strong>.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) A proposição "p → q" é falsa apenas quando:
+a) p é falsa e q é verdadeira.
+b) p é verdadeira e q é falsa.
+c) ambas são verdadeiras.
+d) ambas são falsas.
+e) p é verdadeira e q é verdadeira.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>p→q = F só quando p=V e q=F</strong>. Nos demais casos, V.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique a diferença entre média aritmética simples, média ponderada, mediana e moda, e as medidas de dispersão (amplitude, desvio médio, variância e desvio padrão).</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>média aritmética simples</strong> é a soma dos valores dividida pelo número de valores (sensível a extremos). A <strong>média ponderada</strong> considera <strong>pesos</strong> distintos (soma dos produtos valor×peso ÷ soma dos pesos). A <strong>mediana</strong> é o valor central da distribuição <strong>ordenada</strong> (n ímpar = central; n par = média dos dois centrais), resistente a outliers. A <strong>moda</strong> é o valor mais frequente (pode haver várias ou nenhuma). Sobre dispersão: a <strong>amplitude</strong> é a diferença entre o maior e o menor; o <strong>desvio médio</strong> é a média dos módulos dos desvios em relação à média; a <strong>variância</strong> é a média dos quadrados dos desvios; o <strong>desvio padrão</strong> é a raiz quadrada da variância, expresso na mesma unidade dos dados — quanto maior, mais dispersos os dados.</p></details>
+<p><strong>D2.</strong> Explique o conceito de condicional em lógica proposicional, a diferença entre condição necessária e suficiente e o uso da contrapositiva.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A condicional <strong>p → q</strong> ("se p então q") é falsa <strong>apenas</strong> quando p é verdadeira e q é falsa; nos demais casos, é verdadeira. <strong>q</strong> é <strong>condição necessária</strong> de <strong>p</strong> quando p→q (sem q não há p); <strong>q</strong> é <strong>condição suficiente</strong> de <strong>p</strong> quando q→p (q basta para p). A <strong>contrapositiva</strong> (¬q→¬p) é <strong>logicamente equivalente</strong> a p→q e é a ferramenta central em questões — ao passo que a recíproca (q→p) <strong>não</strong> equivale. A negação de p→q é "p e não q" (p ∧ ¬q). Princípios válidos: <strong>modus ponens</strong> (p→q, p ∴ q) e <strong>modus tollens</strong> (p→q, ¬q ∴ ¬p); inválidos: afirmar o consequente e negar o antecedente.</p></details>
+<hr />
+<p><em>Base: <code>02.Raciocínio Lógico</code> (Aulas 00–05 — proposições, conectivos, tabelas-verdade, argumentos, modus ponens/tollens), <code>03.Matemática</code> (Aulas 00–07 — conjuntos, frações, razões, regra de três, porcentagem, juros, médias, gráficos), <code>matematica e raciocinio logico</code> (SEFA). Complemento: fórmulas de mediana/moda/variância/desvio padrão e interpretação de gráficos (detalhamento parcial na base de 2020).</em></p>
+<script>
+(function () {
+  const key = 'apostila-matematica-e-raciocinio-logico-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

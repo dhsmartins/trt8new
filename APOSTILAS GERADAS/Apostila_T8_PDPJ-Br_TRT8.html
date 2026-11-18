@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T8 — Arquitetura PDPJ-Br (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T8 — Arquitetura PDPJ-Br</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-pdpj-br-plataforma-digital-do-poder-judiciario">1. PDPJ-Br (Plataforma Digital do Poder Judiciário)</a></li>
+<li class="toc-h2"><a href="#2-arquitetura-de-microsservicos">2. Arquitetura de microsserviços</a></li>
+<li class="toc-h2"><a href="#1-java-pontos-de-prova">1. Java (pontos de prova)</a></li>
+<li class="toc-h2"><a href="#2-spring-boot">2. Spring Boot</a></li>
+<li class="toc-h2"><a href="#3-spring-cloud">3. Spring Cloud</a></li>
+<li class="toc-h2"><a href="#4-mapstruct-swagger">4. MapStruct, Swagger</a></li>
+<li class="toc-h2"><a href="#1-rest">1. REST</a></li>
+<li class="toc-h2"><a href="#2-json">2. JSON</a></li>
+<li class="toc-h2"><a href="#1-jpa-e-hibernate">1. JPA e Hibernate</a></li>
+<li class="toc-h2"><a href="#2-hibernate-envers">2. Hibernate Envers</a></li>
+<li class="toc-h2"><a href="#3-flyway">3. Flyway</a></li>
+<li class="toc-h2"><a href="#4-postgresql-h2-oracle-19c-mysql-8-bancos-do-edital">4. PostgreSQL, H2, Oracle 19c, MySQL 8 (bancos do edital)</a></li>
+<li class="toc-h2"><a href="#1-sso-e-keycloak">1. SSO e Keycloak</a></li>
+<li class="toc-h2"><a href="#2-oauth-20-rfc-6749">2. OAuth 2.0 (RFC 6749)</a></li>
+<li class="toc-h2"><a href="#3-boas-praticas-de-seguranca-rfc-9700">3. Boas práticas de segurança — RFC 9700</a></li>
+<li class="toc-h2"><a href="#1-message-broker-e-rabbitmq">1. Message Broker e RabbitMQ</a></li>
+<li class="toc-h2"><a href="#2-evento-negocial-e-webhooks">2. Evento negocial e webhooks</a></li>
+<li class="toc-h2"><a href="#1-git">1. Git</a></li>
+<li class="toc-h2"><a href="#2-docker">2. Docker</a></li>
+<li class="toc-h2"><a href="#3-kubernetes-k8s-e-rancher">3. Kubernetes (K8s) e Rancher</a></li>
+<li class="toc-h2"><a href="#4-cicd-na-pdpj-br">4. CI/CD na PDPJ-Br</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-8-arquitetura-de-desenvolvimento-da-plataforma-digital-do-poder-judiciario-pdpj-br">APOSTILA — TÓPICO 8: ARQUITETURA DE DESENVOLVIMENTO DA PLATAFORMA DIGITAL DO PODER JUDICIÁRIO (PDPJ-Br)</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Java; arquitetura de microsserviços; API RESTful; JSON; Spring (Spring Cloud, Spring Boot, Spring Eureka, Zuul); MapStruct; Swagger; Service Discovery; API Gateway; persistência (JPA 2.0, Hibernate 4.3+, Hibernate Envers, Flyway); PostgreSQL e H2; autenticação SSO, Keycloak, OAuth2 (RFC 6749), boas práticas RFC 9700; mensageria e webhooks (RabbitMQ, evento negocial, APIs reversas); Git; Docker, Kubernetes, Rancher; CI/CD.</p>
+<p><strong>Base de conhecimento:</strong> conteúdo técnico complementar (o material-base local não cobre a PDPJ-Br). Foco no edital e na documentação oficial do CNJ.</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-a-pdpj-br-e-a-arquitetura-de-microservicos">MÓDULO I — A PDPJ-Br E A ARQUITETURA DE MICROSERVIÇOS</h1>
+<h2 id="1-pdpj-br-plataforma-digital-do-poder-judiciario">1. PDPJ-Br (Plataforma Digital do Poder Judiciário)</h2>
+<ul>
+<li><strong>Iniciativa do CNJ</strong> para padronizar e compartilhar a <strong>transformação digital</strong> dos tribunais: componentes reutilizáveis (ex.: <strong>PDPJ-Core</strong>, sistemas processuais, autenticação unificada), interoperabilidade e <strong>padrões técnicos</strong> (Resolução CNJ nº 352/2020 e alterações; guias de arquitetura).</li>
+<li>Objetivos: reduzir retrabalho entre tribunais, garantir interoperabilidade (Base Nacional de Dados Processuais), acelerar a digitalização de serviços judiciais.</li>
+<li>Padrões técnicos relevantes: <strong>API RESTful em JSON</strong>, autenticação <strong>SSO/OAuth2</strong>, versionamento com <strong>Git</strong>, containers (<strong>Docker/Kubernetes</strong>), CI/CD.</li>
+</ul>
+<h2 id="2-arquitetura-de-microsservicos">2. Arquitetura de microsserviços</h2>
+<ul>
+<li><strong>Microsserviços</strong>: estilo arquitetural em que o sistema é um conjunto de <strong>serviços pequenos, independentes e acoplados por contrato</strong>, cada um com <strong>própria base de dados</strong> (database per service), deploy e escalabilidade independentes.</li>
+<li><strong>Monolito × microsserviços</strong>: monolito = um único deploy, simples no início, difícil de escalar seletivamente; microsserviços = escalabilidade granular e times autônomos, mas complexidade de rede, consistência distribuída e operação.</li>
+<li><strong>Conceitos-chave</strong>:</li>
+<li><strong>Comunicação síncrona</strong> (HTTP/REST, gRPC) × <strong>assíncrona</strong> (mensageria — RabbitMQ, Kafka).</li>
+<li><strong>Service Discovery</strong> (descoberta de serviços): serviços registam e localizam uns aos outros dinamicamente (<strong>Spring Eureka</strong> / Netflix Eureka).</li>
+<li><strong>API Gateway</strong> (ponto de entrada único: roteamento, autenticação, rate limit) — <strong>Zuul</strong> (Netflix) / Spring Cloud Gateway.</li>
+<li><strong>Configuração centralizada</strong> (Spring Cloud Config), <strong>circuit breaker</strong> (Resilience4j, Hystrix), <strong>observabilidade</strong> (logs, métricas, tracing — ELK, Prometheus, Jaeger).</li>
+<li><strong>Padrão BFF</strong> (Backend For Frontend), <strong>saga</strong> (consistência eventual entre serviços), <strong>CQRS/Event Sourcing</strong> (casos avançados).</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-java-e-o-ecossistema-spring">MÓDULO II — JAVA E O ECOSSISTEMA SPRING</h1>
+<h2 id="1-java-pontos-de-prova">1. Java (pontos de prova)</h2>
+<ul>
+<li>Linguagem <strong>orientada a objetos, compilada (bytecode JVM) e multiplataforma</strong> ("write once, run anywhere").</li>
+<li><strong>JDK (Development Kit) × JRE (Runtime) × JVM (Virtual Machine)</strong>.</li>
+<li><strong>POO</strong>: encapsulamento, herança, polimorfismo, abstração; <strong>interfaces × classes abstratas</strong>; <strong>exceptions</strong> (checked × unchecked — <code>RuntimeException</code>); <strong>generics</strong>, <strong>collections</strong> (<code>List</code>, <code>Set</code>, <code>Map</code>), <strong>streams</strong> (Java 8+), <strong>lambda</strong>.</li>
+<li><strong>Gerenciamento de memória</strong>: garbage collector (GC); sem ponteiros explícitos (diferente de C/C++).</li>
+</ul>
+<h2 id="2-spring-boot">2. Spring Boot</h2>
+<ul>
+<li>Framework que <strong>acelera</strong> o desenvolvimento Spring com <strong>autoconfiguração</strong>, servidor embarcado (Tomcat), convenções sobre configuração, <code>application.properties</code>/<code>yml</code>, starters (dependências).</li>
+<li><strong>Anotações essenciais</strong>: <code>@SpringBootApplication</code>, <code>@RestController</code>, <code>@Service</code>, <code>@Repository</code>, <code>@Component</code>, <code>@Autowired</code>, <code>@RequestMapping</code>/<code>@GetMapping</code> etc., <code>@Entity</code>, <code>@Configuration</code>, <code>@Bean</code>.</li>
+<li><strong>Injeção de dependência (IoC)</strong>: o <strong>container Spring</strong> instancia e injeta dependências (não fazer <code>new</code> de serviços).</li>
+</ul>
+<h2 id="3-spring-cloud">3. Spring Cloud</h2>
+<ul>
+<li>Conjunto para <strong>sistemas distribuídos</strong>: <strong>Spring Cloud Netflix Eureka</strong> (service discovery — servidor de registro + clientes <code>@EnableEurekaClient</code>), <strong>Zuul/Spring Cloud Gateway</strong> (API Gateway), <strong>Spring Cloud Config</strong> (configuração central), <strong>OpenFeign</strong> (clientes HTTP declarativos), <strong>Hystrix/Resilience4j</strong> (circuit breaker), <strong>Spring Cloud Stream</strong> (mensageria).</li>
+</ul>
+<h2 id="4-mapstruct-swagger">4. MapStruct, Swagger</h2>
+<ul>
+<li><strong>MapStruct</strong>: biblioteca de <strong>mapeamento objeto-objeto</strong> (DTO ↔ entidade) por <strong>geração de código em tempo de compilação</strong> (rápido, sem reflexão — diferente do ModelMapper/BeanUtils em tempo de execução).</li>
+<li><strong>Swagger (OpenAPI)</strong>: especificação e ferramentas para <strong>documentar e testar APIs REST</strong> — <code>springdoc-openapi</code>/<code>springfox</code> gera a UI interativa; o contrato OpenAPI é a <strong>fonte do contrato da API</strong> (padrão em microsserviços).</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-api-restful-e-json">MÓDULO III — API RESTFUL E JSON</h1>
+<h2 id="1-rest">1. REST</h2>
+<ul>
+<li><strong>REST (Representational State Transfer)</strong>: estilo arquitetural para APIs sobre HTTP com <strong>recursos</strong> identificados por <strong>URIs</strong>, operações pelos <strong>métodos HTTP</strong> e comunicação <strong>stateless</strong> (sem estado de sessão no servidor).</li>
+<li><strong>Métodos HTTP</strong>: <code>GET</code> (ler — idempotente), <code>POST</code> (criar), <code>PUT</code> (atualizar por substituição — idempotente), <code>PATCH</code> (atualização parcial), <code>DELETE</code> (remover — idempotente).</li>
+<li><strong>Códigos de status</strong>: <code>200 OK</code>, <code>201 Created</code>, <code>204 No Content</code>, <code>400 Bad Request</code>, <code>401 Unauthorized</code> (não autenticado), <code>403 Forbidden</code> (sem autorização), <code>404 Not Found</code>, <code>409 Conflict</code>, <code>500 Internal Server Error</code>.</li>
+<li><strong>Boas práticas</strong>: versionamento da API (<code>/v1/...</code>), paginação, HATEOAS (opcional), autenticação OAuth2/JWT, tratamento de erros consistente.</li>
+<li><strong>SOAP × REST</strong>: SOAP = protocolo, XML, WSDL, mais rígido; REST = estilo, JSON (comum), mais leve — pegadinha clássica.</li>
+</ul>
+<h2 id="2-json">2. JSON</h2>
+<ul>
+<li><strong>JSON (JavaScript Object Notation)</strong>: formato leve de troca de dados — <strong>chave/valor</strong> (<code>{}</code>), <strong>arrays</strong> (<code>[]</code>), tipos: string, number, boolean, null, object, array.</li>
+<li>Independente de linguagem; padrão de facto em APIs REST.</li>
+<li><strong>JSON × XML</strong>: JSON é mais leve e nativo em JavaScript; XML é mais verboso, com esquemas (XSD) e namespaces.</li>
+<li>No Java: serialização/desserialização com <strong>Jackson</strong> (padrão do Spring Boot) ou Gson.</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-persistencia-jpa-hibernate-flyway">MÓDULO IV — PERSISTÊNCIA: JPA, HIBERNATE, FLYWAY</h1>
+<h2 id="1-jpa-e-hibernate">1. JPA e Hibernate</h2>
+<ul>
+<li><strong>JPA (Java Persistence API)</strong>: <strong>especificação</strong> (padrão Jakarta/Java) de <strong>ORM</strong> (Object-Relational Mapping) — mapeia entidades Java para tabelas. <strong>Hibernate</strong> é a <strong>implementação</strong> mais usada (ou EclipseLink).</li>
+<li><strong>Anotações JPA</strong>: <code>@Entity</code>, <code>@Table</code>, <code>@Id</code>, <code>@GeneratedValue</code>, <code>@Column</code>, <code>@OneToMany</code>, <code>@ManyToOne</code>, <code>@ManyToMany</code>, <code>@JoinColumn</code>, <code>@Embedded</code>.</li>
+<li><strong>EntityManager</strong> e <strong>JPQL</strong> (linguagem de consulta orientada a objetos — <code>SELECT e FROM Entidade e WHERE ...</code>).</li>
+<li><strong>Estados da entidade</strong>: transient, managed, detached, removed.</li>
+<li><strong>Lazy × eager loading</strong> (N+1 problem — pegadinha clássica de performance).</li>
+<li>Versão citada no edital: <strong>JPA 2.0</strong> e <strong>Hibernate 4.3+</strong> (conceitos de metamodelo, criteria API, cache de segundo nível).</li>
+</ul>
+<h2 id="2-hibernate-envers">2. Hibernate Envers</h2>
+<ul>
+<li><strong>Envers</strong>: módulo do Hibernate para <strong>auditoria e versionamento de entidades</strong> — mantém o <strong>histórico de alterações</strong> (tabelas <code>*_AUD</code>, revisões), permite consultas temporais ("como estava em D?"). Anotações: <code>@Audited</code>, <code>@NotAudited</code>.</li>
+</ul>
+<h2 id="3-flyway">3. Flyway</h2>
+<ul>
+<li><strong>Flyway</strong>: ferramenta de <strong>migrations de banco de dados versionadas</strong> (controle de versão do schema). Scripts <code>V1__create_table.sql</code>, <code>V2__add_column.sql</code> — aplicados em ordem, com histórico (<code>flyway_schema_history</code>). Reprodutibilidade entre ambientes (dev/test/prod).</li>
+<li>Alternativa: <strong>Liquibase</strong> (XML/YAML/SQL com changelogs).</li>
+</ul>
+<h2 id="4-postgresql-h2-oracle-19c-mysql-8-bancos-do-edital">4. PostgreSQL, H2, Oracle 19c, MySQL 8 (bancos do edital)</h2>
+<ul>
+<li><strong>PostgreSQL</strong>: SGBD relacional open source, robusto, ACID, JSON/JSONB, extensões (PostGIS). Versões do edital: <strong>15, 16, 17 e 18</strong>.</li>
+<li><strong>H2</strong>: banco <strong>em memória</strong> (ou arquivo), leve, usado em <strong>testes automatizados</strong> e protótipos (compatibilidade JDBC).</li>
+<li><strong>Oracle 19c</strong> e <strong>MySQL 8</strong>: outros SGBDs citados no edital (tópico 4).</li>
+</ul>
+<hr />
+<h1 id="modulo-v-autenticacao-sso-keycloak-e-oauth2">MÓDULO V — AUTENTICAÇÃO, SSO, KEYCLOAK E OAUTH2</h1>
+<h2 id="1-sso-e-keycloak">1. SSO e Keycloak</h2>
+<ul>
+<li><strong>SSO (Single Sign-On)</strong>: o usuário autentica <strong>uma vez</strong> e acessa <strong>vários sistemas</strong> sem novo login.</li>
+<li><strong>Keycloak</strong>: servidor de <strong>identidade e acesso</strong> open source (Red Hat) — SSO, usuários/papéis, <strong>OIDC/OAuth2</strong>, SAML, login social, MFA, federation LDAP/AD.</li>
+</ul>
+<h2 id="2-oauth-20-rfc-6749">2. OAuth 2.0 (RFC 6749)</h2>
+<ul>
+<li><strong>OAuth2</strong>: framework de <strong>autorização</strong> (não de autenticação!) para <strong>delegar acesso</strong> — o usuário concede a um aplicativo acesso limitado aos seus recursos <strong>sem compartilhar credenciais</strong>.</li>
+<li><strong>Papéis</strong>: <strong>Resource Owner</strong> (usuário), <strong>Client</strong> (app), <strong>Authorization Server</strong> (emite tokens), <strong>Resource Server</strong> (API protegida).</li>
+<li><strong>Fluxos (grant types)</strong>:</li>
+<li><strong>Authorization Code</strong> (o mais seguro para apps com backend) — com <strong>PKCE</strong> obrigatório para SPAs e apps nativos.</li>
+<li><strong>Client Credentials</strong> (comunicação entre serviços, sem usuário).</li>
+<li><strong>Implicit</strong> (legado, desaconselhado) e <strong>Password</strong> (desaconselhado — RFC 9700).</li>
+<li><strong>Tokens</strong>: <strong>Access Token</strong> (curta duração, acesso à API), <strong>Refresh Token</strong> (renova access token), <strong>ID Token</strong> (OIDC — identidade do usuário). <strong>JWT (JSON Web Token)</strong> = formato comum de token assinado (header.payload.signature).</li>
+</ul>
+<h2 id="3-boas-praticas-de-seguranca-rfc-9700">3. Boas práticas de segurança — RFC 9700</h2>
+<p><em>(Complementar — atualização de segurança do OAuth 2.0.)</em>
+- Usar <strong>PKCE</strong> em todos os fluxos de authorization code; evitar o grant <strong>password</strong> e o <strong>implicit</strong>.
+- <strong>Access tokens de curta duração</strong>; refresh tokens <strong>rotativos</strong> com detecção de reuso.
+- <strong>TLS obrigatório</strong>; restrição rigorosa de <strong>redirect URIs</strong>; validar <code>state</code> (CSRF) e <code>nonce</code> (replay).
+- Não expor tokens em URLs; limitar escopos (<strong>least privilege</strong>); monitorar e revogar tokens.
+- OIDC (OpenID Connect): camada de <strong>autenticação</strong> sobre o OAuth2 (login + identidade).</p>
+<hr />
+<h1 id="modulo-vi-mensageria-e-webhooks">MÓDULO VI — MENSAGERIA E WEBHOOKS</h1>
+<h2 id="1-message-broker-e-rabbitmq">1. Message Broker e RabbitMQ</h2>
+<ul>
+<li><strong>Message broker</strong>: intermediário assíncrono entre produtor e consumidor — <strong>desacopla</strong> serviços, absorve picos, garante entrega.</li>
+<li><strong>RabbitMQ</strong>: broker open source baseado no protocolo <strong>AMQP</strong> — <strong>exchanges</strong>, <strong>filas (queues)</strong>, <strong>bindings</strong>, <strong>produtores/consumidores</strong>, confirmações (ack), dead-letter queues.</li>
+<li><strong>Exchange types</strong>: direct, topic, fanout, headers.</li>
+<li><strong>Garantias</strong>: at-most-once, at-least-once, <strong>exactly-once</strong> (mais caro).</li>
+<li>Alternativas: <strong>Kafka</strong> (log distribuído, streaming, retenção por tempo), ActiveMQ, SQS.</li>
+</ul>
+<h2 id="2-evento-negocial-e-webhooks">2. Evento negocial e webhooks</h2>
+<ul>
+<li><strong>Evento negocial</strong>: notificação de que <strong>algo de negócio aconteceu</strong> (ex.: processo movimentado, intimação publicada) — publicado para outros sistemas reagirem (padrão <strong>event-driven architecture</strong>).</li>
+<li><strong>Webhook</strong>: <strong>callback HTTP</strong> — o provedor chama a <strong>URL do assinante</strong> quando o evento ocorre (push), em vez de o consumidor ficar consultando (polling). Exige: endpoint público, <strong>assinatura do payload</strong> (HMAC), reentrega idempotente, tratamento de falhas.</li>
+<li><strong>API reversa / integração inversa</strong>: padrão em que um sistema interno expõe uma <strong>API de callback</strong> para receber notificações de sistemas externos (comum na integração do PDPJ com tribunais/órgãos externos).</li>
+<li><strong>Idempotência</strong>: chave de idempotência em webhooks para evitar processamento duplicado.</li>
+</ul>
+<hr />
+<h1 id="modulo-vii-git-docker-kubernetes-rancher-e-cicd">MÓDULO VII — GIT, DOCKER, KUBERNETES, RANCHER E CI/CD</h1>
+<h2 id="1-git">1. Git</h2>
+<p>Ver apostila T7 (DevOps): controle de versão <strong>distribuído</strong>, branches, merge/rebase, pull requests, tags — usado em todos os projetos da PDPJ-Br.</p>
+<h2 id="2-docker">2. Docker</h2>
+<ul>
+<li><strong>Docker</strong>: plataforma de <strong>contêineres</strong> — empacota aplicação + dependências em imagem leve (compartilha o kernel do SO; mais leve que VM).</li>
+<li><strong>Conceitos</strong>: <strong>Dockerfile</strong> (instruções da imagem), <strong>imagem</strong> (template), <strong>contêiner</strong> (instância em execução), <strong>registry</strong> (Docker Hub), <strong>volumes</strong> (dados persistentes), <strong>redes</strong>.</li>
+<li><strong>Dockerfile</strong> comum: <code>FROM</code> (imagem base), <code>WORKDIR</code>, <code>COPY</code>, <code>RUN</code>, <code>EXPOSE</code>, <code>CMD</code>/<code>ENTRYPOINT</code>.</li>
+<li><strong>docker-compose</strong>: orquestra múltiplos contêineres em um host (dev local).</li>
+</ul>
+<h2 id="3-kubernetes-k8s-e-rancher">3. Kubernetes (K8s) e Rancher</h2>
+<ul>
+<li><strong>Kubernetes</strong>: <strong>orquestrador de contêineres</strong> (padrão de mercado) — escalabilidade automática, auto-recuperação, deploy sem downtime, service discovery e balanceamento nativos.</li>
+<li><strong>Conceitos</strong>: <strong>Pod</strong> (menor unidade — 1+ contêineres), <strong>Deployment</strong> (replicação/rollouts), <strong>Service</strong> (exposição estável — ClusterIP/NodePort/LoadBalancer), <strong>Ingress</strong> (roteamento HTTP), <strong>ConfigMap/Secret</strong> (configuração/credenciais), <strong>Namespace</strong> (isolamento), <strong>HPA</strong> (autoscaling), <strong>StatefulSet</strong>, <strong>DaemonSet</strong>, <strong>Helm</strong> (pacotes/charts).</li>
+<li><strong>Rancher</strong>: plataforma de <strong>gestão de clusters Kubernetes</strong> (multi-cluster, UI, RBAC, monitoramento, provisionamento).</li>
+</ul>
+<h2 id="4-cicd-na-pdpj-br">4. CI/CD na PDPJ-Br</h2>
+<ul>
+<li>Pipeline típico: commit Git → build (Maven) → testes → imagem Docker → push para registry → deploy no Kubernetes (Helm/manifests) → monitoramento.</li>
+<li><strong>Continuous Integration</strong> (integração automática e testes a cada commit) × <strong>Continuous Delivery</strong> (artefato pronto para deploy manual) × <strong>Continuous Deployment</strong> (deploy automático) — ver apostila T7.</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>OAuth2 é de AUTORIZAÇÃO</strong>; <strong>OIDC</strong> é que adiciona autenticação/identidade (login).</li>
+<li><strong>Grant password e implicit são desaconselhados</strong> (RFC 9700); usar <strong>authorization code + PKCE</strong>.</li>
+<li><strong>JPA é especificação; Hibernate é implementação</strong>.</li>
+<li><strong>MapStruct</strong> mapeia em <strong>tempo de compilação</strong> (sem reflexão).</li>
+<li><strong>Zuul/Eureka</strong> = gateway/service discovery do Netflix OSS (Spring Cloud).</li>
+<li><strong>Hibernate Envers</strong> = <strong>auditoria/versionamento</strong> de entidades.</li>
+<li><strong>Flyway</strong> = migrations versionadas do <strong>schema</strong> do banco.</li>
+<li><strong>H2</strong> = banco em memória, típico de <strong>testes</strong>.</li>
+<li><strong>Webhook</strong> = push (o provedor chama sua URL); <strong>polling</strong> = consulta periódica.</li>
+<li><strong>REST é um estilo; SOAP é um protocolo</strong>. JSON é o formato comum do REST.</li>
+<li><strong>Stateless</strong> é requisito REST — sem estado de sessão no servidor.</li>
+<li><strong>Pod</strong> é a menor unidade do Kubernetes (não o contêiner isolado).</li>
+<li><strong>401</strong> = não autenticado; <strong>403</strong> = autenticado sem permissão.</li>
+<li><strong>Microsserviços</strong>: cada serviço com <strong>própria base de dados</strong>.</li>
+<li><strong>JWT</strong> = header.payload.signature (token assinado).</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) O protocolo OAuth 2.0 (RFC 6749) tem finalidade primordial de autenticação de usuários, sendo o OpenID Connect um complemento opcional de autorização.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> É o inverso: <strong>OAuth2 = autorização</strong> (delegar acesso); <strong>OpenID Connect = autenticação/identidade</strong> sobre o OAuth2.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) Na arquitetura de microsserviços da PDPJ-Br, o componente responsável por registrar as instâncias dos serviços e permitir que se localizem dinamicamente é:
+a) Zuul.
+b) Spring Eureka (Service Discovery).
+c) MapStruct.
+d) Flyway.
+e) Hibernate Envers.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Eureka</strong> = service discovery (registro + localização). <strong>Zuul</strong> é o <strong>API Gateway</strong> (roteamento/entrada única); MapStruct mapeia objetos; Flyway versiona schema; Envers audita entidades.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) O Hibernate Envers é utilizado para versionar o código-fonte das entidades JPA no repositório Git.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O Envers faz <strong>auditoria/versionamento de dados</strong> (histórico de alterações das entidades no banco — tabelas <code>*_AUD</code>). Versionamento de código é o <strong>Git</strong>.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) No padrão REST, a operação de atualização parcial de um recurso é tipicamente realizada com o método HTTP:
+a) GET.
+b) POST.
+c) PUT.
+d) PATCH.
+e) DELETE.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> <strong>PATCH</strong> = atualização <strong>parcial</strong>; <strong>PUT</strong> = substituição completa (idempotente); GET lê; POST cria; DELETE remove.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O status HTTP 403 (Forbidden) indica que o cliente não se autenticou junto ao servidor.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>401 Unauthorized</strong> = não autenticado; <strong>403</strong> = autenticado, mas <strong>sem permissão</strong> (autorizado a estar logado, não a fazer isso).</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) A abordagem de persistência da PDPJ-Br que usa JPA com Hibernate para mapear entidades Java a tabelas de banco de dados exemplifica:
+a) programação funcional.
+b) ORM (Object-Relational Mapping).
+c) serialização de objetos em JSON.
+d) cache distribuído.
+e) virtualização de banco de dados.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> ORM converte objetos ↔ registros relacionais. <strong>JPA especifica</strong>; <strong>Hibernate implementa</strong>.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) A ferramenta Flyway tem como finalidade gerar imagens Docker a partir do código Java do projeto.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Flyway</strong> gerencia <strong>migrations versionadas do schema do banco de dados</strong>. Imagens Docker vêm do <strong>Dockerfile</strong>.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) O fluxo (grant type) do OAuth 2.0 recomendado para aplicações web com backend próprio, e que com PKCE torna-se o padrão também para SPAs e apps nativos, é:
+a) Resource Owner Password Credentials.
+b) Implicit.
+c) Client Credentials.
+d) Authorization Code.
+e) Device Code.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> <strong>Authorization Code</strong> (com <strong>PKCE</strong>). Password e implicit são <strong>desaconselhados</strong> (RFC 9700); Client Credentials é para comunicação entre serviços (sem usuário).</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) No Kubernetes, a menor unidade de deploy que pode conter um ou mais contêineres é o Deployment.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A menor unidade é o <strong>Pod</strong>. O <strong>Deployment</strong> gerencia a <strong>replicação e os rollouts</strong> dos Pods.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O padrão de comunicação em que um sistema notifica outro via HTTP callback, quando um evento negocial ocorre, chama-se:
+a) polling.
+b) webhook.
+c) batch processing.
+d) shared database.
+e) ETL.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Webhook</strong> = push via callback HTTP. <strong>Polling</strong> = consulta periódica (o inverso).</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A biblioteca MapStruct realiza o mapeamento entre objetos (DTOs e entidades) por reflexão em tempo de execução, semelhantemente ao BeanUtils.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O MapStruct <strong>gera código em tempo de compilação</strong> (anotações → implementações geradas) — mais rápido que as soluções de reflexão em runtime.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FCC-style) No Docker, o arquivo que contém as instruções para a construção de uma imagem é denominado:
+a) docker-compose.yml.
+b) Dockerfile.
+c) image.json.
+d) container.conf.
+e) registry.xml.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Dockerfile</strong> (FROM, WORKDIR, COPY, RUN, EXPOSE, CMD). O <strong>docker-compose.yml</strong> orquestra múltiplos contêineres.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) O Zuul, no ecossistema Spring Cloud, atua como API Gateway, concentrando o roteamento de requisições e funcionalidades transversais como autenticação e rate limiting.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Zuul (e o Spring Cloud Gateway) = <strong>API Gateway</strong>. Eureka = service discovery.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FGV-style) Sobre JSON, é correto afirmar:
+a) É um formato exclusivo do JavaScript, não podendo ser consumido por outras linguagens.
+b) Baseia-se em XML e requer parsing via XSD.
+c) É um formato leve de troca de dados baseado em pares chave/valor e arrays, amplamente usado em APIs REST.
+d) Não suporta tipos primitivos como boolean e null.
+e) É mais verboso que o XML e substitui o SOAP.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> JSON é <strong>independente de linguagem</strong>, leve (chave/valor, arrays), padrão de APIs REST. Suporta string, number, boolean, null, object e array. <strong>SOAP é protocolo</strong> (não é substituído por JSON — REST é o estilo).</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) A arquitetura de microsserviços da PDPJ-Br preconiza que todos os serviços compartilhem uma única base de dados, para garantir consistência transacional ACID entre os serviços.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Padrão de microsserviços: <strong>database per service</strong> (base própria por serviço). A consistência entre serviços é tratada por <strong>eventual consistency</strong> (sagas, mensageria), não por transações ACID globais.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique os papéis do OAuth 2.0 e cite duas boas práticas de segurança da RFC 9700.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> No OAuth 2.0 há quatro papéis: <strong>Resource Owner</strong> (usuário dono dos dados), <strong>Client</strong> (aplicação que solicita acesso), <strong>Authorization Server</strong> (emite os tokens após consentimento) e <strong>Resource Server</strong> (API que protege os recursos). Boas práticas da RFC 9700: usar <strong>Authorization Code com PKCE</strong> (evitar os grants password e implicit), manter <strong>access tokens de curta duração</strong> com <strong>refresh tokens rotativos</strong> e detecção de reuso, aplicar TLS, restrigir redirect URIs e validar <code>state</code>/<code>nonce</code>.</p></details>
+<p><strong>D2.</strong> Descreva o papel do Service Discovery (Eureka), do API Gateway (Zuul) e da mensageria (RabbitMQ) em uma arquitetura de microsserviços.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O <strong>Service Discovery</strong> (Eureka) mantém o registro das instâncias vivas dos serviços e permite a localização dinâmica, essencial com escalabilidade e recuperação automática. O <strong>API Gateway</strong> (Zuul) é o ponto único de entrada, fazendo roteamento, autenticação, rate limiting e agregação de respostas. O <strong>RabbitMQ</strong> (message broker) viabiliza comunicação <strong>assíncrona</strong> entre serviços (ex.: publicação de eventos negociais), absorvendo picos e desacoplando produtor e consumidor, com garantias de entrega e filas de reprocessamento.</p></details>
+<hr />
+<p><em>Conteúdo técnico complementar (o material-base local não cobre a PDPJ-Br). Referências: documentação CNJ/PDPJ-Br, Spring Cloud Netflix, RFC 6749 e RFC 9700 (OAuth 2.0 Security BCP), documentação Hibernate/JPA, Docker e Kubernetes.</em></p>
+<script>
+(function () {
+  const key = 'apostila-t8-pdpj-br-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

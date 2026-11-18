@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T3 — Programação (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T3 — Programação</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-conceitos-basicos">1. Conceitos básicos</a></li>
+<li class="toc-h2"><a href="#2-tratamento-de-excecoes">2. Tratamento de exceções</a></li>
+<li class="toc-h2"><a href="#1-conceitos">1. Conceitos</a></li>
+<li class="toc-h2"><a href="#2-java-python-javascript-typescript-comparativo">2. Java × Python × JavaScript × TypeScript (comparativo)</a></li>
+<li class="toc-h2"><a href="#1-java-jdbcjpa">1. Java (JDBC/JPA)</a></li>
+<li class="toc-h2"><a href="#2-python-e-javascript">2. Python e JavaScript</a></li>
+<li class="toc-h2"><a href="#3-sql">3. SQL</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-3-programacao">APOSTILA — TÓPICO 3: PROGRAMAÇÃO</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Programação: linguagens de programação Python, Java, JavaScript e TypeScript. Fundamentos de programação: tipos de dados, variáveis, operadores, estruturas de controle, laços de repetição, funções, manipulação de strings, arranjos (arrays), estruturas de dados. Programação orientada a objetos (POO): classes, objetos, atributos, métodos, herança, polimorfismo, encapsulamento e abstração. Tratamento de exceções. Acesso a bancos de dados. Versionamento de código com Git.</p>
+<p><strong>Base de conhecimento:</strong> <code>04.Desenvolvimento de Software</code> (Aula03 — POO/Java) + <strong>complemento técnico</strong> para Python, JavaScript e TypeScript (ausentes na base de 2020). Git e Maven/CI: ver apostilas T7/T8.</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-fundamentos-de-programacao">MÓDULO I — FUNDAMENTOS DE PROGRAMAÇÃO</h1>
+<h2 id="1-conceitos-basicos">1. Conceitos básicos</h2>
+<ul>
+<li><strong>Algoritmo</strong>: sequência finita e ordenada de passos para resolver um problema. Linguagem de programação = formalismo para expressá-lo ao computador.</li>
+<li><strong>Tipos de dados</strong>: <strong>primitivos</strong> (inteiros, reais/floating-point, caracteres, booleanos) × <strong>compostos</strong> (strings, arrays/listas, objetos, dicionários). <strong>Tipagem estática</strong> (Java, TypeScript) × <strong>dinâmica</strong> (Python, JavaScript): na estática, o tipo é declarado/verificado em <strong>compilação</strong>; na dinâmica, em <strong>tempo de execução</strong>.</li>
+<li><strong>Variáveis e constantes</strong>: declaração, escopo (global/local/bloco), mutabilidade (<code>let</code>/<code>var</code> vs <code>const</code>, Python <code>PEP 8</code>).</li>
+<li><strong>Operadores</strong>: aritméticos (<code>+ - * / % **</code>), relacionais (<code>== != &gt; &lt;</code>), lógicos (<code>&amp;&amp; || !</code> / <code>and or not</code>), atribuição, incremento; <strong>precedência</strong> e <strong>curto-circuito</strong>. <strong><code>=</code> × <code>==</code> × <code>===</code></strong> (em JS, <code>===</code> compara <strong>valor e tipo</strong> — pegadinha clássica).</li>
+<li><strong>Estruturas de controle</strong>: <code>if/else</code>, <code>switch/case</code> (Java/JS) ou <code>match</code> (Python 3.10+), condicionais ternárias.</li>
+<li><strong>Laços de repetição</strong>: <code>for</code> (contador), <code>while</code>, <code>do-while</code>; <code>for-each</code>/<code>for...of</code>; controle com <code>break</code>/<code>continue</code>. Evitar laços infinitos; complexidade de laços aninhados (O(n²)).</li>
+<li><strong>Funções/métodos</strong>: parâmetros, retorno, <strong>sobrecarga</strong> (Java), valores padrão (Python/JS), <strong>arrow functions</strong> (JS/TS), recursão (caso base + passo recursivo), passagem por valor × por referência (em Java: primitivos por valor, objetos por referência).</li>
+<li><strong>Strings</strong>: imutáveis em Java e Python; métodos comuns (concatenação, busca, substring, split/format, maiúsculas/minúsculas). <strong>Interpolação</strong> (f-strings Python, template literals JS/TS).</li>
+<li><strong>Arrays/listas/estruturas</strong>: array (tamanho fixo em Java), lista dinâmica (<code>ArrayList</code>, <code>list</code> Python, <code>[]</code> JS), fila/pilha, dicionário/mapa (<code>Map</code>, <code>dict</code>, <code>Object</code>/<code>Map</code>), conjunto (<code>Set</code>). <strong>Complexidade</strong> básica: acesso por índice O(1), busca em lista O(n), busca em mapa O(1) amortizado.</li>
+</ul>
+<h2 id="2-tratamento-de-excecoes">2. Tratamento de exceções</h2>
+<ul>
+<li><strong>Erro</strong> (compilação) × <strong>exceção</strong> (tempo de execução) × <strong>falha</strong>.</li>
+<li><strong>Java</strong>: <code>try/catch/finally</code>, <code>throw</code> (lança) × <code>throws</code> (declara); hierarquia: <code>Throwable → Error × Exception → RuntimeException</code> (<strong>checked</strong> × <strong>unchecked</strong>). <code>try-with-resources</code> (AutoCloseable).</li>
+<li><strong>Python</strong>: <code>try/except/else/finally</code>, <code>raise</code>, exceções built-ins (<code>ValueError</code>, <code>TypeError</code>, <code>KeyError</code>, <code>ZeroDivisionError</code>), <code>Exception</code> como base comum.</li>
+<li><strong>JavaScript/TypeScript</strong>: <code>try/catch/finally</code> (só catch de exceções em runtime; <strong>não</strong> distingue checked/unchecked); <code>throw</code> aceita qualquer valor; <code>Error</code> com <code>message</code>/<code>stack</code>. Promises: <code>.catch</code> e <code>async/await</code> com <code>try/catch</code>.</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-programacao-orientada-a-objetos-poo">MÓDULO II — PROGRAMAÇÃO ORIENTADA A OBJETOS (POO)</h1>
+<h2 id="1-conceitos">1. Conceitos</h2>
+<ul>
+<li><strong>POO</strong>: paradigma que organiza o código em <strong>objetos</strong> (instâncias de <strong>classes</strong>) que combinam <strong>estado</strong> (atributos) e <strong>comportamento</strong> (métodos).</li>
+<li><strong>Os 4 pilares</strong>:</li>
+<li><strong>Encapsulamento</strong>: ocultar detalhes internos, expor interface controlada (<code>private/protected/public</code>; getters/setters).</li>
+<li><strong>Herança</strong>: subclasse herda atributos/métodos de superclasse (<code>extends</code>); promove reuso (cuidado com acoplamento).</li>
+<li><strong>Polimorfismo</strong>: mesma chamada, comportamentos diferentes — <strong>sobrecarga</strong> (compile-time) × <strong>sobrescrita/override</strong> (runtime; dinâmica).</li>
+<li><strong>Abstração</strong>: modelar o essencial, esconder a complexidade (classes <strong>abstratas</strong> × <strong>interfaces</strong>).</li>
+<li><strong>Classe abstrata</strong> (pode ter estado e métodos concretos; não é instanciável) × <strong>interface</strong> (contrato; em Java 8+, com métodos <code>default</code>/<code>static</code>; múltiplas implementações).</li>
+<li><strong>Outros conceitos</strong>: <strong>composição/agregação</strong> ("tem-um" × "é-um"), <strong>construtores</strong>, <code>this</code>, <code>static</code>, <code>final</code>, <strong>imutabilidade</strong>, <strong>acoplamento × coesão</strong>, SOLID (complementar).</li>
+</ul>
+<h2 id="2-java-python-javascript-typescript-comparativo">2. Java × Python × JavaScript × TypeScript (comparativo)</h2>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Java</th>
+<th>Python</th>
+<th>JavaScript</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipagem</td>
+<td>Estática</td>
+<td>Dinâmica</td>
+<td>Dinâmica</td>
+<td><strong>Estática (superset do JS)</strong></td>
+</tr>
+<tr>
+<td>Compilação</td>
+<td>Compilado (bytecode JVM)</td>
+<td>Interpretado (CPython)</td>
+<td>Interpretado (engine do browser/Node)</td>
+<td>Compila p/ JS</td>
+</tr>
+<tr>
+<td>POO</td>
+<td>Classes (<code>class</code>)</td>
+<td>Classes + múltipla herança</td>
+<td><strong>Protótipos</strong> + classes (ES6)</td>
+<td>Classes (como Java moderno)</td>
+</tr>
+<tr>
+<td>Sintaxe</td>
+<td><code>int x = 1;</code></td>
+<td><code>x = 1</code></td>
+<td><code>let x = 1;</code></td>
+<td><code>let x: number = 1;</code></td>
+</tr>
+<tr>
+<td>Execução</td>
+<td>JVM (multiplataforma)</td>
+<td>Interpretador</td>
+<td>Browser / Node.js</td>
+<td>Node/browser (via JS)</td>
+</tr>
+<tr>
+<td>Exceções</td>
+<td>Checked + unchecked</td>
+<td><code>try/except</code></td>
+<td><code>try/catch</code> (só runtime)</td>
+<td><code>try/catch</code> + tipagem</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Python</strong>: indentação define blocos; <code>None</code>, list comprehensions, <code>PEP 8</code>; baterias incluídas (stdlib); usado em web (Django/Flask), dados e scripts.</li>
+<li><strong>JavaScript</strong>: linguagem do navegador (ECMAScript); <strong>dinâmica</strong>, baseada em <strong>protótipos</strong>; assíncrono (event loop, callbacks, promises, <code>async/await</code>); <strong>JSON</strong> é subconjunto sintático; DOM.</li>
+<li><strong>TypeScript</strong>: <strong>JavaScript com tipos</strong> (Microsoft); tipos opcionais, interfaces, enums, generics; <strong>transpila</strong> para JS; erros de tipo detectados <strong>antes</strong> da execução; usado em grandes aplicações (Angular).</li>
+<li><strong>Java</strong>: POO estrita, JVM, forte em corporativo/Android; <strong>JDBC</strong> para banco; <strong>Maven</strong> para build (ver T7).</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-acesso-a-bancos-de-dados">MÓDULO III — ACESSO A BANCOS DE DADOS</h1>
+<h2 id="1-java-jdbcjpa">1. Java (JDBC/JPA)</h2>
+<ul>
+<li><strong>JDBC</strong> (Java Database Connectivity): API padrão — <code>DriverManager</code>, <code>Connection</code>, <code>Statement</code>/<code>PreparedStatement</code>, <code>ResultSet</code>, <code>commit/rollback</code>.</li>
+<li><strong>PreparedStatement</strong> evita <strong>SQL injection</strong> (parametrização); <code>Statement</code> concatena strings (perigoso).</li>
+<li><strong>JPA/Hibernate</strong> (ORM): mapeia objetos ↔ tabelas; ver apostila T4/T8.</li>
+</ul>
+<h2 id="2-python-e-javascript">2. Python e JavaScript</h2>
+<ul>
+<li><strong>Python</strong>: <strong>DB-API 2.0</strong> (<code>psycopg2</code>/<code>psycopg</code> p/ PostgreSQL, <code>sqlite3</code>, <code>SQLAlchemy</code> como ORM).</li>
+<li><strong>JavaScript/TypeScript</strong>: drivers (<code>pg</code>, <code>mysql2</code>), ORMs (<strong>Sequelize</strong>, <strong>TypeORM</strong>, <strong>Prisma</strong>); em Node.js, conexões assíncronas com pool.</li>
+<li><strong>Boas práticas</strong>: parametrizar consultas (evitar injection), usar <strong>pool de conexões</strong>, transações explícitas, <strong>migrations</strong> para schema (Flyway — T8).</li>
+</ul>
+<h2 id="3-sql">3. SQL</h2>
+<p>Ver apostila T4 (DDL/DML/DCL, JOIN, transações). O acesso programático sempre envolve <strong>abrir conexão → executar SQL → tratar resultados → fechar</strong> (ou usar ORM/pool).</p>
+<hr />
+<h1 id="modulo-iv-versionamento-de-codigo-com-git">MÓDULO IV — VERSIONAMENTO DE CÓDIGO COM GIT</h1>
+<ul>
+<li><strong>Git</strong>: controle de versão <strong>distribuído</strong> (repositório completo em cada dev). Conceitos: <strong>working tree → staging (add) → commit → push</strong>; <strong>branch</strong> (ponteiro leve), <strong>merge</strong> (preserva história) × <strong>rebase</strong> (reescreve história), <strong>revert</strong> (novo commit que desfaz) × <strong>reset</strong> (move o ponteiro).</li>
+<li>Comandos essenciais: <code>git init/clone</code>, <code>status</code>, <code>add</code>, <code>commit -m</code>, <code>push/pull/fetch</code>, <code>branch</code>, <code>checkout/switch</code>, <code>merge</code>, <code>rebase</code>, <code>stash</code>, <code>log</code>, <code>tag</code>.</li>
+<li><strong>Fluxos</strong>: <strong>Git Flow</strong> (main/develop/feature/release/hotfix) × <strong>GitHub Flow/trunk-based</strong> (main + PRs curtos). <strong>PRs</strong> para revisão; <strong>semver</strong> (major.minor.patch); <code>.gitignore</code>.</li>
+<li><em>Detalhamento completo na apostila T7 (DevOps).</em></li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong><code>===</code> (JS)</strong> compara <strong>valor e tipo</strong>; <code>==</code> faz coerção de tipos; <code>=</code> é atribuição.</li>
+<li><strong>TypeScript</strong> é <strong>superset</strong> do JS com <strong>tipagem estática</strong>; transpila para JavaScript.</li>
+<li><strong>Java</strong> é tipado estaticamente e compilado (JVM); <strong>Python/JS</strong> são dinâmicos.</li>
+<li><strong>JS usa protótipos</strong>; as classes ES6 são açúcar sintático sobre protótipos.</li>
+<li><strong>Java</strong>: exceções <strong>checked</strong> (obrigam <code>throws</code>/catch) × <strong>unchecked</strong> (<code>RuntimeException</code>). JS/Python <strong>não</strong> têm checked.</li>
+<li><strong>PreparedStatement</strong> previne <strong>SQL injection</strong>; concatenação de strings, não.</li>
+<li><strong>Encapsulamento</strong> = ocultar; <strong>herança</strong> = reuso ("é-um"); <strong>polimorfismo</strong> = mesmo método, comportamentos diferentes.</li>
+<li><strong>Sobrecarga</strong> = mesma assinatura-em-nome, parâmetros diferentes (compile-time); <strong>sobrescrita</strong> = mesma assinatura em subclasses (runtime).</li>
+<li><strong>Classe abstrata</strong> não é instanciável; <strong>interface</strong> define contrato (múltiplas em Java).</li>
+<li><strong>Python</strong> usa <strong>indentação</strong> como bloco (não chaves).</li>
+<li><strong><code>throw</code> (lança)</strong> × <strong><code>throws</code> (declara)</strong> em Java.</li>
+<li><strong>Git merge</strong> preserva história; <strong>rebase</strong> reescreve; <strong>revert</strong> cria commit novo que desfaz.</li>
+<li><strong><code>fetch</code></strong> só baixa; <strong><code>pull</code></strong> = fetch + merge.</li>
+<li><strong>JSON</strong> é independente de linguagem (embora a sintaxe venha do JS).</li>
+<li>Java: <strong>primitivos por valor, objetos por referência</strong>.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) A linguagem TypeScript é uma linguagem distinta do JavaScript, executada diretamente pelo navegador sem transpilação.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> TypeScript é um <strong>superset</strong> do JavaScript que <strong>transpila</strong> para JS; o navegador executa o JavaScript gerado.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) Em JavaScript, a expressão <code>0 == "0"</code> retorna true, enquanto <code>0 === "0"</code> retorna false porque:
+a) <code>===</code> compara apenas o tipo dos operandos.
+b) <code>==</code> compara valor e tipo; <code>===</code> apenas valor.
+c) <code>===</code> compara valor e tipo; <code>==</code> compara apenas o valor, com coerção de tipos.
+d) ambos comparam igualmente, a diferença é apenas de performance.
+e) <code>===</code> não é suportado em JavaScript.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <code>==</code> faz <strong>coerção</strong> (compara o valor após conversão); <code>===</code> exige <strong>valor e tipo</strong> iguais (comparação estrita).</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) Em Java, uma exceção do tipo RuntimeException exige que o método a declare na cláusula throws ou a capture em bloco try-catch.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <code>RuntimeException</code> é <strong>unchecked</strong> (não verificada) — <strong>não</strong> obriga <code>throws</code>/catch. As <strong>checked</strong> (ex.: <code>IOException</code>) é que obrigam.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) O pilar da POO que consiste em ocultar os detalhes internos de um objeto, expondo apenas uma interface controlada de acesso, é:
+a) herança.
+b) polimorfismo.
+c) encapsulamento.
+d) abstração.
+e) sobrecarga.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Encapsulamento</strong> (modifiers private/protected/public, getters/setters).</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) No Python, os blocos de código são delimitados por chaves { }, semelhantemente ao Java.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> No Python, os blocos são definidos por <strong>indentação</strong> (espaços/tabulações), não por chaves.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) Em acesso a banco de dados via JDBC, a classe que permite executar consultas SQL parametrizadas, prevenindo SQL injection, é:
+a) Statement.
+b) PreparedStatement.
+c) DriverManager.
+d) ResultSet.
+e) Connection.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>PreparedStatement</strong> parametriza (<code>?</code>) e previne <strong>SQL injection</strong>; <code>Statement</code> concatena strings.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) O polimorfismo de sobrecarga (overloading) ocorre em tempo de execução, quando subclasses fornecem implementações diferentes de um mesmo método.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Sobrecarga</strong> = compile-time (mesmo nome, parâmetros diferentes). A <strong>sobrescrita (override)</strong> em subclasses é que ocorre em <strong>runtime</strong> (polimorfismo dinâmico).</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) Em TypeScript, a principal vantagem em relação ao JavaScript puro é:
+a) execução nativa sem compilação.
+b) verificação de tipos em tempo de compilação, reduzindo erros em tempo de execução.
+c) ausência de suporte a orientação a objetos.
+d) substituição completa do JavaScript no navegador.
+e) menor tamanho dos artefatos finais.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Tipagem estática</strong> detectada antes da execução (transpila para JS).</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) Em Git, o comando <code>git rebase</code> reaplica commits sobre outra base, preservando integralmente o histórico original do branch.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <code>rebase</code> <strong>reescreve o histórico</strong> (cria novos commits). Quem preserva é o <code>merge</code>. Rebase é perigoso em branches compartilhados.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) A estrutura de dados que armazena pares chave-valor, com acesso médio O(1), é:
+a) array.
+b) lista encadeada.
+c) pilha.
+d) dicionário (mapa/tabela hash).
+e) fila.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> <strong>Dicionário/mapa (hash)</strong> = chave-valor, O(1) médio. Array = acesso O(1) por índice, mas busca O(n); lista encadeada = O(n).</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) Em Python, a palavra-chave <code>None</code> representa um objeto vazio equivalente a zero ou à string vazia.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <code>None</code> é o <strong>absence de valor</strong> (singleton <code>NoneType</code>) — diferente de <code>0</code>, <code>""</code> ou <code>False</code> (embora todos sejam falsy em contexto booleano).</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre tratamento de exceções, é correto afirmar:
+a) Java e Python possuem exceções verificadas (checked) que obrigam o uso de throws.
+b) Em JavaScript, o bloco catch trata apenas exceções de tempo de execução, sem distinção checked/unchecked.
+c) Em Java, <code>throw</code> declara que um método pode lançar exceção.
+d) Em Python, o bloco <code>finally</code> só executa se ocorrer exceção.
+e) Exceções devem ser usadas para controle normal de fluxo do programa.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> JS só trata exceções de runtime. Em Java, <strong><code>throws</code></strong> declara; <strong><code>throw</code></strong> lança. <code>finally</code> <strong>sempre</strong> executa (Python/Java). Exceções não são para fluxo normal.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) A composição, em POO, representa uma relação do tipo "é-um", típica da herança entre classes.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Composição/agregação</strong> = "<strong>tem-um</strong>" (objeto contém outro). <strong>Herança</strong> = "<strong>é-um</strong>".</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) Em JavaScript moderno, a construção <code>async/await</code> é usada para:
+a) declarar variáveis imutáveis.
+b) simplificar o consumo de Promises, escrevendo código assíncrono com sintaxe síncrona.
+c) criar classes abstratas.
+d) tipar variáveis estaticamente.
+e) compilar TypeScript.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <code>async/await</code> é açúcar sintático sobre <strong>Promises</strong> para código assíncrono legível.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) No Git, o comando <code>git fetch</code> atualiza as referências remotas no repositório local e já integra automaticamente as mudanças ao branch de trabalho.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <code>fetch</code> <strong>só baixa</strong> (atualiza referências remotas); <strong><code>pull</code></strong> = fetch + <strong>merge</strong> (integra).</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique os quatro pilares da POO e diferencie sobrecarga de sobrescrita de métodos.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> Os pilares são: <strong>encapsulamento</strong> (ocultar detalhes e expor interface controlada), <strong>herança</strong> (subclasse reutiliza atributos/métodos de superclasse — relação "é-um"), <strong>polimorfismo</strong> (mesma chamada com comportamentos distintos) e <strong>abstração</strong> (modelar o essencial via classes abstratas/interfaces). <strong>Sobrecarga</strong> (overloading) ocorre em <strong>tempo de compilação</strong>: mesmo nome, diferentes listas de parâmetros no mesmo escopo. <strong>Sobrescrita</strong> (overriding) ocorre em <strong>tempo de execução</strong>: subclasses redefinem um método herdado com a mesma assinatura, e a versão executada depende do objeto concreto (polimorfismo dinâmico).</p></details>
+<p><strong>D2.</strong> Compare Java, Python, JavaScript e TypeScript quanto a tipagem, compilação e modelo de POO, e cite uma medida de segurança no acesso a banco de dados.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> <strong>Java</strong> é estaticamente tipado, compilado para bytecode da JVM, com POO por classes e exceções checked/unchecked. <strong>Python</strong> é dinamicamente tipado e interpretado, com blocos por indentação e POO por classes (herança múltipla). <strong>JavaScript</strong> é dinâmico, interpretado (browser/Node), baseado em <strong>protótipos</strong> (classes ES6 como sintaxe), com assincronia via event loop/promises. <strong>TypeScript</strong> é JavaScript com <strong>tipagem estática</strong> (superset), compilado (transpilado) para JS, muito usado em aplicações grandes. No acesso a banco, deve-se usar consultas <strong>parametrizadas</strong> (ex.: <code>PreparedStatement</code> no JDBC) para prevenir <strong>SQL injection</strong>, além de pool de conexões e transações explícitas.</p></details>
+<hr />
+<p><em>Base: <code>04.Desenvolvimento de Software</code> (Aula03 — POO/Java; Aula05 — JDBC/JPA). Complemento: Python, JavaScript e TypeScript não têm aula dedicada no material local de 2020 — conteúdo técnico complementar. Git: ver apostila T7 (DevOps).</em></p>
+<script>
+(function () {
+  const key = 'apostila-t3-programacao-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

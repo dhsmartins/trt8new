@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T12 — Redes de Computadores (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T12 — Redes de Computadores</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-redes-por-alcance">1. Redes por alcance</a></li>
+<li class="toc-h2"><a href="#2-meios-de-transmissao">2. Meios de transmissão</a></li>
+<li class="toc-h2"><a href="#3-comutacao">3. Comutação</a></li>
+<li class="toc-h2"><a href="#1-dispositivos">1. Dispositivos</a></li>
+<li class="toc-h2"><a href="#2-osi-7-tcpip-4">2. OSI (7) × TCP/IP (4)</a></li>
+<li class="toc-h2"><a href="#3-ethernet-ieee-8023">3. Ethernet (IEEE 802.3)</a></li>
+<li class="toc-h2"><a href="#4-stprstpmstp">4. STP/RSTP/MSTP</a></li>
+<li class="toc-h2"><a href="#1-ieee-8021q-8021p-8021x">1. IEEE 802.1Q / 802.1P / 802.1X</a></li>
+<li class="toc-h2"><a href="#2-sem-fio-ieee-80211">2. Sem fio (IEEE 802.11)</a></li>
+<li class="toc-h2"><a href="#1-ipv4">1. IPv4</a></li>
+<li class="toc-h2"><a href="#2-ipv6">2. IPv6</a></li>
+<li class="toc-h2"><a href="#3-arp-icmp-igmp">3. ARP, ICMP, IGMP</a></li>
+<li class="toc-h2"><a href="#4-tcp-udp">4. TCP × UDP</a></li>
+<li class="toc-h2"><a href="#5-protocolos-de-aplicacao">5. Protocolos de aplicação</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-12-redes-de-computadores">APOSTILA — TÓPICO 12: REDES DE COMPUTADORES</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Tipos e meios de transmissão; comutação por circuitos, por pacotes e por células; redes PAN, LAN, MAN, WAN, WPAN, WLAN, WMAN e WWAN; protocolos e elementos de interconexão; modelo OSI; TCP/IP; IPv4 e IPv6 (segmentação, endereçamento, DNS); TCP, UDP, IPSec, ARP, SSH, SMTP, HTTP, FTP, LDAP, DNS, DHCP, POP e IMAP; cabeamento estruturado ABNT NBR 14565:2019; fibras ópticas mono e multimodo; IEEE 802.1Q, 802.1X, 802.3, Spanning Tree e RSTP; wireless 802.11ac, 802.11ax e 802.11be.</p>
+<p><strong>Base de conhecimento:</strong> <code>02.Redes de Computadores</code> (Aulas 00–12) e <code>01.Sistemas Operacionais e Arquitetura</code> (Aula08 — LDAP/AD) — Curso Regular TI 2020.2 + <strong>complemento</strong> (802.11ax/be, NBR 14565:2019).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-classificacao-meios-e-comutacao">MÓDULO I — CLASSIFICAÇÃO, MEIOS E COMUTAÇÃO</h1>
+<h2 id="1-redes-por-alcance">1. Redes por alcance</h2>
+<table>
+<thead>
+<tr>
+<th>Rede</th>
+<th>Alcance</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PAN</strong></td>
+<td>~10 m</td>
+<td>Bluetooth</td>
+</tr>
+<tr>
+<td><strong>LAN</strong></td>
+<td>Prédio/campus</td>
+<td>Ethernet</td>
+</tr>
+<tr>
+<td><strong>MAN</strong></td>
+<td>Cidade</td>
+<td>Metro Ethernet</td>
+</tr>
+<tr>
+<td><strong>WAN</strong></td>
+<td>País/continente</td>
+<td>MPLS, Internet</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Variante sem fio: <strong>WPAN, WLAN, WMAN, WWAN</strong>. CAN/TAN também citadas. <em>Forouzan</em>: LAN/MAN = "não comutadas"; WAN = "comutada".</li>
+<li><strong>Topologias</strong>: barramento, estrela, anel (Token Ring), malha/mesh, árvore. Topologia <strong>física × lógica</strong>. Meio compartilhado: <strong>CSMA/CD</strong> (com fio) e <strong>CSMA/CA</strong> (sem fio).</li>
+</ul>
+<h2 id="2-meios-de-transmissao">2. Meios de transmissão</h2>
+<ul>
+<li><strong>Guiados</strong>: par trançado (UTP/STP), coaxial, <strong>fibra óptica</strong>. <strong>Não guiados</strong>: rádio, micro-onda, satélite, infravermelho. Capacidade por <strong>Nyquist/Shannon</strong>; multiplexação <strong>FDM/TDM/WDM</strong>.</li>
+<li><strong>Categorias UTP</strong> (conector RJ-45, padrão T568A/B; limite prático 100 m; regra 5-4-3 para repetidores): CAT5 (100 MHz/100 Mbps), CAT5e (125 MHz/1 Gbps), CAT6 (250 MHz/10 Gbps até 55 m), CAT6a (500 MHz/10 Gbps), CAT7 (600 MHz), CAT7a (1000 MHz).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Fibra</th>
+<th>Monomodo</th>
+<th>Multimodo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Núcleo</td>
+<td>Pequeno (~9 µm)</td>
+<td>Maior (50 ou 62,5 µm)</td>
+</tr>
+<tr>
+<td>Fonte</td>
+<td>Somente <strong>laser</strong></td>
+<td>LED ou laser</td>
+</tr>
+<tr>
+<td>Atenuação</td>
+<td><strong>Menor</strong></td>
+<td>Maior</td>
+</tr>
+<tr>
+<td>Distância</td>
+<td>Centenas de km (WAN)</td>
+<td>Curtas (ex.: 550 m em 1000BASE-SX)</td>
+</tr>
+<tr>
+<td>Exemplo</td>
+<td>1000BASE-LX (1310 nm, até 40 km)</td>
+<td>1000BASE-SX (550 m; medida por <strong>OFL</strong>)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Pegadinha</em>: "monomodo 62,5/125 µm" é <strong>falso</strong> — 62,5 µm é <strong>multimodo</strong>. Conectores: SC, ST, MT-RJ. <strong>NBR 14565 (cabeamento estruturado)</strong> aparece em questões; a versão <strong>2019</strong> é o texto atual do edital (complementar).</p>
+<h2 id="3-comutacao">3. Comutação</h2>
+<ul>
+<li><strong>Por circuito</strong>: caminho dedicado; desperdício quando ocioso; bloqueio se não houver recurso.</li>
+<li><strong>Por pacote</strong>: caminho compartilhado, sem rota pré-estabelecida (datagrama/circuito virtual).</li>
+<li><strong>Por célula (ATM)</strong>: células fixas de <strong>53 bytes = 5 B cabeçalho + 48 B carga</strong>; circuitos virtuais VPI/VCI; camadas AAL/SAR/CS.</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-elementos-de-interconexao-e-modelos-ositcp-ip">MÓDULO II — ELEMENTOS DE INTERCONEXÃO E MODELOS OSI/TCP-IP</h1>
+<h2 id="1-dispositivos">1. Dispositivos</h2>
+<ul>
+<li><strong>Hub/repetidor</strong>: regenera sinal; <strong>1 domínio de colisão</strong> e 1 de broadcast; half-duplex.</li>
+<li><strong>Bridge</strong>: <strong>L2</strong>; separa tráfego por MAC.</li>
+<li><strong>Switch</strong>: isola domínios de colisão <strong>por porta</strong> (tabela MAC/CAM); sem VLANs, mantém 1 domínio de broadcast. Modos: <strong>Store-and-Forward, Cut-Through, Fragment Free</strong>.</li>
+<li><strong>Roteador</strong>: <strong>L3</strong> (IP), tabelas de roteamento; <strong>separa broadcasts</strong>.</li>
+<li><strong>Gateway</strong>: <strong>L7</strong>; converte protocolos (ex.: voz).</li>
+</ul>
+<h2 id="2-osi-7-tcpip-4">2. OSI (7) × TCP/IP (4)</h2>
+<table>
+<thead>
+<tr>
+<th>OSI</th>
+<th>TCP/IP</th>
+<th>PDU</th>
+<th>Exemplos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aplicação</td>
+<td>Aplicação</td>
+<td>Dados</td>
+<td>HTTP, SMTP, DNS</td>
+</tr>
+<tr>
+<td>Apresentação</td>
+<td>Aplicação</td>
+<td>Dados</td>
+<td>ASCII, SSL/TLS, MIME</td>
+</tr>
+<tr>
+<td>Sessão</td>
+<td>Aplicação</td>
+<td>Dados</td>
+<td>NetBIOS, RPC</td>
+</tr>
+<tr>
+<td>Transporte</td>
+<td>Transporte</td>
+<td>Segmentos</td>
+<td>TCP, UDP</td>
+</tr>
+<tr>
+<td>Rede</td>
+<td>Internet</td>
+<td>Pacotes</td>
+<td>IP, ICMP, ARP*</td>
+</tr>
+<tr>
+<td>Enlace (LLC/MAC)</td>
+<td>Acesso à rede</td>
+<td>Quadros</td>
+<td>Ethernet, 802.11</td>
+</tr>
+<tr>
+<td>Física</td>
+<td>Acesso à rede</td>
+<td>Bits</td>
+<td>Cabos, rádio</td>
+</tr>
+</tbody>
+</table>
+<p>*ARP opera entre enlace e rede. Hosts implementam todas as camadas; dispositivos intermediários até a sua camada. <strong>MPLS</strong> = "camada 2.5" (Label 20 bits; campo Exp/QoS 3 bits = 8 classes; FEC; LSR/LER; LIB).</p>
+<h2 id="3-ethernet-ieee-8023">3. Ethernet (IEEE 802.3)</h2>
+<ul>
+<li>Ethernet 10 Mbps half-duplex; <strong>FastEthernet</strong> 100 Mbps (100BaseTX/FX); <strong>GigabitEthernet</strong> 1000 Mbps full-duplex (jumbo frames até 9000 B; precisa switch em estrela). CSMA/CD no half-duplex; controle de fluxo (802.3x) no full-duplex.</li>
+<li><em>Pegadinha</em>: "FastEthernet atinge 200 Mbps full-duplex" — impreciso: taxa nominal é <strong>100 Mbps por direção</strong>. "GigabitEthernet tem QoS nativamente" — <strong>falso</strong> (precisa 802.1p/q, 802.3x, RSVP).</li>
+</ul>
+<h2 id="4-stprstpmstp">4. STP/RSTP/MSTP</h2>
+<ul>
+<li><strong>STP (802.1d)</strong>: <strong>root bridge</strong> = menor bridge ID; BPDUs; estados blocking/listening/learning/forwarding; convergência até <strong>50 s</strong>. <strong>RSTP</strong>: forwarding/learning/<strong>discarding</strong> (mais rápido). <strong>MSTP</strong>: múltiplas instâncias.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-vlans-8021x-e-wireless">MÓDULO III — VLANs, 802.1X E WIRELESS</h1>
+<h2 id="1-ieee-8021q-8021p-8021x">1. IEEE 802.1Q / 802.1P / 802.1X</h2>
+<ul>
+<li><strong>802.1Q</strong>: <strong>tag/trunk</strong>; VLAN por porta, MAC ou endereço de rede; modos aberto/fechado/misto.</li>
+<li><strong>802.1P</strong>: 3 bits de prioridade = <strong>QoS na camada 2</strong>.</li>
+<li><strong>802.1X</strong>: autenticação <strong>por porta</strong> — <strong>suplicante, authenticator, servidor de autenticação (RADIUS)</strong>; encapsula via <strong>EAP/EAPOL</strong> (TLS, MD5, TTLS, PEAP, LEAP).</li>
+</ul>
+<h2 id="2-sem-fio-ieee-80211">2. Sem fio (IEEE 802.11)</h2>
+<table>
+<thead>
+<tr>
+<th>Padrão</th>
+<th>Faixa</th>
+<th>Canal</th>
+<th>Modulação</th>
+<th>Taxa</th>
+<th>Antenas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>802.11a</td>
+<td>5 GHz</td>
+<td>20 MHz</td>
+<td>OFDM</td>
+<td>54 Mbps</td>
+<td>—</td>
+</tr>
+<tr>
+<td>802.11b</td>
+<td>2,4 GHz</td>
+<td>20 MHz</td>
+<td>DSSS (HR-DSSS)</td>
+<td>11 Mbps</td>
+<td>alcance ~7× o de "a"</td>
+</tr>
+<tr>
+<td>802.11g</td>
+<td>2,4 GHz</td>
+<td>20 MHz</td>
+<td>DSSS+OFDM</td>
+<td>54 Mbps</td>
+<td>—</td>
+</tr>
+<tr>
+<td>802.11n</td>
+<td>2,4+5 GHz</td>
+<td>20–40 MHz</td>
+<td>OFDM/<strong>MIMO</strong></td>
+<td>600 Mbps</td>
+<td>4</td>
+</tr>
+<tr>
+<td>802.11ac</td>
+<td><strong>5 GHz</strong></td>
+<td>40–160 MHz</td>
+<td>OFDM/MIMO</td>
+<td>até 7000 Mbps</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>"a" é <strong>incompatível</strong> com "b". Acesso DCF/PCF. Segurança: WEP/WPA quebrados; <strong>WPA2</strong> recomendado (ver tópico 16).</li>
+<li><strong>802.11ax (Wi-Fi 6) e 802.11be (Wi-Fi 7)</strong> <em>(complemento — ausentes na base de 2020)</em>: <strong>ax</strong> = 2,4/5/6 GHz, OFDMA, MU-MIMO uplink, TWT (economia de energia), maior densidade; <strong>be</strong> = Wi-Fi 7 (320 MHz, 4096-QAM, Multi-Link Operation).</li>
+<li><strong>WPAN</strong>: Bluetooth = <strong>802.15.1</strong> (2,4 GHz); ZigBee = 802.15.4 (baixa potência). <strong>WMAN/WiMAX 802.16</strong> (10–66 GHz; 802.16d com MIMO; 802.16e com mobilidade).</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-ipv4-ipv6-e-protocolos">MÓDULO IV — IPv4, IPv6 E PROTOCOLOS</h1>
+<h2 id="1-ipv4">1. IPv4</h2>
+<ul>
+<li>32 bits / 4 octetos. Classes pelos primeiros bits: <strong>0=A, 10=B, 110=C, 1110=D</strong>. Máscara = operação <strong>AND</strong>; subnetting; <strong>VLSM</strong>; <strong>CIDR/supernetting</strong>.</li>
+<li><strong>Privadas</strong>: <strong>A 10.0.0.0/8</strong> (16.777.216 hosts), <strong>B 172.16.0.0/12</strong> (1.048.576), <strong>C 192.168.0.0/16</strong> (65.536). Loopback <strong>127.0.0.1</strong>. Campo TOS/DSCP (6 dos 8 bits, RFC 2474). Fragmentação pelo roteador.</li>
+<li><strong>NAT/PAT</strong>: estático 1:1; dinâmico; <strong>NAPT/NAT overload N:1</strong> (portas); NAT reverso (round-robin/load balancing); NAT <strong>altera o cabeçalho IP</strong>.</li>
+</ul>
+<h2 id="2-ipv6">2. IPv6</h2>
+<table>
+<thead>
+<tr>
+<th>IPv4</th>
+<th>IPv6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>32 bits, 4 octetos</td>
+<td><strong>128 bits</strong>, 8 grupos hexadecimais</td>
+</tr>
+<tr>
+<td>Cabeçalho variável 20–60 B</td>
+<td>Cabeçalho <strong>fixo 40 B</strong> (8 campos)</td>
+</tr>
+<tr>
+<td>Broadcast</td>
+<td><strong>Sem broadcast</strong> (ND substitui ARP; MLD substitui IGMP)</td>
+</tr>
+<tr>
+<td>Fragmentação no roteador</td>
+<td><strong>Só na origem</strong> (ICMPv6 "packet too big")</td>
+</tr>
+<tr>
+<td>IPSec opcional</td>
+<td><strong>IPSec obrigatório</strong></td>
+</tr>
+<tr>
+<td>ARP</td>
+<td><strong>Neighbor Discovery</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Compressão "::" (uma vez por endereço); máscara padrão <strong>/64</strong> em LAN; autoconfiguração link-local <strong>FE80::/64</strong> com <strong>EUI-64</strong>; multicast <strong>FF00::/8</strong>; loopback <strong>::1</strong>; não especificado <strong>::0</strong>. Transição: Dual Stack, tunelamento, tradução.</li>
+</ul>
+<h2 id="3-arp-icmp-igmp">3. ARP, ICMP, IGMP</h2>
+<ul>
+<li><strong>ARP</strong>: mapeia <strong>IP↔MAC</strong>; ARP Request <strong>broadcast FF:FF:FF:FF:FF:FF</strong>; ARP Reply unicast; cache. <strong>RARP</strong>: inverso. <strong>ICMP</strong>: diagnóstico (ping/traceroute) — <strong>não é camada de transporte</strong>. <strong>IGMP</strong>: grupos multicast.</li>
+</ul>
+<h2 id="4-tcp-udp">4. TCP × UDP</h2>
+<table>
+<thead>
+<tr>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Orientado a conexão (<strong>3-way handshake</strong>)</td>
+<td>Sem conexão</td>
+</tr>
+<tr>
+<td>Confiável (ACK, retransmissão)</td>
+<td>Não confiável, sem ACK</td>
+</tr>
+<tr>
+<td>Ordenação (números de seq.)</td>
+<td>Sem ordenação</td>
+</tr>
+<tr>
+<td>Controle de fluxo (janela deslizante) e de congestão</td>
+<td>Sem controle</td>
+</tr>
+<tr>
+<td>Mais lento, mais overhead</td>
+<td>Rápido, leve (DNS, VoIP, DHCP)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Portas essenciais</strong>: FTP-dados 20, FTP-controle 21, <strong>SSH 22</strong>, Telnet 23, <strong>SMTP 25</strong>, <strong>DNS 53</strong> (UDP+TCP), <strong>HTTP 80</strong>, <strong>POP3 110</strong>, <strong>IMAP 143</strong>, SNMP 161/162, <strong>HTTPS 443</strong>, CIFS/SMB 445, SMTPS 465, SMTP-TLS 587, IMAPS 993, POP3S 995, RDP 3389. <strong>DHCP: servidor 67/UDP, cliente 68/UDP</strong>.</p>
+<h2 id="5-protocolos-de-aplicacao">5. Protocolos de aplicação</h2>
+<ul>
+<li><strong>HTTP</strong>: cliente-servidor, request/response, <strong>stateless</strong> (cookies tornam stateful); v1.0 não persistente × v1.1 persistente; métodos GET/POST/PUT/DELETE/<strong>CONNECT (proxy)</strong>; códigos 2xx sucesso, 3xx redirecionamento; cache no cliente/proxy. HTTPS = 443 com SSL/TLS.</li>
+<li><strong>E-mail</strong>: MUA (cliente) × MTA (servidor). <strong>SMTP 25</strong> (587 anti-spam; 465 SMTPS): ASCII 7-bit, <strong>store-and-forward</strong>. <strong>POP3 110</strong>: baixa e <strong>remove</strong> do servidor, 1 dispositivo (APOP/MD5). <strong>IMAP 143/993</strong>: mensagens <strong>permanecem no servidor</strong>, múltiplos dispositivos, pastas remotas, leitura offline. MIME estende RFC 822.</li>
+<li><strong>DHCP</strong>: evolução do BOOTP; hierárquico (relay agents); <strong>DORA</strong>: <strong>D</strong>iscovery (broadcast de 0.0.0.0) → <strong>O</strong>ffer (por MAC) → <strong>R</strong>equest (broadcast) → <strong>A</strong>CK (lease). Reserva estática por MAC (servidores/impressoras).</li>
+<li><strong>FTP</strong>: portas <strong>20+21</strong>, outband (2 conexões); modo ativo (vulnerável em firewall) × passivo; sem criptografia nativa (SFTP sobre SSH).</li>
+<li><strong>DNS</strong>: porta <strong>53</strong> (UDP consultas; TCP &gt;512 B e transferências de zona); hierarquia (raiz ".", FQDN); zonas (master/slave, <strong>AXFR</strong>); zonas reversas/PTR; Root Hints; consultas iterativa × <strong>recursive (mais usada)</strong>; registros <strong>A, CNAME, PTR, NS, MX, SOA</strong> (serial, refresh 3600, retry 600); BIND (v9); forwarders.</li>
+<li><strong>Telnet 23 × SSH 22</strong>: Telnet <strong>sem criptografia</strong>; SSH seguro (chaves assimétricas; SSH1 vulnerável a MITM; SSH2; <strong>SFTP</strong> tunelado).</li>
+<li><strong>LDAP</strong>: porta <strong>389/TCP</strong> (LDAPv3); baseado em X.500; nomenclatura hierárquica (<strong>DN/RDN</strong>; atributos DC/O/OU); operações Bind/Search/Add/Delete/Modify/Compare/StartTLS. <strong>AD</strong>: serviço de diretório Microsoft que usa LDAP (ver tópico 11).</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>Monomodo ~9 µm só laser</strong>; 62,5/125 µm = <strong>multimodo</strong>. Multimodo mede por <strong>OFL</strong>.</li>
+<li><strong>ATM: células de 53 bytes</strong> (5+48).</li>
+<li><strong>Hub</strong> = 1 domínio de colisão; <strong>switch</strong> isola colisões por porta; <strong>roteador</strong> separa broadcasts (L3).</li>
+<li><strong>ICMP não é camada de transporte</strong>; ARP opera entre enlace e rede.</li>
+<li><strong>IPSec: opcional IPv4, obrigatório IPv6</strong>. IPv6: <strong>sem broadcast</strong>; fragmentação <strong>só na origem</strong>.</li>
+<li><strong>DHCP: 67 servidor / 68 cliente</strong> (não confundir com 53/DNS ou 69/TFTP).</li>
+<li><strong>POP3 remove</strong> (1 dispositivo); <strong>IMAP mantém</strong> no servidor (vários dispositivos).</li>
+<li><strong>STP converge até 50 s</strong>; RSTP é mais rápido (discarding).</li>
+<li><strong>802.11a (5 GHz) incompatível com 802.11b (2,4 GHz)</strong>; "b" tem alcance ~7× maior.</li>
+<li><strong>FastEthernet = 100 Mbps por direção</strong> (não 200). <strong>Gigabit não tem QoS nativa</strong>.</li>
+<li><strong>Zabbix suporta SNMP</strong> (falso dizer o contrário). <strong>SNMP usa 161/162</strong>, não 22.</li>
+<li><strong>DNS 53</strong>: UDP para consultas, TCP para transferências de zona (AXFR).</li>
+<li><strong>FTP = 20 (dados) + 21 (controle)</strong>, duas conexões.</li>
+<li><strong>NAT altera o cabeçalho IP</strong>; NAPT usa portas (N:1).</li>
+<li><strong>VLSM</strong> = máscaras variáveis na mesma rede; <strong>CIDR/supernetting</strong> agrega rotas.</li>
+<li><strong>802.11ax = Wi-Fi 6; 802.11be = Wi-Fi 7</strong> (complemento — base só vai até "ac").</li>
+<li><strong>NBR 14565:2019</strong> = norma de <strong>cabeamento estruturado</strong> (edital cita a versão 2019).</li>
+<li><strong>MPLS = camada 2.5</strong>; label de 20 bits; Exp/QoS 3 bits.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) A fibra óptica monomodo possui núcleo de 62,5 µm e é indicada para longas distâncias em WANs.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>62,5 µm</strong> é <strong>multimodo</strong>. <strong>Monomodo</strong> tem núcleo ~<strong>9 µm</strong>, só laser, atenuação menor, centenas de km.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) O dispositivo que opera na camada de rede (L3), mantém tabelas de roteamento e separa domínios de broadcast é:
+a) hub.
+b) bridge.
+c) switch.
+d) roteador.
+e) repetidor.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> <strong>Roteador</strong> = L3 (IP), separa broadcasts. Switch/Bridge = L2 (colisão por porta/MAC); Hub = L1.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) O protocolo ICMP é classificado como protocolo de camada de transporte, equivalente ao TCP e ao UDP.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>ICMP</strong> é de <strong>rede</strong> (diagnóstico: ping/traceroute), <strong>não</strong> de transporte.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) Na versão IPv6, em relação ao IPv4, ocorre:
+a) ampliação do endereço para 128 bits e eliminação do broadcast.
+b) redução do endereço para 64 bits.
+c) obrigatoriedade de NAT.
+d) fragmentação apenas em roteadores intermediários.
+e) IPSec opcional.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> IPv6: <strong>128 bits</strong>, <strong>sem broadcast</strong> (ND/MLD), fragmentação <strong>só na origem</strong>, <strong>IPSec obrigatório</strong>.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) No DHCP, o processo de obtenção de endereço IP segue a sequência Discovery, Offer, Request e ACK (DORA).
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>DORA</strong>: Discovery (broadcast) → Offer (por MAC) → Request (broadcast) → ACK (lease). Portas: servidor <strong>67</strong>, cliente <strong>68</strong>.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) O protocolo que baixa as mensagens de e-mail para o cliente e as remove do servidor, sendo adequado a um único dispositivo, é:
+a) SMTP.
+b) IMAP.
+c) POP3.
+d) MIME.
+e) LDAP.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>POP3 (110)</strong> baixa e <strong>remove</strong> (1 dispositivo). <strong>IMAP (143)</strong> mantém no servidor (vários dispositivos). <strong>SMTP (25)</strong> envia.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) O padrão IEEE 802.1Q refere-se à autenticação de acesso à rede por porta, baseada em suplicante, authenticator e servidor RADIUS.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Isso é <strong>802.1X</strong> (EAP/EAPOL). <strong>802.1Q</strong> = <strong>VLAN tag/trunk</strong>. <strong>802.1P</strong> = QoS L2 (3 bits).</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) A convergência do Spanning Tree Protocol (STP 802.1d) pode levar até:
+a) 5 segundos.
+b) 15 segundos.
+c) 30 segundos.
+d) 50 segundos.
+e) 90 segundos.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> STP: até <strong>50 s</strong> (listening + learning). <strong>RSTP</strong> converge muito mais rápido (estados forwarding/learning/<strong>discarding</strong>).</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) As células do ATM possuem tamanho fixo de 53 bytes, sendo 5 bytes de cabeçalho e 48 bytes de carga útil.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Comutação por <strong>células</strong>: 53 = <strong>5 + 48</strong>.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O protocolo ARP tem como finalidade:
+a) traduzir nomes de domínio em endereços IP.
+b) mapear endereços IP em endereços MAC (e vice-versa).
+c) configurar endereços IP automaticamente.
+d) rotear pacotes entre redes.
+e) criptografar tráfego HTTP.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>ARP</strong> = IP↔<strong>MAC</strong> (request broadcast; reply unicast). <strong>DNS</strong> = nome→IP; <strong>DHCP</strong> = configuração automática.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A diferença entre TCP e UDP é que o TCP é orientado a conexão, confiável, com controle de fluxo e de congestão, enquanto o UDP é sem conexão, sem confirmação e mais leve.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> TCP: 3-way handshake, ACK, ordenação, janela deslizante. UDP: rápido/leve (DNS, VoIP, DHCP) — sem ACK nem ordenação.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre meios de transmissão e fibra óptica, é correto afirmar:
+a) a fibra multimodo utiliza somente laser e atinge centenas de km.
+b) a fibra monomodo tem núcleo maior (50 ou 62,5 µm) e usa LED.
+c) a fibra monomodo tem núcleo pequeno (~9 µm), usa laser e tem menor atenuação, indicada para WAN.
+d) UTP CAT5 suporta 10 Gbps.
+e) fibra multimodo mede-se pelo método OTDR exclusivamente.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> Monomodo ~9 µm, laser, menor atenuação, longas distâncias. Multimodo 50/62,5 µm, LED/laser, curtas (OFL). CAT5 = 100 Mbps.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) O padrão IEEE 802.11a opera na faixa de 2,4 GHz e é compatível com o padrão 802.11b.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>802.11a</strong> = <strong>5 GHz</strong> e é <strong>incompatível</strong> com "b" (2,4 GHz). "b" tem alcance ~7× maior.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) Sobre DNS, é correto afirmar:
+a) usa exclusivamente TCP na porta 53.
+b) consultas usam UDP na porta 53; transferências de zona usam TCP.
+c) não suporta registros MX.
+d) o registro SOA não contém serial.
+e) a consulta recursiva é menos usada que a iterativa.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> DNS <strong>53</strong>: <strong>UDP</strong> consultas; <strong>TCP</strong> transferências (AXFR, &gt;512 B). SOA tem serial/refresh/retry; MX = mail; <strong>recursive</strong> é a mais usada.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) O cabeamento estruturado é normatizado no Brasil pela ABNT NBR ISO/IEC 27001, que trata de segurança da informação.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Cabeamento estruturado = <strong>ABNT NBR 14565</strong> (versão <strong>2019</strong> no edital). A <strong>NBR ISO/IEC 27001</strong> trata de <strong>SGSI</strong> (segurança da informação — ver tópico 16).</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique o modelo OSI e o modelo TCP/IP, relacionando as camadas, as PDUs e exemplos de protocolos.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O <strong>OSI</strong> tem 7 camadas: Aplicação, Apresentação, Sessão, Transporte, Rede, Enlace e Física. O <strong>TCP/IP</strong> tem 4: Aplicação, Transporte, Internet e Acesso à rede. As PDUs são: dados (aplicação/presentação/sessão), <strong>segmentos</strong> (transporte — TCP/UDP), <strong>pacotes</strong> (rede — IP/ICMP) e <strong>quadros</strong> (enlace — Ethernet/802.11) e bits (física). Hosts implementam todas as camadas; dispositivos intermediários atuam até a sua camada (switch = L2, roteador = L3). O ARP opera entre enlace e rede; o MPLS é dito "camada 2.5".</p></details>
+<p><strong>D2.</strong> Diferencie TCP de UDP e explique o funcionamento do DHCP (DORA) e as diferenças entre POP3 e IMAP.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> <strong>TCP</strong> é orientado a conexão (3-way handshake), confiável (ACK/retransmissão), ordenado, com controle de fluxo e de congestão — indicado a transferências confiáveis. <strong>UDP</strong> é sem conexão, sem confirmação, mais leve e rápido — indicado a DNS, VoIP e DHCP. O <strong>DHCP</strong> atribui endereços IP automaticamente pelo processo <strong>DORA</strong>: Discovery (broadcast), Offer (por MAC), Request (broadcast) e ACK (lease), nas portas 67 (servidor) e 68 (cliente). <strong>POP3</strong> baixa as mensagens e as <strong>remove</strong> do servidor (adequado a um único dispositivo); <strong>IMAP</strong> mantém as mensagens <strong>no servidor</strong>, permitindo acesso de múltiplos dispositivos e pastas remotas.</p></details>
+<hr />
+<p><em>Base: <code>02.Redes de Computadores</code> (Aulas 00–12) e <code>01.Sistemas Operacionais e Arquitetura</code> (Aula08 — LDAP/AD). Complemento: 802.11ax (Wi-Fi 6) e 802.11be (Wi-Fi 7), ABNT NBR 14565:2019 — ausentes da base de 2020. Segurança de redes wireless e VPN: ver apostila T16. Serviços (proxy, Apache/IIS, JBoss) e SNMP/QoS/ferramentas de monitoramento: ver apostilas T13 e T14.</em></p>
+<script>
+(function () {
+  const key = 'apostila-t12-redes-de-computadores-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noções de Direito Constitucional (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>Noções de Direito Constitucional</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-classificacao-de-jose-afonso-da-silva">1. Classificação de José Afonso da Silva</a></li>
+<li class="toc-h2"><a href="#2-hierarquia-e-vigencia-pontos-de-prova">2. Hierarquia e vigência (pontos de prova)</a></li>
+<li class="toc-h2"><a href="#1-sistemas-e-momentos">1. Sistemas e momentos</a></li>
+<li class="toc-h2"><a href="#2-difuso-concentrado">2. DIFUSO × CONCENTRADO</a></li>
+<li class="toc-h2"><a href="#3-adi-acao-direta-de-inconstitucionalidade-lei-986899">3. ADI — Ação Direta de Inconstitucionalidade (Lei 9.868/99)</a></li>
+<li class="toc-h2"><a href="#4-adc-acao-declaratoria-de-constitucionalidade-ec-31993">4. ADC — Ação Declaratória de Constitucionalidade (EC 3/1993)</a></li>
+<li class="toc-h2"><a href="#5-adpf-arguicao-de-descumprimento-de-preceito-fundamental-lei-988899">5. ADPF — Arguição de Descumprimento de Preceito Fundamental (Lei 9.888/99)</a></li>
+<li class="toc-h2"><a href="#1-remedios-constitucionais">1. Remédios constitucionais</a></li>
+<li class="toc-h2"><a href="#2-pontos-capitais-do-art-5o">2. Pontos capitais do art. 5º</a></li>
+<li class="toc-h2"><a href="#1-direitos-sociais-art-6o">1. Direitos sociais (art. 6º)</a></li>
+<li class="toc-h2"><a href="#2-nacionalidade-arts-12-13">2. Nacionalidade (arts. 12-13)</a></li>
+<li class="toc-h2"><a href="#3-direitos-politicos-arts-14-16">3. Direitos políticos (arts. 14-16)</a></li>
+<li class="toc-h2"><a href="#1-partidos-politicos-arts-17-18">1. Partidos políticos (arts. 17-18)</a></li>
+<li class="toc-h2"><a href="#2-organizacao-politico-administrativa-art-18">2. Organização político-administrativa (art. 18)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+<li class="toc-h2"><a href="#referencias-de-estudo-na-base-local-trt8-new">Referências de estudo na base local (trt8 new)</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-nocoes-de-direito-constitucional">APOSTILA — NOÇÕES DE DIREITO CONSTITUCIONAL</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Aplicabilidade e interpretação das normas constitucionais; vigência e eficácia das normas constitucionais. Controle de constitucionalidade: sistemas difuso e concentrado; ADI, ADC e ADPF. Princípios fundamentais. Direitos e garantias fundamentais: individuais e coletivos; sociais; nacionalidade; políticos. Partidos políticos. Organização do Estado: organização político-administrativa da União; competências da União, dos Estados e dos Municípios.</p>
+<p><strong>Base de conhecimento:</strong> SEFA-PA (aulas de Direito Constitucional — aplicabilidade, controle de constitucionalidade, arts. 1º-6º, 12-18) + Estratégia Básico 2020 (aulas 00-05). Complementos atuais sinalizados no texto.</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-aplicabilidade-vigencia-e-eficacia-das-normas-constitucionais">MÓDULO I — APLICABILIDADE, VIGÊNCIA E EFICÁCIA DAS NORMAS CONSTITUCIONAIS</h1>
+<h2 id="1-classificacao-de-jose-afonso-da-silva">1. Classificação de José Afonso da Silva</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Eficácia plena</strong></th>
+<th><strong>Eficácia contida</strong></th>
+<th><strong>Eficácia limitada</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Autoaplicável?</strong></td>
+<td>Sim</td>
+<td>Sim</td>
+<td><strong>Não</strong> (depende de lei)</td>
+</tr>
+<tr>
+<td><strong>Aplicabilidade</strong></td>
+<td>Direta, imediata e <strong>integral</strong></td>
+<td>Direta, imediata e <strong>possivelmente não integral</strong></td>
+<td><strong>Indireta, mediata e reduzida</strong></td>
+</tr>
+<tr>
+<td><strong>Restringível?</strong></td>
+<td><strong>Não</strong></td>
+<td><strong>Sim</strong> — por lei, outra norma constitucional ou conceitos ético-jurídicos indeterminados</td>
+<td>Lei posterior <strong>amplia</strong> o alcance</td>
+</tr>
+<tr>
+<td><strong>Exemplos</strong></td>
+<td>Art. 2º (Poderes independentes e harmônicos)</td>
+<td>Art. 5º, XIII (liberdade de profissão — "qualificações que a lei estabelecer"); art. 9º (greve)</td>
+<td>Art. 37, VII (greve do servidor — "nos termos de lei específica"); art. 196 (saúde)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Subespécies de eficácia limitada:</strong>
+- <strong>Declaratórias de princípios institutivos/organizativos</strong> — organizam órgãos; podem ser <strong>impositivas</strong> (obrigam o legislador) ou <strong>facultativas</strong> (ex.: art. 125, §3º — Justiça Militar estadual "poderá" ser criada).
+- <strong>Declaratórias de princípios programáticos</strong> — programas dirigidos ao legislador (ex.: art. 196). É a presença delas que faz da CF/88 uma <strong>Constituição dirigente</strong>.
+- <strong>Eficácia mínima</strong> das limitadas: (i) <strong>efeito negativo</strong> (revogam leis anteriores em contrário; são parâmetro de controle) e (ii) <strong>efeito vinculativo</strong> (obrigam o legislador a regulamentar, sob pena de <strong>omissão inconstitucional</strong> → mandado de injunção ou ADI por omissão).
+- <strong>Normas de eficácia exaurida</strong>: efeitos já cessados (vários dispositivos do ADCT) — <strong>não</strong> são objeto de controle de constitucionalidade.</p>
+<p><strong>Art. 5º, §1º (regra-chave):</strong> as normas definidoras de direitos e garantias fundamentais têm <strong>aplicação imediata</strong>. <em>Pegadinha: isso NÃO afasta a existência de direitos fundamentais com eficácia limitada — a classificação de JAS convive com o §1º.</em></p>
+<h2 id="2-hierarquia-e-vigencia-pontos-de-prova">2. Hierarquia e vigência (pontos de prova)</h2>
+<ul>
+<li><strong>Normas originárias não são controláveis; emendas constitucionais são</strong> (só afronta inequívoca a cláusula pétrea). Não há hierarquia entre normas originárias, nem entre estas e as emendas.</li>
+<li><strong>Tratados de direitos humanos</strong>: aprovados em 2 turnos, 3/5, em cada Casa (EC 45/2004, art. 5º §3º) = <strong>status de emenda constitucional</strong>; demais tratados de DH = <strong>status supralegal</strong> (STF).</li>
+<li><strong>Leis federais, estaduais e municipais têm o MESMO nível hierárquico</strong> — o conflito se resolve por <strong>competência</strong> (pode prevalecer a lei municipal!).</li>
+<li>Lei complementar = <strong>mesmo nível</strong> da ordinária (diferem por conteúdo/quórum). Lei complementar tratando de matéria de lei ordinária é <strong>materialmente ordinária</strong> (revogável por lei ordinária).</li>
+<li>Vigência: no âmbito federal, 45 dias da publicação (Lei de Introdução, art. 1º) — regra geral de vigência das leis.</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-controle-de-constitucionalidade">MÓDULO II — CONTROLE DE CONSTITUCIONALIDADE</h1>
+<h2 id="1-sistemas-e-momentos">1. Sistemas e momentos</h2>
+<ul>
+<li>Quanto ao <strong>órgão</strong>: judicial (EUA — <em>Marbury v. Madison</em>), político (França), <strong>misto (Brasil)</strong>.</li>
+<li><strong>Difuso</strong> (qualquer juiz/tribunal — modelo americano) × <strong>concentrado</strong> (órgão de cúpula — modelo europeu/kelseniano).</li>
+<li>Via <strong>incidental</strong> (exceção/defesa — caso concreto) × via <strong>principal</strong> (abstrata — pedido principal).</li>
+<li><strong>Momentos</strong>: preventivo (CCJ, veto jurídico, MS de parlamentar contra PL com vício formal — legitimidade <strong>exclusiva de parlamentar da Casa em que tramita</strong>) × repressivo (Judiciário; exceções políticas: art. 49, V — sustar atos do Executivo; TCs — Súmula 347, <strong>apenas incidental</strong>, sem efeitos <em>erga omnes</em>).</li>
+</ul>
+<h2 id="2-difuso-concentrado">2. DIFUSO × CONCENTRADO</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Controle difuso</strong></th>
+<th><strong>Controle concentrado</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Via/objeto</td>
+<td>Incidental (caso concreto)</td>
+<td>Principal (lei "em tese")</td>
+</tr>
+<tr>
+<td>Efeitos</td>
+<td><strong>Inter partes</strong>, não vinculante; regra <strong>ex tunc</strong></td>
+<td><strong>Erga omnes + vinculante</strong> (Judiciário e AP); regra <strong>ex tunc</strong></td>
+</tr>
+<tr>
+<td>Modulação</td>
+<td>Sim (jurisprudência + art. 27 Lei 9.868/99 por analogia) — 2/3, segurança jurídica ou excepcional interesse social</td>
+<td>Sim (art. 27) — 2/3</td>
+</tr>
+<tr>
+<td>Ampliação de efeitos</td>
+<td><strong>Senado Federal</strong> (art. 52, X) suspende a execução por <strong>resolução</strong> — ato <strong>discricionário/político</strong>; majoritário: efeitos <strong>ex nunc</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Processo objetivo?</td>
+<td>Não (há partes)</td>
+<td>Sim (<strong>indisponível</strong> — não cabe desistência)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Súmula Vinculante</strong> (art. 103-A / EC 45/2004; Lei 11.417/2006): reiteradas decisões + controvérsia atual + <strong>2/3 do STF (8 ministros)</strong>. Vincula Judiciário e AP; <strong>NÃO vincula</strong>: o próprio STF, o Legislativo legislando e o Executivo legislando (função atípica).</p>
+<h2 id="3-adi-acao-direta-de-inconstitucionalidade-lei-986899">3. ADI — Ação Direta de Inconstitucionalidade (Lei 9.868/99)</h2>
+<ul>
+<li><strong>Objeto</strong>: leis/atos normativos <strong>federais e estaduais</strong> (e do DF, no lugar de estaduais).</li>
+<li><strong>Legitimados (art. 103, I-IX — rol taxativo)</strong>:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>Universal</strong> (qualquer matéria)</th>
+<th><strong>Especial</strong> (exigem <strong>pertinência temática</strong>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Presidente da República; Mesa do Senado; Mesa da Câmara; PGR; Conselho Federal da OAB; partido com representação no Congresso</td>
+<td>Governador (Estado/DF); Mesa de AL ou Câmara Legislativa do DF; confederação sindical ou entidade de classe <strong>de âmbito nacional</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Precisam de advogado</strong>: apenas partido político e confederação/entidade de classe (incs. VIII e IX).</li>
+<li><strong>NÃO propõem ADI</strong>: senador/deputado isolado (só as Mesas); sindicatos e federações (só <strong>confederações</strong> e entidades de classe <strong>nacionais</strong>).</li>
+<li><strong>Causa de pedir aberta</strong> (STF não se vincula ao fundamento), mas <strong>vincula-se ao pedido</strong>.</li>
+<li><strong>AGU</strong> defende a constitucionalidade em regra (art. 103, §3º), mas tem autonomia (ADI 3.916); <strong>PGR</strong> = <em>custos constitutionis</em>, manifestação <strong>obrigatória</strong>.</li>
+<li><strong>Medida cautelar</strong>: maioria absoluta (6), presença de 8; efeitos <strong>ex nunc</strong>, <em>erga omnes</em>, vinculantes, com efeito <strong>repristinatório</strong> (afastável a pedido).</li>
+<li><strong>Imprescritível</strong>; mérito: 8 presentes, <strong>6 votos</strong> (reserva de plenário). <strong>Natureza dúplice</strong>: procedente = inconstitucional; improcedente = constitucional. Não cabe ação rescisória; desrespeito → reclamação.</li>
+<li><strong>ADI por omissão (ADO)</strong>: comunica o órgão; se omissão do Legislativo → parlamentares têm 45 dias para legislar.</li>
+</ul>
+<h2 id="4-adc-acao-declaratoria-de-constitucionalidade-ec-31993">4. ADC — Ação Declaratória de Constitucionalidade (EC 3/1993)</h2>
+<ul>
+<li>Objeto <strong>apenas leis/atos federais</strong> pós-constitucionais; exige <strong>controvérsia judicial relevante</strong> (critério <strong>qualitativo</strong>).</li>
+<li><strong>AGU não atua</strong> (o autor "defere" a norma); PGR <strong>obrigatório</strong>.</li>
+<li><strong>Natureza dúplice</strong>: procedente = constitucional; improcedente = <strong>inconstitucional</strong>. Cabe <strong>cumulação</strong> de pedidos ADI + ADC.</li>
+</ul>
+<h2 id="5-adpf-arguicao-de-descumprimento-de-preceito-fundamental-lei-988899">5. ADPF — Arguição de Descumprimento de Preceito Fundamental (Lei 9.888/99)</h2>
+<ul>
+<li><strong>Subsidiária/residual</strong>: <strong>não cabe</strong> se houver outro meio eficaz (ADI/ADC) — <em>pegadinha clássica</em>.</li>
+<li>Legitimados: os mesmos do art. 103.</li>
+<li><strong>Objeto</strong> (supre lacunas da ADI/ADC): leis/atos <strong>municipais</strong>; <strong>atos administrativos</strong>; <strong>direito pré-constitucional</strong> (ex.: ADPF 54 — Código Penal e anencéfalo); leis <strong>revogadas ou de efeitos exauridos</strong>; <strong>interpretações judiciais</strong> violadoras de preceito fundamental (ADPF 101).</li>
+<li><strong>NÃO cabe</strong> para leis federais/estaduais pós-constitucionais (ADI), atos políticos (veto) e súmulas do STF.</li>
+<li>Modalidades: <strong>autônoma</strong> (preventiva/repressiva) e <strong>incidental</strong> (exige relevância de controvérsia judicial).</li>
+<li>Preceitos fundamentais: direitos e garantias individuais, cláusulas pétreas, princípios sensíveis (art. 34, VII), saúde, meio ambiente.</li>
+<li><strong>ADI e ADPF são fungíveis</strong> (uma pode ser conhecida como a outra).</li>
+<li>Decisão: 8 presentes, 6 votos; <em>erga omnes</em>, ex tunc, vinculante; modulação por 2/3; <strong>efeitos imediatos</strong> (ADI/ADC só produzem efeitos desde a publicação da ata no DJ).</li>
+<li><em>(Complemento — art. 11 Lei 9.868/99):</em> decisões definitivas de mérito em ADI/ADC por <strong>maioria simples</strong> em pleno dependem de <strong>repercussão geral reconhecida</strong> e provocação por 1/3 dos membros do tribunal (<strong>cláusula de reserva de plenário</strong> — cf. art. 97).</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-principios-fundamentais-arts-1o-a-4o">MÓDULO III — PRINCÍPIOS FUNDAMENTAIS (arts. 1º a 4º)</h1>
+<ul>
+<li><strong>Art. 1º — Fundamentos da República</strong> (SOCIDIVAPLU): <strong>S</strong>oberania; <strong>C</strong>idadania; <strong>D</strong>ignidade da pessoa humana; valores sociais do <strong>T</strong>rabalho e da livre <strong>I</strong>niciativa; <strong>P</strong>luralismo político. Estado <strong>Democrático de Direito</strong>; o poder emana do povo, exercido por representantes eleitos <strong>ou diretamente</strong> (plebiscito, referendo, iniciativa popular).</li>
+<li><strong>Art. 2º — Separação dos Poderes</strong>: Legislativo, Executivo e Judiciário, <strong>independentes e harmônicos</strong> (separação flexível; funções típicas e atípicas).</li>
+<li><strong>Art. 3º — Objetivos fundamentais</strong> (CONGA ERRA PRO): <strong>construir</strong> sociedade livre, justa e solidária; <strong>garantir</strong> o desenvolvimento nacional; <strong>erradicar</strong> a pobreza/marginalização e <strong>reduzir</strong> desigualdades; <strong>promover</strong> o bem de todos, sem preconceitos.</li>
+<li><strong>Art. 4º — Relações internacionais</strong>: independência nacional; prevalência dos direitos humanos; autodeterminação dos povos; não-intervenção; igualdade entre os Estados; defesa da paz; solução pacífica dos conflitos; repúdio ao terrorismo e ao racismo; concessão de asilo político. P. único: integração dos povos da <strong>América Latina</strong> (<em>pegadinha: trocam por "América do Sul"</em>).</li>
+</ul>
+<p><em>Natureza: fundamento, objetivo fundamental e princípio internacional são todos espécies de "princípio fundamental".</em></p>
+<hr />
+<h1 id="modulo-iv-direitos-individuais-e-coletivos-art-5o">MÓDULO IV — DIREITOS INDIVIDUAIS E COLETIVOS (art. 5º)</h1>
+<h2 id="1-remedios-constitucionais">1. Remédios constitucionais</h2>
+<table>
+<thead>
+<tr>
+<th>Remédio</th>
+<th>Direito protegido</th>
+<th>Peculiaridades</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HC</strong> (LXVIII)</td>
+<td>Liberdade de <strong>locomoção</strong></td>
+<td>Gratuito; <strong>dispensa advogado</strong>; pode ser de ofício; <strong>não</strong> cabe para pessoa jurídica; cabe contra <strong>particular</strong></td>
+</tr>
+<tr>
+<td><strong>Habeas data</strong> (LXXII)</td>
+<td>Acesso/retificação de informações próprias em registros públicos</td>
+<td><strong>Personalíssimo</strong>; <strong>exige advogado</strong>; exige <strong>negativa administrativa</strong> prévia; <strong>não</strong> alcança autos de processo administrativo</td>
+</tr>
+<tr>
+<td><strong>MS individual</strong> (LXIX)</td>
+<td>Direito líquido e certo não amparado por HC/HD</td>
+<td>Prazo <strong>decadencial de 120 dias</strong></td>
+</tr>
+<tr>
+<td><strong>MS coletivo</strong> (LXX)</td>
+<td>Direitos coletivos</td>
+<td>Partido com <strong>representação no Congresso</strong>; sindicato/entidade de classe/associação (<strong>associação</strong>: 1 ano de constituição — exigência que <strong>não</strong> se aplica a sindicatos/entidades)</td>
+</tr>
+<tr>
+<td><strong>MI</strong> (LXXI)</td>
+<td>Falta de norma regulamentadora (omissão total ou parcial)</td>
+<td>STF <strong>concretista</strong> (MI 712)</td>
+</tr>
+<tr>
+<td><strong>Ação popular</strong> (LXXIII)</td>
+<td>Ato lesivo ao patrimônio público, moralidade, meio ambiente</td>
+<td>Qualquer cidadão</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-pontos-capitais-do-art-5o">2. Pontos capitais do art. 5º</h2>
+<ul>
+<li><strong>Racismo (XLII)</strong>: crime <strong>inafiançável e imprescritível</strong>.</li>
+<li><strong>Tortura, tráfico ilícito, terrorismo e hediondos (XLIII)</strong>: <strong>inhafiançáveis e insusceptíveis de graça ou anistia</strong>.</li>
+<li><strong>Censura vedada (IX)</strong> — inclusive a judicial; manifestação do pensamento <strong>não exige licença</strong> (IV — mas pode exigir <strong>identificação</strong> nos termos da lei).</li>
+<li>Direitos absolutos (não admitem restrição): pensamento/consciência/crença (objeção de consciência), racismo enquanto imprescritibilidade, etc.</li>
+</ul>
+<hr />
+<h1 id="modulo-v-direitos-sociais-nacionalidade-e-politicos">MÓDULO V — DIREITOS SOCIAIS, NACIONALIDADE E POLÍTICOS</h1>
+<h2 id="1-direitos-sociais-art-6o">1. Direitos sociais (art. 6º)</h2>
+<ul>
+<li>Rol: educação, saúde, alimentação, trabalho, moradia, transporte, lazer, segurança, previdência social, proteção à maternidade e à infância, assistência aos desamparados. <strong>Rol exemplificativo</strong> (STF, ADI 639).</li>
+<li><strong>Inserções pelo poder derivado</strong> (pegadinha): <strong>moradia</strong> (EC 26/2000), <strong>alimentação</strong> (EC 64/2010), <strong>transporte</strong> (EC 90/2015).</li>
+<li>São de <strong>eficácia limitada</strong>, mas <strong>não estritamente programáticas</strong>. Princípios de concretização: <strong>reserva do possível</strong> (o Estado não pode alegar só o orçamento — deve <strong>demonstrar objetivamente</strong>), <strong>mínimo existencial</strong>, <strong>vedação ao retrocesso</strong>.</li>
+</ul>
+<h2 id="2-nacionalidade-arts-12-13">2. Nacionalidade (arts. 12-13)</h2>
+<ul>
+<li><strong>Nacionalidade ≠ cidadania</strong> (cidadania = gozo pleno de direitos políticos).</li>
+<li><strong>Natos (art. 12, I)</strong>: (a) nascidos no Brasil, ainda que de pais estrangeiros, <strong>exceto</strong> se <strong>ambos</strong> os pais forem estrangeiros <strong>e</strong> algum estiver <strong>a serviço do seu país</strong> (as duas condições são <strong>cumulativas</strong>); (b) nascidos no exterior de pai/mãe brasileiro <strong>a serviço da RFB</strong>; (c) nascidos no exterior de pai/mãe brasileiro <strong>registrados</strong> em repartição brasileira <strong>ou</strong> que residam no Brasil e <strong>optem após a maioridade</strong> (nacionalidade potestativa — efeitos <strong>ex tunc</strong>).</li>
+<li><strong>Naturalizados</strong>: <strong>ordinária</strong> (lei; portugueses: 1 ano de residência + idoneidade moral; ato <strong>discricionário</strong> do Presidente) e <strong>extraordinária</strong> (+15 anos ininterruptos, sem condenação penal, requerimento; <strong>direito subjetivo</strong>; efeitos retroativos ao requerimento — RE 264.848).</li>
+<li><strong>Perda (art. 12, §4º)</strong>: (I) cancelamento de naturalização por sentença; (II) aquisição de outra nacionalidade <strong>voluntariamente</strong>, <strong>salvo</strong>: (a) reconhecimento de nacionalidade originária pela lei estrangeira; (b) imposição de naturalização como condição de permanência/exercício de direitos civis. Exceções admitem <strong>dupla nacionalidade</strong>.</li>
+<li><strong>Art. 13</strong>: língua portuguesa = idioma oficial; símbolos da RFB: bandeira, hino, armas, selo.</li>
+</ul>
+<h2 id="3-direitos-politicos-arts-14-16">3. Direitos políticos (arts. 14-16)</h2>
+<ul>
+<li><strong>Voto</strong>: <strong>obrigatório</strong> para maiores de 18; <strong>facultativo</strong> para analfabetos, <strong>maiores de 70</strong> e <strong>16 a 18</strong>; <strong>vedado</strong> a estrangeiros e conscritos em serviço militar obrigatório.</li>
+<li><strong>Elegibilidade (art. 14, §3º — cumulativas)</strong>: nacionalidade brasileira; pleno exercício dos direitos políticos; alistamento; domicílio eleitoral; filiação partidária (<strong>não há candidatura avulsa</strong>); idade: <strong>35</strong> (Presidente/Vice, Senador), <strong>30</strong> (Governador/Vice — Estado e DF), <strong>21</strong> (Dep. Federal/Estadual/Distrital, Prefeito/Vice, juiz de paz), <strong>18</strong> (Vereador).</li>
+<li><strong>Perda e suspensão (art. 15)</strong>: <strong>vedada a cassação</strong>. <strong>Perda</strong> (definitiva): cancelamento de naturalização; recusa de obrigação a todos imposta. <strong>Suspensão</strong> (reaquisição automática): incapacidade civil <strong>absoluta</strong>; condenação criminal transitada em julgado (enquanto durarem os efeitos); <strong>improbidade administrativa</strong> (perda do mandato + suspensão dos direitos políticos).</li>
+<li><strong>Art. 16 — anterioridade eleitoral</strong>: lei que altera o processo eleitoral <strong>não se aplica à eleição que ocorra até 1 ano</strong> da sua vigência. <strong>Cláusula pétrea</strong> (RE 633.703).</li>
+</ul>
+<hr />
+<h1 id="modulo-vi-partidos-politicos-e-organizacao-do-estado">MÓDULO VI — PARTIDOS POLÍTICOS E ORGANIZAÇÃO DO ESTADO</h1>
+<h2 id="1-partidos-politicos-arts-17-18">1. Partidos políticos (arts. 17-18)</h2>
+<ul>
+<li><strong>Pessoas jurídicas de direito privado</strong>; criação livre (soberania, regime democrático, pluripartidarismo, direitos fundamentais).</li>
+<li><strong>Preceitos (art. 17, I-IV)</strong>: caráter nacional; vedação de recursos/subordinação estrangeiros; prestação de contas à Justiça Eleitoral; funcionamento parlamentar conforme lei.</li>
+<li><strong>Autonomia (§1º)</strong>: estatutos, órgãos, coligações (<strong>vedadas nas proporcionais</strong> — EC 97/2017; permitidas nas majoritárias); fim da verticalização (EC 52/2006); fidelidade partidária; fundo partidário; rádio/TV.</li>
+<li><strong>Personalidade jurídica</strong>: registro do estatuto no <strong>TSE</strong> = capacidade política.</li>
+<li><strong>Cláusula de barreira (art. 17, §3º — EC 97/2017)</strong>: fundo partidário + rádio/TV só se, <strong>alternativamente</strong>: (I) ≥ <strong>3%</strong> dos votos válidos para a Câmara, em ≥ 1/3 das UF, com ≥ 2% em cada; ou (II) ≥ <strong>15 deputados federais</strong> em ≥ 1/3 das UF. <strong>Aplicação plena a partir de 2030</strong> (transição: 2018 — 1,5%/9; 2022 — 2%/11; 2026 — 2,5%/13). A cláusula de 5% da Lei 9.096/95 foi declarada inconstitucional (ADI 1.351).</li>
+</ul>
+<h2 id="2-organizacao-politico-administrativa-art-18">2. Organização político-administrativa (art. 18)</h2>
+<ul>
+<li>União, Estados, DF e Municípios, <strong>todos autônomos</strong> (federação indissolúvel). Brasília = capital (§1º), <strong>não é ente federativo</strong>. <strong>Territórios não são entes</strong> (autarquias territoriais da União).</li>
+<li><strong>DF (art. 32)</strong>: autonomia <strong>híbrida</strong> (competências de Estados e Municípios), mas <strong>não</strong> organiza Judiciário/MP/polícias/bombeiros (é da União — SV 39); <strong>não se divide em municípios</strong>.</li>
+<li><strong>Estados (art. 25)</strong>: auto-organização observando os <strong>princípios constitucionais sensíveis</strong> (art. 34, VII) — violação gera <strong>intervenção federal</strong>. Regiões metropolitanas por <strong>lei complementar estadual</strong> (§3º).</li>
+<li><strong>Municípios (art. 30)</strong>: <strong>sem Poder Judiciário</strong>; Lei Orgânica (2 turnos, 10 dias de interstício, 2/3); 2º turno só em municípios com +200 mil eleitores. <strong>Interesse local</strong>: horário de comércio (SV 38), meia-passagem local, meio ambiente local. <strong>NÃO é interesse local</strong>: horário de agências bancárias (sistema financeiro nacional), cinto de segurança (trânsito = art. 22).</li>
+</ul>
+<hr />
+<h1 id="modulo-vii-competencias-da-uniao-dos-estados-e-dos-municipios">MÓDULO VII — COMPETÊNCIAS DA UNIÃO, DOS ESTADOS E DOS MUNICÍPIOS</h1>
+<table>
+<thead>
+<tr>
+<th>Espécie</th>
+<th>Natureza</th>
+<th>Dispositivo</th>
+<th>Delegável?</th>
+<th>Peculiaridade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Exclusiva (União)</strong></td>
+<td><strong>Administrativa</strong> (executar)</td>
+<td><strong>art. 21</strong></td>
+<td><strong>NÃO</strong></td>
+<td>Mesmo com a União omisa, os outros entes não atuam</td>
+</tr>
+<tr>
+<td><strong>Privativa (União)</strong></td>
+<td><strong>Legislativa</strong></td>
+<td><strong>art. 22</strong></td>
+<td><strong>SIM</strong>, por <strong>lei complementar</strong>, a Estados e DF (<strong>nunca Municípios</strong>), questões específicas, a todos os estados</td>
+<td>Delegação ≠ renúncia; União pode retomar</td>
+</tr>
+<tr>
+<td><strong>Comum</strong> (todos)</td>
+<td><strong>Administrativa</strong> (solidária)</td>
+<td><strong>art. 23</strong></td>
+<td>—</td>
+<td>Lei complementar coordena a cooperação</td>
+</tr>
+<tr>
+<td><strong>Concorrente</strong> (União + Estados + DF)</td>
+<td><strong>Legislativa</strong></td>
+<td><strong>art. 24</strong></td>
+<td>—</td>
+<td>União: <strong>normas gerais</strong>; Estados: <strong>suplementar</strong>. Sem lei federal → <strong>competência plena</strong> do Estado. Superveniência de lei federal <strong>suspende</strong> (não revoga!) a estadual</td>
+</tr>
+<tr>
+<td><strong>Residual (Estados)</strong></td>
+<td>—</td>
+<td><strong>art. 25, §1º</strong></td>
+<td>—</td>
+<td>Competências <strong>não vedadas</strong> aos Estados</td>
+</tr>
+<tr>
+<td><strong>Municipais</strong></td>
+<td>Mista</td>
+<td><strong>art. 30</strong></td>
+<td>—</td>
+<td>I — legislar sobre <strong>interesse local</strong> (<strong>exclusiva</strong>); II — <strong>suplementar</strong> lei federal/estadual</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Casos clássicos de confusão:</strong>
+- <strong>Seguridade social</strong> (privativa, art. 22, XXIII) × <strong>previdência social</strong> (concorrente, art. 24, XII).
+- <strong>Diretrizes e bases da educação</strong> (privativa, art. 22, XXIV) × <strong>educação</strong> (concorrente, art. 24, IX).
+- Art. 22 mais cobrados: direito civil/comercial/penal/processual, desapropriação, águas/energia/telecom, moeda, comércio exterior e interestadual, <strong>trânsito e transporte</strong>, nacionalidade/cidadania, seguridade social, LDB, registros públicos, <strong>licitações (normas gerais)</strong>.
+- Art. 21 mais cobrados: relações exteriores, defesa nacional, intervenção, estados de exceção, moeda, correios, telecomunicações, energia/portos/transportes interestaduais, polícias do DF, anistia, <strong>nuclear (monopólio)</strong>.</p>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>Eficácia contida × limitada</strong>: contida já produz efeitos e a lei <strong>restringe</strong>; limitada <strong>depende</strong> de lei que <strong>amplia</strong>.</li>
+<li>Subdividir a eficácia <strong>contida</strong> em programáticas/institutivas está <strong>ERRADO</strong> — quem se subdivide é a <strong>limitada</strong>.</li>
+<li>Eficácia plena "deve produzir todos os efeitos" está <strong>ERRADO</strong> — basta a <strong>possibilidade</strong> de produzi-los.</li>
+<li><strong>Art. 5º §1º não afasta</strong> direitos fundamentais de eficácia limitada.</li>
+<li>"Defesa da paz" é do <strong>art. 4º</strong>, não fundamento (art. 1º); <strong>América Latina</strong>, não América do Sul.</li>
+<li>Só <strong>emendas</strong> são controláveis; normas originárias, não.</li>
+<li>Leis federais = estaduais = municipais em hierarquia; conflito é de <strong>competência</strong>.</li>
+<li><strong>ADI</strong>: partido precisa de representação no Congresso; <strong>sindicato não</strong> propõe (só confederação/entidade nacional); <strong>parlamentar isolado não</strong> propõe (só Mesa).</li>
+<li><strong>ADC só atinge leis federais</strong>.</li>
+<li><strong>ADPF é residual</strong> — havendo ADI/ADC eficaz, não cabe.</li>
+<li><strong>Modulação</strong>: 2/3 + segurança jurídica <strong>ou</strong> excepcional interesse social.</li>
+<li><strong>Súmula vinculante não vincula o STF nem o Legislativo legislando</strong>.</li>
+<li><strong>Improbidade = suspensão</strong> (não perda) dos direitos políticos; <strong>cassação é vedada</strong>.</li>
+<li><strong>Prisão cautelar não suspende</strong> direitos políticos (só condenação transitada em julgado).</li>
+<li><strong>Analfabeto e maior de 70</strong>: voto <strong>facultativo</strong>.</li>
+<li>Filho de diplomata não é nato <strong>somente se ambos os pais forem estrangeiros</strong>.</li>
+<li><strong>Naturalização extraordinária</strong> = direito subjetivo; <strong>ordinária</strong> = discricionária.</li>
+<li><strong>Exclusiva (21) indelegável × privativa (22) delegável</strong> por LC a Estados/DF (nunca Municípios).</li>
+<li><strong>Comum (23) = administrativa × concorrente (24) = legislativa</strong>; superveniência <strong>suspende</strong>, não revoga.</li>
+<li><strong>Residual é dos Estados</strong>; Municípios <strong>não têm Judiciário</strong>; DF <strong>não se divide</strong> em municípios.</li>
+<li><strong>Anterioridade eleitoral (art. 16) é cláusula pétrea</strong>.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) A norma constitucional que determina a greve dos servidores públicos civis "nos termos de lei específica" é exemplo de norma de eficácia contida.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> É norma de <strong>eficácia limitada</strong> (aplicabilidade indireta, mediata e reduzida) — depende de lei que <strong>amplia</strong> seu alcance. Na eficácia <strong>contida</strong>, a norma já produz efeitos e a lei <strong>restringe</strong>.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) Sobre a classificação das normas constitucionais quanto à eficácia, é INCORRETO afirmar:
+a) As normas de eficácia plena têm aplicabilidade direta, imediata e integral.
+b) As normas de eficácia contida podem ser restringidas por lei ou por outro dispositivo constitucional.
+c) As normas de eficácia limitada dividem-se em declaratórias de princípios institutivos e programáticos.
+d) As normas de eficácia plena devem necessariamente produzir todos os seus efeitos em qualquer hipótese.
+e) As normas de eficácia limitada possuem eficácia mínima, de revogação e de vinculação do legislador.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> A eficácia plena dá a <strong>possibilidade</strong> de produção integral dos efeitos, não a certeza de que todos serão produzidos em qualquer caso. As demais alternativas estão corretas.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) O Senado Federal, ao suspender a execução de lei declarada inconstitucional em controle difuso (art. 52, X, CF), pratica ato vinculado e seus efeitos são necessariamente ex tunc.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A resolução do Senado é ato <strong>político/discricionário</strong>, e a doutrina majoritária lhe confere efeitos <strong>ex nunc</strong>.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FGV-style) São legitimados para propor ação direta de inconstitucionalidade, EXCETO:
+a) o Governador do Estado.
+b) o Procurador-Geral da República.
+c) partido político com representação no Congresso Nacional.
+d) a Mesa da Câmara dos Deputados.
+e) a Federação dos Sindicatos dos Trabalhadores do Poder Judiciário da União.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: e.</strong> Sindicatos e <strong>federações</strong> não têm legitimidade — apenas <strong>confederações</strong> sindicais (mínimo de 3 federações) e entidades de classe de âmbito nacional. O Governador é legitimado <strong>especial</strong> (exige pertinência temática).</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) A arguição de descumprimento de preceito fundamental pode ser proposta mesmo quando existir outro meio eficaz de sanar a lesividade, por ser ação de natureza principal e não subsidiária.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A ADPF é <strong>subsidiária/residual</strong>: não cabe quando houver <strong>outro meio eficaz</strong> no contexto das ações de controle concentrado (ADI/ADC).</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) O fundamento da República Federativa do Brasil relativo aos valores sociais do trabalho e da livre iniciativa está previsto:
+a) no art. 1º, IV.
+b) no art. 3º, I.
+c) no art. 4º, II.
+d) no art. 170, caput.
+e) no art. 193.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> Art. 1º, IV — <strong>fundamento</strong> da República. O art. 3º trata de <strong>objetivos fundamentais</strong>; o art. 4º de relações internacionais; o art. 170 é a ordem econômica.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) A aquisição voluntária de outra nacionalidade importa sempre e automaticamente a perda da nacionalidade brasileira.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Há <strong>duas exceções</strong> (art. 12, §4º, II): (a) reconhecimento de nacionalidade originária pela lei estrangeira; (b) imposição de naturalização como condição de permanência no país ou de exercício de direitos civis. Nessas hipóteses, admite-se <strong>dupla nacionalidade</strong>.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FGV-style) Sobre direitos políticos, é correto afirmar:
+a) O alistamento eleitoral é obrigatório para analfabetos.
+b) O voto é facultativo para os maiores de 70 anos.
+c) A cassação de direitos políticos é medida admitida pela Constituição.
+d) A condenação criminal por decisão não transitada em julgado suspende os direitos políticos.
+e) A inelegibilidade por improbidade administrativa implica perda definitiva dos direitos políticos.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> (a) analfabeto: voto <strong>facultativo</strong>; (c) cassação é <strong>vedada</strong> (art. 15); (d) exige trânsito em julgado; (e) improbidade gera <strong>perda do mandato e suspensão</strong> (não perda definitiva) dos direitos políticos.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) A lei que altera o processo eleitoral poderá ser aplicada à eleição que se realize no mesmo ano de sua publicação, desde que aprovada por três quintos dos membros de cada Casa do Congresso Nacional.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A <strong>anterioridade eleitoral</strong> (art. 16) é absoluta: a lei <strong>não se aplica</strong> à eleição que ocorra até <strong>1 ano</strong> da sua vigência — e é <strong>cláusula pétrea</strong> (RE 633.703).</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (CESPE-style) A União pode delegar aos Municípios, mediante lei complementar, a competência para legislar sobre matérias de sua competência privativa (art. 22).
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A delegação (art. 22, parágrafo único) alcança <strong>apenas os Estados e o Distrito Federal</strong>, mediante lei complementar, sobre questões específicas — <strong>nunca aos Municípios</strong>. A competência do art. 22 é <strong>privativa</strong> (legislativa e delegável); a do art. 21 é <strong>exclusiva</strong> (administrativa e indelegável).</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A lei federal superveniente às normas estaduais no âmbito de competência concorrente revoga automaticamente a legislação estadual pré-existente.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Em competência concorrente (art. 24, §3º), a superveniência de lei federal sobre normas gerais <strong>suspende</strong> a eficácia da lei estadual no que lhe for contrário — <strong>não revoga</strong>.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Assinale a opção correta acerca da organização político-administrativa:
+a) Os Territórios Federais são entes federativos dotados de autonomia.
+b) O Distrito Federal pode dividir-se em municípios.
+c) Os Municípios possuem Poder Judiciário próprio.
+d) A administração pública direta do Distrito Federal integra a estrutura da União para fins de organização de sua Justiça e polícias.
+e) Brasília é ente federativo autônomo.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> O DF <strong>não organiza</strong> Judiciário, MP, polícias civis e militares e corpo de bombeiros (arts. 21, XIII-XIV; SV 39) — são da <strong>União</strong>. Territórios não são entes; DF não se divide em municípios; Municípios não têm Judiciário; Brasília é capital, não ente.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) É da competência comum da União, dos Estados, do Distrito Federal e dos Municípios zelar pela guarda da Constituição, das leis e das instituições democráticas e conservar o patrimônio público.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Art. 23, I e IX — competência <strong>comum</strong> (administrativa/solidária). Não confundir com competência <strong>concorrente</strong> (legislativa — art. 24).</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) Sobre o mandado de segurança coletivo, é correto afirmar:
+a) Somente o Ministério Público pode impetrá-lo.
+b) Associação pode impetrá-lo independentemente do tempo de constituição.
+c) Sindicato pode impetrá-lo em defesa dos interesses de seus membros ou associados.
+d) Não admite substituição processual.
+e) O partido político pode impetrá-lo mesmo sem representação no Congresso Nacional.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> (a) o MP não é legitimado do art. 5º, LXX; (b) associação exige <strong>1 ano</strong> de constituição (exigência dispensada a sindicatos/entidades de classe); (d) admite <strong>substituição processual</strong>; (e) partido <strong>exige</strong> representação no Congresso.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) A cláusula de barreira prevista no art. 17, §3º, da CF, com a redação da EC 97/2017, condiciona o acesso ao fundo partidário e ao rádio e à televisão, em caráter alternativo, ao alcance de 3% dos votos válidos para a Câmara dos Deputados em pelo menos um terço das unidades federadas, com o mínimo de 2% em cada uma delas, ou à eleição de, no mínimo, 15 deputados federais distribuídos em pelo menos um terço das unidades federadas.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Os dois critérios são <strong>alternativos</strong> e a aplicação é <strong>plena a partir de 2030</strong> (com escalonamento em 2018, 2022 e 2026).</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Diferencie controle difuso e concentrado de constitucionalidade quanto a: objeto, efeitos da decisão e legitimidade para provocação.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> No <strong>controle difuso</strong> (via incidental), o objeto é o caso concreto; qualquer juiz ou tribunal pode exercê-lo; a decisão tem efeitos <strong>inter partes</strong>, não vinculantes (regra ex tunc), podendo ser ampliados pelo Senado (art. 52, X). No <strong>controle concentrado</strong> (via principal), discute-se a lei "em tese"; só o STF julga (ADI/ADC/ADPF); a decisão é <strong>erga omnes e vinculante</strong> (regra ex tunc, com modulação por 2/3 — art. 27 da Lei 9.868/99); a provocação é restrita ao rol do art. 103 da CF.</p></details>
+<p><strong>D2.</strong> Explique a diferença entre competência exclusiva (art. 21) e competência privativa (art. 22) da União, quanto à natureza e à delegabilidade.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>exclusiva</strong> (art. 21) é <strong>administrativa/material</strong> (execução de serviços) e <strong>indelegável</strong> — mesmo que a União não a exerça, os demais entes não podem fazê-lo. A <strong>privativa</strong> (art. 22) é <strong>legislativa</strong> e <strong>delegável</strong> mediante <strong>lei complementar</strong>, mas somente aos <strong>Estados e ao Distrito Federal</strong> (nunca aos Municípios), sobre questões específicas; a delegação não importa renúncia, podendo a União retomar o exercício.</p></details>
+<hr />
+<h2 id="referencias-de-estudo-na-base-local-trt8-new">Referências de estudo na base local (trt8 new)</h2>
+<ul>
+<li><code>APOSTILAS SEFA MD\direito constitucional\</code> — aula-00 (aplicabilidade/hierarquia), aula-01 (arts. 1º-4º), aulas-02/03 (art. 5º e remédios), aula-04 (art. 6º), aula-05 (nacionalidade), aula-06 (direitos políticos), aula-07 (federação), <strong>aula-18 (controle de constitucionalidade)</strong>.</li>
+<li><code>APOSTILAS ESTRATEGIA MD\02.Básico.para.Concursos.2020\05.Direito Constitucional\</code> — Aula00 (Constituição), Aula01/02 (art. 5º), Aula03 (direitos sociais/nacionalidade), Aula04 (direitos políticos/partidos), Aula05 (organização do Estado/competências).</li>
+<li>Complementos (modulação no difuso, art. 11 da Lei 9.868/99, EC 115/2022): redigidos com base em conhecimento jurídico atual, sinalizados no texto.</li>
+</ul>
+<script>
+(function () {
+  const key = 'apostila-direito-constitucional-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

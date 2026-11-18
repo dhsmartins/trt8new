@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tópico 9 — Ciência de Dados e IA (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>Tópico 9 — Ciência de Dados e IA</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-conceitos-fundamentais">1. Conceitos fundamentais</a></li>
+<li class="toc-h2"><a href="#2-estatistica-descritiva-e-analise-exploratoria-de-dados-aed">2. Estatística descritiva e Análise Exploratória de Dados (AED)</a></li>
+<li class="toc-h2"><a href="#3-escalas-de-mensuracao-assunto-recorrente-em-prova">3. Escalas de mensuração (assunto recorrente em prova)</a></li>
+<li class="toc-h2"><a href="#4-variaveis">4. Variáveis</a></li>
+<li class="toc-h2"><a href="#5-visualizacao-de-dados">5. Visualização de dados</a></li>
+<li class="toc-h2"><a href="#6-amostragem">6. Amostragem</a></li>
+<li class="toc-h2"><a href="#7-estatistica-inferencial-complemento-nao-esta-no-material-2020">7. Estatística inferencial (complemento — não está no material 2020)</a></li>
+<li class="toc-h2"><a href="#1-conceito-e-os-vs">1. Conceito e os Vs</a></li>
+<li class="toc-h2"><a href="#2-big-data-analytics-e-os-tipos-de-analise">2. Big Data Analytics e os tipos de análise</a></li>
+<li class="toc-h2"><a href="#3-as-8-falacias-do-big-data-cuidado-em-prova">3. As 8 falácias do Big Data (cuidado em prova)</a></li>
+<li class="toc-h2"><a href="#4-nosql">4. NoSQL</a></li>
+<li class="toc-h2"><a href="#5-hadoop-e-ecossistema">5. Hadoop e ecossistema</a></li>
+<li class="toc-h2"><a href="#6-data-warehouse-etl-e-olap-complemento-de-contexto-coberto-no-topico-10-mas-cai-junto">6. Data Warehouse, ETL e OLAP (complemento de contexto — coberto no Tópico 10, mas cai junto)</a></li>
+<li class="toc-h2"><a href="#1-conceitos">1. Conceitos</a></li>
+<li class="toc-h2"><a href="#2-paradigmas-de-aprendizado">2. Paradigmas de aprendizado</a></li>
+<li class="toc-h2"><a href="#3-algoritmos-supervisionado">3. Algoritmos — supervisionado</a></li>
+<li class="toc-h2"><a href="#4-algoritmos-nao-supervisionado">4. Algoritmos — não supervisionado</a></li>
+<li class="toc-h2"><a href="#5-pre-processamento-de-dados-kdd-e-crisp-dm">5. Pré-processamento de dados (KDD e CRISP-DM)</a></li>
+<li class="toc-h2"><a href="#1-matriz-de-confusao-classificacao-binaria">1. Matriz de confusão (classificação binária)</a></li>
+<li class="toc-h2"><a href="#2-metricas-essenciais">2. Métricas essenciais</a></li>
+<li class="toc-h2"><a href="#3-validacao-e-generalizacao">3. Validação e generalização</a></li>
+<li class="toc-h2"><a href="#1-conceito">1. Conceito</a></li>
+<li class="toc-h2"><a href="#2-modelos-de-linguagem-llms">2. Modelos de linguagem (LLMs)</a></li>
+<li class="toc-h2"><a href="#3-tecnicas-e-aplicacoes">3. Técnicas e aplicações</a></li>
+<li class="toc-h2"><a href="#4-limitacoes">4. Limitações</a></li>
+<li class="toc-h2"><a href="#1-etica-e-vieses-algoritmicos">1. Ética e vieses algorítmicos</a></li>
+<li class="toc-h2"><a href="#2-governanca-de-modelos">2. Governança de modelos</a></li>
+<li class="toc-h2"><a href="#3-lgpd-lei-137092018-aplicada-a-ia">3. LGPD (Lei 13.709/2018) aplicada a IA</a></li>
+<li class="toc-h2"><a href="#4-regulacao-em-evolucao">4. Regulação em evolução</a></li>
+<li class="toc-h2"><a href="#1-dataops">1. DataOps</a></li>
+<li class="toc-h2"><a href="#2-mlops">2. MLOps</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas-para-treino-de-prova-discursiva">Questões discursivas (para treino de prova discursiva)</a></li>
+<li class="toc-h2"><a href="#referencias-de-estudo-na-base-local-trt8-new">Referências de estudo na base local (trt8 new)</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-9-ciencia-de-dados-e-inteligencia-artificial">APOSTILA — TÓPICO 9: CIÊNCIA DE DADOS E INTELIGÊNCIA ARTIFICIAL</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Fundamentos de estatística e análise de dados; Big Data: ferramentas e arquiteturas; Algoritmos de machine learning: supervisionado e não supervisionado; Avaliação de modelos; IA Generativa, ética e governança de modelos; Processos e práticas: DataOps, MLOps.</p>
+<p><strong>Base de conhecimento:</strong> apostilas Estratégia 2020.2 (Business Intelligence Aula02–Aula06 e Aula10; Banco de Dados Aula08) + complementos atuais (IA generativa, MLOps, métricas de avaliação — conteúdos pós-2020, sinalizados no texto).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-fundamentos-de-estatistica-e-analise-de-dados">MÓDULO I — FUNDAMENTOS DE ESTATÍSTICA E ANÁLISE DE DADOS</h1>
+<h2 id="1-conceitos-fundamentais">1. Conceitos fundamentais</h2>
+<ul>
+<li><strong>Estatística</strong>: conjunto de técnicas para organizar, descrever, analisar e interpretar dados. Divide-se em três áreas: <strong>estatística descritiva</strong>, <strong>probabilidade</strong> e <strong>inferência estatística</strong>.</li>
+<li><strong>População</strong>: conjunto de todos os elementos que possuem ao menos uma característica em comum. <strong>Amostra</strong>: subconjunto <strong>próprio</strong> (menor) e <strong>representativo</strong> da população. <strong>Amostragem</strong>: processo de seleção da amostra.</li>
+<li><strong>Parâmetro</strong> × <strong>Estimador</strong> (pegadinha clássica):</li>
+<li><strong>Parâmetro</strong>: medida da <strong>população</strong>; é <strong>constante</strong>; símbolos θ, μ (média), σ² (variância), σ (desvio padrão), ρ.</li>
+<li><strong>Estimador</strong>: fórmula/função aplicada à <strong>amostra</strong>; símbolos θ̂, x̅, s², s, r.</li>
+<li><strong>Erro amostral</strong>: ε = θ̂ − θ.</li>
+</ul>
+<h2 id="2-estatistica-descritiva-e-analise-exploratoria-de-dados-aed">2. Estatística descritiva e Análise Exploratória de Dados (AED)</h2>
+<ul>
+<li><strong>AED</strong>: resumir as características principais dos dados, geralmente com métodos <strong>visuais</strong>, <strong>sem impor um modelo</strong> (diferente da Estatística Clássica e da Bayesiana). Promovida por <strong>John Tukey</strong>.</li>
+<li><strong>Medidas de tendência central</strong>:</li>
+<li><strong>Moda</strong>: valor mais frequente. Ex.: {3,4,5,6,7,7,7,8,8,9} → moda = 7. <strong>Única medida válida para escala nominal.</strong></li>
+<li><strong>Mediana</strong>: valor central da série <strong>ordenada</strong>; com número par de elementos, é a <strong>média dos dois centrais</strong>.</li>
+<li><strong>Média</strong>: soma/n; só faz sentido para escala <strong>intervalar</strong> ou <strong>de razão</strong>.</li>
+<li><strong>Medidas de dispersão</strong>: amplitude, amplitude interquartílica (IIQ = Q3 − Q1), <strong>variância</strong> (soma dos desvios da média elevados ao quadrado — <em>a soma dos desvios sem elevar é sempre 0</em>), <strong>desvio padrão</strong> (raiz da variância; volta à unidade original), coeficiente de variação.</li>
+<li><strong>Assimetria</strong> (distribuição inclinada) e <strong>curtose</strong> (grau de achatamento/pontude).</li>
+</ul>
+<h2 id="3-escalas-de-mensuracao-assunto-recorrente-em-prova">3. Escalas de mensuração (assunto recorrente em prova)</h2>
+<table>
+<thead>
+<tr>
+<th>Escala</th>
+<th>Natureza</th>
+<th>O que permite</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nominal</strong></td>
+<td>Qualitativa</td>
+<td>Só igualdade/diferença, <strong>sem ordem</strong></td>
+<td>sexo, cor, estado civil</td>
+</tr>
+<tr>
+<td><strong>Ordinal</strong></td>
+<td>Qualitativa</td>
+<td>Igualdade + <strong>ordem</strong> (diferenças não quantificáveis)</td>
+<td>classe social, faixa etária, likert</td>
+</tr>
+<tr>
+<td><strong>Intervalar</strong></td>
+<td>Quantitativa</td>
+<td>Diferenças significativas; <strong>zero relativo/convenção</strong> (0°C ≠ ausência de calor)</td>
+<td>temperatura Celsius, ano, IQ</td>
+</tr>
+<tr>
+<td><strong>Razão</strong></td>
+<td>Quantitativa</td>
+<td>Diferenças <strong>e razões</strong> significativas; <strong>zero absoluto</strong></td>
+<td>peso, altura, renda, distância</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pegadinha CESPE (TCE-PB 2018):</strong> não confundir <strong>nível de mensuração</strong> (quanto de informação a variável apresenta) com <strong>nível de manipulação</strong> (como ela se relaciona no experimento):
+- <strong>Independente</strong>: manipulada pelo pesquisador.
+- <strong>Dependente</strong>: medida/registrada (resposta).
+- <strong>De controle</strong>: mantida fixa para isolar efeito.</p>
+<h2 id="4-variaveis">4. Variáveis</h2>
+<ul>
+<li><strong>Qualitativas</strong>: nominal e ordinal. <strong>Quantitativas</strong>: <strong>discreta</strong> (nº de filhos — contagem) e <strong>contínua</strong> (peso, altura — medição).</li>
+</ul>
+<h2 id="5-visualizacao-de-dados">5. Visualização de dados</h2>
+<ul>
+<li><strong>Barras</strong>: qualitativas ordinais/discretas. <strong>Pizza</strong>: categorias nominais.</li>
+<li><strong>Histograma</strong>: retângulos <strong>contíguos</strong>; a <strong>área</strong> = frequência relativa; informa centralidade, amplitude e simetria.</li>
+<li><strong>Boxplot (diagrama de caixa)</strong>: Q1, mediana (Q2), Q3. <strong>Outliers/discrepantes</strong>: valores &gt; Q3 + 1,5·(Q3−Q1) ou &lt; Q1 − 1,5·(Q3−Q1). Informa posição, dispersão, assimetria, caudas e discrepantes.</li>
+<li><strong>Série temporal</strong> (linha): evolução no tempo. <strong>Polígono de frequências</strong>: liga os pontos médios do histograma. <strong>Dispersão (scatterplot)</strong>: relação entre <strong>duas</strong> variáveis quantitativas. <strong>Curvas de nível</strong>: mapas de contorno.</li>
+</ul>
+<h2 id="6-amostragem">6. Amostragem</h2>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Modalidade</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aleatória simples</td>
+<td>Probabilística</td>
+<td>Cada elemento com a <strong>mesma chance</strong> de ser escolhido</td>
+</tr>
+<tr>
+<td>Por estratificação</td>
+<td>Probabilística</td>
+<td>Divide a população em ≥2 <strong>estratos</strong> homogêneos e amostra cada um</td>
+</tr>
+<tr>
+<td>Por conglomerados</td>
+<td>Probabilística</td>
+<td>Divide a área em <strong>seções</strong> (agrupamentos), sorteia seções e analisa <strong>todos</strong> os elementos delas</td>
+</tr>
+<tr>
+<td>Sistemática</td>
+<td>Probabilística</td>
+<td>Escolhe cada elemento de ordem <em>k</em></td>
+</tr>
+<tr>
+<td>Conveniência</td>
+<td><strong>Não</strong> probabilística</td>
+<td>Elementos de fácil acesso</td>
+</tr>
+<tr>
+<td>Julgamento</td>
+<td><strong>Não</strong> probabilística</td>
+<td>Escolha do pesquisador/entrevistador</td>
+</tr>
+<tr>
+<td>Por cotas</td>
+<td><strong>Não</strong> probabilística</td>
+<td>Cotas proporcionais, sem critério probabilístico</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Regra prática de prova:</strong> se o sorteio/probabilidade participa → probabilística; se há subjetividade ou conveniência → não probabilística. <strong>Estratificação</strong> = homogeneidade <strong>dentro</strong> dos grupos, heterogeneidade <strong>entre</strong> eles; <strong>conglomerados</strong> = o inverso.</p>
+<h2 id="7-estatistica-inferencial-complemento-nao-esta-no-material-2020">7. Estatística inferencial (complemento — não está no material 2020)</h2>
+<ul>
+<li><strong>Inferência estatística</strong>: generalizar resultados da amostra para a população, quantificando a incerteza.</li>
+<li><strong>Intervalo de confiança (IC)</strong>: faixa de valores plausíveis para o parâmetro, com nível de confiança (ex.: 95%). IC 95% para a média: x̅ ± z·(s/√n).</li>
+<li><strong>Teste de hipóteses</strong>: H₀ (hipótese nula — "não há efeito/diferença") × H₁ (alternativa). O <strong>p-valor</strong> é a probabilidade de observar o resultado (ou mais extremo) assumindo H₀ verdadeira. <strong>p &lt; α (usualmente 0,05) → rejeita-se H₀.</strong></li>
+<li><strong>Erro tipo I</strong>: rejeitar H₀ verdadeira (falso positivo). <strong>Erro tipo II</strong>: não rejeitar H₀ falsa (falso negativo).</li>
+<li><strong>Correlação × causalidade</strong>: correlação (ex.: coeficiente de Pearson r ∈ [−1,1]) <strong>não</strong> implica causalidade — pegadinha universal.</li>
+<li><strong>Regressão linear</strong>: Y = β₀ + β₁X₁ + … + βₙXₙ + ε (previsão de valor <strong>numérico</strong>). <strong>Regressão logística</strong>: prevê <strong>probabilidade</strong> de classe (classificação binária).</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-big-data-ferramentas-e-arquiteturas">MÓDULO II — BIG DATA: FERRAMENTAS E ARQUITETURAS</h1>
+<h2 id="1-conceito-e-os-vs">1. Conceito e os Vs</h2>
+<ul>
+<li><strong>Big Data</strong>: captura, gerenciamento e análise de dados <strong>para além dos estruturados</strong> (vídeo, imagens, logs, sensores, redes sociais). ~85% dos dados corporativos são <strong>não estruturados</strong>; IBM (2013): 2,5 exabytes gerados por dia.</li>
+<li><strong>3Vs originais</strong> — propostos por <strong>Doug Laney</strong> (Meta Group, 2001; depois Gartner): <strong>Volume, Velocidade, Variedade</strong>.</li>
+<li><strong>Vs adicionais</strong>: <strong>Veracidade</strong> (4º V, IBM — confiabilidade; ex.: sentimentos em redes sociais são incertos), <strong>Valor</strong> (Oracle — o valor por byte é baixo; dados devem gerar retorno), <strong>Visibilidade</strong>, <strong>Variabilidade/Complexidade</strong> (SAS — picos de fluxo, múltiplas fontes), <strong>Visualização</strong>.</li>
+<li>IBM cita <strong>7 dimensões</strong>: volume, variedade, velocidade, veracidade, valor + <strong>governança</strong> (propriedade/legalidade — ex.: dados de pacientes) e <strong>pessoas</strong> (modelagem, estatística).</li>
+</ul>
+<h2 id="2-big-data-analytics-e-os-tipos-de-analise">2. Big Data Analytics e os tipos de análise</h2>
+<ul>
+<li><strong>BI × Big Data Analytics</strong> (pergunta clássica): o <strong>BI responde perguntas que já existem</strong> (explica o <strong>passado</strong>); o <strong>Big Data Analytics encontra perguntas que nem sabíamos que existiam</strong> (tendências/padrões para o futuro).</li>
+<li><strong>Tipos de análise</strong>:</li>
+<li><strong>Descritiva</strong>: fotografia do presente (ex.: a pessoa <strong>é</strong> má pagadora hoje).</li>
+<li><strong>Diagnóstica</strong>: as causas (ex.: <strong>virou</strong> má pagadora porque ficou viúva).</li>
+<li><strong>Preditiva</strong>: prever comportamento (ex.: valor do dólar no ano que vem).</li>
+<li><strong>Prescritiva</strong>: prever <strong>consequências</strong> de um acontecimento (ex.: impacto do dólar nas importações).</li>
+</ul>
+<h2 id="3-as-8-falacias-do-big-data-cuidado-em-prova">3. As 8 falácias do Big Data (cuidado em prova)</h2>
+<ol>
+<li>Big Data engloba <strong>apenas</strong> dados estruturados — <strong>FALSO</strong>.</li>
+<li>Só existe em escala de petabytes — <strong>FALSO</strong>.</li>
+<li>Só vale para a Vale do Silício — <strong>FALSO</strong>.</li>
+<li>Só grandes organizações se beneficiam — <strong>FALSO</strong>.</li>
+<li>Requer dados externos — <strong>FALSO</strong> (comece pelos internos).</li>
+<li><strong>Big Data prevê o futuro</strong> — <strong>FALSO</strong>: os dados vêm do passado; só projeta tendências sob circunstâncias semelhantes.</li>
+<li>Substitui valores/ética — <strong>FALSO</strong>.</li>
+<li>Resolve qualquer problema — <strong>FALSO</strong> (não resolve problemas não quantificáveis, como comportamento individual).</li>
+</ol>
+<p><strong>Fato de prova (CESPE TJ/SE 2014):</strong> em Big Data, a análise exige <strong>transformar dados não estruturados em estruturados</strong>; consultas ad hoc são <strong>diferentes</strong> das de bancos tradicionais (fontes/formatos não fixos).</p>
+<h2 id="4-nosql">4. NoSQL</h2>
+<ul>
+<li><strong>Origem</strong>: termo cunhado em reunião de 11/06/2009 (São Francisco — Johan Oskarsson) sobre bancos <strong>não relacionais, distribuídos e open source</strong>. Inspirado em <strong>BigTable (Google)</strong> e <strong>Dynamo (Amazon)</strong>. Lê-se "<strong>Not only SQL</strong>".</li>
+<li><strong>Características</strong>: não usa modelo relacional; bom em clusters; código aberto; <strong>schema free</strong>; resultado: <strong>persistência poliglota</strong> (mistura de tecnologias conforme a necessidade).</li>
+<li><strong>Agregado</strong>: conjunto de objetos tratado como unidade de manipulação/consistência. <strong>Orientação por agregados</strong> em chave-valor, documento e família de colunas (grafos têm modelo próprio).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Modelo</th>
+<th>Característica</th>
+<th>Exemplos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Chave-valor</strong></td>
+<td>Agregado <strong>opaco</strong>; pesquisa só pela chave (get/set); sem consultas complexas</td>
+<td>DynamoDB, Redis, Riak</td>
+</tr>
+<tr>
+<td><strong>Documento</strong></td>
+<td>Agregado <strong>transparente</strong> (JSON/XML); consultas parciais; sem esquema rígido</td>
+<td>MongoDB, CouchDB</td>
+</tr>
+<tr>
+<td><strong>Colunar (família de colunas)</strong></td>
+<td>Trilha = (linha, coluna, <strong>timestamp</strong>); leitura/escrita atômicas por linha; <strong>column family</strong></td>
+<td>BigTable, Cassandra, HBase</td>
+</tr>
+<tr>
+<td><strong>Grafos</strong></td>
+<td>Nós, <strong>arestas</strong> (relacionamentos) e propriedades; multigrafo rotulado/direcionado</td>
+<td>Neo4J, InfoGrid</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Distribuição</strong>: <strong>fragmentação</strong> (distribui dados <strong>diferentes</strong> entre servidores) × <strong>replicação</strong> (copia os mesmos dados). Replicação <strong>mestre-escravo</strong> (mestre grava, escravos leem — menos conflitos) × <strong>ponto a ponto</strong> (qualquer nó grava — sem SPOF).</li>
+<li><strong>Teorema CAP</strong> (Eric Brewer, 2000; provado por Gilbert e Lynch): em sistema distribuído, entre <strong>Consistência, Disponibilidade e Tolerância a partições</strong>, escolhe-se <strong>apenas duas</strong>.</li>
+<li>Consistência = toda leitura retorna o valor mais recente; Disponibilidade = toda requisição recebe resposta; Tolerância a partições = o sistema sobrevive a "split brain" (rede dividida).</li>
+<li><strong>ACID × BASE</strong>:</li>
+<li><strong>ACID</strong> (Atomicidade, Consistência, Isolamento, Durabilidade): pessimista, bloqueios, consistência <strong>imediata</strong>; relacionais priorizam <strong>C+A</strong>.</li>
+<li><strong>BASE</strong> (Basically Available, Soft State, Eventual consistency): otimista, consistência <strong>eventual</strong>; favorece <strong>A+P</strong>. <em>Pegadinha: sistemas bancários não podem relaxar a consistência.</em></li>
+<li><strong>MapReduce</strong>: padrão de computação em cluster. <code>Map(k1,v1) → lista(k2,v2)</code>; <code>Reduce(k2, lista(v2)) → lista(v3)</code>. Exemplo clássico: <strong>censo romano</strong> (contagem paralela por região).</li>
+</ul>
+<h2 id="5-hadoop-e-ecossistema">5. Hadoop e ecossistema</h2>
+<ul>
+<li><strong>Hadoop</strong>: framework <strong>open source</strong> para armazenamento/processamento em larga escala em hardware <strong>commodity</strong>, tolerante a falhas. = <strong>HDFS</strong> (armazenamento distribuído) + <strong>MapReduce</strong> (processamento paralelo).</li>
+<li><strong>HDFS</strong>: daemons <strong>NameNode</strong> (metadados), <strong>DataNode</strong> (blocos), BackupNode, Checkpoint NameNode.</li>
+<li><strong>Camada de programação sobre MapReduce</strong>:</li>
+<li><strong>Hive</strong>: interface SQL (<strong>HiveQL</strong>), criado no Facebook; <strong>HiveQL NÃO é compatível com SQL92</strong>; suporta UDFs.</li>
+<li><strong>Pig</strong>: script <strong>Pig Latin</strong> (Yahoo); dados semiestruturados.</li>
+<li><strong>Spark</strong>: <strong>até 100× mais rápido que MapReduce em memória</strong> (10× em disco); processamento em <strong>streaming/tempo real</strong>; suportado pelo YARN.</li>
+<li><strong>HBase</strong>: NoSQL colunar sobre HDFS (inspirado no BigTable); baixa latência, forte consistência, esquema flexível.</li>
+<li><strong>Ingestão de dados</strong>:</li>
+<li><strong>Flume</strong>: eventos/logs → HDFS. Agente: <strong>Source → Channel → Sink</strong>.</li>
+<li><strong>Sqoop</strong>: Hadoop ↔ bancos relacionais/DW (import/export via MapReduce + driver JDBC).</li>
+<li><strong>NiFi</strong>: fluxo automatizado entre sistemas (FlowFile, Conteúdo, Proveniência; ZooKeeper elege o coordenador).</li>
+<li><strong>Kafka</strong>: plataforma de <strong>streaming</strong> distribuída (tópicos, partições, brokers, líder/réplica, produtores/consumidores).</li>
+<li><strong>Storm</strong>: processamento de streaming em tempo real.</li>
+<li><strong>Gestão e apoio</strong>:</li>
+<li><strong>YARN</strong> (Yet Another Resource Negotiator): gerencia recursos do Hadoop 2.x (suporta MapReduce, Spark, Storm, Tez).</li>
+<li><strong>ZooKeeper</strong>: coordenação/sincronização distribuída. <strong>Oozie</strong>: agendamento de workflows.</li>
+<li><strong>Mahout</strong>: biblioteca de <strong>machine learning</strong> (recomendação, clustering, classificação).</li>
+<li><strong>Ambari</strong>: administração/monitoramento de clusters (APIs RESTful).</li>
+</ul>
+<h2 id="6-data-warehouse-etl-e-olap-complemento-de-contexto-coberto-no-topico-10-mas-cai-junto">6. Data Warehouse, ETL e OLAP (complemento de contexto — coberto no Tópico 10, mas cai junto)</h2>
+<ul>
+<li><strong>Granularidade</strong> = nível de detalhe/sumarização; é o <strong>aspecto mais importante do projeto de DW</strong>. <em>Granularidade alta = menos detalhe.</em></li>
+<li><strong>Medidas em tabela fato</strong>: <strong>aditivas</strong> (somam em qualquer dimensão — ex.: lucro), <strong>semiaditivas</strong> (somam só em algumas — ex.: saldo não soma no tempo), <strong>não aditivas</strong> (nunca somam — ex.: percentuais/taxas).</li>
+<li><strong>ETL (Extract-Transform-Load)</strong>: consome ~<strong>70–80%</strong> dos recursos/tempo de um projeto de DW. 4 etapas (Kimball): <strong>Extração</strong> (com <em>data profiling</em> e <strong>CDC</strong> — change data capture), <strong>Limpeza</strong>, <strong>Conformidade</strong>, <strong>Entrega</strong> + <strong>Gestão</strong>. <em>Staging area</em> = área temporária ("cozinha" do restaurante).</li>
+<li><strong>OLAP</strong> (E.F. Codd): análise <strong>multidimensional</strong>, consultas <strong>ad hoc</strong>; <strong>não armazena dados</strong> (é ferramenta de análise).</li>
+<li><strong>Operações</strong>: <strong>roll-up/drill-up</strong> (agregar), <strong>drill-down</strong> (detalhar), <strong>slice</strong> (corta 1 dimensão), <strong>dice</strong> (≥2 dimensões), <strong>pivot/rotate</strong> (gira eixos), <strong>drill-across</strong> (<strong>mais de uma tabela fato</strong> — visão Kimball), <strong>drill-through</strong> (vai às <strong>tabelas relacionais</strong> de back-end).</li>
+<li><strong>Arquiteturas</strong>: <strong>MOLAP</strong> (cubos multidimensionais; Data Marts; "explosão de dados"), <strong>ROLAP</strong> (relacional + middleware; grandes volumes/DW), <strong>HOLAP</strong> (híbrido), <strong>DOLAP</strong> (desktop), <strong>SOLAP</strong> (SIG/geográfico), WOLAP (web).</li>
+<li><strong>OLTP × OLAP</strong>: OLTP atualiza registros atômicos, dados correntes, resposta &lt;1s, consultas pré-definidas; OLAP analisa dados sumarizados/históricos, arrays/cubos, resposta de segundos a <strong>horas</strong>, consultas ad hoc, armazenamento <strong>maior</strong>.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-algoritmos-de-machine-learning">MÓDULO III — ALGORITMOS DE MACHINE LEARNING</h1>
+<h2 id="1-conceitos">1. Conceitos</h2>
+<ul>
+<li><strong>Machine Learning (ML)</strong>: área da <strong>Inteligência Artificial</strong> em que sistemas <strong>aprendem com experiência</strong> (dados), melhorando desempenho em tarefas sem serem programados explicitamente.</li>
+<li><strong>Teorema NFL (No Free Lunch)</strong>: <strong>não existe algoritmo melhor para todos os problemas</strong> — a escolha depende dos dados e da tarefa.</li>
+</ul>
+<h2 id="2-paradigmas-de-aprendizado">2. Paradigmas de aprendizado</h2>
+<table>
+<thead>
+<tr>
+<th>Paradigma</th>
+<th>Dados</th>
+<th>Objetivo</th>
+<th>Exemplos de tarefa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Supervisionado</strong></td>
+<td>Entradas <strong>com</strong> rótulos/saídas conhecidas ("professor")</td>
+<td>Aprender f: entradas → saída</td>
+<td>Classificação (classe) e Regressão (valor numérico)</td>
+</tr>
+<tr>
+<td><strong>Não supervisionado</strong></td>
+<td><strong>Sem</strong> rótulos</td>
+<td>Descobrir estrutura oculta</td>
+<td>Clustering, redução de dimensionalidade, regras de associação</td>
+</tr>
+<tr>
+<td><strong>Por reforço</strong></td>
+<td>Agente + ambiente; <strong>recompensas/punições</strong></td>
+<td>Maximizar recompensa</td>
+<td>Ajuste dinâmico de preços, robótica, jogos</td>
+</tr>
+<tr>
+<td><strong>Semissupervisionado</strong></td>
+<td>Poucos rótulos + muitos não rotulados</td>
+<td>Combinar</td>
+<td>Semi-supervised learning</td>
+</tr>
+<tr>
+<td><strong>Por transferência</strong></td>
+<td>Conhecimento de uma tarefa/domínio para outro</td>
+<td>Reaproveitar</td>
+<td>Fine-tuning de LLMs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-algoritmos-supervisionado">3. Algoritmos — supervisionado</h2>
+<ul>
+<li><strong>Árvores de decisão</strong> (paradigma <strong>simbólico</strong>, TDIDT): nós de decisão, folhas = classe; induzem regras IF-THEN; ex.: ID3, C4.5, CART. Vantagem: <strong>interpretável</strong>.</li>
+<li><strong>Naive Bayes</strong> (paradigma <strong>estatístico</strong>): teorema de Bayes com suposição de <strong>independência condicional</strong> entre atributos; rápido, bom para texto/spam.</li>
+<li><strong>KNN — K vizinhos mais próximos</strong> (paradigma <strong>baseado em exemplos</strong>): classifica pelo <strong>voto majoritário</strong> dos K vizinhos mais próximos (distância); exige normalização; "preguiçoso" (lazy).</li>
+<li><strong>Redes neurais artificiais</strong> (paradigma <strong>conexista</strong>): camadas de <strong>entrada → escondidas → saída</strong>; <strong>pesos</strong> ajustados por <strong>regra delta/backpropagation</strong>. <strong>Deep learning</strong> = redes com muitas camadas (CNN para imagens, RNN/LSTM para sequências, Transformers para texto).</li>
+<li><strong>Regressão linear/logística</strong> (paradigma estatístico): previsão de valores (linear) ou probabilidades de classe (logística).</li>
+<li><strong>SVM (máquinas de vetores de suporte)</strong>: hiperplano de separação com <strong>margem máxima</strong>; eficaz em espaços de alta dimensão.</li>
+<li><strong>Ensembles</strong>:</li>
+<li><strong>Bagging</strong> (ex.: Random Forest): treina em <strong>subamostras</strong> (bootstrap) e combina por votação/média → reduz <strong>variância</strong>.</li>
+<li><strong>Boosting</strong> (ex.: AdaBoost, Gradient Boosting, XGBoost): sequencial, ajusta <strong>pesos</strong> aos erros anteriores → reduz <strong>viés</strong>.</li>
+<li><strong>Stacking</strong>: as <strong>saídas</strong> de vários modelos viram <strong>entrada</strong> de um meta-modelo.</li>
+</ul>
+<h2 id="4-algoritmos-nao-supervisionado">4. Algoritmos — não supervisionado</h2>
+<ul>
+<li><strong>Clustering/agrupamento</strong> (descritivo; "classificação" para estatísticos, "segmentação" para marketing):</li>
+<li><strong>K-means</strong> (particional): K centróides, minimiza intra-cluster; sensível a outliers e à inicialização.</li>
+<li><strong>Hierárquico</strong>: dendrograma; aglomerativo (bottom-up) ou divisivo (top-down).</li>
+<li><strong>DBSCAN</strong> (densidade): encontra formas arbitrárias e detecta ruído.</li>
+<li>Medidas de <strong>distância</strong>: D(A,B)=D(B,A) (simetria); D(A,A)=0; positividade; desigualdade triangular.</li>
+<li><strong>Redução de dimensionalidade</strong>: <strong>PCA</strong> (análise de componentes principais), seleção de atributos, autoencoders.</li>
+<li><strong>Regras de associação</strong> (mercado — "quem compra pão compra leite"): padrão X → Y.</li>
+<li><strong>Suporte</strong> = % de transações em que a regra ocorre (frequência).</li>
+<li><strong>Confiança</strong> = grau de certeza da regra = <strong>P(Y|X)</strong>.</li>
+<li><em>Pegadinha FGV: "confiança = quantas vezes a regra se verifica" está ERRADO — isso é o <strong>suporte</strong>.</em></li>
+<li>Itemsets grandes: algoritmo Apriori (fechamento por baixo + <strong>antimonotonicidade</strong> — se um itemset é infrequente, todos os seus superconjuntos também são).</li>
+</ul>
+<h2 id="5-pre-processamento-de-dados-kdd-e-crisp-dm">5. Pré-processamento de dados (KDD e CRISP-DM)</h2>
+<ul>
+<li><strong>Processo KDD</strong> (Knowledge Discovery in Databases): limpeza → integração → seleção → transformação → <strong>mineração</strong>.</li>
+<li><strong>CRISP-DM</strong> (1996 — 6 fases, sequência <strong>não obrigatória</strong>/iterativa): 1. Entendimento do negócio; 2. Compreensão dos dados; 3. <strong>Preparação (&gt;50% do trabalho)</strong>; 4. Modelagem; 5. Avaliação; 6. Entrega/Deployment.</li>
+<li><strong>Problemas de qualidade</strong>: <strong>incompletude</strong> (valor/atributo/objeto ausente), <strong>inconsistência</strong> (fora do domínio), <strong>ruído</strong> (outliers/variações).</li>
+<li><strong>Tarefas de pré-processamento</strong>: limpeza, integração, <strong>transformação</strong> (padronização/normalização — ex.: z-score, min-max), <strong>redução</strong> (seleção de atributos, compressão, discretização).</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-avaliacao-de-modelos">MÓDULO IV — AVALIAÇÃO DE MODELOS</h1>
+<h2 id="1-matriz-de-confusao-classificacao-binaria">1. Matriz de confusão (classificação binária)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Previsto <strong>Positivo</strong></th>
+<th>Previsto <strong>Negativo</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Real Positivo</strong></td>
+<td>VP (verdadeiro positivo)</td>
+<td>FN (falso negativo — erro tipo II)</td>
+</tr>
+<tr>
+<td><strong>Real Negativo</strong></td>
+<td>FP (falso positivo — erro tipo I)</td>
+<td>VN (verdadeiro negativo)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-metricas-essenciais">2. Métricas essenciais</h2>
+<ul>
+<li><strong>Acurácia</strong> = (VP + VN) / total. <em>Enganosa em bases desbalanceadas (ex.: fraude 1% — "prever sempre não-fraude" dá 99% de acurácia e zero utilidade).</em></li>
+<li><strong>Precisão</strong> = VP / (VP + FP) — "dos que o modelo disse serem positivos, quantos realmente são?" (custo alto de falso positivo, ex.: spam).</li>
+<li><strong>Recall (sensibilidade/revocação)</strong> = VP / (VP + FN) — "dos positivos reais, quantos o modelo capturou?" (custo alto de falso negativo, ex.: câncer, fraude).</li>
+<li><strong>F1-score</strong> = média harmônica de precisão e recall: 2·P·R/(P+R). Equilibra os dois.</li>
+<li><strong>Especificidade</strong> = VN / (VN + FP).</li>
+<li><strong>Curva ROC e AUC</strong>: ROC plota TPR (recall) × FPR (1−especificidade) variando o limiar; <strong>AUC</strong> = área sob a curva (1 = perfeito; 0,5 = aleatório).</li>
+<li><strong>Métricas de regressão</strong>: <strong>MAE</strong> (erro absoluto médio), <strong>MSE</strong> (erro quadrático médio — penaliza erros grandes), <strong>RMSE</strong> (raiz do MSE — unidade original), <strong>R²</strong> (proporção da variância explicada).</li>
+</ul>
+<h2 id="3-validacao-e-generalizacao">3. Validação e generalização</h2>
+<ul>
+<li><strong>Holdout</strong>: separa <strong>treino</strong> (ex.: 70–80%) e <strong>teste</strong> (20–30%). Pode haver terceiro conjunto de <strong>validação</strong> para ajuste de hiperparâmetros.</li>
+<li><strong>Validação cruzada (k-fold)</strong>: divide em <em>k</em> partes; treina em <em>k</em>−1 e testa em 1, rotacionando; resultado = média das <em>k</em> rodadas. Mais robusta que holdout simples.</li>
+<li><strong>Underfitting × Overfitting</strong> (viés × variância):</li>
+<li><strong>Viés (bias) alto → underfitting</strong>: modelo simples demais, erra até nos dados de treino.</li>
+<li><strong>Variância alta → overfitting</strong>: modelo complexo demais, "decora" o treino (inclusive o <strong>ruído</strong>) e falha no teste.</li>
+<li><strong>Trade-off</strong>: buscar o ponto de equilíbrio. Técnicas anti-overfitting: regularização (L1/L2), poda, dropout, mais dados, validação cruzada, early stopping.</li>
+</ul>
+<hr />
+<h1 id="modulo-v-ia-generativa">MÓDULO V — IA GENERATIVA</h1>
+<p><em>(Conteúdo pós-2020 — não está na base Estratégia; cobrir bem, é tendência de banca.)</em></p>
+<h2 id="1-conceito">1. Conceito</h2>
+<ul>
+<li><strong>IA Generativa</strong>: modelos que <strong>geram conteúdo novo</strong> (texto, imagem, áudio, código, vídeo) a partir de padrões aprendidos em grandes volumes de dados — em contraste com IA <strong>discriminativa</strong>, que <strong>classifica/prediz</strong> rótulos.</li>
+<li><strong>Fundamento</strong>: <strong>redes neurais profundas</strong>; para texto, a arquitetura dominante é o <strong>Transformer</strong> (artigo "Attention Is All You Need", 2017), baseado no mecanismo de <strong>atenção</strong>.</li>
+</ul>
+<h2 id="2-modelos-de-linguagem-llms">2. Modelos de linguagem (LLMs)</h2>
+<ul>
+<li><strong>LLM (Large Language Model)</strong>: modelo treinado em enormes corpora para <strong>prever o próximo token</strong>. Ex.: famílias GPT, Claude, Llama, Gemini.</li>
+<li><strong>Fases de desenvolvimento</strong>:</li>
+<li><strong>Pré-treinamento (self-supervised)</strong>: previsão de tokens em texto bruto.</li>
+<li><strong>Fine-tuning supervisionado (SFT)</strong>: exemplos instrução→resposta.</li>
+<li><strong>Alinhamento (ex.: RLHF</strong> — reinforcement learning from human feedback): preferências humanas para segurança/utilidade.</li>
+<li><strong>Token</strong>: unidade de texto (palavra ou pedaço) processada pelo modelo; define custo e limite de contexto (<strong>janela de contexto</strong>).</li>
+<li><strong>Prompt engineering</strong>: técnicas de instrução (zero-shot, few-shot com exemplos, chain-of-thought — "pense passo a passo", personas, restrições de formato).</li>
+<li><strong>Embeddings</strong>: vetores numéricos que representam significado semântico — base de busca semântica e <strong>RAG</strong>.</li>
+</ul>
+<h2 id="3-tecnicas-e-aplicacoes">3. Técnicas e aplicações</h2>
+<ul>
+<li><strong>RAG (Retrieval-Augmented Generation)</strong>: recupera documentos relevantes em uma base (busca vetorial) e os injeta no contexto do LLM — <strong>reduz alucinações</strong> e atualiza o conhecimento sem retreinar.</li>
+<li><strong>Agentes de IA</strong>: LLM + ferramentas (busca, código, APIs) com ciclo de raciocínio-ação-observação.</li>
+<li><strong>Geração de imagem</strong>: modelos de <strong>difusão</strong> (ex.: Stable Diffusion) e GANs.</li>
+<li><strong>Alucinação</strong>: o modelo gera informação <strong>plausível, mas falsa</strong> — risco central dos LLMs.</li>
+</ul>
+<h2 id="4-limitacoes">4. Limitações</h2>
+<ul>
+<li>Corte de conhecimento (dados de treino têm data final); sem memória permanente entre conversas (sem mecanismos externos); alucinações; custo computacional elevado; vieses herdados dos dados; sensibilidade a prompts.</li>
+</ul>
+<hr />
+<h1 id="modulo-vi-etica-e-governanca-de-modelos-de-ia">MÓDULO VI — ÉTICA E GOVERNANÇA DE MODELOS DE IA</h1>
+<h2 id="1-etica-e-vieses-algoritmicos">1. Ética e vieses algorítmicos</h2>
+<ul>
+<li><strong>Viés algorítmico</strong>: modelo reproduz/amplia desigualdades dos dados históricos (ex.: sistemas de recrutamento que discriminam gênero; reconhecimento facial com maior erro em peles escuras).</li>
+<li><strong>Princípios de IA responsável</strong> (OCDE, UNESCO, NIST AI RMF): <strong>transparência/explicabilidade</strong>, <strong>justiça/não discriminação</strong>, <strong>accountability (responsabilização)</strong>, <strong>segurança/robustez</strong>, <strong>privacidade</strong>, <strong>supervisão humana</strong>, <strong>beneficência e não maleficência</strong>.</li>
+<li><strong>Explicabilidade (XAI)</strong>: capacidade de explicar decisões do modelo (ex.: SHAP, LIME). Modelos "caixa-preta" (deep learning) × modelos interpretáveis (árvore de decisão).</li>
+</ul>
+<h2 id="2-governanca-de-modelos">2. Governança de modelos</h2>
+<ul>
+<li><strong>AI Model Governance</strong>: framework de políticas, papéis e controles sobre o ciclo de vida do modelo — inventário de modelos, documentação (model cards), aprovação para produção, auditorias, monitoramento, aposentadoria.</li>
+<li><strong>Model card / datasheet for datasets</strong>: documentação padronizada de uso pretendido, métricas por subgrupo, limitações.</li>
+<li><strong>Avaliação de impacto algorítmico</strong>: analisar riscos antes do deploy (similar a DPIA/LAIA — relatório de impacto).</li>
+</ul>
+<h2 id="3-lgpd-lei-137092018-aplicada-a-ia">3. LGPD (Lei 13.709/2018) aplicada a IA</h2>
+<ul>
+<li><strong>Bases legais</strong> para tratamento de dados em IA (consentimento, legítimo interesse, execução de contrato, etc.).</li>
+<li><strong>Direitos do titular</strong>: acesso, correção, eliminação, revisão de decisões automatizadas (<strong>art. 20 — direito à revisão de decisão tomada unicamente com base em tratamento automatizado</strong>).</li>
+<li><strong>Dados pessoais sensíveis</strong> (raça, saúde, biometria): proteção reforçada contra discriminação algorítmica.</li>
+<li><strong>Princípios</strong>: finalidade, adequação, necessidade, transparência, segurança, prevenção, não discriminação, responsabilização.</li>
+<li><strong>Encarregado (DPO)</strong> e <strong>privacidade desde a concepção (privacy by design)</strong>.</li>
+</ul>
+<h2 id="4-regulacao-em-evolucao">4. Regulação em evolução</h2>
+<ul>
+<li><strong>EU AI Act</strong> (União Europeia, 2024): abordagem por <strong>risco</strong> (inaceitável / alto / limitado / mínimo); IA de uso geral (GPAI) com obrigações de transparência; proibição de usos (ex.: pontuação social).</li>
+<li>No Brasil: <strong>PL 2338/2023</strong> (Marco Legal da IA) — princípios, direitos dos titulares, governança baseada em risco, sanções.</li>
+</ul>
+<hr />
+<h1 id="modulo-vii-dataops-e-mlops">MÓDULO VII — DATAOPS E MLOPS</h1>
+<p><em>(Conteúdo pós-2020 — complementar.)</em></p>
+<h2 id="1-dataops">1. DataOps</h2>
+<ul>
+<li><strong>DataOps</strong>: aplicação de práticas <strong>DevOps/ágil</strong> ao <strong>ciclo de vida de dados</strong> — integração, qualidade, orquestração e entrega contínua de dados.</li>
+<li><strong>Objetivos</strong>: dados <strong>confiáveis, rápidos e reutilizáveis</strong>; automação de pipelines de dados; colaboração entre times de dados; <strong>monitoramento de qualidade</strong> (testes de dados — ex.: Great Expectations), observabilidade de dados, versionamento de dados.</li>
+<li><strong>Diferença para MLOps</strong>: DataOps cuida do <strong>dado</strong> (da fonte ao consumo); MLOps cuida do <strong>modelo</strong> (do treino à produção).</li>
+</ul>
+<h2 id="2-mlops">2. MLOps</h2>
+<ul>
+<li><strong>MLOps</strong>: união de <strong>Machine Learning + DevOps + Engenharia de Dados</strong>; práticas para levar modelos à produção de forma <strong>reprodutível, automatizada e monitorada</strong>.</li>
+<li><strong>Ciclo</strong>: coleta/preparação de dados → treinamento → avaliação → deployment → <strong>monitoramento</strong> → retreinamento.</li>
+<li><strong>Pilares/práticas</strong>:</li>
+<li><strong>CI/CD/CT</strong> para ML: integração contínua, entrega contínua e <strong>treinamento contínuo</strong> (retraining).</li>
+<li><strong>Versionamento</strong>: código, <strong>dados</strong> (ex.: DVC), modelos e experimentos (ex.: MLflow).</li>
+<li><strong>Feature store</strong>: repositório compartilhado de features (consistência treino × produção).</li>
+<li><strong>Registro de modelos (model registry)</strong> e controle de linhagem (lineage).</li>
+<li><strong>Deployment</strong>: shadow, canary, A/B testing, blue-green, batch × online (real-time inference).</li>
+<li><strong>Monitoramento em produção</strong>: <strong>data drift</strong> (distribuição dos dados muda) e <strong>concept drift</strong> (relação entrada-saída muda); alertas de degradação de métricas; retreinamento automático.</li>
+<li><strong>Níveis de maturidade MLOps</strong> (Google): Nível 0 (manual), Nível 1 (pipeline automatizado de treino), Nível 2 (CI/CD/CT completo com monitoramento e retreinamento).</li>
+<li><strong>Ferramentas típicas</strong>: MLflow, Kubeflow, Airflow/Prefect (orquestração), DVC, TFX, Evidently (drift).</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>Suporte ≠ confiança</strong> (FGV): confiança = P(Y|X); suporte = frequência da regra.</li>
+<li><strong>Classificação = supervisionado; clustering = não supervisionado.</strong></li>
+<li><strong>OLAP não armazena dados</strong>; operações OLAP podem levar <strong>horas</strong>; OLAP usa <strong>mais</strong> armazenamento que OLTP.</li>
+<li><strong>Granularidade alta = menos detalhe.</strong></li>
+<li><strong>Big Data não prevê o futuro</strong>; não se resume a estruturados/petabytes/grandes empresas.</li>
+<li><strong>BI explica o passado; Big Data Analytics encontra perguntas novas.</strong></li>
+<li><strong>Drill-across</strong> = várias tabelas fato (Kimball); <strong>drill-through</strong> = detalhe nas tabelas relacionais. <em>A FCC usa definições equivocadas — atenção à banca.</em></li>
+<li><strong>CAP</strong>: só 2 de 3. <strong>ACID</strong> prioriza C+A; <strong>BASE</strong> prioriza A+P.</li>
+<li><strong>CRISP-DM</strong>: 6 fases, sequência <strong>não obrigatória</strong>; preparação = <strong>&gt;50%</strong> do esforço.</li>
+<li><strong>ETL ≈ 70–80%</strong> do projeto de DW; 4 etapas (extração, limpeza, conformidade, entrega) + gestão.</li>
+<li><strong>Moda</strong> = única medida de tendência central para escala <strong>nominal</strong>.</li>
+<li><strong>HiveQL não é SQL92</strong>; <strong>Spark</strong> é até 100× mais rápido que MapReduce em memória.</li>
+<li><strong>NoSQL = "Not only SQL"</strong>; schema free; persistência poliglota.</li>
+<li><strong>Parâmetro</strong> (constante, população) ≠ <strong>estimador</strong> (função, amostra).</li>
+<li><strong>Acurácia engana em bases desbalanceadas</strong> — use precisão/recall/F1.</li>
+<li><strong>Overfitting = variância alta; underfitting = viés alto.</strong></li>
+<li><strong>NFL</strong>: não existe melhor algoritmo universal.</li>
+<li><strong>CAP de Brewer</strong>; prova de Gilbert e Lynch.</li>
+<li><strong>MapReduce</strong>: <code>Map(k1,v1)→lista(k2,v2)</code>; <code>Reduce(k2,lista(v2))→lista(v3)</code>.</li>
+<li><strong>LGPD art. 20</strong>: direito à <strong>revisão de decisões automatizadas</strong>.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-questoes">CADERNO DE QUESTÕES COMENTADAS (15 questões)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) Em estatística, considere a afirmação: "O estimador é uma medida calculada sobre a população, cujo valor é sempre constante."
+Assinale a opção correta:
+a) Certo.
+b) Errado. O estimador é calculado sobre a <strong>amostra</strong>, enquanto a medida constante da população é o <strong>parâmetro</strong>.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Parâmetro = medida da população (constante: μ, σ, ρ). Estimador = função amostral (x̅, s², r). O erro amostral ε = θ̂ − θ.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) Sobre escalas de mensuração, é correto afirmar:
+a) A escala nominal permite ordenar as categorias.
+b) A escala ordinal possui zero absoluto.
+c) A temperatura medida em Celsius é exemplo de escala de razão.
+d) A escala de razão possui zero absoluto e permite razões entre valores.
+e) A escala intervalar é qualitativa.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> (a) nominal <strong>não</strong> ordena; (b) ordinal não tem zero absoluto (nem é quantitativa); (c) Celsius tem <strong>zero relativo</strong> → intervalar; (e) intervalar é <strong>quantitativa</strong>.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) A moda é a única medida de tendência central aplicável a variáveis em escala nominal.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Média e mediana exigem quantificação (ordinal para mediana em casos de ordenação, mas nominal → só moda).</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FGV-style) Um analista encontra a regra de associação "X → Y" em 8% das transações, e observa que em 75% das transações em que X ocorre, Y também ocorre. Nesse contexto, 8% corresponde ao ______ e 75% corresponde ao ______.
+a) suporte; confiança.
+b) confiança; suporte.
+c) lift; suporte.
+d) confiança; lift.
+e) suporte; lift.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> Suporte = frequência da regra na base (8%); confiança = P(Y|X) = 75%. <em>Pegadinha clássica: confiança NÃO é "quantas vezes a regra se verifica na base inteira".</em></p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O teorema CAP estabelece que um sistema distribuído pode garantir simultaneamente consistência, disponibilidade e tolerância a partições de rede.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Brewer (2000): escolhem-se <strong>duas</strong> das três propriedades. Bancos relacionais priorizam C+A; NoSQL BASE prioriza A+P.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) No ecossistema Hadoop, o componente responsável por gerenciar os recursos do cluster no Hadoop 2.x, permitindo que outros paradigmas além do MapReduce sejam executados, é:
+a) HDFS.
+b) Hive.
+c) YARN.
+d) ZooKeeper.
+e) Sqoop.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>YARN</strong> (Yet Another Resource Negotiator) gerencia recursos e suporta MapReduce, Spark, Storm e Tez. HDFS armazena; Hive consulta (HiveQL); ZooKeeper coordena; Sqoop integra com RDBMS.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) O Apache Hive utiliza a linguagem HiveQL, cuja sintaxe é totalmente compatível com o padrão SQL92.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> HiveQL <strong>não</strong> é compatível com SQL92 — é semelhante ao SQL, mas com diferenças e extensões (UDFs).</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) Sobre OLAP, assinale a alternativa correta:
+a) A operação drill-down agrega dados, subindo na hierarquia dimensional.
+b) Slice corta o cubo em duas ou mais dimensões.
+c) Drill-across consulta mais de uma tabela fato com dimensões em comum.
+d) O MOLAP armazena dados em tabelas relacionais normalizadas.
+e) OLAP é um banco de dados que armazena os dados analisados.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> (a) agregação é <strong>roll-up</strong> (drill-down <strong>detalha</strong>); (b) slice = <strong>1</strong> dimensão; dice = ≥2; (d) MOLAP usa <strong>cubos/arrays multidimensionais</strong> (ROLAP usa relacional); (e) OLAP <strong>não armazena</strong> — é ferramenta de análise.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) Em machine learning, um modelo que apresenta alto desempenho nos dados de treinamento e desempenho significativamente inferior em dados novos está sob o fenômeno denominado underfitting.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Esse cenário é <strong>overfitting</strong> (variância alta — decorou o treino, inclusive ruído). Underfitting = viés alto: erro alto <strong>também no treino</strong>.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FGV-style) Em um problema de detecção de fraude (1% dos casos positivos), um modelo que classifica todas as transações como "não fraude" apresenta 99% de acurácia. A métrica mais adequada para avaliar esse modelo seria:
+a) acurácia.
+b) precisão combinada com recall (F1-score).
+c) erro quadrático médio (MSE).
+d) R².
+e) suporte.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Acurácia engana em bases <strong>desbalanceadas</strong>. Precisão, recall e o F1-score capturam o desempenho sobre a classe minoritária. MSE e R² são de <strong>regressão</strong>; suporte é de regras de associação.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) O K-means é um algoritmo de aprendizado supervisionado, pois requer rótulos de classe para formar os grupos.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> K-means é <strong>não supervisionado</strong> (clustering): agrupa por similaridade <strong>sem rótulos</strong>. Classificação (com rótulos) é supervisionada.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FCC-style) O modelo de IA generativa baseado na arquitetura Transformer, que utiliza mecanismo de atenção e é treinado para prever o próximo token do texto, é exemplo de:
+a) sistema especialista simbólico.
+b) Large Language Model (LLM).
+c) algoritmo de clustering hierárquico.
+d) banco NoSQL orientado a documentos.
+e) técnica de ETL.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> LLMs (GPT, Claude, Llama etc.) são modelos de linguagem baseados em Transformers. O mecanismo de <strong>atenção</strong> (artigo "Attention Is All You Need", 2017) é o fundamento.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) A técnica de RAG (Retrieval-Augmented Generation) tem como principal característica recuperar documentos relevantes em uma base externa e incorporá-los ao contexto do modelo, contribuindo para reduzir alucinações.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> RAG = recuperação + geração: busca semântica (embeddings) + injeção no contexto. Reduz alucinações e permite atualizar conhecimento sem retreinar o modelo.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FGV-style) No âmbito da LGPD, o direito do titular de solicitar a revisão de decisão tomada unicamente com base em tratamento automatizado de dados está previsto:
+a) no art. 7º, inciso IX.
+b) no art. 20.
+c) no art. 33.
+d) no art. 46.
+e) no art. 65.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> O <strong>art. 20</strong> da Lei 13.709/2018 assegura a revisão de decisões automatizadas, com direito a solicitar a intervenção humana — pilar da governança de IA no Brasil.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) Sobre MLOps e DataOps, assinale a opção correta:
+a) DataOps trata exclusivamente do deploy de modelos de machine learning.
+b) O data drift refere-se à mudança na distribuição dos dados de entrada ao longo do tempo, podendo degradar modelos em produção.
+c) Feature store é um repositório de modelos aposentados.
+d) MLOps dispensa versionamento de dados, pois apenas o código precisa ser versionado.
+e) Retreinamento contínuo (CT) é prática exclusiva de DataOps.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> (a) DataOps cuida do <strong>ciclo de dados</strong>; deploy de modelos é MLOps; (c) feature store guarda <strong>features</strong> (consistência treino/produção); (d) MLOps versiona <strong>dados, código e modelos</strong> (ex.: DVC); (e) CT (continuous training) é do <strong>MLOps</strong>.</p></details>
+<hr />
+<h2 id="questoes-discursivas-para-treino-de-prova-discursiva">Questões discursivas (para treino de prova discursiva)</h2>
+<p><strong>D1.</strong> Explique a diferença entre aprendizado supervisionado e não supervisionado, citando dois algoritmos de cada e uma aplicação típica.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> No supervisionado, o algoritmo aprende a partir de exemplos <strong>com rótulos</strong> (pares entrada-saída), tarefa típica de <strong>classificação</strong> (ex.: árvores de decisão, Naive Bayes — detecção de spam) e <strong>regressão</strong> (ex.: regressão linear — previsão de demanda). No não supervisionado, <strong>não há rótulos</strong>; o objetivo é descobrir estrutura oculta nos dados, como em <strong>clustering</strong> (ex.: K-means — segmentação de clientes) e <strong>regras de associação</strong> (ex.: Apriori — análise de mercado). Há ainda o aprendizado <strong>por reforço</strong>, no qual um agente aprende por recompensas e punições.</p></details>
+<p><strong>D2.</strong> Cite os Vs do Big Data e explique por que a afirmação "Big Data prevê o futuro" é considerada uma falácia.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> Os 3Vs originais (Doug Laney, 2001) são <strong>Volume, Velocidade e Variedade</strong>; acrescentam-se <strong>Veracidade, Valor, Visibilidade, Variabilidade</strong>, entre outros (IBM cita 7 dimensões, incluindo governança e pessoas). A afirmação é falsa porque os dados coletados referem-se sempre ao <strong>passado</strong>; o Big Data identifica <strong>padrões, correlações e tendências</strong> que, sob circunstâncias semelhantes, podem indicar cenários futuros — mas sem previsão determinística, especialmente para comportamentos individuais ou eventos sem precedentes.</p></details>
+<hr />
+<h2 id="referencias-de-estudo-na-base-local-trt8-new">Referências de estudo na base local (trt8 new)</h2>
+<ul>
+<li><code>APOSTILAS ESTRATEGIA MD\01.Curso.Regular.TI.2020.2\11.Business Intelligence\Aula10.md</code> — Estatística e AED.</li>
+<li><code>...\11.Business Intelligence\Aula06.md</code> — Big Data, NoSQL, Hadoop, MapReduce.</li>
+<li><code>...\11.Business Intelligence\Aula05.md</code> — Mineração de dados, CRISP-DM, ML clássico.</li>
+<li><code>...\11.Business Intelligence\Aula04.md</code> — OLAP.</li>
+<li><code>...\11.Business Intelligence\Aula02.md</code> — DW e granularidade. <code>Aula03.md</code> — ETL.</li>
+<li><code>...\07.Banco de Dados\Aula08.md</code> — Bancos paralelos e distribuídos (CAP, fragmentação).</li>
+<li>Complementos pós-2020 (IA generativa, métricas modernas, MLOps/DataOps, LGPD/IA): redigidos com base em conhecimento técnico atual.</li>
+</ul>
+<script>
+(function () {
+  const key = 'apostila-topico9-ciencia-de-dados-e-ia-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

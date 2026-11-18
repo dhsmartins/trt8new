@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T11 — Sistemas Operacionais (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T11 — Sistemas Operacionais</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-processos">1. Processos</a></li>
+<li class="toc-h2"><a href="#2-threads">2. Threads</a></li>
+<li class="toc-h2"><a href="#3-comunicacao-e-sincronizacao">3. Comunicação e sincronização</a></li>
+<li class="toc-h2"><a href="#4-deadlock-starvation">4. Deadlock × Starvation</a></li>
+<li class="toc-h2"><a href="#5-escalonamento-de-cpu">5. Escalonamento de CPU</a></li>
+<li class="toc-h2"><a href="#1-alocacao-e-swapping">1. Alocação e swapping</a></li>
+<li class="toc-h2"><a href="#2-memoria-virtual-paginacao-e-segmentacao">2. Memória virtual, paginação e segmentação</a></li>
+<li class="toc-h2"><a href="#1-windows-11-windows-10-legado-windows-server-2019-2022-e-2025-complemento">1. Windows 11 / Windows 10 (legado) / Windows Server 2019, 2022 e 2025 (complemento)</a></li>
+<li class="toc-h2"><a href="#2-powershell">2. PowerShell</a></li>
+<li class="toc-h2"><a href="#3-active-directory-ad">3. Active Directory (AD)</a></li>
+<li class="toc-h2"><a href="#4-wsus-complemento-ausente-na-base">4. WSUS (complemento — ausente na base)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-11-sistemas-operacionais">APOSTILA — TÓPICO 11: SISTEMAS OPERACIONAIS</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Gerenciamento de processos e fluxos de execução (threads): alocação de CPU, comunicação e sincronização entre processos, impasses (deadlocks) e esgotamento de recursos (starvation); Gerenciamento de memória: alocação, segmentação, memória virtual e paginação; Sistemas de entrada e saída; ambiente Linux (Red Hat e Oracle Linux); utilitários e comandos padrão; Microsoft Windows (Windows 11; Windows 10 legado; Windows Server 2019, 2022 e 2025); Active Directory; Powershell; WSUS.</p>
+<p><strong>Base de conhecimento:</strong> <code>01.Sistemas Operacionais e Arquitetura</code> (Aulas 04–10, 12–15 — Curso Regular TI 2020.2) + <strong>complemento</strong> (Windows 11/Server 2019–2025, WSUS, orçamento de recursos).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-processos-e-threads">MÓDULO I — PROCESSOS E THREADS</h1>
+<h2 id="1-processos">1. Processos</h2>
+<ul>
+<li><strong>Processo</strong> = programa em execução (com registradores PC/IR e variáveis). <strong>Multiprogramação/pseudoparalelismo</strong> com 1 CPU; <strong>troca de contexto (chaveamento)</strong> = salvar/restaurar estado da CPU.</li>
+<li><strong>Criação</strong>: inicialização do sistema, <code>fork()</code> (Linux), pedido do usuário, tarefa em lote. <strong>Daemons</strong> = background; no Linux, pai dos daemons é o <strong>init (PID=1)</strong>.</li>
+<li><strong>PCB (Bloco de Controle do Processo)</strong>: PID, registradores, espaço de endereçamento, prioridade — em área <strong>protegida do kernel</strong>. A <strong>Tabela de Processos</strong> localiza o PCB.</li>
+<li><strong>Estados</strong>: executando, pronto, bloqueado (4 transições). <strong>CPU-bound</strong> (pouco bloqueia) × <strong>I/O-bound</strong> (bloqueia seguidamente; ex.: chat).</li>
+</ul>
+<h2 id="2-threads">2. Threads</h2>
+<ul>
+<li><strong>Threads</strong> (processos leves): múltiplos fluxos no <strong>mesmo processo</strong> compartilham código/dados. <strong>Nível de usuário</strong> (escalona no espaço do usuário) × <strong>nível de kernel</strong> (tabelas no kernel).</li>
+</ul>
+<h2 id="3-comunicacao-e-sincronizacao">3. Comunicação e sincronização</h2>
+<ul>
+<li><strong>Pipes</strong> (<code>ls | grep x | sort -r</code>). <strong>Condições de corrida</strong> em armazenamento compartilhado (ex.: spooler de impressão). <strong>Seção crítica</strong> com <strong>exclusão mútua</strong> — 4 condições de boa solução: (1) só 1 processo por vez na seção; (2) sem suposição sobre velocidade/nº de CPUs; (3) processo fora da seção não bloqueia outros; (4) ninguém espera eternamente.</li>
+<li><strong>Semáforo</strong>: inteiro verificado/alterado <strong>atomicamente</strong>; operações <strong>down/sleep</strong> (decrementa se &gt;0; se 0, bloqueia) e <strong>up/wakeup</strong> (incrementa). <strong>Mutex</strong>: semáforo simplificado livre/ocupado.</li>
+</ul>
+<h2 id="4-deadlock-starvation">4. Deadlock × Starvation</h2>
+<table>
+<thead>
+<tr>
+<th>Deadlock (impasse)</th>
+<th>Starvation (inanição)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conjunto de processos presos mutuamente, cada um com um recurso que outro precisa</td>
+<td>Processo de baixa prioridade <strong>nunca</strong> é atendido ("sempre alguém fura a fila")</td>
+</tr>
+<tr>
+<td>4 condições simultâneas: <strong>exclusão mútua, espera por recurso, não-preempção, espera circular</strong></td>
+<td>Típico de sistemas com <strong>prioridades</strong>, sobretudo <strong>não preemptivos</strong></td>
+</tr>
+<tr>
+<td><strong>Ninguém</strong> progride (bloqueio circular)</td>
+<td>Os demais progridem; só o "esquecido" não</td>
+</tr>
+<tr>
+<td>Ex.: thread 1 segura teclado e espera impressora; thread 2 segura impressora e espera teclado</td>
+<td>Ex.: prioridade mínima disputando CPU com chegadas de prioridade maior</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-escalonamento-de-cpu">5. Escalonamento de CPU</h2>
+<ul>
+<li><strong>Preempção</strong> = SO retira a CPU via interrupção de relógio. Ocorre <strong>obrigatoriamente</strong> quando o processo termina ou é bloqueado (E/S ou semáforo).</li>
+<li><strong>Lote</strong>: não-preemptivo ou quanta longos — <strong>FCFS</strong>, <strong>SJF</strong>, <strong>SRT</strong> (versão preemptiva do SJF). <strong>Interativo</strong>: preempção fundamental — <strong>round-robin</strong> com quantum (ex.: chaveamento 1 ms + quantum 9 ms = 10% de sobrecarga); <strong>prioridade</strong>; múltiplas filas (1/2/4/8 quanta); garantido (1/N da CPU); sorteio ("bilhetes de loteria"). <strong>Tempo real</strong>: preempção pode ser desnecessária.</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-gerencia-de-memoria">MÓDULO II — GERÊNCIA DE MEMÓRIA</h1>
+<h2 id="1-alocacao-e-swapping">1. Alocação e swapping</h2>
+<ul>
+<li><strong>Memory leak</strong>: blocos alocados sem ponteiro acessível, ou dados mortos ainda referenciados.</li>
+<li><strong>Partições fixas (MFT)</strong>: 1 processo por partição; desperdício interno. <strong>Swapping</strong>: processo inteiro vai/vem do disco; fragmentos exigem <strong>compactação</strong> (custosa). Gerenciamento por <strong>mapa de bits</strong> (lento procurar N bits 0) e <strong>listas encadeadas</strong> (P/L: início, fim, ponteiro).</li>
+<li><strong>Alocação (first-fit/next-fit/best-fit/quick-fit)</strong>: first-fit (rápido), next-fit (retoma da última posição), best-fit (varre tudo; sobram espaços minúsculos), quick-fit (listas por tamanho; fusão cara).</li>
+</ul>
+<h2 id="2-memoria-virtual-paginacao-e-segmentacao">2. Memória virtual, paginação e segmentação</h2>
+<ul>
+<li><strong>Memória virtual</strong>: programa+dados+pilha podem exceder a RAM; SO mantém em RAM só o que está em uso (evolução dos overlays).</li>
+<li><strong>Segmentação</strong>: segmentos de tamanhos <strong>variáveis</strong> conforme a lógica do programa; endereço = nº do segmento + deslocamento; <strong>fragmentação externa</strong>.</li>
+<li><strong>Paginação</strong> (maioria dos sistemas): <strong>MMU</strong> mapeia endereços virtuais em físicos; espaço virtual em <strong>páginas</strong> (= tamanho dos <strong>quadros/page frames</strong> físicos; ex.: 4 KB); <strong>page fault</strong> dispara interrupção, SO remove quadro menos usado e traz a página; <strong>fragmentação interna</strong> (última página parcialmente usada).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Paginação</th>
+<th>Segmentação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unidades <strong>fixas</strong> (páginas/quadros)</td>
+<td>Unidades <strong>variáveis</strong> (lógica do programa)</td>
+</tr>
+<tr>
+<td>Fragmentação <strong>interna</strong></td>
+<td>Fragmentação <strong>externa</strong></td>
+</tr>
+<tr>
+<td><strong>Transparente</strong> ao programador</td>
+<td><strong>Visível</strong> ao programador</td>
+</tr>
+<tr>
+<td>Base da memória virtual moderna</td>
+<td>Proteção por segmento</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Substituição de página</strong>: <strong>ótimo</strong> (remove a de maior rótulo futuro — <strong>não realizável</strong>); <strong>NRU</strong> (bits R e M; classes 0–3); <strong>LRU</strong> (menos usada; custo alto); <strong>FIFO</strong>; <strong>segunda chance</strong> (FIFO com bit R); <strong>relógio</strong> (lista circular com ponteiro).</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-es-e-armazenamento">MÓDULO III — E/S E ARMAZENAMENTO</h1>
+<ul>
+<li><strong>DAS</strong> (direto ao servidor), <strong>NAS</strong> (rede, opera com <strong>arquivos</strong>), <strong>SAN</strong> (rede de alta disponibilidade para discos/fitas, opera com <strong>blocos</strong>). <strong>JBOD</strong>: discos concatenados vistos como um volume — <strong>não é RAID</strong>.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>RAID</th>
+<th>Ideia</th>
+<th>Mín. discos</th>
+<th>Tolerância</th>
+<th>Uso útil (ex. 4×1 TB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>Striping</td>
+<td>2</td>
+<td><strong>Nenhuma</strong></td>
+<td>4 TB (100%)</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>Mirror</td>
+<td>2</td>
+<td>1 falha (metade)</td>
+<td>2 TB (50%)</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Paridade em <strong>1 disco fixo</strong></td>
+<td>3</td>
+<td>1 falha</td>
+<td>3 TB</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Paridade <strong>distribuída</strong></td>
+<td>3</td>
+<td>1 falha</td>
+<td>3 TB (75%)</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Dupla paridade</td>
+<td>4</td>
+<td><strong>2 falhas</strong></td>
+<td>2 TB (50%)</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>RAID-1 interno + RAID-0 externo</td>
+<td><strong>4</strong></td>
+<td>1 falha por espelho</td>
+<td>2 TB</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Backup</strong>: deduplicação, <strong>snapshot</strong>, tipos de backup. <strong>Sistemas de arquivos</strong>: FAT/exFAT/<strong>NTFS (necessário ao AD)</strong>/EXT/HFS+. <strong>Data center</strong>: "noves" de disponibilidade (5 noves = 99,999%, ~5 min/ano).</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-linux-red-hat-oracle-linux">MÓDULO IV — LINUX (RED HAT / ORACLE LINUX)</h1>
+<ul>
+<li>SO <strong>interativo, multitarefa, multiusuário</strong>; root (home <code>/root</code>); usuários em <code>/home/nome</code>. Instalação por mídia bootável ou rede (<strong>PXE/TFTP+DHCP</strong>). Boot: <strong>LILO</strong> e <strong>GRUB</strong>.</li>
+<li><strong>Kernel monolítico</strong> (Unix/Linux); módulos carregados sob demanda (<code>/lib/modules/versão</code>, <code>uname -a</code>). Shells: sh, <strong>bash</strong>, csh, ksh, zsh. Janelas: Gnome, KDE.</li>
+<li><strong>Foreground/background</strong>: <code>&amp;</code> executa em background; <strong>CTRL+Z</strong> suspende, <code>bg</code> manda para background, <code>jobs</code> lista, <code>fg %n</code> traz de volta. Daemons (terminados em "d": syslogd).</li>
+<li><strong>Cron/Crontab</strong>: campos <code>minuto hora dia_do_mês mês dia_da_semana comando</code> (ex. <code>0 22 * * 1-5</code>); <strong>Anacron</strong> (executa pendências após desligamento; não é daemon; granularidade ≥ dia); <strong>Fcron</strong> combina ambos.</li>
+<li>Utilitários/comandos padrão (complementar ao material): <code>ls, cd, pwd, cp, mv, rm, mkdir, grep, find, chmod, chown, ps, top, df, du, tar, ssh, systemctl</code> (Red Hat/Oracle Linux: serviços via systemd; pacotes via <code>yum</code>/<code>dnf</code>).</li>
+<li>Serviços de rede em Linux: DNS (arquivos de zona; 127.0.0.1 localhost), DHCP, FTP, e-mail.</li>
+</ul>
+<hr />
+<h1 id="modulo-v-windows-active-directory-powershell-e-wsus">MÓDULO V — WINDOWS, ACTIVE DIRECTORY, POWERSHELL E WSUS</h1>
+<h2 id="1-windows-11-windows-10-legado-windows-server-2019-2022-e-2025-complemento">1. Windows 11 / Windows 10 (legado) / Windows Server 2019, 2022 e 2025 <em>(complemento)</em></h2>
+<ul>
+<li><strong>Windows 10 legado</strong> × <strong>Windows 11</strong> (requisitos de hardware mais restritos: TPM 2.0, Secure Boot; interface renovada). <strong>Windows Server 2019</strong> (hybrid com Azure, Windows Admin Center), <strong>2022</strong> (segurança: Secured-core, TLS 1.3, SMB AES-256), <strong>2025</strong> (novo — complementar à base de 2020).</li>
+<li>Instalação/configuração: periféricos, programas, <strong>Windows Update</strong>, acessórios; rede: DHCP, DNS (subdomínios/FQDN).</li>
+</ul>
+<h2 id="2-powershell">2. PowerShell</h2>
+<ul>
+<li>Shell CLI com prompt interativo e ambiente de <strong>scripts</strong> para administração e automação; usa <strong>cmdlets</strong> (diferem de comandos de shell tradicionais); versões 1.0 (2006) a 3.0 (nativo no Server 2012/Windows 8) — atualmente 5.1 e <strong>PowerShell 7</strong> (cross-platform). Sessões remotas por cmdlet.</li>
+</ul>
+<h2 id="3-active-directory-ad">3. Active Directory (AD)</h2>
+<ul>
+<li><strong>LDAP</strong>: protocolo de acesso a objetos de diretório (<strong>não</strong> é o diretório em si); porta <strong>389/TCP</strong>. <strong>AD</strong> (Windows 2000+): serviço de diretórios (contas, grupos, políticas) em <strong>BD replicado</strong>; <strong>exige NTFS</strong>. <strong>Workgroup</strong> (independente, ≤~10 usuários) × <strong>domínio</strong> (base única replicada).</li>
+<li><strong>DC</strong> (controlador de domínio: autentica, emite token) × servidor membro; promoção via <strong>DCPROMO.EXE</strong> (antigo) ou Gerenciador do Servidor + PowerShell (2012+). <strong>OUs</strong> (facultativas), partições (esquema, configuração, domínio), árvores, floresta, <strong>Catálogo Global</strong> (cópia completa do seu domínio + parcial dos demais), relações de confiança (transitivas; bidirecionais pai-filho; unidirecionais).</li>
+<li>Serviços: <strong>AD CS</strong> (certificados), <strong>AD DS</strong> (domínios), <strong>AD FS</strong> (federação), <strong>AD LDS</strong>, <strong>AD RMS</strong>. Arquivos: <strong>Ntds.dit</strong> (todos os dados), Edb.chk, Edb.log, Res1/Res2.log, Schema.ini.</li>
+</ul>
+<h2 id="4-wsus-complemento-ausente-na-base">4. WSUS <em>(complemento — ausente na base)</em></h2>
+<ul>
+<li><strong>WSUS (Windows Server Update Services)</strong>: servidor Microsoft para <strong>gerenciar e distribuir atualizações</strong> do Windows/Microsoft em uma rede corporativa — aprovadores testam pacotes antes de liberar aos clientes (economia de banda; conformidade de patching). Integrado ao ecossistema AD/GPO.</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>PCB</strong> fica em memória <strong>protegida</strong>; <strong>Tabela de Processos</strong> localiza o PCB; <strong>init é PID=1</strong>.</li>
+<li><strong>Semáforo</strong>: DOWN com 0 <strong>bloqueia</strong>; UP soma 1; operação <strong>atômica</strong>.</li>
+<li><strong>Deadlock</strong> = 4 condições simultâneas; <strong>starvation</strong> = prioridades/sobretudo <strong>não preemptivas</strong>.</li>
+<li><strong>Página = virtual; quadro = físico</strong>. Algoritmo <strong>ótimo é não realizável</strong>.</li>
+<li><strong>Paginação</strong> = fragmentação <strong>interna</strong>; <strong>segmentação</strong> = <strong>externa</strong>.</li>
+<li><strong>RAID-0 não tem redundância</strong>; <strong>JBOD não é RAID</strong>; <strong>RAID-10 exige mín. 4</strong>; RAID-5 paridade <strong>distribuída</strong> (≠ RAID-4, disco fixo).</li>
+<li><strong>NAS</strong> opera com <strong>arquivos</strong>; <strong>SAN</strong> opera com <strong>blocos</strong>.</li>
+<li><strong>NTFS</strong> é exigido pelo <strong>Active Directory</strong>.</li>
+<li><strong>LDAP = protocolo</strong> (389), não é o diretório.</li>
+<li><strong>Anacron</strong> não é daemon e granularidade ≥ dia; <strong>Cron</strong> precisa de máquina ligada.</li>
+<li><code>CTRL+Z</code> suspende; <code>bg</code>/<code>fg</code> alternam jobs; <code>&amp;</code> inicia em background.</li>
+<li><strong>PowerShell</strong> usa <strong>cmdlets</strong> (não comandos de shell tradicionais).</li>
+<li><strong>SRT</strong> = versão <strong>preemptiva</strong> do SJF.</li>
+<li><strong>5 noves</strong> = 99,999% (~5 min/ano).</li>
+<li><strong>WSUS</strong> = distribuição de atualizações Windows (complemento — não está na base de 2020).</li>
+<li><strong>Ntds.dit</strong> = arquivo de dados do AD.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) O Bloco de Controle do Processo (PCB) é armazenado na área de memória do usuário, sendo acessível ao próprio processo para auto-regulação.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O PCB fica em área <strong>protegida do kernel</strong>; a <strong>Tabela de Processos</strong> localiza-o. O processo não tem acesso direto.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) As quatro condições necessárias para a ocorrência de deadlock são:
+a) exclusão mútua, espera por recurso, não-preempção e espera circular.
+b) prioridade, preempção, fila e quantum.
+c) fragmentação interna, externa, swapping e compactação.
+d) page fault, thrashing, aging e starvation.
+e) semáforo, mutex, monitor e lock.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> Exclusão mútua + espera por recurso + <strong>não-preempção</strong> + espera circular. (Ex.: teclado/impresso­ra entre duas threads.)</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) O starvation ocorre quando um processo de baixa prioridade nunca é atendido, sendo mais provável em sistemas com política de escalonamento preemptiva.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Starvation é mais provável em políticas <strong>não preemptivas</strong> (com prioridades) — a preempção permite que o processo de baixa prioridade eventualmente rode.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) No gerenciamento de memória, a unidade lógica do espaço virtual e a unidade física da memória real são, respectivamente:
+a) página e quadro (page frame).
+b) quadro e página.
+c) segmento e página.
+d) byte e word.
+e) bloco e cluster.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> <strong>Página</strong> = virtual; <strong>quadro</strong> = físico. A MMU faz o mapeamento.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) A segmentação de memória utiliza unidades de tamanho fixo, gerando fragmentação interna, e é totalmente transparente ao programador.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Segmentação</strong> = unidades <strong>variáveis</strong> (lógica do programa), <strong>fragmentação externa</strong>, <strong>visível</strong> ao programador. O descrito é a <strong>paginação</strong>.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) O algoritmo ótimo de substituição de páginas é amplamente adotado por sistemas operacionais modernos por sua eficiência comprovada.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O ótimo exige conhecer o <strong>futuro</strong> de uso das páginas — é <strong>não realizável</strong> (serve como referência teórica). Na prática: LRU, FIFO, segunda chance, relógio.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) O RAID 0 oferece tolerância a falhas graças à redundância de dados entre os discos do conjunto.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>RAID-0</strong> só faz <strong>striping</strong> — <strong>sem redundância</strong>. Tolerância: RAID-1 (mirror), 5 (paridade), 6 (dupla), 10.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) A diferença entre NAS e SAN é que:
+a) NAS opera com blocos; SAN opera com arquivos.
+b) NAS opera com arquivos (rede); SAN opera com blocos (alta disponibilidade).
+c) ambos são sinônimos de DAS.
+d) SAN não suporta fitas.
+e) NAS exige Fibre Channel.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>NAS</strong> = arquivos (compartilhamento); <strong>SAN</strong> = blocos (discos/fitas, HA). <strong>DAS</strong> é direto ao servidor.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) No Linux, o comando <code>jobs</code> lista os processos em background; <code>fg %n</code> traz um deles para o foreground; <code>CTRL+Z</code> suspende o processo atual.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <code>&amp;</code> inicia em background; <code>CTRL+Z</code> suspende; <code>bg</code>/<code>fg %n</code> alternam; <code>jobs</code> lista.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O Anacron difere do Cron principalmente porque:
+a) é um daemon que roda continuamente.
+b) executa tarefas pendentes após desligamentos, com granularidade mínima de um dia.
+c) exige máquina ligada permanentemente.
+d) usa apenas unidades de segundos.
+e) substitui o GRUB.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Anacron</strong> não é daemon, granularidade ≥ <strong>dia</strong>, cobre tarefas perdidas quando a máquina estava desligada. <strong>Cron</strong> exige máquina ligada no horário.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) O Active Directory pode ser instalado em sistemas de arquivos FAT32, desde que configurado em modo de compatibilidade.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O AD <strong>exige NTFS</strong> (recursos de segurança e do arquivo Ntds.dit).</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre o LDAP, é correto afirmar:
+a) é o próprio diretório de objetos da Microsoft.
+b) é protocolo de acesso a diretórios (porta 389), baseado no X.500.
+c) é um servidor de aplicação JEE.
+d) substitui o DNS em redes corporativas.
+e) opera exclusivamente com Windows.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>LDAP = protocolo</strong> (389/TCP, padrão aberto baseado no X.500) — o AD <strong>usa</strong> LDAP; não é sinônimo de diretório.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) A política de escalonamento SRT (Shortest Remaining Time) é a versão não preemptiva do algoritmo SJF.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>SRT</strong> é a versão <strong>preemptiva</strong> do SJF (se chegar processo com tempo restante menor, preempção ocorre).</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) O RAID 5 caracteriza-se por:
+a) paridade em um disco fixo dedicado (mínimo 3 discos).
+b) dupla paridade, tolerando duas falhas simultâneas.
+c) paridade distribuída entre os discos, tolerando uma falha (mínimo 3 discos).
+d) espelhamento puro com 50% de aproveitamento.
+e) striping sem redundância.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>RAID-5</strong>: paridade <strong>distribuída</strong>, mín. 3 discos, tolera <strong>1</strong> falha. (RAID-4 = disco fixo; RAID-6 = dupla.)</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) O WSUS (Windows Server Update Services) é o serviço do Active Directory responsável pela autenticação de usuários via Kerberos.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>WSUS</strong> distribui e gerencia <strong>atualizações</strong> do Windows. Autenticação Kerberos é papel do <strong>AD DS/KDC</strong>.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Diferencie deadlock de starvation e relacione-os com o escalonamento de CPU.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> <strong>Deadlock</strong> é o impasse em que um conjunto de processos fica preso mutuamente — cada um segura um recurso que outro precisa — exigindo quatro condições simultâneas (exclusão mútua, espera por recurso, não-preempção e espera circular); ninguém progride. <strong>Starvation</strong> ocorre quando um processo de baixa prioridade nunca é atendido, pois outros de prioridade maior chegam continuamente; é mais provável em políticas <strong>não preemptivas</strong> com prioridades. No deadlock todos param; no starvation, os demais progridem e apenas o "esquecido" fica.</p></details>
+<p><strong>D2.</strong> Explique memória virtual, paginação e segmentação, incluindo os tipos de fragmentação gerados.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>memória virtual</strong> permite que o programa exceda a RAM física, mantendo em RAM apenas as partes em uso (transferências por página). Na <strong>paginação</strong>, o espaço virtual é dividido em <strong>páginas</strong> (tamanho fixo = quadros físicos), mapeadas pela MMU; gera <strong>fragmentação interna</strong> (última página parcialmente usada) e é transparente ao programador. Na <strong>segmentação</strong>, as unidades (segmentos) têm tamanhos <strong>variáveis</strong> conforme a lógica do programa; gera <strong>fragmentação externa</strong> e é visível ao programador, permitindo proteção por segmento.</p></details>
+<hr />
+<p><em>Base: <code>01.Sistemas Operacionais e Arquitetura</code> (Aulas 04 — processos/threads/deadlock/escalonamento; 05 — memória; 06 e 12 — sistemas de arquivos/backup; 07–10 — Windows/PowerShell/AD/Linux/Cron; 13 — RAID/E-S; 14 — data center) do material local (2020). Complemento: Windows 11 e Windows Server 2019/2022/2025, WSUS e utilitários atuais (systemctl/dnf) — ausentes da base de 2020.</em></p>
+<script>
+(function () {
+  const key = 'apostila-t11-sistemas-operacionais-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

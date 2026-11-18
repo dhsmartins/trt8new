@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T16 — Segurança da Informação (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T16 — Segurança da Informação</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-isoiec-27001-sgsi">1. ISO/IEC 27001 — SGSI</a></li>
+<li class="toc-h2"><a href="#2-isoiec-27002-controles">2. ISO/IEC 27002 — controles</a></li>
+<li class="toc-h2"><a href="#3-isoiec-27701-privacidade-complemento">3. ISO/IEC 27701 — privacidade (complemento)</a></li>
+<li class="toc-h2"><a href="#4-lgpd-lei-137092018-complemento">4. LGPD (Lei 13.709/2018) (complemento)</a></li>
+<li class="toc-h2"><a href="#1-firewall-e-arranjos">1. Firewall e arranjos</a></li>
+<li class="toc-h2"><a href="#2-waf-utm-proxy-e-nac">2. WAF, UTM, Proxy e NAC</a></li>
+<li class="toc-h2"><a href="#3-ids-ips">3. IDS × IPS</a></li>
+<li class="toc-h2"><a href="#1-seguranca-sem-fio">1. Segurança sem fio</a></li>
+<li class="toc-h2"><a href="#2-vpn-e-ztna">2. VPN e ZTNA</a></li>
+<li class="toc-h2"><a href="#1-ataques">1. Ataques</a></li>
+<li class="toc-h2"><a href="#2-codigos-maliciosos-malware">2. Códigos maliciosos (malware)</a></li>
+<li class="toc-h2"><a href="#1-criptografia-simetrica-assimetrica">1. Criptografia simétrica × assimétrica</a></li>
+<li class="toc-h2"><a href="#2-hash-assinatura-e-certificados">2. Hash, assinatura e certificados</a></li>
+<li class="toc-h2"><a href="#3-controle-de-acesso-rbac-e-mfa">3. Controle de acesso, RBAC e MFA</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-16-seguranca-da-informacao">APOSTILA — TÓPICO 16: SEGURANÇA DA INFORMAÇÃO</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> ABNT NBR ISO/IEC 27001:2024 e ABNT NBR ISO/IEC 27002:2022; ABNT NBR ISO/IEC 27701:2026; LGPD Lei nº 13.709/2018; OWASP Top 10:2025; firewall, WAF, UTM, DMZ, Proxy, NAC, Antivírus e AntiSpam; IDS e IPS; monitoramento de tráfego; sniffer; segurança em redes sem fio: EAP, WEP, WPA, WPA2 e WPA3; VPN, VPN-SSL e ZTNA; ataques e ameaças; códigos maliciosos; ataques DoS e DDoS; criptografia assimétrica e simétrica; certificados digitais; assinaturas digitais; funções hash; controle de acesso; RBAC; MFA; TLS 1.2 e 1.3 e limitações do SSL.</p>
+<p><strong>Base de conhecimento:</strong> <code>10.Segurança da Informação e Armazenamento de Dados</code> (Aulas 00–05, 11–12), <code>02.Redes de Computadores</code> (Aulas 04, 08), <code>04.Desenvolvimento de Software</code> (Aulas 13–14) — Curso Regular TI 2020.2 + <strong>complemento</strong> (LGPD, OWASP 2025, ISO 27001:2024/27701:2026, WPA3, ZTNA, TLS 1.3).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-governanca-iso-270012700227701-e-lgpd">MÓDULO I — GOVERNANÇA: ISO 27001/27002/27701 E LGPD</h1>
+<h2 id="1-isoiec-27001-sgsi">1. ISO/IEC 27001 — SGSI</h2>
+<ul>
+<li>Define requisitos do <strong>SGSI</strong> (Sistema de Gestão de Segurança da Informação). Objetivo: <strong>estabelecer, implementar, manter e melhorar continuamente</strong> o SGSI (ciclo <strong>PDCA</strong>).</li>
+<li>Estrutura (10 tópicos + anexo): 1 Escopo; 2 Referência Normativa; 3 Termos; 4 Contexto; 5 Liderança; 6 Planejamento; 7 Apoio; 8 Operação; 9 Avaliação de Desempenho; 10 Melhoria. <strong>Itens 4 a 10 são obrigatórios</strong> para conformidade.</li>
+<li><strong>POSIC</strong> (Política de Segurança da Informação) documentada, comunicada e disponível às partes interessadas. Liderança <strong>top-down</strong>. Genérica (qualquer organização).</li>
+<li><em>Complemento (versão <strong>2024</strong> no edital)</em>: a base local cobre a <strong>2013</strong>; a estrutura de alto nível (Annex SL) permanece; ver a 27002:2022 para os controles.</li>
+</ul>
+<h2 id="2-isoiec-27002-controles">2. ISO/IEC 27002 — controles</h2>
+<ul>
+<li>Código de <strong>boas práticas com controles</strong> para o SGSI (detalha o Anexo da 27001). Versão 2013: <strong>14 seções, 35 objetivos, 114 controles</strong>. Seções: Políticas; Organização da SI; Segurança em RH; Gestão de Ativos (<strong>classificação da informação</strong>); <strong>Controle de Acesso</strong>; <strong>Criptografia</strong> (confidencialidade, integridade/autenticidade, <strong>não repúdio</strong>, autenticação; gerenciamento de chaves); Segurança Física; Operações; Comunicações; Aquisição/Desenvolvimento; Cadeia de Suprimentos; Incidentes; Continuidade; Conformidade.</li>
+<li><em>Complemento (versão <strong>2022</strong> no edital)</em>: <strong>4 temas</strong> (Pessoas, Físico, Tecnológico, Organizacional) e <strong>93 controles</strong> (11 novos, incl. threat intelligence, cloud services, data masking, DLP, secure coding).</li>
+<li><strong>Procedimentos seguros de log-on</strong> (clássico): não mostrar identificadores antes de concluir; aviso de acesso restrito; validar só com dados completos; proteção contra tentativas forçadas; registrar tentativas; mostrar última entrada; não mostrar/transmitir senha em claro; encerrar sessões inativas.</li>
+</ul>
+<h2 id="3-isoiec-27701-privacidade-complemento">3. ISO/IEC 27701 — privacidade <em>(complemento)</em></h2>
+<ul>
+<li>Extensão do 27001/27002 para <strong>gestão de privacidade da informação (PIMS)</strong> — alinhada à <strong>LGPD</strong> e ao GDPR: papéis (controlador/operador), bases legais, direitos do titular, avaliação de impacto, transferência internacional. O edital cita a versão <strong>2026</strong>.</li>
+</ul>
+<h2 id="4-lgpd-lei-137092018-complemento">4. LGPD (Lei 13.709/2018) <em>(complemento)</em></h2>
+<ul>
+<li><strong>Dado pessoal</strong> = informação relacionada a pessoa natural identificada/identificável; <strong>dado pessoal sensível</strong> (origem racial, convicção religiosa, opinião política, saúde, vida sexual, dado genético/biométrico).</li>
+<li><strong>Princípios</strong>: finalidade, adequação, necessidade, livre acesso, qualidade dos dados, transparência, segurança, prevenção, não discriminação, responsabilização.</li>
+<li><strong>Bases legais</strong> (art. 7º/11): consentimento, cumprimento de obrigação legal, execução de contrato, tutela da saúde, legítimo interesse, entre outras.</li>
+<li><strong>Direitos do titular</strong>: confirmação, acesso, correção, eliminação, portabilidade, informação sobre compartilhamento, revogação do consentimento.</li>
+<li><strong>Papéis</strong>: <strong>controlador</strong> e <strong>operador</strong>; <strong>encarregado (DPO)</strong>; <strong>ANPD</strong> (autoridade nacional). Segurança e boas práticas; sanções administrativas (advertência, multa até 2% do faturamento, limitada a R$ 50 milhões, bloqueio/eliminação dos dados).</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-perimetro-firewall-dmz-waf-utm-proxy-nac">MÓDULO II — PERÍMETRO: FIREWALL, DMZ, WAF, UTM, PROXY, NAC</h1>
+<h2 id="1-firewall-e-arranjos">1. Firewall e arranjos</h2>
+<ul>
+<li><strong>Firewall</strong>: elemento de <strong>borda</strong> (princípio do <strong>"choke point"</strong> — ponto único de entrada/saída); permite monitoração, controle, autenticação, logs, alertas, trilhas de auditoria.</li>
+<li><strong>DMZ (rede de perímetro)</strong>: área de serviços comuns (web, e-mail) acessível a externos e internos; tira os servidores expostos da rede interna. Evolução: <strong>2 firewalls</strong> (defesa em profundidade).</li>
+<li>Arranjos: <strong>dual-homed host</strong> (2 interfaces); <strong>screened host</strong> (firewall + <strong>bastion host</strong> — mínimo de serviços); <strong>screened-subnet/DMZ</strong> (subrede com dois firewalls); "hybrid host" (agrupa características).</li>
+<li>Conceitos: filtros; <strong>proxies</strong> (intermediário: duas conexões — cliente-proxy-servidor); <strong>bastion hosts</strong>; <strong>honeypot</strong> (servidor-iscas); <strong>NAT</strong> (segurança por obscuridade); <strong>VPN</strong> (túnel terminando no firewall). <em>Pegadinha</em>: firewall <strong>nativamente não é antivírus nem antispam</strong> (só em UTM/deep inspection).</li>
+<li><strong>Classificação por camada</strong>: <strong>bridge</strong> (L2, <strong>sem IP</strong>); <strong>filtro de pacotes estático</strong> (L3/L4: IP/portas); <strong>stateful</strong> (tabela de estados; abre/fecha portas conforme a conexão TCP); <strong>proxy</strong> (L7; SQUID; filtra por URL); <strong>proxy reverso</strong> (proteção/balanceamento/cache no lado servidor); <strong>deep inspection</strong> (inspeção de conteúdo).</li>
+</ul>
+<h2 id="2-waf-utm-proxy-e-nac">2. WAF, UTM, Proxy e NAC</h2>
+<ul>
+<li><strong>WAF (Web Application Firewall)</strong>: camada 7, protege o <strong>servidor de aplicações web</strong> (não a rede nem os usuários); posiciona-se à frente da aplicação; analisa fluxo <strong>após decriptação</strong>; appliance ou software. <em>Dado</em>: 70% do orçamento vai para tráfego de rede, mas 70% dos ataques ocorrem na <strong>camada de aplicação</strong>.</li>
+<li><strong>UTM</strong>: appliance único agregando firewall, IDS/IPS, antivírus, antimalware, segurança wireless, VPN, relatórios.</li>
+<li><strong>Proxy</strong>: intermediário (cache, filtragem, anonimato do IP); CONNECT do HTTP.</li>
+<li><strong>NAC (Network Access Control)</strong> <em>(complemento)</em>: controle de acesso à rede por postura (802.1X, verificação de compliance — antivírus/patches — antes de liberar acesso).</li>
+<li><strong>ICAP</strong> (Internet Content Adaptation Protocol): baseado em HTTP, leve; adaptação de conteúdo (ex.: checar vírus); geralmente na DMZ.</li>
+<li><strong>Antivírus/antispam</strong>: antivírus (assinaturas, heurística, sandbox — complemento EDR); <strong>antispam</strong>: blacklists/whitelists/<strong>greylists</strong> (só entrega após reenvio legítimo); filtros de conteúdo (<strong>bayesiano</strong> — probabilístico, falsos positivos); <strong>SPF</strong> (valida IPs autorizados por domínio); <strong>DKIM</strong> (assinatura com chaves públicas — verifica cabeçalho <strong>e</strong> conteúdo); gerência da <strong>porta 25</strong>.</li>
+</ul>
+<h2 id="3-ids-ips">3. IDS × IPS</h2>
+<ul>
+<li><strong>IDS</strong>: <strong>detecção</strong> ("alarme") — acusa, mas <strong>não bloqueia</strong> (modo passivo: log/alerta; modo reativo: comanda firewall, mas o ataque já ocorreu). Tipos: <strong>NIDS</strong> (rede), <strong>HIDS</strong> (host — trata dados na origem, antes da criptografia), baseado em pilhas, <strong>Hybrid</strong>. Ferramenta: <strong>SNORT</strong> (faz também de IPS).</li>
+<li><strong>IPS</strong>: IDS <strong>in-line</strong>, <strong>bloqueio ativo e preventivo</strong> (impede o ataque). <strong>IDPS</strong> = híbrido configurável.</li>
+<li><strong>Metodologias de detecção</strong>: <strong>Base de Conhecimento</strong> (assinaturas/regras — baixos falsos positivos; precisa atualização; associação: IDS) × <strong>Base de Comportamento</strong> (heurística/estatística; detecta ataques novos; muitos falsos positivos; associação: IPS).</li>
+<li><strong>Falso negativo</strong> (suspeito não detectado) × <strong>falso positivo</strong> (legítimo acusado).</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-wireless-vpn-e-ztna">MÓDULO III — WIRELESS, VPN E ZTNA</h1>
+<h2 id="1-seguranca-sem-fio">1. Segurança sem fio</h2>
+<ul>
+<li><strong>WEP</strong> (1997): IV de 24 bits, chave 64/128 bits, chaves <strong>estáticas</strong> → <strong>quebrado</strong>. <strong>TKIP</strong>: chaves de 128 bits com IV de 48 bits.</li>
+<li><strong>WPA</strong>: subconjunto do <strong>802.11i</strong>; chaves dinâmicas; <strong>TKIP + MIC + 802.1X/RADIUS</strong>; versões <strong>Personal</strong> (pré-chave) e <strong>Enterprise</strong> (802.1X por usuário).</li>
+<li><strong>WPA2</strong>: implementa o <strong>802.11i por completo</strong>; <strong>AES</strong> (em vez de RC4); <strong>4-way handshake</strong>; Personal e Enterprise.</li>
+<li><strong>WPA3</strong> <em>(complemento)</em>: SAE (substitui PSK), proteção em redes abertas (OWE), forward secrecy, 192-bit no modo Enterprise.</li>
+<li><strong>EAP</strong> (Extensible Authentication Protocol): framework de autenticação — <strong>EAP-TLS</strong> (certificados), <strong>EAP-MD5</strong> (usuário/senha), <strong>EAP-TTLS/PEAP</strong> (usuário+senha+certificados), <strong>EAP-LEAP</strong> (Cisco). Usado no <strong>802.1X</strong>: <strong>suplicante, authenticator, servidor de autenticação (RADIUS)</strong>; encapsulamento <strong>EAPOL</strong>.</li>
+</ul>
+<h2 id="2-vpn-e-ztna">2. VPN e ZTNA</h2>
+<ul>
+<li><strong>VPN</strong>: <strong>túnel seguro</strong> com criptografia sobre rede pública; autenticação; confidencialidade, autenticidade, integridade. Cenários: <strong>site-to-site</strong>, <strong>acesso remoto</strong>, <strong>extranet</strong>. NAT entre pontos: <strong>NAT Traversal/UDP Encapsulation</strong>.</li>
+<li>Protocolos: <strong>PPTP</strong> (leve, 128 bits — <strong>não considerado seguro</strong>); <strong>L2TP</strong> (<strong>sem criptografia própria</strong> — usa IPSec; porta 1701); <strong>OpenVPN</strong> (open source, SSL/TLS, UDP/TCP 443); <strong>SSTP</strong> (Microsoft, TCP 443); <strong>IPSec</strong> (L3; UDP/500 IKE; protocolos IP 50 ESP e 51 AH); <strong>MPLS VPN</strong> (<strong>só isola, NÃO criptografa</strong>).</li>
+<li><strong>VPN-SSL/TLS</strong>: túnel via TLS (OpenVPN, SSTP) — mais atravessa firewalls (443).</li>
+<li><strong>ZTNA (Zero Trust Network Access)</strong> <em>(complemento)</em>: "<strong>nunca confie, sempre verifique</strong>" — acesso por identidade/contexto a recursos específicos (não à rede inteira como na VPN); microsegmentação, MFA, verificação contínua. Substitui gradualmente o modelo de perímetro/trusted network.</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-ataques-ameacas-e-codigos-maliciosos">MÓDULO IV — ATAQUES, AMEAÇAS E CÓDIGOS MALICIOSOS</h1>
+<h2 id="1-ataques">1. Ataques</h2>
+<ul>
+<li><strong>Scan/varredura</strong> (NMAP: <code>nmap -sS 192.168.0.0/24 -p 1-150</code>); <strong>spoofing</strong> (e-mail, IP, ARP); <strong>Man in the Middle</strong>; <strong>Smurf</strong> (IP forjado + broadcast); <strong>sniffing</strong> (Wireshark/TCPDump; em claro permite capturar senhas).</li>
+<li><strong>Força bruta/dicionário</strong>; <strong>defacement</strong> (vandalismo de página — <strong>não</strong> é phishing); <strong>phishing</strong> (página falsa por spam; <strong>spear phishing</strong> = alvo específico); <strong>pharming</strong> (DNS/cache poisoning — desvio sem o usuário perceber); <strong>SPIM</strong>; <strong>engenharia social</strong> (<strong>vishing</strong> = voip; <strong>hoax</strong>; <strong>whaling</strong> = executivos).</li>
+<li><strong>DoS</strong> (esgota recursos: processamento, sessões, banda, memória) / <strong>DDoS</strong> (coordenado via <strong>botnet/zumbis</strong>; mitigação: banda, baseline, blackholes, CDNs, hardening) / <strong>DRDoS</strong> (refletores — como Smurf, amplificado).</li>
+<li><strong>Aplicação</strong>: <strong>LFI/LFR</strong>; <strong>XSS</strong> (não persistente × persistente; sequestra sessões; defesa: CSP, sanitização); <strong>CSRF/XSRF</strong> ("cheque em branco assinado"); <strong>SQL/LDAP/XML injection</strong>; <strong>zero-day</strong>; <strong>buffer overflow</strong>; <strong>session hijacking</strong> (ativo = spoofing; passivo = monitora); <strong>APT</strong> (ameaça persistente avançada — 5 fases: reconhecimento, incursão, descoberta, exfiltação, ação).</li>
+<li><strong>Wireless</strong>: wardriving, rogue AP, bluejacking (mensagens), bluesnarfing (acesso a dados Bluetooth).</li>
+</ul>
+<h2 id="2-codigos-maliciosos-malware">2. Códigos maliciosos (malware)</h2>
+<ul>
+<li><strong>Vírus</strong> (precisa de <strong>ação do usuário/SO</strong>; tipos: boot/MBR, arquivo, residente, e-mail, script, macro, celular, stealth, <strong>metamórficos/polimórficos</strong>); <strong>worm</strong> (propaga-se <strong>sozinho pela rede</strong>, explora vulnerabilidades); <strong>spyware</strong> (keylogger, screenlogger, adware); <strong>cavalo de Tróia</strong> (aparenta legítimo); <strong>backdoor</strong> (acesso futuro); <strong>rootkit</strong> (esconde presença; escala privilégios); <strong>bot/botnet</strong>; <strong>bomba lógica</strong> (data/evento); <strong>ransomware</strong> (criptografa e exige resgate).</li>
+<li><em>Pegadinha</em>: <strong>vírus precisa de execução</strong>; <strong>worm propaga-se sozinho</strong>.</li>
+</ul>
+<hr />
+<h1 id="modulo-v-criptografia-certificados-hash-e-controle-de-acesso">MÓDULO V — CRIPTOGRAFIA, CERTIFICADOS, HASH E CONTROLE DE ACESSO</h1>
+<h2 id="1-criptografia-simetrica-assimetrica">1. Criptografia simétrica × assimétrica</h2>
+<ul>
+<li><strong>Simétrica</strong>: <strong>mesma chave</strong> cifra/decifra; <strong>mais rápida</strong>, chaves menores; segurança no <strong>segredo da chave</strong>; garante <strong>confidencialidade</strong> (cifra de substituição). Algoritmos: <strong>DES</strong> (56 bits efetivos; 16 rodadas; rede de <strong>Feistel</strong> — expansão, mistura (XOR), substituição (S-boxes = confusão), permutação (P-box = difusão)); <strong>3DES</strong> (168 bits com 3 chaves; 112 com 2); <strong>AES</strong> (blocos 128 bits; chaves 128/192/256; <strong>sem Feistel</strong>; SubBytes, ShiftRows, MixColumns, AddRoundKey); RC4/RC5/RC6, Blowfish, Twofish, IDEA.</li>
+<li><strong>Assimétrica (chaves públicas)</strong>: par <strong>privada</strong> (exclusiva) × <strong>pública</strong>. <strong>Regra de ouro</strong>: <strong>confidencialidade</strong> → cifra com a <strong>pública do RECEPTOR</strong>; <strong>autenticidade</strong> → cifra com a <strong>privada do EMISSOR</strong>. Algoritmos: <strong>Diffie-Hellman</strong> (<strong>troca de chaves</strong>, não cifra; logaritmo discreto; com curva elíptica → <strong>PFS</strong>); <strong>RSA</strong> (fatoração de primos; 2048–4096 bits; cifragem e assinatura); <strong>El Gamal</strong> (PGP).</li>
+<li>Boas práticas: <strong>comprimir antes de encriptar</strong>; a chave simétrica é trocada por canal assimétrico.</li>
+</ul>
+<h2 id="2-hash-assinatura-e-certificados">2. Hash, assinatura e certificados</h2>
+<ul>
+<li><strong>Funções hash</strong>: <strong>unidirecionais (one-way)</strong>, saída de tamanho fixo (<strong>message digest</strong>). Garantem <strong>integridade</strong> (comparar hash recebido × recalculado) e autenticidade de senhas. Algoritmos: <strong>MD5</strong> (128 bits; <strong>colisões desde 2008</strong>), <strong>SHA-1</strong> (160 bits), <strong>SHA-256/384/512</strong>, SHA-3. Ataque: <strong>rainbow tables</strong> (defesa: salt).</li>
+<li><strong>Assinatura digital</strong>: garante <strong>integridade + autenticidade</strong> (<strong>NÃO confidencialidade</strong> — mensagem vai em claro): hash → cifra com a <strong>privada do EMISSOR</strong> → destinatário decifra com a <strong>pública do emissor</strong> e compara. <strong>Atemporal × temporal</strong> (timestamp).</li>
+<li><strong>Certificado digital</strong> (X.509): <strong>AC (CA)</strong> = "cartório"; conteúdo: chave pública, identidade, validade, assinatura da AC, cadeia. <strong>PKI/ICP-Brasil</strong>: AC, <strong>AR (Registradora)</strong>, <strong>CRL</strong> (revogados). Modelo completo: chave de <strong>sessão simétrica</strong> cifrada com a <strong>pública do destinatário</strong> + assinatura digital do emissor.</li>
+<li><strong>TLS 1.2/1.3 × SSL</strong> <em>(complemento)</em>: TLS sucessor do SSL (IETF). <strong>SSL e TLS NÃO interoperam</strong>; TLS usa HMAC; OpenSSL suporta ambos. <strong>TLS 1.2</strong> (PRF, AES-GCM, SNI); <strong>TLS 1.3</strong> (handshake em 1-RTT, só AEAD, <strong>sem RSA key-exchange</strong> — só (EC)DHE (PFS), 0-RTT opcional). <strong>Limitações do SSL</strong>: obsoleto (SSLv3 vulnerável a POODLE), sem interoperar com TLS, chaves mais fracas; <strong>não usar SSL</strong> — usar TLS 1.2/1.3.</li>
+<li><strong>IPSec</strong>: camada de rede; <strong>AH</strong> (autenticidade+integridade de cabeçalho+dados, <strong>sem confidencialidade</strong>) × <strong>ESP</strong> (confidencialidade+integridade+autenticidade <strong>só dos dados</strong>). Modos transporte × túnel. <strong>IKE</strong>: Main Mode × Aggressive Mode (identidades em claro); Quick Mode.</li>
+</ul>
+<h2 id="3-controle-de-acesso-rbac-e-mfa">3. Controle de acesso, RBAC e MFA</h2>
+<ul>
+<li><strong>AAA</strong> = <strong>Authentication, Authorization, Accounting</strong> (auditoria). <strong>Três fatores</strong>: <strong>sabe</strong> (senha), <strong>tem</strong> (token, smart card), <strong>é</strong> (biometria — universalidade, singularidade, permanência, mensurabilidade).</li>
+<li><strong>MFA (autenticação multifator)</strong> <em>(complemento)</em>: exige <strong>2+ fatores independentes</strong> (ex.: senha + token) — prevenção OWASP de quebra de autenticação. <strong>2FA</strong> = caso particular de 2 fatores.</li>
+<li><strong>RBAC (Role-Based Access Control)</strong> <em>(complemento)</em>: acesso por <strong>papéis/perfis</strong> (permissões atribuídas ao papel; usuário herda do papel) — administrável, prático para grandes organizações. Outros modelos: DAC (discretionário), MAC (obrigatório), ABAC (atributos).</li>
+<li><strong>Controle de acesso</strong>: físico (cancela, biometria, chave de rack) × lógico (login/senha, restrição por IP). <strong>Procedimentos seguros de log-on</strong> (ver ISO 27002).</li>
+</ul>
+<hr />
+<h1 id="modulo-vi-owasp">MÓDULO VI — OWASP</h1>
+<ul>
+<li><strong>OWASP</strong> (Open Web Application Security Project): princípios e ferramentas de segurança de aplicações — <strong>ESAPI</strong> (biblioteca de controles), <strong>ZAP</strong> (scanner/proxy de testes), projetos SAST.</li>
+<li><strong>Teste de penetração</strong>: avaliação simulando ataque (análise ativa de vulnerabilidades).</li>
+<li><strong>OWASP Top 10</strong> — base 2017: <strong>Injeção</strong> (SQL/NoSQL/OS/LDAP; parametrizar, validar no servidor); <strong>Quebra de Autenticação</strong> (MFA, sem credenciais padrão); <strong>Exposição de Dados Sensíveis</strong> (criptografia em repouso/trânsito); <strong>XXE</strong>; <strong>Controle de Acesso Quebrado</strong> (verificar direitos no servidor a cada chamada); <strong>Configuração Incorreta de Segurança</strong>; <strong>XSS</strong>; <strong>Desserialização Insegura</strong> (RCE); <strong>Componentes Vulneráveis Conhecidos</strong>; <strong>Logging e Monitoração Insuficientes</strong> (tempo médio de detecção de violação: <strong>200 dias</strong>).</li>
+<li><strong>OWASP Top 10:2025</strong> <em>(complemento — edital exige a versão 2025)</em>: reorganização com ênfase em <strong>Broken Access Control</strong> (mantido no topo), <strong>Cryptographic Failures</strong>, <strong>Injection</strong> (inclui SQL/XSS/SSRF modernos), <strong>Insecure Design</strong>, <strong>Security Misconfiguration</strong>, <strong>Vulnerable and Outdated Components</strong>, <strong>Identification and Authentication Failures</strong>, <strong>Software and Data Integrity Failures</strong>, <strong>Security Logging and Monitoring Failures</strong>, <strong>Server-Side Request Forgery (SSRF)</strong> — verifique a versão oficial da banca; os conceitos centrais (injeção, acesso, criptografia, configuração, componentes, logs) são estáveis.</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>ISO 27001</strong> = requisitos do SGSI (<strong>itens 4–10 obrigatórios</strong>; PDCA); <strong>27002</strong> = controles (<strong>14 seções/114 controles</strong> na 2013; <strong>93 controles/4 temas</strong> na 2022).</li>
+<li><strong>Firewall não é antivírus/antispam nativamente</strong>; <strong>WAF protege o servidor de aplicação</strong>, não a rede.</li>
+<li><strong>IDS detecta (alarme), não bloqueia</strong>; <strong>IPS bloqueia (in-line)</strong>. IDS≈assinaturas; IPS≈comportamento.</li>
+<li><strong>Falso negativo</strong> = suspeito não detectado; <strong>falso positivo</strong> = legítimo acusado.</li>
+<li><strong>SSL e TLS não interoperam</strong>; use <strong>TLS 1.2/1.3</strong> (SSL obsoleto). TLS 1.3: 1-RTT, sem RSA key-exchange, PFS.</li>
+<li><strong>AH não cifra</strong> (autenticidade/integridade); <strong>ESP</strong> não cobre cabeçalho IP. <strong>MPLS VPN não criptografa</strong>; <strong>PPTP não é seguro</strong>.</li>
+<li><strong>Assinatura digital</strong>: hash + <strong>privada do EMISSOR</strong> (integridade/autenticidade, <strong>NÃO confidencialidade</strong>). Confidencialidade: <strong>público do RECEPTOR</strong>.</li>
+<li><strong>DES = 56 bits</strong>; 3DES = 168 (3 chaves) ou 112 (2); WEP = 64/128 com IV de 24; MD5 = 128 bits (colisões).</li>
+<li><strong>Hash é unidirecional</strong> (não reverte); criptografia é bidirecional.</li>
+<li><strong>WEP quebrado</strong>; WPA = subconjunto 802.11i (TKIP); <strong>WPA2 = AES/802.11i completo</strong>; <strong>WPA3 = SAE</strong>.</li>
+<li><strong>Vírus precisa de execução</strong>; <strong>worm propaga-se sozinho</strong>. <strong>Ransomware</strong> criptografa e cobra resgate.</li>
+<li><strong>Phishing</strong> = página falsa; <strong>pharming</strong> = DNS poisoning; <strong>defacement</strong> = vandalismo.</li>
+<li><strong>DoS</strong> ataca <strong>disponibilidade</strong>; <strong>DRDoS</strong> usa refletores; <strong>DDoS</strong> = botnet.</li>
+<li><strong>AAA</strong> = autenticação/autorização/<strong>contabilização</strong> (auditoria). <strong>MFA</strong> = 2+ fatores; <strong>RBAC</strong> = papéis.</li>
+<li><strong>802.1X</strong>: suplicante/authenticator/servidor (RADIUS); <strong>EAP-TLS</strong> usa certificados.</li>
+<li><strong>LGPD</strong>: controlador/operador, <strong>encarregado (DPO)</strong>, <strong>ANPD</strong>; dado sensível ≠ dado comum; sanções até 2%/R$ 50 mi.</li>
+<li><strong>ZTNA</strong> = "nunca confie, sempre verifique" (acesso por identidade, não à rede inteira).</li>
+<li><strong>WPA3/OWASP 2025/ISO 27001:2024/27701:2026/ZTNA/TLS 1.3</strong> = complementos (base local: 2020).</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) O firewall, por si só, já oferece proteção contra vírus e spam, dispensando soluções dedicadas de antivírus e antispam.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Firewall <strong>nativamente não é</strong> antivírus/antispam (só em appliances UTM ou via deep inspection).</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) O IDS caracteriza-se por:
+a) bloquear ativamente o ataque em linha (in-line).
+b) detectar e alertar ("alarme"), sem bloquear o tráfego.
+c) substituir o firewall.
+d) criptografar o tráfego.
+e) gerenciar certificados.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>IDS</strong> detecta/alerta (<strong>não</strong> bloqueia). <strong>IPS</strong> é in-line e <strong>bloqueia</strong> preventivamente.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) Na assinatura digital, o remetente cifra o hash da mensagem com sua chave pública, garantindo confidencialidade do conteúdo.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Cifra-se o hash com a <strong>privada do EMISSOR</strong> (garante integridade/autenticidade, <strong>NÃO confidencialidade</strong> — a mensagem vai em claro). Confidencialidade: cifrar com a <strong>pública do receptor</strong>.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) O algoritmo simétrico adotado como padrão pelo governo dos EUA, que substituiu o DES e utiliza blocos de 128 bits com chaves de 128, 192 ou 256 bits, é:
+a) RSA.
+b) AES.
+c) Diffie-Hellman.
+d) MD5.
+e) El Gamal.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>AES</strong> (sem Feistel; SubBytes/ShiftRows/MixColumns/AddRoundKey). RSA/Diffie-Hellman/El Gamal são <strong>assimétricos</strong>; MD5 é <strong>hash</strong>.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) A função hash garante confidencialidade da mensagem, pois permite recuperar o conteúdo original a partir do digest.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Hash é <strong>unidirecional</strong> (não reverte) e garante <strong>integridade</strong>, não confidencialidade.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) O protocolo WPA2, em relação ao WEP, avança por:
+a) usar IV de 24 bits.
+b) adotar AES e completar o padrão IEEE 802.11i (4-way handshake).
+c) manter chaves estáticas.
+d) dispensar autenticação.
+e) usar RC4.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>WPA2</strong> = <strong>AES</strong> + <strong>802.11i completo</strong> + 4-way handshake (WEP: RC4, IV 24 bits, chaves estáticas, quebrado).</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) O worm difere do vírus por propagar-se automaticamente pela rede, explorando vulnerabilidades, sem exigir ação do usuário.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Worm</strong> propaga-se <strong>sozinho</strong>; <strong>vírus</strong> precisa de <strong>execução</strong> (ação do usuário/SO).</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) O WAF (Web Application Firewall) tem como principal função:
+a) proteger a rede inteira contra ataques de rede.
+b) proteger o servidor de aplicações web (camada 7), analisando o fluxo após decriptação.
+c) substituir o IDS.
+d) gerenciar endereços IP.
+e) criptografar e-mails.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>WAF</strong> = L7, protege o <strong>servidor web/aplicação</strong> (não a rede nem os usuários internos).</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) No IPSec, o cabeçalho AH (Authentication Header) oferece confidencialidade dos dados, cifrando o conteúdo do pacote.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>AH</strong> dá autenticidade+integridade (cabeçalho+dados), <strong>sem confidencialidade</strong> (não cifra). Quem cifra é o <strong>ESP</strong> (só dados).</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O certificado digital no padrão X.509 é emitido por:
+a) o próprio usuário.
+b) uma Autoridade Certificadora (AC), terceira parte confiável.
+c) o fabricante do hardware.
+d) o ISP.
+e) o firewall.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>AC (CA)</strong> = "cartório" que emite/atesta certificados (chave pública, identidade, validade, assinatura da AC). <strong>PKI/ICP-Brasil</strong>: AC, AR, CRL.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) O TLS e o SSL interoperam naturalmente, sendo o TLS apenas uma versão mais recente do SSL.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>SSL e TLS NÃO interoperam</strong>. TLS é sucessor (IETF) do SSL 3.0, com HMAC e autoridades intermediárias. Use <strong>TLS 1.2/1.3</strong>; SSL está obsoleto.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre controle de acesso e autenticação, é correto afirmar:
+a) MFA exige apenas um fator de autenticação.
+b) RBAC atribui permissões a papéis, aos quais os usuários são vinculados.
+c) biometria é um exemplo de fator "algo que você tem".
+d) AAA não inclui auditoria.
+e) 2FA e MFA são conceitos opostos.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>RBAC</strong> = permissões por <strong>papéis</strong>. <strong>MFA</strong> = 2+ fatores; <strong>2FA</strong> é caso de 2 fatores. Biometria = "<strong>algo que você é</strong>". <strong>AAA</strong> inclui <strong>contabilização/auditoria</strong>.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) A LGPD aplica-se apenas a dados sensíveis, como saúde e biometria, não alcançando dados pessoais comuns como nome e endereço.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A LGPD alcança <strong>dado pessoal</strong> (nome, endereço...) <strong>e</strong> <strong>dado sensível</strong> (saúde, biometria, origem racial...), com regimes distintos (sensível tem bases legais mais restritas).</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) O ataque DoS tem por objetivo comprometer:
+a) a confidencialidade dos dados.
+b) a disponibilidade do serviço, esgotando recursos.
+c) a integridade do banco.
+d) a autenticidade do usuário.
+e) a criptografia.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>DoS/DDoS</strong> atacam a <strong>disponibilidade</strong> (processamento, sessões, banda, memória). DDoS usa <strong>botnet</strong>; DRDoS usa refletores.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) O ZTNA (Zero Trust Network Access) baseia-se no princípio "nunca confie, sempre verifique", concedendo acesso contextual a recursos específicos, em contraste com o acesso amplo da VPN tradicional.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>ZTNA</strong> = Zero Trust (identidade/contexto, microsegmentação, MFA, verificação contínua) — acesso a <strong>recursos</strong>, não à rede inteira (como a VPN).</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Diferencie criptografia simétrica, assimétrica e funções hash, explicando o papel da assinatura digital e dos certificados.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>criptografia simétrica</strong> usa a mesma chave para cifrar e decifrar (rápida; ex.: AES, DES) — garante confidencialidade, mas exige troca segura de chave. A <strong>assimétrica</strong> usa um par público/privado (ex.: RSA, Diffie-Hellman) — para confidencialidade cifra-se com a <strong>pública do receptor</strong>; para autenticidade, com a <strong>privada do emissor</strong>. As <strong>funções hash</strong> são unidirecionais (MD5, SHA) e garantem <strong>integridade</strong> (digest). A <strong>assinatura digital</strong> combina hash + cifra com a privada do emissor (integridade e autenticidade, sem confidencialidade). Os <strong>certificados X.509</strong>, emitidos por uma <strong>Autoridade Certificadora</strong> confiável, vinculam identidade à chave pública, formando a PKI.</p></details>
+<p><strong>D2.</strong> Explique a diferença entre IDS e IPS, as funções do firewall, do WAF e do UTM e os princípios da LGPD.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O <strong>IDS</strong> detecta e alerta sobre tráfego suspeito ("alarme"), sem bloquear (base de conhecimento/assinaturas); o <strong>IPS</strong> fica in-line e bloqueia preventivamente (base de comportamento). O <strong>firewall</strong> controla o perímetro (choke point; filtros, stateful, proxy, DMZ), mas não é antivírus nativamente; o <strong>WAF</strong> protege o servidor de aplicações web (camada 7, após decriptação); o <strong>UTM</strong> agrega firewall, IDS/IPS, antivírus, VPN e antispam em um appliance. A <strong>LGPD</strong> rege o tratamento de dados pessoais e sensíveis por princípios (finalidade, necessidade, segurança, transparência, responsabilização), com papéis de controlador/operador, encarregado (DPO), direitos do titular, atuação da ANPD e sanções administrativas.</p></details>
+<hr />
+<p><em>Base: <code>10.Segurança da Informação e Armazenamento de Dados</code> (Aulas 00–05: controle de acesso, firewall/IDS/IPS, SSL/TLS/IPSec/VPN, ataques/malware, criptografia, assinatura/certificados; Aulas 11–12: ISO 27001/27002/27005), <code>02.Redes de Computadores</code> (Aula04: WEP/WPA/WPA2/802.1X; Aula08: TLS/HTTP2), <code>04.Desenvolvimento de Software</code> (Aulas 13–14: 2FA/OWASP). Complemento: LGPD, ISO 27001:2024/27002:2022/27701:2026, OWASP Top 10:2025, WPA3, ZTNA, TLS 1.3, NAC, RBAC/MFA — exigidos pelo edital e ausentes ou incompletos na base de 2020.</em></p>
+<script>
+(function () {
+  const key = 'apostila-t16-seguranca-da-informacao-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

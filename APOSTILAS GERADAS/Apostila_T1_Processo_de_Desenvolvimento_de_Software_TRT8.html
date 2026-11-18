@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T1 — Processo de Desenvolvimento de Software (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T1 — Processo de Desenvolvimento de Software</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-conceitos">1. Conceitos</a></li>
+<li class="toc-h2"><a href="#2-modelos-preditivos">2. Modelos preditivos</a></li>
+<li class="toc-h2"><a href="#1-manifesto-agil-2001">1. Manifesto Ágil (2001)</a></li>
+<li class="toc-h2"><a href="#2-scrum">2. Scrum</a></li>
+<li class="toc-h2"><a href="#3-xp-kent-beck">3. XP (Kent Beck)</a></li>
+<li class="toc-h2"><a href="#4-kanban-david-j-anderson-origem-toyota">4. Kanban (David J. Anderson; origem Toyota)</a></li>
+<li class="toc-h2"><a href="#5-outros">5. Outros</a></li>
+<li class="toc-h2"><a href="#1-classificacao-de-requisitos">1. Classificação de requisitos</a></li>
+<li class="toc-h2"><a href="#2-fases-sommerville">2. Fases (Sommerville)</a></li>
+<li class="toc-h2"><a href="#3-elicitacao">3. Elicitação</a></li>
+<li class="toc-h2"><a href="#4-especificacao-e-validacao">4. Especificação e validação</a></li>
+<li class="toc-h2"><a href="#1-qualidade">1. Qualidade</a></li>
+<li class="toc-h2"><a href="#2-testes">2. Testes</a></li>
+<li class="toc-h2"><a href="#3-manutencao-complemento-nao-detalhada-no-material">3. Manutenção (complemento — não detalhada no material)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-1-processo-de-desenvolvimento-de-software">APOSTILA — TÓPICO 1: PROCESSO DE DESENVOLVIMENTO DE SOFTWARE</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Processo de Desenvolvimento de Software: Metodologias, métodos e processos de desenvolvimento ágil de software. Metodologias, métodos e processos de engenharia de requisitos. Metodologias, métodos e processos de engenharia de software.</p>
+<p><strong>Base de conhecimento:</strong> <code>03.Engenharia de Software</code> (Aulas 00–05, 09, 10) e <code>04.Desenvolvimento de Software</code> (Aulas 14, 17) — Curso Regular TI 2020.2 + complemento (Scrum Guide 2020, manutenção).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-engenharia-de-software-e-ciclos-de-vida">MÓDULO I — ENGENHARIA DE SOFTWARE E CICLOS DE VIDA</h1>
+<h2 id="1-conceitos">1. Conceitos</h2>
+<ul>
+<li><strong>Engenharia de Software (IEEE)</strong>: abordagem <strong>sistemática, disciplinada e quantificável</strong> para desenvolvimento, operação e manutenção de software. Princípios: formalidade, abstração, decomposição, generalização, flexibilização.</li>
+<li><strong>Ciclo de vida (Sommerville)</strong>: Especificação → Desenvolvimento → Validação → Evolução. <strong>(Pressman)</strong>: Comunicação → Planejamento → Modelagem → Construção → Implantação. "Modelo de processo" = sinônimo de modelo de ciclo de vida em prova.</li>
+</ul>
+<h2 id="2-modelos-preditivos">2. Modelos preditivos</h2>
+<ul>
+<li><strong>Cascata</strong> (Royce, 1970; sinônimos: waterfall, clássico, sequencial, linear, rígido): fases estritamente sequenciais; <strong>atrasa</strong> a redução de riscos; custo de correção depende do <strong>momento da detecção</strong> do erro. <strong>Não facilita mudanças</strong>.</li>
+<li><strong>Iterativo</strong> (refaz versões) × <strong>Incremental</strong> (acrescenta builds). Exemplo da Monalisa: incremental = partes pintadas; iterativo = versões do quadro.</li>
+<li><strong>RAD</strong>: 5 fases, ciclo de <strong>60–90 dias</strong>.</li>
+<li><strong>Prototipagem</strong>: <strong>Exploratória/Evolucionária</strong> × <strong>Throwaway/Descartável</strong> — <em>quando o enunciado não especifica o tipo, a resposta é throwaway</em>.</li>
+<li><strong>Espiral</strong> (Boehm, 1988): baseada em <strong>análise de riscos</strong>; evolucionário; ideal para sistemas <strong>grandes</strong> (Pressman: &gt; 500 mil LOC).</li>
+<li><strong>Métodos formais</strong> (Cleanroom), <strong>CBSE/COTS</strong> (2 fases de requisitos: especificação e modificação), <strong>orientado a aspectos</strong> (concern principal × crosscutting), <strong>RUP</strong> (fases Iniciação, Elaboração, Construção, Transição).</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-metodos-ageis">MÓDULO II — MÉTODOS ÁGEIS</h1>
+<h2 id="1-manifesto-agil-2001">1. Manifesto Ágil (2001)</h2>
+<ul>
+<li>17 especialistas, Utah (Aliança Ágil). <strong>4 valores</strong>: indivíduos/interações <strong>&gt;</strong> processos/ferramentas; software funcionando <strong>&gt;</strong> documentação extensa; colaboração com o cliente <strong>&gt;</strong> negociação de contrato; responder a mudanças <strong>&gt;</strong> seguir um plano.</li>
+<li><em>Pegadinha clássica</em>: valorizam-se <strong>MAIS</strong> os itens à esquerda, <strong>não exclusivamente</strong>. 12 princípios. <strong>Agilidade ≠ velocidade</strong>.</li>
+</ul>
+<h2 id="2-scrum">2. Scrum</h2>
+<ul>
+<li>Framework leve; pilares <strong>TIA</strong> (Transparência, Inspeção, Adaptação). <strong>Sprint</strong> time-boxada <strong>≤ 1 mês</strong>.</li>
+<li><strong>Papéis</strong>: <strong>Product Owner</strong> (único a priorizar o Product Backlog; garante ROI), <strong>Development Team</strong> (3–9, auto-organizado, multifuncional), <strong>Scrum Master</strong> (servo-líder, remove impedimentos — <strong>jamais PO ao mesmo tempo</strong>).</li>
+<li><strong>Artefatos</strong>: <strong>Product Backlog</strong> (dinâmico; user stories), <strong>Sprint Backlog</strong> (tarefas, do DT; deve incluir ≥1 item de melhoria da retrospectiva), <strong>Incremento</strong> (<strong>DoD obrigatório</strong>; DoR opcional; Burndown opcional).</li>
+<li><strong>Eventos</strong>: Planejamento (≤ 8h p/ sprint de 1 mês), Diária (≤ 15 min), Revisão (≤ 4h — foco no produto; PO valida), Retrospectiva (≤ 3h — foco no processo).</li>
+<li><strong>Scrum Guide 2020</strong> <em>(complemento)</em>: 3 <strong>accountabilities</strong> (PO, SM, Scrum Master; "Developers"), <strong>Product Goal</strong> e <strong>Sprint Goal</strong> como compromissos (commitments), "self-managed".</li>
+<li>Story points / Planning Poker (Fibonacci: 1, 2, 3, 5, 8, 13...).</li>
+</ul>
+<h2 id="3-xp-kent-beck">3. XP (Kent Beck)</h2>
+<ul>
+<li>Práticas: Planejamento Incremental, <strong>Pequenos Releases</strong> (~2 sem), Projeto Simples (<strong>KIS</strong>), <strong>Test-First (TDD)</strong>, <strong>Refactoring</strong>, <strong>Programação em Pares</strong>, <strong>Propriedade Coletiva</strong>, <strong>Integração Contínua</strong>, Ritmo Sustentável (~40h/sem), Metáforas, Cliente On-site.</li>
+<li><strong>5 valores (CorSim ComFeRe)</strong>: Coragem, Simplicidade, Comunicação, Feedback, Respeito.</li>
+</ul>
+<h2 id="4-kanban-david-j-anderson-origem-toyota">4. Kanban (David J. Anderson; origem Toyota)</h2>
+<ul>
+<li><strong>Visualizar o fluxo</strong>; <strong>limitar WIP</strong> (sem número mágico); políticas explícitas; medir fluxo; feedback; melhoria contínua; "<strong>comece com o que você tem hoje</strong>".</li>
+<li><strong>Sem papéis e sem cerimônias prescritas</strong>; <strong>sem iterações por padrão</strong> (Scrumban = Kanban + iterações). Não é metodologia de SDLC (mas bancas o tratam como método ágil).</li>
+</ul>
+<h2 id="5-outros">5. Outros</h2>
+<ul>
+<li><strong>FDD</strong>: 5 processos (Modelo Abrangente; Lista de Funcionalidades; Planejar/ Detalhar/ Construir por Funcionalidade); feature em ≤ 2 semanas.</li>
+<li><strong>TDD</strong>: abordagem de <strong>desenvolvimento</strong> (não de testes); ciclo <strong>Vermelho → Verde → Refatorar</strong>. <strong>ATDD</strong>: foco em aceitação/comunicação.</li>
+<li><strong>Escalagem (complemento)</strong>: SAFe, LeSS, Nexus — ausentes no material local.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-engenharia-de-requisitos">MÓDULO III — ENGENHARIA DE REQUISITOS</h1>
+<h2 id="1-classificacao-de-requisitos">1. Classificação de requisitos</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Tipos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Abstração</td>
+<td><strong>Usuário</strong> × <strong>Sistema</strong> (ambos podem ser funcionais ou não)</td>
+</tr>
+<tr>
+<td>Funcionalidade</td>
+<td><strong>Funcionais</strong> ("o que") × <strong>Não-funcionais</strong> ("como"/restrições globais) × de domínio</td>
+</tr>
+<tr>
+<td>Evolução</td>
+<td><strong>Permanentes</strong> × <strong>Voláteis</strong> (mutáveis, emergentes, consequentes, de compatibilidade)</td>
+</tr>
+<tr>
+<td>Qualidade (QFD)</td>
+<td>Normais, Esperados, <strong>Fascinantes</strong></td>
+</tr>
+<tr>
+<td>Origem dos RNF</td>
+<td>Produto; <strong>Organizacionais</strong> (ambientais, operacionais, desenvolvimento); <strong>Externos</strong> (<strong>interoperabilidade</strong> é externa!)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-fases-sommerville">2. Fases (Sommerville)</h2>
+<p><strong>Viabilidade</strong> (3 perguntas: contribui para os objetivos? é implementável com tecnologia/custo/prazo? integra-se?) → <strong>Elicitação/Análise</strong> → <strong>Especificação</strong> → <strong>Validação</strong> → <strong>Gestão</strong>.</p>
+<h2 id="3-elicitacao">3. Elicitação</h2>
+<ul>
+<li>4 atividades: obtenção, classificação, priorização/negociação, documentação.</li>
+<li>Técnicas: entrevistas (pirâmide/funil/diamante), etnografia, cenários, questionários, workshops, brainstorming, <strong>JAD</strong>, prototipação, <strong>reúso (&gt; 80%)</strong>, <strong>user stories</strong> ("Como um \&lt;papel&gt;, eu quero \&lt;meta&gt; de modo que \&lt;benefício&gt;"), <strong>grupo focal (≤ 12)</strong>, VORD.</li>
+</ul>
+<h2 id="4-especificacao-e-validacao">4. Especificação e validação</h2>
+<ul>
+<li><strong>Especificação</strong> = contrato entre partes (requisitos de usuário + de sistema).</li>
+<li><strong>Validação</strong>: revisão técnica (inspeções em 5 etapas; walkthroughs em 2), prototipação, geração de casos de teste. Atributos: validade, consistência, completude, verificabilidade, <strong>rastreabilidade</strong>.</li>
+<li><strong>Gestão</strong>: rastreabilidade (origem → requisitos → projeto), matrizes, banco de dados de requisitos.</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-qualidade-e-testes">MÓDULO IV — QUALIDADE E TESTES</h1>
+<h2 id="1-qualidade">1. Qualidade</h2>
+<ul>
+<li><strong>QA</strong> (processo, <strong>prevenção</strong>, início) × <strong>QC</strong> (produto, <strong>detecção</strong>, fim; engloba V&amp;V).</li>
+<li><strong>V&amp;V (Boehm)</strong>: <strong>Verificação</strong> = "construindo o produto corretamente?" (comparação com a <strong>especificação</strong>; ambiente de dev) × <strong>Validação</strong> = "produto correto?" (<strong>expectativas do usuário</strong>; ambiente do usuário).</li>
+<li><strong>Verificação estática</strong> (inspeção — não executa) × <strong>dinâmica</strong> (teste — executa).</li>
+<li><strong>Defeito → Erro → Falha (DEF)</strong>: defeito (falta, universo físico) → erro (engano, universo da informação) → falha (comportamento observado diferente do esperado). <em>Nem todo defeito gera falha.</em> Pressman: erro = antes da liberação; defeito = depois.</li>
+<li><strong>ISO 9126</strong>: Funcionalidade, Confiabilidade, Usabilidade, Eficiência, Manutenibilidade, Portabilidade ("EFI gênio fuma pouco"). Métricas: MTTF, MTBF, densidade de defeitos.</li>
+</ul>
+<h2 id="2-testes">2. Testes</h2>
+<ul>
+<li><strong>2 metas</strong>: atender requisitos × descobrir defeitos. <strong>Dijkstra</strong>: "testes só mostram a <strong>presença</strong> de erros, não sua ausência".</li>
+<li><strong>7 princípios</strong>: demonstram presença de defeitos; <strong>exaustivos impossíveis</strong>; testar cedo é mais barato; <strong>Pareto 80/20</strong>; paradoxo do pesticida; dependem do contexto; ausência de defeitos ≠ qualidade.</li>
+<li><strong>Processo</strong>: Planejamento → Preparação → <strong>Especificação (casos/roteiros)</strong> → Execução → Entrega.</li>
+<li><strong>Níveis (QUANDO)</strong>: <strong>Unidade</strong> (dev) → <strong>Integração</strong> (interfaces; big bang × incremental; ambiente de dev) → <strong>Validação/Aceitação</strong> (usuário) → <strong>Sistema</strong> (independente).</li>
+<li><strong>Técnicas (COMO)</strong>: <strong>Caixa-branca</strong> (estrutural, caminhos, complexidade ciclomática) × <strong>caixa-preta</strong> (funcional, partição de equivalência, valor limite) × <strong>caixa-cinza</strong> (híbrida).</li>
+<li><strong>Tipos (O QUE)</strong>: desempenho (<strong>carga</strong> = dentro dos limites; <strong>estresse</strong> = além, até ruptura), usabilidade, <strong>regressão</strong> (após mudanças), fumaça (showstopper), comparação (2 versões), <strong>alfa</strong> (ambiente do dev) × <strong>beta</strong> (ambiente real), recuperação (MTTR), compatibilidade, segurança.</li>
+</ul>
+<h2 id="3-manutencao-complemento-nao-detalhada-no-material">3. Manutenção <em>(complemento — não detalhada no material)</em></h2>
+<ul>
+<li><strong>Corretiva</strong> (defeitos) × <strong>adaptativa</strong> (mudanças de ambiente) × <strong>evolutiva</strong> (novas funcionalidades) × <strong>preventiva</strong> (evitar problemas futuros).</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li>Manifesto: "valorizam-se <strong>MAIS</strong> os itens à esquerda" — nunca "apenas".</li>
+<li><strong>DoD obrigatório</strong>; DoR e Burndown <strong>opcionais</strong>.</li>
+<li><strong>Scrum Master jamais é PO</strong> ao mesmo tempo; <strong>somente o PO cancela a Sprint</strong>.</li>
+<li>Prototipagem sem tipo = <strong>Throwaway</strong>.</li>
+<li>Cascata <strong>não facilita</strong> mudanças; custo de correção ↑ com a detecção tardia.</li>
+<li><strong>Kanban</strong>: sem iterações, sem papéis/cerimônias; <strong>limite de WIP</strong> é central.</li>
+<li><strong>Verificação = especificação</strong>; <strong>Validação = usuário</strong>.</li>
+<li>Cadeia <strong>Defeito → Erro → Falha</strong> (DEF).</li>
+<li><strong>QA</strong> = prevenção/processo; <strong>QC</strong> = detecção/produto.</li>
+<li>Estresse <strong>vai além</strong> dos limites; carga <strong>fica dentro</strong>.</li>
+<li><strong>Alfa</strong> = ambiente do desenvolvedor; <strong>Beta</strong> = ambiente real.</li>
+<li><strong>Integração</strong> ocorre no ambiente de <strong>desenvolvimento</strong>.</li>
+<li>Teste exaustivo é <strong>impossível</strong>; testes <strong>não provam</strong> correção.</li>
+<li><strong>TDD é abordagem de desenvolvimento</strong> (Vermelho-Verde-Refatorar), não de testes.</li>
+<li><strong>Interoperabilidade</strong> (RNF) é <strong>externa</strong>, não organizacional.</li>
+<li>Grupo focal <strong>≤ 12</strong>; reúso de requisitos <strong>&gt; 80%</strong>; RAD <strong>60–90 dias</strong>.</li>
+<li>Níveis ≠ técnicas ≠ tipos de teste (caixa-branca <strong>não</strong> é nível).</li>
+<li>User story: "Como um <strong>\&lt;papel&gt;</strong>, eu quero <strong>\&lt;meta&gt;</strong> de modo que <strong>\&lt;benefício&gt;</strong>".</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) O Manifesto Ágil preconiza que apenas os itens do lado esquerdo de seus quatro valores devem ser valorizados, sendo vedado o uso de ferramentas, documentação e planos.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O manifesto diz que se valorizam <strong>mais</strong> os itens à esquerda — os da direita também têm valor, em menor grau.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) No Scrum, o artefato que contém o conjunto de funcionalidades desejadas para o produto, priorizado exclusivamente pelo Product Owner, é:
+a) Sprint Backlog.
+b) Product Backlog.
+c) Incremento.
+d) Definition of Done.
+e) Burndown Chart.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Product Backlog</strong> = visão do produto, priorizado pelo <strong>PO</strong>. Sprint Backlog é do DT; Burndown é opcional.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) A verificação de software consiste em assegurar que o produto atende às expectativas e necessidades reais do usuário final.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Isso é <strong>validação</strong>. <strong>Verificação</strong> = conformidade com a <strong>especificação</strong> ("construindo o produto corretamente").</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) A sequência correta da cadeia de manifestação de defeitos em software é:
+a) Falha → Erro → Defeito.
+b) Erro → Defeito → Falha.
+c) Defeito → Erro → Falha.
+d) Defeito → Falha → Erro.
+e) Erro → Falha → Defeito.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Defeito → Erro → Falha</strong> (mnemônico DEF). Nem todo defeito gera falha.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O teste de estresse tem por objetivo verificar o comportamento do sistema dentro dos limites de carga acordados com o cliente.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Dentro dos limites = teste de <strong>carga</strong>. <strong>Estresse</strong> vai <strong>além</strong> dos limites, até a degradação/ruptura.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) No TDD (Test-Driven Development), o ciclo de desenvolvimento é composto por:
+a) Projetar, Codificar, Testar, Documentar.
+b) Vermelho, Verde, Refatorar.
+c) Planejar, Executar, Monitorar, Encerrar.
+d) Especificar, Validar, Entregar, Manter.
+e) Coletar, Transformar, Carregar, Consultar.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Vermelho</strong> (teste falha) → <strong>Verde</strong> (código mínimo) → <strong>Refatorar</strong>. O TDD é abordagem de <strong>desenvolvimento</strong>.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) No Kanban, é recomendado o uso de iterações fixas (sprints) como prática central do método.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Kanban <strong>não</strong> adota iterações por padrão (limita WIP e trabalha em fluxo contínuo). A combinação com iterações é o <strong>Scrumban</strong>.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) Entre as técnicas de elicitação de requisitos, o grupo focal recomenda a participação de no máximo:
+a) 5 pessoas.
+b) 8 pessoas.
+c) 12 pessoas.
+d) 20 pessoas.
+e) 30 pessoas.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> Grupo focal: <strong>até 12</strong> participantes.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) O requisito não funcional de interoperabilidade classifica-se como requisito de origem organizacional.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Interoperabilidade é RNF de origem <strong>externa</strong> (fatores fora do controle da organização). Organizacionais: ambientais, operacionais e de desenvolvimento.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O nível de teste que verifica a interação entre componentes/módulos do sistema, antes da validação pelo usuário, é o teste de:
+a) unidade.
+b) integração.
+c) aceitação.
+d) desempenho.
+e) regressão.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Integração</strong> testa interfaces entre componentes. Unidade = lógica interna; aceitação = visão do usuário.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) Em testes de software, a técnica de caixa-preta baseia-se na estrutura interna do código e na análise de caminhos independentes.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Estrutura interna/caminhos = <strong>caixa-branca</strong>. <strong>Caixa-preta</strong> testa comportamento/funcionalidade, sem olhar o código (partição de equivalência, valor limite).</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre o prototipação de software, é correto afirmar:
+a) Quando o tipo não é especificado, entende-se o protótipo evolucionário.
+b) O protótipo descartável (throwaway) é implementado para ser mantido e evoluído.
+c) O protótipo descartável (throwaway) é utilizado para explorar requisitos e é descartado após a validação.
+d) Protótipos servem apenas à fase de testes.
+e) O protótipo evolucionário é sempre descartado após a especificação.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> Sem tipo especificado = <strong>throwaway</strong> (descartável); o <strong>evolucionário</strong> é o que permanece e evolui.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) O Scrum Master pode acumular a função de Product Owner em equipes pequenas, desde que haja autorização do cliente.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Os papéis são <strong>incompatíveis</strong> — o Scrum Master <strong>jamais</strong> é simultaneamente o PO.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) O modelo de processo de software baseado na análise e redução de riscos, com ciclos espirais de quatro a setores, é o modelo:
+a) cascata.
+b) RAD.
+c) espiral.
+d) incremental.
+e) em V.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Espiral</strong> (Boehm) = análise de riscos; 4 setores por ciclo; indicado para sistemas grandes.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) A qualidade de garantia (QA) foca na detecção de defeitos no produto final, ao passo que o controle de qualidade (QC) foca na prevenção por meio de processos.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> É o inverso: <strong>QA</strong> = prevenção/<strong>processo</strong>; <strong>QC</strong> = detecção/<strong>produto</strong> (engloba verificação e validação).</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Diferencie verificação e validação de software e relacione-as com os ambientes de desenvolvimento e do usuário.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> <strong>Verificação</strong> assegura que o software está sendo <strong>construído corretamente</strong>, comparando-o com a <strong>especificação de requisitos</strong> — tipicamente em ambiente de desenvolvimento. <strong>Validação</strong> assegura que foi construído o <strong>produto correto</strong>, atendendo às <strong>expectativas do usuário</strong> — tipicamente em ambiente do usuário (aceitação). A verificação é mais associada a inspeções/estática; a validação, a testes de aceitação.</p></details>
+<p><strong>D2.</strong> Explique os quatro valores do Manifesto Ágil e diferencie Scrum de Kanban.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> Os valores do Manifesto valorizam <strong>mais</strong>: indivíduos e interações sobre processos e ferramentas; software funcionando sobre documentação extensa; colaboração com o cliente sobre negociação de contrato; e responder a mudanças sobre seguir um plano (sem excluir os itens da direita). <strong>Scrum</strong> é framework iterativo com <strong>sprints</strong> time-boxadas (≤ 1 mês), papéis (PO, SM, DT) e eventos fixos; <strong>Kanban</strong> é método de gestão de fluxo contínuo, <strong>sem iterações nem papéis prescritos</strong>, centrado em <strong>visualizar o fluxo</strong> e <strong>limitar o WIP</strong>, com melhoria evolutiva a partir do processo atual.</p></details>
+<hr />
+<p><em>Base: <code>03.Engenharia de Software</code> (Aulas 00–05, 09–10) e <code>04.Desenvolvimento de Software</code> (Aulas 14, 17). Complemento: Scrum Guide 2020 (product/sprint goal, commitments), tipos de manutenção e frameworks de escala (ausentes na base de 2020).</em></p>
+<script>
+(function () {
+  const key = 'apostila-t1-processo-de-desenvolvimento-de-software-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

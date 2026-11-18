@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T15 — Nuvem Computacional (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T15 — Nuvem Computacional</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-conceito-e-beneficios">1. Conceito e benefícios</a></li>
+<li class="toc-h2"><a href="#2-modelos-de-servico-x-como-servico">2. Modelos de serviço ("X como Serviço")</a></li>
+<li class="toc-h2"><a href="#3-modelos-de-implantacao-quem-enxerga-o-servico">3. Modelos de implantação ("quem enxerga o serviço")</a></li>
+<li class="toc-h2"><a href="#1-conceito">1. Conceito</a></li>
+<li class="toc-h2"><a href="#2-tecnicas-x86">2. Técnicas (x86)</a></li>
+<li class="toc-h2"><a href="#1-docker">1. Docker</a></li>
+<li class="toc-h2"><a href="#2-kubernetes">2. Kubernetes</a></li>
+<li class="toc-h2"><a href="#3-openshift">3. OpenShift</a></li>
+<li class="toc-h2"><a href="#4-serverless-faas-complemento-ausente-na-base-de-2020">4. Serverless / FaaS (complemento — ausente na base de 2020)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-15-nuvem-computacional">APOSTILA — TÓPICO 15: NUVEM COMPUTACIONAL</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Nuvem computacional: arquitetura; nuvem pública e privada; modelos de serviço IaaS, PaaS e SaaS; implantação e operação em nuvem e contêineres; Kubernetes, Docker, Serverless Framework.</p>
+<p><strong>Base de conhecimento:</strong> <code>01.Sistemas Operacionais e Arquitetura</code> (Aula11 — nuvem; Aula12 — virtualização/Docker/Kubernetes/OpenShift; Aula14 — data center/modelos) — Curso Regular TI 2020.2 + <strong>complemento</strong> (Serverless/FaaS, NIST, cloud native).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-fundamentos-e-arquitetura-de-nuvem">MÓDULO I — FUNDAMENTOS E ARQUITETURA DE NUVEM</h1>
+<h2 id="1-conceito-e-beneficios">1. Conceito e benefícios</h2>
+<ul>
+<li><strong>Computação em nuvem</strong>: conjunto de recursos <strong>virtuais</strong> de fácil utilização e acesso (hardware, software, plataformas, serviços), <strong>dinamicamente reconfiguráveis</strong> para se ajustar à carga variável, otimizando o uso de recursos.</li>
+<li><strong>Elasticidade</strong> (benefício-chave): evita sub/superutilização. Ex.: site com média de 1.000 vendas/dia que faz promoção e salta para 50.000 adquire mais processamento/memória/banda <strong>apenas pelo período da promoção</strong> (pague-por-uso).</li>
+<li><strong>Origem</strong>: modelo <strong>IDC (Internet Data Center)</strong> — data center operado por provedor, infraestrutura compartilhada por várias organizações (exige grande segurança) — deu origem à nuvem. Nuvem privada <strong>on-premises</strong> é possível (ex.: Azure Stack) — "ainda não há tecnologia para implantar própria nuvem" está <strong>ERRADA</strong>.</li>
+<li><strong>Tecnologias envolvidas</strong>: <strong>virtualização</strong> (essencial), containers, automação, redes definidas por software.</li>
+<li><strong>Arquitetura</strong>: <strong>multi-inquilino (multi-tenant)</strong>, hipervisor na nuvem, APIs de provisionamento, orquestração, medição/medição de consumo, SLA.</li>
+<li><em>Complemento (NIST SP 800-145)</em>: 5 características essenciais — <strong>autoatendimento sob demanda, acesso amplo por rede, pool de recursos, elasticidade rápida, serviço medido</strong>.</li>
+</ul>
+<h2 id="2-modelos-de-servico-x-como-servico">2. Modelos de serviço ("X como Serviço")</h2>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>IaaS</th>
+<th>PaaS</th>
+<th>SaaS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O que oferece</td>
+<td><strong>Infraestrutura</strong> (processamento/armazenamento virtualizados)</td>
+<td><strong>Plataforma</strong> p/ <strong>desenvolvedor</strong> (computação, armazenamento, comunicação)</td>
+<td><strong>Aplicação completa</strong> hospedada, via browser</td>
+</tr>
+<tr>
+<td>Controle do usuário</td>
+<td>SO, armazenamento, aplicações, rede (<strong>não</strong> a infra física); pode escolher o SO</td>
+<td>Código/aplicações sobre a plataforma</td>
+<td>Só usa o software ("nada embaixo")</td>
+</tr>
+<tr>
+<td>Exemplos</td>
+<td>Máquinas virtuais</td>
+<td>Frameworks de desenvolvimento</td>
+<td>Gmail/Drive, SalesForce</td>
+</tr>
+<tr>
+<td>Posição na pilha</td>
+<td>Base</td>
+<td>Meio</td>
+<td>Topo</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Regra: quanto mais "alto" (<strong>SaaS</strong>), <strong>menos</strong> o usuário controla; quanto mais "baixo" (<strong>IaaS</strong>), mais controle.</li>
+<li><strong>SaaS</strong> é o modelo <strong>mais maduro</strong> (e com mais provedores). <strong>PaaS</strong> = mais indicado para <strong>desenvolvimento</strong>; <strong>não</strong> obriga o cliente a gerenciar SO (quem gerencia SO é <strong>IaaS</strong>).</li>
+<li><em>Pegadinha clássica (CESPE/BNB-2018)</em>: "IaaS é modelo de <strong>implementação</strong> no qual aplicações são virtualizadas em contêineres" — <strong>ERRADA</strong>: IaaS é modelo de <strong>serviço</strong>; <strong>modelos de implantação</strong> são privada/pública/híbrida/comunitária.</li>
+</ul>
+<h2 id="3-modelos-de-implantacao-quem-enxerga-o-servico">3. Modelos de implantação ("quem enxerga o serviço")</h2>
+<ul>
+<li><strong>Privada</strong>: uso interno (pela organização ou terceiros); segurança/controle rigorosos; equipe de TI própria decide permissões; pode ser <strong>on-premises</strong>.</li>
+<li><strong>Pública</strong>: disponibilizada publicamente; modelo <strong>"pague-por-uso"</strong>; provedor cuida de software, infraestrutura, provisionamento e manutenção; qualquer usuário da Internet.</li>
+<li><strong>Híbrida</strong>: duas ou mais nuvens (privadas/públicas/comunitárias) que permanecem entidades únicas, conectadas por tecnologia que propicia <strong>portabilidade de dados e aplicações</strong>.</li>
+<li><strong>Comunitária</strong>: compartilhada por organizações com <strong>interesses comuns</strong> (missão, segurança, política, jurisdição, economia); administrada <strong>pelas próprias organizações ou por terceiros</strong>.</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-virtualizacao">MÓDULO II — VIRTUALIZAÇÃO</h1>
+<h2 id="1-conceito">1. Conceito</h2>
+<ul>
+<li>Três partes: <strong>sistema hospedeiro (host)</strong>; <strong>camada de virtualização / hypervisor / VMM</strong> (disponibiliza interfaces virtuais às VMs); <strong>sistema convidado (guest)</strong>. Pode-se ter n VMs (ex.: Ubuntu + Windows XP sobre Windows Server).</li>
+<li>Aplicável a: computadores (servidores/desktops), redes, armazenamento e aplicações — <strong>NÃO a periféricos</strong> (questão IF-RS-2018: "EXCETO" = virtualização de periféricos).</li>
+<li><strong>Níveis</strong>: hardware (direto sobre o hardware, sem SO), SO, linguagem de programação.</li>
+</ul>
+<h2 id="2-tecnicas-x86">2. Técnicas (x86)</h2>
+<ol>
+<li><strong>Virtualização total</strong> (translação binária + execução direta): abstração completa; <strong>NÃO exige modificação</strong> do SO convidado; facilita migração de VMs; desvantagem = emulação de hardware genérico degrada desempenho.</li>
+<li><strong>Paravirtualização</strong> (assistida pelo SO): melhor desempenho, mas <strong>REQUER modificação do SO convidado</strong> (chamadas privilegiadas passam pelo hypervisor); ex.: <strong>Xen</strong> (não possui drivers de dispositivo — apenas gerencia E/S).</li>
+<li>
+<p><strong>Assistida por hardware</strong>: extensões <strong>Intel VT/AMD-V</strong>; hypervisor em anel abaixo do ring 0; melhor desempenho; praticamente eliminou a necessidade de modificar o SO.</p>
+</li>
+<li>
+<p><strong>Hypervisor bare-metal</strong> (Type 1, roda direto no hardware — ex.: <strong>VMware ESXi</strong>) × <strong>hosted</strong> (Type 2, sobre um SO — ex.: VirtualBox). <em>Pegadinha</em>: ESXi = <strong>bare-metal</strong>; hosted é o inverso.</p>
+</li>
+<li>Associações: VirtualBox = criar VMs; OneDrive/Dropbox = armazenamento em nuvem; Nessus = verificação de vulnerabilidades; Ossim = segurança.</li>
+</ol>
+<hr />
+<h1 id="modulo-iii-conteineres-docker-kubernetes-openshift">MÓDULO III — CONTÊINERES: DOCKER, KUBERNETES, OPENSHIFT</h1>
+<h2 id="1-docker">1. Docker</h2>
+<ul>
+<li>Software de <strong>contêiner</strong> da Docker, Inc.; camada de abstração/automação para <strong>virtualização de SO</strong> (Windows/Linux). Emprega <strong>isolamento de recursos do kernel Linux (namespaces)</strong> e sistema de arquivos com união (<strong>OverlayFS</strong>), criando contêineres independentes em <strong>uma única instância do SO</strong>.</li>
+<li>O <strong>kernel é compartilhado</strong> com a hospedeira → menos sobrecarga que VMs de hardware completo; empacota app + dependências; portável (on-premises, nuvem). <strong>Alternativa à virtualização de servidor completo</strong>.</li>
+<li><em>Contêiner ≠ VM</em>: contêiner compartilha o kernel; VM tem SO próprio e hypervisor.</li>
+</ul>
+<h2 id="2-kubernetes">2. Kubernetes</h2>
+<ul>
+<li>Sistema <strong>open source</strong> (Google) para <strong>gerenciamento/orquestração de aplicativos em containers</strong> em múltiplos hosts de um cluster; foco em microsserviços; adaptado ao Docker.</li>
+<li>Recursos: <strong>balanceamento de carga</strong> e <strong>migração de containers sem perda de dados</strong> (questão PUC-PR/TJ-MS-2017). Não prende à API do Docker (problema do Docker Swarm); pode rodar com outros runtimes (ex.: Rocket/CoreOS).</li>
+<li>Conceitos (complemento): pods, deployments, services, namespaces, self-healing, escalonamento horizontal.</li>
+</ul>
+<h2 id="3-openshift">3. OpenShift</h2>
+<ul>
+<li>Produto da <strong>Red Hat</strong> para implantação/gerenciamento de software baseado em container; distribuição suportada do <strong>Kubernetes</strong> usando Docker e ferramentas DevOps.</li>
+</ul>
+<h2 id="4-serverless-faas-complemento-ausente-na-base-de-2020">4. Serverless / FaaS <em>(complemento — ausente na base de 2020)</em></h2>
+<ul>
+<li><strong>Serverless</strong>: o provedor gerencia infraestrutura; o desenvolvedor escreve <strong>funções</strong> executadas sob demanda (<strong>FaaS</strong> — Function as a Service). Ex.: <strong>AWS Lambda</strong>, Azure Functions, Google Cloud Functions.</li>
+<li><strong>Serverless Framework</strong>: ferramenta open source para implantar aplicações serverless (configuração por <code>serverless.yml</code>, provisionamento em nuvem, integração com API Gateway). Vantagens: sem gerenciar servidores, escala automática, cobrança por execução; limites: cold start, tempo de execução, dependência do provedor.</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-implantacao-e-operacao-em-nuvem">MÓDULO IV — IMPLANTAÇÃO E OPERAÇÃO EM NUVEM</h1>
+<ul>
+<li><strong>Provisionamento</strong>: autoatendimento via painel/API; IaC (Infrastructure as Code — complemento: Terraform/CloudFormation).</li>
+<li><strong>Operação</strong>: monitoramento, escalonamento (auto scaling), backup, segurança (compartimentação de responsabilidades entre provedor e cliente — modelo <strong>responsabilidade compartilhada</strong>), custos (FinOps).</li>
+<li><strong>Portabilidade/híbrida</strong>: containers facilitam mover workloads entre nuvens; Kubernetes como camada de orquestração.</li>
+<li><strong>Alta disponibilidade</strong>: múltiplas zonas/regiões, réplicas, balanceamento, failover.</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>IaaS/PaaS/SaaS = modelos de SERVIÇO</strong>; <strong>privada/pública/híbrida/comunitária = modelos de IMPLANTAÇÃO</strong> (confundi-los é erro clássico).</li>
+<li><strong>PaaS = desenvolvimento</strong>; <strong>SaaS = software pronto (mais maduro)</strong>; <strong>IaaS = controle de SO/rede</strong>.</li>
+<li><strong>Nuvem privada pode ser on-premises</strong> (não exige terceiros).</li>
+<li><strong>Virtualização total NÃO modifica o guest</strong>; <strong>paravirtualização MODIFICA</strong> (Xen). <strong>Não virtualiza periféricos</strong>.</li>
+<li><strong>ESXi = hypervisor bare-metal</strong>; hosted roda sobre SO.</li>
+<li><strong>Docker = contêiner</strong> (kernel compartilhado, namespaces, OverlayFS); <strong>Kubernetes = orquestração</strong> (balanceamento, migração sem perda); <strong>OpenShift = Red Hat sobre Kubernetes</strong>.</li>
+<li><strong>Contêiner ≠ VM</strong> (contêiner compartilha kernel).</li>
+<li><strong>SaaS é o mais maduro</strong> e com mais provedores.</li>
+<li><strong>Elasticidade</strong> = adicionar/recursos conforme carga (ex.: promoção 1.000→50.000).</li>
+<li><strong>Híbrida</strong> = portabilidade de dados/aplicações entre nuvens; <strong>comunitária</strong> = interesses comuns (pode ser administrada por terceiros).</li>
+<li><strong>Serverless/FaaS</strong> = funções sob demanda, sem gerenciar servidores (complemento).</li>
+<li><strong>Virtualização NÃO se aplica a periféricos</strong> (IF-RS-2018).</li>
+<li><strong>PaaS não obriga gerenciar SO</strong> (IaaS é que dá controle de SO).</li>
+<li><strong>IDC</strong> = origem histórica da nuvem (data center compartilhado).</li>
+<li><strong>Assistida por hardware</strong> = Intel VT/AMD-V (praticamente dispensa modificar o guest).</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) O IaaS é um modelo de implementação de nuvem no qual aplicações são virtualizadas em contêineres.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>IaaS</strong> é modelo de <strong>serviço</strong> (infraestrutura). Modelos de <strong>implantação</strong> são privada/pública/híbrida/comunitária. Contêineres são outra tecnologia.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) O modelo de serviço em nuvem mais indicado para desenvolvedores que desejam criar aplicações sem gerenciar a infraestrutura e o sistema operacional é:
+a) IaaS.
+b) PaaS.
+c) SaaS.
+d) DaaS.
+e) CaaS.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>PaaS</strong> = plataforma para <strong>desenvolvimento</strong>. IaaS dá controle de SO; SaaS é software pronto.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) A virtualização total exige que o sistema operacional convidado seja modificado para se comunicar com o hypervisor.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Virtualização total</strong> NÃO exige modificação. A <strong>paravirtualização</strong> é que <strong>requer</strong> modificação do guest (ex.: Xen).</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) O Docker caracteriza-se por:
+a) criar máquinas virtuais com SO completo.
+b) isolar aplicações em contêineres que compartilham o kernel da hospedeira, com menor sobrecarga que VMs.
+c) ser um hypervisor bare-metal.
+d) substituir o Kubernetes.
+e) exigir virtualização de hardware.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Docker</strong> = contêiner (namespaces, OverlayFS, <strong>kernel compartilhado</strong>). Não é hypervisor nem VM.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O Kubernetes é uma ferramenta da Red Hat para virtualização de servidores, sendo incompatível com Docker.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Kubernetes</strong> = orquestração de <strong>containers</strong> (Google, open source), <strong>adaptado ao Docker</strong> (e outros runtimes). <strong>OpenShift</strong> é da Red Hat (sobre Kubernetes).</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) A principal vantagem da nuvem híbrida em relação às demais é:
+a) ser exclusivamente pública.
+b) permitir portabilidade de dados e aplicações entre nuvens.
+c) dispensar virtualização.
+d) ser gratuita.
+e) eliminar a necessidade de segurança.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Híbrida</strong> = duas ou mais nuvens com <strong>portabilidade</strong> de dados/aplicações (privadas+públicas).</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) A nuvem privada implica, necessariamente, a contratação de um provedor externo, não podendo ser implantada no próprio data center da organização.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Nuvem privada <strong>pode ser on-premises</strong> (no próprio data center — ex.: Azure Stack) ou por terceiros.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) O SaaS é o modelo de serviço de nuvem considerado o mais maduro, no qual o usuário acessa aplicações completas via navegador, sem gerenciar infraestrutura.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>SaaS</strong> = aplicação completa via browser (multi-tenant); é o <strong>mais maduro</strong> e com mais provedores.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) A virtualização aplica-se a computadores, redes, armazenamento e aplicações, mas não a periféricos.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Não</strong> se virtualiza <strong>periféricos</strong> (questão IF-RS-2018 — "EXCETO": periféricos).</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O hypervisor VMware ESXi classifica-se como:
+a) hosted (roda sobre um SO hospedeiro).
+b) bare-metal (roda direto sobre o hardware).
+c) contêiner.
+d) sistema de arquivos.
+e) protocolo de rede.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>ESXi = bare-metal</strong> (Type 1). Ex.: hosted = VirtualBox (Type 2, sobre SO).</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A elasticidade em nuvem refere-se à capacidade de ajustar dinamicamente os recursos conforme a carga de trabalho, evitando sub e superutilização.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Elasticidade = provisionar/recursos conforme demanda (ex.: promoção 1.000→50.000 vendas/dia, pagando só pelo período).</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre a nuvem comunitária, é correto afirmar:
+a) é exclusivamente administrada pela organização cliente.
+b) é compartilhada por organizações com interesses comuns, podendo ser administrada por elas ou por terceiros.
+c) equivale à nuvem pública.
+d) dispensa qualquer requisito de segurança.
+e) é um modelo de serviço (IaaS/PaaS/SaaS).</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Comunitária</strong> = interesses comuns (missão, segurança, jurisdição); administrada pelas próprias organizações <strong>ou por terceiros</strong>. É modelo de <strong>implantação</strong>.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) O OpenShift é um orquestrador de containers open source criado pelo Google, independente da Red Hat.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>OpenShift</strong> é da <strong>Red Hat</strong> (distribuição do <strong>Kubernetes</strong> com Docker e DevOps). O Kubernetes (Google) é que é o orquestrador open source.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) A diferença fundamental entre contêiner (Docker) e máquina virtual é que:
+a) o contêiner inclui um SO completo; a VM, não.
+b) o contêiner compartilha o kernel da hospedeira; a VM tem SO próprio via hypervisor.
+c) ambos são idênticos.
+d) a VM é mais leve que o contêiner.
+e) contêineres exigem hypervisor bare-metal.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Contêiner</strong> = kernel <strong>compartilhado</strong> (namespaces/OverlayFS); <strong>VM</strong> = SO próprio + hypervisor.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) No modelo Serverless (FaaS), o desenvolvedor provisiona e administra os servidores que executam suas funções.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> No <strong>serverless</strong>, o <strong>provedor</strong> gerencia a infraestrutura; o desenvolvedor só escreve <strong>funções</strong> executadas sob demanda (ex.: AWS Lambda). Cobrança por execução.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Diferencie os modelos de serviço IaaS, PaaS e SaaS e os modelos de implantação privada, pública, híbrida e comunitária.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> <strong>IaaS</strong> oferece infraestrutura virtualizada (o usuário controla SO, rede e aplicações); <strong>PaaS</strong> oferece plataforma para desenvolvimento (sem gerenciar SO); <strong>SaaS</strong> oferece aplicação completa via navegador (mais maduro; usuário só consome). São modelos de <strong>serviço</strong>. Os modelos de <strong>implantação</strong> definem quem acessa: <strong>privada</strong> (uso interno, pode ser on-premises), <strong>pública</strong> (pague-por-uso, acesso geral), <strong>híbrida</strong> (duas ou mais nuvens com portabilidade) e <strong>comunitária</strong> (organizações com interesses comuns, administrada por elas ou terceiros).</p></details>
+<p><strong>D2.</strong> Compare virtualização e contêineres, explicando Docker, Kubernetes e Serverless.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>virtualização</strong> cria máquinas virtuais com SO próprio, mediadas por um hypervisor (total, paravirtualizada ou assistida por hardware); há maior isolamento, mas mais sobrecarga. Os <strong>contêineres</strong> (Docker) empacotam a aplicação e dependências compartilhando o <strong>kernel</strong> da hospedeira (namespaces, OverlayFS), sendo mais leves e portáveis. O <strong>Kubernetes</strong> orquestra contêineres em cluster (balanceamento, escalonamento, migração sem perda de dados); o <strong>OpenShift</strong> (Red Hat) é uma distribuição suportada dele. No <strong>Serverless (FaaS)</strong>, o provedor executa funções sob demanda sem gerenciamento de servidores (ex.: AWS Lambda, Serverless Framework).</p></details>
+<hr />
+<p><em>Base: <code>01.Sistemas Operacionais e Arquitetura</code> (Aula11 — nuvem/elasticidade; Aula12 — virtualização/Docker/Kubernetes/OpenShift; Aula14 — IDC e modelos de implantação). Complemento: Serverless/FaaS e Serverless Framework (ausentes na base de 2020), características NIST, responsabilidade compartilhada e IaC.</em></p>
+<script>
+(function () {
+  const key = 'apostila-t15-nuvem-computacional-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

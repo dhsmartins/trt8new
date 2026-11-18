@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T4 — Banco de Dados (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T4 — Banco de Dados</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-conceitos-fundamentais">1. Conceitos fundamentais</a></li>
+<li class="toc-h2"><a href="#2-modelo-entidade-relacionamento-mer">2. Modelo Entidade-Relacionamento (MER)</a></li>
+<li class="toc-h2"><a href="#3-normalizacao-codd-1972">3. Normalização (Codd, 1972)</a></li>
+<li class="toc-h2"><a href="#1-sublinguagens">1. Sublinguagens</a></li>
+<li class="toc-h2"><a href="#2-consultas-extracao-filtragem-classificacao-e-combinacao">2. Consultas (extração, filtragem, classificação e combinação)</a></li>
+<li class="toc-h2"><a href="#1-acid-e-transacao">1. ACID e transação</a></li>
+<li class="toc-h2"><a href="#2-niveis-de-isolamento-ansi">2. Níveis de isolamento (ANSI)</a></li>
+<li class="toc-h2"><a href="#3-controle-de-concorrencia">3. Controle de concorrência</a></li>
+<li class="toc-h2"><a href="#1-indices">1. Índices</a></li>
+<li class="toc-h2"><a href="#2-tuning">2. Tuning</a></li>
+<li class="toc-h2"><a href="#1-plsql-oracle">1. PL/SQL (Oracle)</a></li>
+<li class="toc-h2"><a href="#2-plpgsql-postgresql">2. PL/pgSQL (PostgreSQL)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-4-banco-de-dados">APOSTILA — TÓPICO 4: BANCO DE DADOS</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Conceito de Banco de dados. Projeto de bancos de dados: conceitos, modelagem, normalização e linguagem SQL. Operações de banco de dados: extração, filtragem, classificação e combinação de dados. Transações e controle de concorrência. Tuning de banco de dados. Programação em PL/pgSQL e PL/SQL. Ferramentas e linguagens para banco de dados: PostgreSQL (versões 15, 16, 17 e 18); Oracle (versão 19c); MySQL (versão 8); NoSQL.</p>
+<p><strong>Base de conhecimento:</strong> <code>07.Banco de Dados</code> e <code>08.SGBDs</code> (Curso Regular TI 2020.2) + complemento técnico para as versões atuais dos SGBDs.</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-conceitos-e-projeto-de-banco-de-dados">MÓDULO I — CONCEITOS E PROJETO DE BANCO DE DADOS</h1>
+<h2 id="1-conceitos-fundamentais">1. Conceitos fundamentais</h2>
+<ul>
+<li><strong>Banco de dados (BD)</strong>: coleção de dados <strong>relacionados e persistentes</strong>, organizados para atender múltiplos usuários e aplicações. <strong>SGBD</strong> (DBMS): software que gerencia o BD (ex.: PostgreSQL, Oracle, MySQL) — oferece definição, manipulação, controle de acesso, concorrência, recuperação e integridade.</li>
+<li><strong>Arquitetura em 3 esquemas</strong> (ANSI/SPARC): <strong>esquema externo</strong> (visões dos usuários), <strong>esquema conceitual</strong> (modelo lógico global), <strong>esquema interno</strong> (armazenamento físico). <strong>Independência lógica e física de dados</strong>.</li>
+<li><strong>Modelo relacional</strong> (Codd, 1970): dados em <strong>relações</strong> (tuplas × atributos). Conceitos: <strong>grau</strong> (nº de colunas) × <strong>cardinalidade</strong> (nº de linhas); restrições de integridade (PK, FK, CHECK, UNIQUE, NOT NULL); <strong>integridade de entidade</strong> (PK não nula) e <strong>referencial</strong> (FK).</li>
+<li><strong>NoSQL × relacional</strong>: NoSQL = "Not Only SQL" — <strong>chave-valor, documentos, colunas (wide column) e grafos</strong>; modelo <strong>BASE</strong> (Basically Available, Soft state, Eventually consistent) em vez de <strong>ACID</strong>; escala horizontal; usados em Big Data / alta disponibilidade. ACID × BASE: o relacional garante consistência imediata; o NoSQL prioriza disponibilidade/partição (ver tópico 9 — CAP/BASE).</li>
+</ul>
+<h2 id="2-modelo-entidade-relacionamento-mer">2. Modelo Entidade-Relacionamento (MER)</h2>
+<ul>
+<li><strong>MER (Peter Chen, 1976)</strong>: <strong>entidades</strong> (retângulos), <strong>relacionamentos</strong> (losangos), <strong>atributos</strong> (elipses). Notações: Chen, Barker, <strong>pé-de-galinha (crow's foot)</strong>, IDEF1X.</li>
+<li><strong>Atributos</strong>: monovalorados × multivalorados; armazenados × derivados; simples × compostos (aninháveis → <strong>complexos</strong>).</li>
+<li><strong>Cardinalidade</strong>: 1:1, 1:N, N:1, M:N; mínima/máxima entre parênteses (min=0 → opcional; min≥1 → obrigatório).</li>
+<li><strong>Entidade forte</strong> (tem PK própria) × <strong>entidade fraca</strong> (depende de forte; <strong>relacionamento identificador</strong>; atributo da forte faz parte da PK da fraca).</li>
+<li><strong>Auto-relacionamento</strong> (ex.: CASAMENTO entre PESSOA e PESSOA em papéis diferentes).</li>
+<li><strong>Especialização</strong> (top-down: superclasse → subclasses) × <strong>generalização</strong> (bottom-up: subclasses → superclasse) — inversas. <strong>Disjunção</strong> ("d": instância pertence a no máximo uma subclasse) × <strong>sobreposição</strong> ("o": pode pertencer a várias). <strong>Participação total</strong> (linhas duplas) × parcial.</li>
+<li><strong>Agregação</strong>: trata um relacionamento como entidade de nível superior (relação entre relacionamentos).</li>
+<li><strong>Mapeamento ER → relacional</strong>: entidades → tabelas; relacionamentos 1:N → FK no lado N; M:N → tabela de junção; atributos multivalorados → tabela nova; entidade fraca → PK composta (FK da forte + discriminador).</li>
+</ul>
+<h2 id="3-normalizacao-codd-1972">3. Normalização (Codd, 1972)</h2>
+<ul>
+<li><strong>Objetivo</strong>: eliminar <strong>redundância</strong> e <strong>anomalias</strong> (inserção, atualização, exclusão) por <strong>decomposição</strong>.</li>
+<li><strong>Dependência funcional (DF)</strong>: X → Y (no máximo um Y por X). X = <strong>determinante</strong>; DF <strong>trivial</strong> se X contém Y. <strong>Superchave</strong> × <strong>chave</strong> (superchave mínima) × <strong>chave candidata</strong> × <strong>chave primária</strong>; atributos <strong>primários</strong> (membro de alguma candidata) × <strong>não primários</strong>.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>FN</th>
+<th>Requisito</th>
+<th>Problema eliminado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1FN</strong></td>
+<td>Domínios <strong>atômicos</strong></td>
+<td>Atributos compostos/multivalorados</td>
+</tr>
+<tr>
+<td><strong>2FN</strong></td>
+<td>1FN + dependência <strong>total</strong> da chave candidata</td>
+<td>Dependência <strong>parcial</strong></td>
+</tr>
+<tr>
+<td><strong>3FN</strong></td>
+<td>2FN + sem dependência <strong>transitiva</strong> de não primários</td>
+<td>Dependência transitiva</td>
+</tr>
+<tr>
+<td><strong>FNBC</strong></td>
+<td><strong>Todo determinante é chave candidata</strong></td>
+<td>Determinante não candidato</td>
+</tr>
+<tr>
+<td><strong>4FN</strong></td>
+<td>Eliminar <strong>dependências multivaloradas</strong> independentes</td>
+<td>DMVs</td>
+</tr>
+<tr>
+<td><strong>5FN</strong></td>
+<td>Decomposição <strong>sem perdas na junção</strong></td>
+<td>Join dependency</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Cumulatividade</strong>: 2FN exige 1FN; 3FN exige 2FN; FNBC exige 3FN. <strong>FNBC é mais rígida que 3FN</strong> (se está na FNBC, está na 3FN; o inverso não vale).</li>
+<li>Soluções: atributo <strong>composto</strong> → separar em colunas; <strong>multivalorado</strong> → nova tabela com chave composta.</li>
+<li><strong>UNIQUE com NULL não é determinante</strong> (logo, não é chave candidata — pegadinha da FNBC).</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-sql-e-operacoes-sobre-dados">MÓDULO II — SQL E OPERAÇÕES SOBRE DADOS</h1>
+<h2 id="1-sublinguagens">1. Sublinguagens</h2>
+<p>SQL é <strong>declarativa</strong> (declara-se o <em>quem</em>, o SGBD decide o <em>como</em>).</p>
+<table>
+<thead>
+<tr>
+<th>Sublinguagem</th>
+<th>Comandos</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DDL</strong></td>
+<td>CREATE, ALTER, DROP, TRUNCATE</td>
+<td>Definir/modificar objetos</td>
+</tr>
+<tr>
+<td><strong>DML</strong></td>
+<td>SELECT, INSERT, UPDATE, DELETE</td>
+<td>Manipular dados</td>
+</tr>
+<tr>
+<td><strong>DQL</strong></td>
+<td>SELECT</td>
+<td>Consultar (subconjunto da DML)</td>
+</tr>
+<tr>
+<td><strong>DTL</strong></td>
+<td>COMMIT, ROLLBACK, SAVEPOINT</td>
+<td>Transações</td>
+</tr>
+<tr>
+<td><strong>DCL</strong></td>
+<td>GRANT, REVOKE</td>
+<td>Permissões</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-consultas-extracao-filtragem-classificacao-e-combinacao">2. Consultas (extração, filtragem, classificação e combinação)</h2>
+<ul>
+<li><strong>Ordem lógica de avaliação</strong>: <code>FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY</code>.</li>
+<li><strong>Filtragem</strong>: <code>WHERE</code> (=, &gt;, &lt;, BETWEEN, LIKE, IN, IS NULL); <strong>linhas</strong> antes do agrupamento.</li>
+<li><strong>Agrupamento</strong>: <code>GROUP BY</code> + funções agregadas (<code>COUNT, SUM, AVG, MAX, MIN</code>); <strong><code>HAVING</code></strong> filtra <strong>grupos</strong> depois do agrupamento (pegadinha: HAVING × WHERE).</li>
+<li><strong>Classificação</strong>: <code>ORDER BY</code> (ASC/DESC).</li>
+<li><strong>Combinação</strong>: <strong>JOIN</strong> — INNER, LEFT/RIGHT/FULL OUTER, CROSS; <strong>UNION/INTERSECT/EXCEPT</strong> (combinar consultas); <strong>subconsultas</strong> (IN, EXISTS, ALL, ANY/SOME).</li>
+<li><strong>VIEW</strong>: consulta nomeada — <strong>comum não é materializada</strong> (executa a cada acesso); visões com JOIN/agregação <strong>não são atualizáveis</strong>. <strong>Visão materializada</strong> <strong>armazena o resultado</strong> (PostgreSQL 9.3+; REFRESH).</li>
+<li><strong>DELETE</strong> (DML: remove linhas, transacional) × <strong>TRUNCATE</strong> (DDL: remove todas as linhas, rápido, sem log por linha) × <strong>DROP</strong> (DDL: remove o objeto e os dados).</li>
+<li><strong>GRANT/REVOKE</strong> (DCL): privilégios, roles, <code>WITH GRANT OPTION</code>. <strong>INFORMATION_SCHEMA</strong>: catálogo de metadados.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-transacoes-e-concorrencia">MÓDULO III — TRANSAÇÕES E CONCORRÊNCIA</h1>
+<h2 id="1-acid-e-transacao">1. ACID e transação</h2>
+<ul>
+<li><strong>Transação</strong>: unidade lógica de trabalho; inicia com BEGIN/START TRANSACTION, termina com <strong>COMMIT</strong> ou <strong>ROLLBACK</strong>; <strong>SAVEPOINT</strong> = rollback parcial.</li>
+<li><strong>ACID</strong>: <strong>A</strong>tomicidade (tudo ou nada), <strong>C</strong>onsistência (estado válido), <strong>I</strong>solamento (transações não se interferem), <strong>D</strong>urabilidade (persiste após commit).</li>
+</ul>
+<h2 id="2-niveis-de-isolamento-ansi">2. Níveis de isolamento (ANSI)</h2>
+<table>
+<thead>
+<tr>
+<th>Nível</th>
+<th>Dirty Read</th>
+<th>Non-Repeatable</th>
+<th>Phantom</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>READ UNCOMMITTED</td>
+<td>Sim</td>
+<td>Sim</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td>READ COMMITTED</td>
+<td>Não</td>
+<td>Sim</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td>REPEATABLE READ</td>
+<td>Não</td>
+<td>Não</td>
+<td>Sim</td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>Não</td>
+<td>Não</td>
+<td>Não</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Dirty read</strong> = ler dado não commitado (que pode ser desfeito); <strong>non-repeatable read</strong> = reler o mesmo dado e ver valor diferente; <strong>phantom</strong> = nova linha que satisfaz o filtro aparece entre leituras.</li>
+</ul>
+<h2 id="3-controle-de-concorrencia">3. Controle de concorrência</h2>
+<ul>
+<li>Problemas: atualização perdida, dirty read, non-repeatable, phantom.</li>
+<li><strong>Locks</strong>: binário (uma transação por item) × múltiplo (<strong>read lock</strong> compartilhado + <strong>write lock</strong> exclusivo). <strong>Protocolo 2PL</strong> (duas fases: crescimento de locks → redução de unlocks). Alternativas: ordenação por <strong>timestamp</strong>, protocolo baseado em grafos.</li>
+<li><strong>Serializabilidade</strong>: plano serializável ⇔ <strong>grafo de precedência sem ciclos</strong>.</li>
+<li><strong>Recuperação</strong>: log (WAL — write-ahead log), <strong>checkpoints</strong>, redo/undo.</li>
+<li><strong>MVCC</strong> (PostgreSQL/Oracle/MySQL-InnoDB): cada transação lê um <em>snapshot</em> — leituras não bloqueiam escritas.</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-indices-e-tuning">MÓDULO IV — ÍNDICES E TUNING</h1>
+<h2 id="1-indices">1. Índices</h2>
+<ul>
+<li><strong>Primário</strong> (chave de ordenação, esparso), <strong>clustering</strong> (campo de agrupamento, esparso), <strong>secundário</strong> (não chave, <strong>denso</strong>). <strong>Denso</strong> (entrada por valor) × <strong>esparso</strong> (entrada por bloco/valor distinto). <strong>Multinível</strong> (B-tree).</li>
+<li><strong>B-tree/B+tree</strong> (padrão); <strong>hash</strong> (busca por igualdade); no PostgreSQL: <strong>GiST, GIN, BRIN</strong> (complementar).</li>
+</ul>
+<h2 id="2-tuning">2. Tuning</h2>
+<ul>
+<li><strong>Full table scan × uso de índices</strong>; otimização baseada em <strong>custo</strong>; formatação de consultas; estatísticas atualizadas (<code>ANALYZE</code>).</li>
+<li><strong>Alta disponibilidade</strong>: cluster, <strong>replicação</strong>, <strong>failover</strong>, <strong>balanceamento de carga</strong>, backup online.</li>
+<li>Ferramentas: <code>EXPLAIN ANALYZE</code> (PostgreSQL), execution plans (Oracle), slow query log (MySQL) — <em>complementar</em>.</li>
+</ul>
+<hr />
+<h1 id="modulo-v-plpgsql-e-plsql">MÓDULO V — PL/pgSQL E PL/SQL</h1>
+<h2 id="1-plsql-oracle">1. PL/SQL (Oracle)</h2>
+<ul>
+<li>Linguagem <strong>procedural extensão do SQL</strong> da Oracle, executada no servidor.</li>
+<li><strong>Blocos</strong>: <code>DECLARE</code> (declarações) → <code>BEGIN</code> (executáveis) → <code>EXCEPTION</code> (tratamento de erros).</li>
+<li><strong>Estruturas</strong>: IF/THEN/ELSE, CASE, loops (FOR, WHILE); <strong>cursores</strong> (implícitos/explícitos); <strong>exceções</strong> (nativas/usuário).</li>
+<li><strong>Procedures</strong> (parâmetros IN/OUT) × <strong>functions</strong> (retornam valor) × <strong>packages</strong> (agrupamento). <strong>Triggers</strong>: BEFORE/AFTER/INSTEAD OF; row/statement.</li>
+</ul>
+<h2 id="2-plpgsql-postgresql">2. PL/pgSQL (PostgreSQL)</h2>
+<ul>
+<li>Linguagem procedural do PostgreSQL: <code>CREATE FUNCTION ... LANGUAGE plpgsql</code> com blocos <code>DECLARE/BEGIN/EXCEPTION</code>, estruturas de controle, cursores e <strong>triggers</strong>. Suporta visões atualizáveis, <strong>MVCC</strong> e transações completas.</li>
+</ul>
+<hr />
+<h1 id="modulo-vi-sgbdds-do-edital">MÓDULO VI — SGBDDS DO EDITAL</h1>
+<table>
+<thead>
+<tr>
+<th>SGBD</th>
+<th>Versões do edital</th>
+<th>Destaques examináveis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PostgreSQL</strong></td>
+<td><strong>15, 16, 17 e 18</strong></td>
+<td>Open source, ACID, JSON/JSONB, PL/pgSQL, MVCC, visões materializadas, lógica de replicação. <em>Complemento (pós-11)</em>: MERGE (15), incremental sorting, multirange, SQL/JSON, <code>NULLS NOT DISTINCT</code>, melhorias de VACUUM/paralelismo</td>
+</tr>
+<tr>
+<td><strong>Oracle</strong></td>
+<td><strong>19c</strong></td>
+<td>SGBD líder empresarial; <strong>19c = release de longo prazo (LTS)</strong>; multitenant (CDB/PDB), <strong>Automatic Indexing</strong>, RAC, PL/SQL, dicionário de dados. <em>Base local cobre 11g</em></td>
+</tr>
+<tr>
+<td><strong>MySQL</strong></td>
+<td><strong>8</strong></td>
+<td>InnoDB (padrão, ACID, FK) × MyISAM; <strong>8.0</strong>: window functions, CTEs recursivas, utf8mb4 padrão, roles, CHECK constraints, invisible/descending indexes</td>
+</tr>
+<tr>
+<td><strong>NoSQL</strong></td>
+<td>—</td>
+<td>Chave-valor (Redis), documentos (MongoDB), colunas (Cassandra), grafos (Neo4j); BASE; uso em Big Data</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>H2</strong> (citado no tópico 8): banco <strong>em memória</strong> para testes.</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>DELETE</strong> é DML (transacional); <strong>TRUNCATE</strong> e <strong>DROP</strong> são DDL.</li>
+<li><strong>WHERE</strong> filtra <strong>linhas</strong> antes do GROUP BY; <strong>HAVING</strong> filtra <strong>grupos</strong> depois.</li>
+<li><strong>3FN × FNBC</strong>: FNBC exige <strong>todo determinante = chave candidata</strong>; é mais rígida.</li>
+<li><strong>UNIQUE com NULL</strong> não é determinante → não qualifica a FNBC.</li>
+<li><strong>View comum não é materializada</strong>; <strong>materializada</strong> guarda o resultado fisicamente.</li>
+<li><strong>Atributo composto</strong> → separar colunas; <strong>multivalorado</strong> → nova tabela (ambos violam a 1FN).</li>
+<li><strong>Grau</strong> = nº de colunas; <strong>cardinalidade</strong> = nº de linhas.</li>
+<li><strong>SQL é declarativa</strong>, não procedural.</li>
+<li><strong>READ COMMITTED</strong> resolve dirty read; <strong>REPEATABLE READ</strong> ainda tem <strong>phantom</strong>; só <strong>SERIALIZABLE</strong> resolve tudo.</li>
+<li><strong>ACID</strong> (relacional) × <strong>BASE</strong> (NoSQL) não são equivalentes.</li>
+<li><strong>Especialização</strong> = top-down; <strong>generalização</strong> = bottom-up.</li>
+<li><strong>Disjunção</strong> = exclusividade de subclasse; <strong>sobreposição</strong> = múltiplas.</li>
+<li><strong>Índice secundário</strong> é <strong>denso</strong>; primário/clustering são <strong>esparso</strong>s.</li>
+<li><strong>PG 15–18 / Oracle 19c / MySQL 8</strong> = versões do edital (base local: PG 11, Oracle 11g — complementar as novidades).</li>
+<li><strong>MVCC</strong>: leituras não bloqueiam escritas (PostgreSQL).</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) No modelo relacional, o comando TRUNCATE, que remove todas as linhas de uma tabela, pertence à sublinguagem DML.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> TRUNCATE é <strong>DDL</strong> (define/altera objetos — remove o conteúdo da tabela de forma rápida). O comando DML que remove linhas é o <strong>DELETE</strong> (transacional, linha a linha).</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) A cláusula SQL utilizada para filtrar grupos resultantes da operação GROUP BY é:
+a) WHERE.
+b) HAVING.
+c) ORDER BY.
+d) DISTINCT.
+e) INTO.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>HAVING</strong> filtra <strong>grupos</strong> após o agrupamento; <strong>WHERE</strong> filtra <strong>linhas</strong> antes. Ordem lógica: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) Uma tabela encontra-se na Terceira Forma Normal (3FN) quando todos os seus atributos não primários são totalmente dependentes da chave candidata.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Essa é a definição da <strong>2FN</strong> (dependência total, sem parcial). A <strong>3FN</strong> exige ainda que <strong>não haja dependência transitiva</strong> de atributos não primários em relação à chave.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) Entre as formas normais apresentadas, aquela que exige que todo determinante de uma dependência funcional seja também chave candidata é:
+a) 1FN.
+b) 2FN.
+c) 3FN.
+d) FNBC (Boyce-Codd).
+e) 4FN.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> A <strong>FNBC</strong> é mais rígida que a 3FN: <strong>todo determinante deve ser chave candidata</strong>. Se está na FNBC, está na 3FN (o inverso não é verdadeiro).</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O nível de isolamento READ COMMITTED elimina os fenômenos de dirty read e de leitura não repetível.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> READ COMMITTED elimina <strong>dirty read</strong> apenas. A <strong>leitura não repetível</strong> persiste até o REPEATABLE READ, e o <strong>phantom</strong> até o SERIALIZABLE.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) No modelo Entidade-Relacionamento, uma entidade que não possui atributos suficientes para definir sua chave primária, dependendo de outra entidade para tanto, denomina-se:
+a) entidade forte.
+b) entidade fraca.
+c) entidade associativa.
+d) generalização.
+e) agregação.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Entidade fraca</strong> não tem PK própria; o <strong>relacionamento identificador</strong> e atributos da entidade <strong>forte</strong> completam sua chave.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) Uma view criada a partir de um JOIN entre duas tabelas pode ser atualizada normalmente por meio de comandos INSERT e UPDATE.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Visões com <strong>JOIN, agrupamento ou agregação não são atualizáveis</strong>. Além disso, a view comum <strong>não é materializada</strong> — é uma consulta executada a cada acesso.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) A propriedade ACID que garante que uma transação será executada por inteiro ou não produzirá nenhum efeito denomina-se:
+a) Atomicidade.
+b) Consistência.
+c) Isolamento.
+d) Durabilidade.
+e) Serializabilidade.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> <strong>Atomicidade</strong> = tudo ou nada. Consistência = estado válido; Isolamento = transações independentes; Durabilidade = persistência pós-commit.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) A especialização, no modelo EER, corresponde ao processo bottom-up de agrupamento de subclasses em uma superclasse comum.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Especialização</strong> é top-down (superclasse → subclasses). O processo <strong>bottom-up</strong> (subclasses → superclasse) é a <strong>generalização</strong>.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) Sobre índices em banco de dados, é correto afirmar:
+a) O índice secundário é esparso, com uma entrada por bloco.
+b) O índice primário é denso, com entrada para cada registro.
+c) O índice secundário é denso, com entrada para cada valor dos campos indexados.
+d) O índice clustering exige a chave primária como campo de ordenação.
+e) Índices eliminam a necessidade de tuning de consultas.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Secundário = denso</strong>; primário e clustering = <strong>esparso</strong>. Índices ajudam, mas não substituem o tuning.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) O MySQL 8 utiliza, por padrão, o mecanismo de armazenamento MyISAM, que oferece suporte completo a transações ACID e chaves estrangeiras.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O mecanismo padrão do MySQL 8 é o <strong>InnoDB</strong> (ACID, FK, MVCC). O <strong>MyISAM</strong> não suporta transações nem chaves estrangeiras.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FCC-style) A linguagem procedural padrão do PostgreSQL para a criação de funções, triggers e blocos de programação no servidor é:
+a) PL/SQL.
+b) T-SQL.
+c) PL/pgSQL.
+d) PSM.
+e) Java Stored Procedures.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>PL/pgSQL</strong> é do PostgreSQL; <strong>PL/SQL</strong> é do Oracle; T-SQL, do SQL Server.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) No modelo relacional, atributos multivalorados violam a Primeira Forma Normal e devem ser remanejados para uma nova tabela, com chave composta.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> 1FN exige domínios atômicos. <strong>Multivalorado</strong> (ex.: telefones) → <strong>nova tabela</strong>; <strong>composto</strong> (ex.: endereço) → separar em colunas.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) Em controle de concorrência, o protocolo de bloqueio em duas fases (2PL) caracteriza-se por:
+a) Liberar locks progressivamente à medida que novos locks são adquiridos.
+b) Uma fase de crescimento (aquisição de locks) seguida de uma fase de redução (liberação), sem nova aquisição após o primeiro unlock.
+c) Uso exclusivo de timestamps para serialização, sem bloqueios.
+d) Permissão de dirty reads para aumentar a concorrência.
+e) Bloqueio binário exclusivo de leitura e escrita.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>2PL</strong>: fase de <strong>crescimento</strong> (só adquire) e fase de <strong>redução</strong> (só libera). Garante serializabilidade.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) Os bancos de dados NoSQL adotam obrigatoriamente o modelo ACID, dispensando o conceito de consistência eventual.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> NoSQL adota tipicamente <strong>BASE</strong> (Basically Available, Soft state, Eventually consistent) — consistência <strong>eventual</strong>, foco em disponibilidade/partição. ACID é o modelo do relacional.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Diferencie as formas normais 3FN e FNBC e explique a diferença entre dependência funcional parcial e transitiva.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>3FN</strong> exige que a tabela esteja na 2FN e que nenhum atributo não primário dependa <strong>transitivamente</strong> da chave candidata (A→B→C, com B e C não chave). A <strong>FNBC</strong> é mais rígida: exige que <strong>todo determinante</strong> de qualquer dependência funcional seja <strong>chave candidata</strong> — resolvendo casos em que um atributo primário é determinado por um não primário (permitido na 3FN). <strong>Dependência parcial</strong> (eliminada pela 2FN): o atributo não chave depende de <strong>parte</strong> de uma chave composta. <strong>Dependência transitiva</strong> (eliminada pela 3FN): o atributo depende de outro atributo não chave, que por sua vez depende da chave.</p></details>
+<p><strong>D2.</strong> Explique os fenômenos dirty read, non-repeatable read e phantom e relate-os aos níveis de isolamento SQL.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> <strong>Dirty read</strong> = ler dados ainda não commitados (que podem ser revertidos); <strong>non-repeatable read</strong> = duas leituras do mesmo registro retornam valores diferentes por interferência de outra transação; <strong>phantom</strong> = linhas novas que satisfazem a consulta aparecem entre leituras. <strong>READ UNCOMMITTED</strong> sofre os três; <strong>READ COMMITTED</strong> elimina o dirty read; <strong>REPEATABLE READ</strong> elimina também o non-repeatable; apenas <strong>SERIALIZABLE</strong> elimina o phantom, equivalendo à execução em série.</p></details>
+<hr />
+<p><em>Base: <code>07.Banco de Dados</code> (Aulas 00–10) e <code>08.SGBDs</code> (Aulas 00–07) do material local; complemento técnico para PostgreSQL 15–18, Oracle 19c, MySQL 8 e PL/pgSQL (ausentes ou desatualizados na base de 2020).</em></p>
+<script>
+(function () {
+  const key = 'apostila-t4-banco-de-dados-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

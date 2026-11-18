@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Língua Portuguesa (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>Língua Portuguesa</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-redacao-oficial-complemento-manual-de-redacao-da-presidencia-da-republica">1. Redação Oficial (complemento — Manual de Redação da Presidência da República)</a></li>
+<li class="toc-h2"><a href="#2-interpretacao-de-textos-e-contexto-historico">2. Interpretação de textos e contexto histórico</a></li>
+<li class="toc-h2"><a href="#3-denotacao-e-conotacao">3. Denotação e conotação</a></li>
+<li class="toc-h2"><a href="#4-discurso-direto-indireto-e-indireto-livre">4. Discurso direto, indireto e indireto livre</a></li>
+<li class="toc-h2"><a href="#5-intertextualidade">5. Intertextualidade</a></li>
+<li class="toc-h2"><a href="#6-figuras-de-linguagem">6. Figuras de linguagem</a></li>
+<li class="toc-h2"><a href="#1-formacao-de-palavras">1. Formação de palavras</a></li>
+<li class="toc-h2"><a href="#2-sinonimia-e-antonimia">2. Sinonímia e antonímia</a></li>
+<li class="toc-h2"><a href="#3-pontuacao">3. Pontuação</a></li>
+<li class="toc-h2"><a href="#4-pronomes">4. Pronomes</a></li>
+<li class="toc-h2"><a href="#1-concordancia-nominal-e-verbal">1. Concordância nominal e verbal</a></li>
+<li class="toc-h2"><a href="#2-flexao-nominal-e-verbal">2. Flexão nominal e verbal</a></li>
+<li class="toc-h2"><a href="#3-vozes-do-verbo">3. Vozes do verbo</a></li>
+<li class="toc-h2"><a href="#4-correlacao-de-tempos-e-modos-verbais">4. Correlação de tempos e modos verbais</a></li>
+<li class="toc-h2"><a href="#5-regencia-nominal-e-verbal">5. Regência nominal e verbal</a></li>
+<li class="toc-h2"><a href="#6-coordenacao-subordinacao-e-conectivos">6. Coordenação, subordinação e conectivos</a></li>
+<li class="toc-h2"><a href="#7-organizacao-e-reorganizacao-de-periodos-complemento">7. Organização e reorganização de períodos (complemento)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-lingua-portuguesa">APOSTILA — LÍNGUA PORTUGUESA</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Redação Oficial. Ortografia e acentuação. Emprego do sinal indicativo de crase. Compreensão e interpretação de textos de gêneros variados. Relação do texto com seu contexto histórico. Denotação e conotação. Discurso direto, discurso indireto e discurso indireto livre. Intertextualidade. Figuras de linguagem. Morfossintaxe. Elementos estruturais e processos de formação de palavras. Sinonímia e antonímia. Pontuação. Pronomes. Concordância nominal e concordância verbal. Flexão nominal e flexão verbal. Vozes do verbo. Correlação de tempos e modos verbais. Regência nominal e regência verbal. Coordenação e subordinação. Conectivos. Redação (confronto e reconhecimento de frases corretas e incorretas; organização e reorganização de orações e períodos; equivalência e transformação de estruturas).</p>
+<p><strong>Base de conhecimento:</strong> <code>01.Português</code> (Aulas 00–06 — concordância, regência, colocação pronominal, pontuação, crase, figuras, discurso, hífen), <code>lingua portuguesa</code> (SEFA), <code>02.Básico.para.Concursos.2020/01.Português</code> — Curso 2020 + <strong>complemento</strong> (Redação Oficial — Manual da Presidência; reorganização de períodos).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-redacao-oficial-e-interpretacao">MÓDULO I — REDAÇÃO OFICIAL E INTERPRETAÇÃO</h1>
+<h2 id="1-redacao-oficial-complemento-manual-de-redacao-da-presidencia-da-republica">1. Redação Oficial <em>(complemento — Manual de Redação da Presidência da República)</em></h2>
+<ul>
+<li><strong>Princípios</strong>: <strong>clareza</strong> (de pensamento e de expressão), <strong>concisão</strong>, <strong>formalidade</strong>, <strong>padronização</strong>, <strong>impessoalidade</strong>, <strong>uso do padrão culto</strong>.</li>
+<li><strong>Características do texto oficial</strong>: impessoalidade (evitar 1ª pessoa; "esta Seção" em vez de "eu"); uso do tempo presente/pretérito perfeito; ordem direta; vocabulário comum (sem gíria/expressão regional); parágrafos curtos (até 5 linhas); numeração cardinal até 10 e ordinal depois.</li>
+<li><strong>Documentos oficiais</strong>: <strong>ofício</strong> (comunicação entre órgãos), <strong>memorando</strong> (comunicação interna), <strong>circular</strong> (mensagem padronizada a diversos destinatários), <strong>aviso</strong> (ministérios/órgãos de maior hierarquia), <strong>portaria</strong>, <strong>despacho</strong>. Elementos: local/data, destinatário, texto, assinatura.</li>
+<li><strong>Padrão de ofício (ABNT/simplificado)</strong>: cabeçalho, referência, assunto, texto, fecho, assinatura. <em>Ex.: "Senhor Diretor," (dois pontos); "Respeitosamente," (fecho de ofício); "Atenciosamente," (fecho de memorando).</em></li>
+<li><strong>Concordância</strong>: o documento é de <strong>propósito singular</strong> ("O Diretor... determina"); não usar "eu"; evitar anglicismos; evitar abreviaturas; <strong>datas</strong>: 12 de março de 2026 (por extenso até 20; a partir de 21, numeral).</li>
+<li><strong>Síntese de clareza</strong>: uma ideia por parágrafo; evitar períodos longos; evitar dupla negação; preferir voz ativa; evitar nominalização excessiva ("efetuar a realização de" → "realizar").</li>
+</ul>
+<h2 id="2-interpretacao-de-textos-e-contexto-historico">2. Interpretação de textos e contexto histórico</h2>
+<ul>
+<li><strong>Gêneros variados</strong>: notícia, editorial, artigo, carta, resenha, publicidade, charge, texto literário, discurso, texto jurídico-administrativo. Cada gênero tem <strong>intenção, público e recursos</strong> próprios.</li>
+<li><strong>Relação texto × contexto histórico</strong>: o texto nasce de uma <strong>época e lugar</strong>; ideologias, poderes, conflitos e costumes informam o sentido. <em>Ex.: um discurso abolicionista do século XIX; a linguagem da Constituição de 1988.</em></li>
+<li><strong>Tese × argumentos × conclusão</strong>; <strong>fatos × opiniões</strong>; <strong>implícitos</strong> (o que o texto deixa entender); <strong>presupostos</strong>; <strong>ironia</strong> (dizer o contrário do que se quer).</li>
+</ul>
+<h2 id="3-denotacao-e-conotacao">3. Denotação e conotação</h2>
+<ul>
+<li><strong>Denotação</strong>: sentido <strong>literal</strong>, próprio, dicionário. <strong>Conotação</strong>: sentido <strong>figurado</strong>, transferido, afetivo/ideológico.</li>
+<li>*Ex.: "O homem de ferro resistiu" (denotativo: feito de ferro) × "É um homem de ferro" (conotativo: firme).</li>
+</ul>
+<h2 id="4-discurso-direto-indireto-e-indireto-livre">4. Discurso direto, indireto e indireto livre</h2>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Característica</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Direto</strong></td>
+<td>Palavras <strong>exatas</strong> do falante; travessão/aspas; 1ª pessoa</td>
+<td>Ele disse: "Vou sair."</td>
+</tr>
+<tr>
+<td><strong>Indireto</strong></td>
+<td><strong>O narrador reproduz</strong>; verbo <em>dicendi</em>; 3ª pessoa; <strong>conjunção "que"</strong></td>
+<td>Ele disse <strong>que</strong> sairia.</td>
+</tr>
+<tr>
+<td><strong>Indireto livre</strong></td>
+<td><strong>Mistura</strong> de narrador e falante; <strong>sem</strong> verbo introdutor; <strong>sem</strong> "que"; subjetividade do personagem</td>
+<td>Ia sair. Não aguentava mais aquilo.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Transformação</strong>: DD → DI exige: <strong>conjunção "que"</strong> + <strong>mudança de pessoa</strong> (eu→ele) + <strong>concordância dos tempos</strong> (presente→pretérito imperfeito do subjuntivo ou futuro do pretérito; pretérito perfeito→pretérito mais-que-perfeito). <em>Ex.: "Vou sair" → "disse que sairia".</em></li>
+<li><strong>Indireto livre</strong>: reconhecer pela <strong>quebra de lógica</strong> entre a narração e o pensamento do personagem (é o que mais cai).</li>
+</ul>
+<h2 id="5-intertextualidade">5. Intertextualidade</h2>
+<ul>
+<li><strong>Diálogo entre textos</strong>: citação, alusão, paródia, paráfrase, plágio (desonesto).</li>
+<li><strong>Paródia</strong> = muda o sentido (crítica/humor) × <strong>paráfrase</strong> = repete com outras palavras (mesmo sentido). <em>Ex.: "Terra, mar, ar..." parodia "Água, mato, ar".</em></li>
+<li>Intertextualidade com obras, provérbios, textos bíblicos, músicas, publicidade.</li>
+</ul>
+<h2 id="6-figuras-de-linguagem">6. Figuras de linguagem</h2>
+<ul>
+<li><strong>Metáfora</strong> (comparação implícita) × <strong>comparação/símile</strong> (com "como", "qual"). <strong>Personificação/prosopopeia</strong> (atribuir ações humanas). <strong>Metonímia</strong> (relação de contiguidade: "Bebeu três <strong>garrafas</strong>" = o líquido; "<strong>A Casa Branca</strong> disse"). <strong>Antítese</strong> (oposição de palavras: "Vivo morto") × <strong>paradoxo</strong> (oposição de ideias: "Moro fora de casa"). <strong>Ironia</strong> (dizer o contrário). <strong>Hiperbole</strong> (exagero). <strong>Eufemismo</strong> (suavizar: "faleceu" por "morreu"). <strong>Onomatopeia</strong> (som). <strong>Catacrese</strong> (metáfora cristalizada: "pé da mesa", "aguia de mesa"). <strong>Aliteração</strong> (sons repetidos) e <strong>assonância</strong> (vogais).</li>
+<li><em>Pegadinha</em>: <strong>metonímia ≠ metáfora</strong>; <strong>antítese ≠ paradoxo</strong>.</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-morfossintaxe-palavras-pontuacao-pronomes">MÓDULO II — MORFOSSINTAXE: PALAVRAS, PONTUAÇÃO, PRONOMES</h1>
+<h2 id="1-formacao-de-palavras">1. Formação de palavras</h2>
+<ul>
+<li><strong>Processos</strong>: <strong>derivação</strong> (prefixação, sufixação, parassíntese, imposição, abreviação); <strong>composição</strong> (justaposição, aglutinação); <strong>hibridismo</strong> (palavras de línguas diferentes); <strong>empréstimo</strong> ("software"); <strong>neologismo</strong>; <strong>sigla</strong>; <strong>onomatopeia</strong>.</li>
+<li><strong>Derivação</strong>: prefixo + radical; radical + sufixo; <strong>parassíntese</strong> (prefixo + sufixo + radical = "en<strong>louquec</strong>er").</li>
+<li><strong>Categorias</strong>: substantivo, adjetivo, advérbio, verbo, pronome, preposição, conjunção, artigo, numeral, interjeição. <strong>Palavras variáveis</strong> (substantivo, adjetivo, verbo, pronome, artigo, numeral) × <strong>invariáveis</strong> (advérbio, preposição, conjunção, interjeição).</li>
+</ul>
+<h2 id="2-sinonimia-e-antonimia">2. Sinonímia e antonímia</h2>
+<ul>
+<li><strong>Sinônimos</strong> (mesmo sentido aproximado: "alegre/feliz") × <strong>antonimos</strong> (sentidos opostos: "alegre/triste"). <strong>Sinônimos absolutos</strong> (raro: "ótimo/excelente") × <strong>contextuais</strong> (dependem do uso).</li>
+<li><strong>Parônimos</strong> (palavras parecidas: aceitar/acentuar) × <strong>homônimos</strong> (mesma forma, sentidos diferentes: "manga" fruta/roupa) × <strong>homógrafos/homofones</strong>.</li>
+</ul>
+<h2 id="3-pontuacao">3. Pontuação</h2>
+<ul>
+<li><strong>Vírgula</strong>: separar <strong>adjuntos adverbiais deslocados</strong> ("Ontem, viajou"); <strong>explicações</strong> ("O aluno, que faltou, reprovou"); <strong>expressões explicativas</strong> ("isto é", "ou seja", "por exemplo"); <strong>complementos</strong> ("compramos livros, cadernos e canetas"); <strong>apostos</strong>; <strong>vocativos</strong> ("João, venha aqui"). <strong>NÃO</strong> separar: sujeito do predicado; verbo do complemento ("Ele disse <strong>que</strong> veio"); entre nome e adjunto adnominal restritivo ("O aluno <strong>que faltou</strong> reprovou").</li>
+<li><strong>Ponto e vírgula</strong>: orações longas; enumerações complexas; antes de "porém", "contudo", "entretanto", "todavia", "portanto".</li>
+<li><strong>Dois-pontos</strong>: antes de citação, enumeração, explicação ("O motivo é este: chuva").</li>
+<li><strong>Ponto de interrogação/exclamação</strong>: interrogativas/exclamativas diretas.</li>
+<li><strong>Travessão</strong>: fala em discurso direto; explicações.</li>
+<li><strong>Parênteses</strong>: informações suplementares; <strong>colchetes</strong>: citações dentro de citações.</li>
+<li><strong>Aspas</strong>: citação, ironia, palavra em sentido não usual.</li>
+<li><em>Pegadinha</em>: "Ele disse que, embora cansado, continuaria" — <strong>sem vírgula antes de "que"</strong>; mas "continuaria, embora cansado" — vírgula após o verbo.</li>
+</ul>
+<h2 id="4-pronomes">4. Pronomes</h2>
+<ul>
+<li><strong>Pessoais do caso reto</strong>: eu, tu, ele/ela, nós, vós, eles/elas. <strong>Caso oblíquo</strong>: me/te/lhe/nos/vos/lhes; mim/contigo/ele/ela/nós/vós/eles/elas; <strong>comigo, contigo, consigo</strong> (só com "com").</li>
+<li><strong>Possessivos</strong>: meu, teu, seu, nosso, vosso, seu. <strong>Demonstrativos</strong>: este/esse/aquele; isto/isso/aquilo; este/esse/aquele. <strong>Relativos</strong>: que, quem, cujo, onde, o qual. <strong>Indefinidos</strong>: alguém, ninguém, tudo, nada, cada, algum, nenhum.</li>
+<li><strong>Colocação pronominal</strong> (<strong>próclise, mesóclise, ênclise</strong>):</li>
+<li><strong>Próclise</strong> (antes): <strong>palavras negativas</strong> ("<strong>Não</strong> me diga"); <strong>advérbios</strong> ("<strong>Sempre</strong> me avisam"); <strong>pronomes relativos</strong> ("O homem <strong>que</strong> me viu"); <strong>orações subordinadas</strong> ("Quando <strong>te</strong> chamar"); <strong>conjunções subordinativas</strong> ("Para <strong>me</strong> ajudar").</li>
+<li><strong>Ênclise</strong> (depois): <strong>início de frase</strong> ("<strong>Diga</strong>-me"); <strong>imperativo afirmativo</strong> ("<strong>Faça</strong>-se"); <strong>gerúndio sem "em"</strong> ("Estava <strong>pensando</strong>-se"); <strong>infinitivo</strong> ("Vou <strong>fazer</strong>-lo").</li>
+<li><strong>Mesóclise</strong> (meio do verbo): <strong>futuro do presente/preterito do pretérito</strong> em frases afirmativas sem termos que atraiam ("Dar-<strong>se</strong>-á").</li>
+<li><em>Pegadinha</em>: "<strong>Não</strong> há-me de faltar" (próclise por negação); "Hão de <strong>faltar</strong>-me" (ênclise).</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-concordancia-flexao-vozes-correlacao-regencia">MÓDULO III — CONCORDÂNCIA, FLEXÃO, VOZES, CORRELAÇÃO, REGÊNCIA</h1>
+<h2 id="1-concordancia-nominal-e-verbal">1. Concordância nominal e verbal</h2>
+<ul>
+<li><strong>Concordância nominal</strong>: adjetivo concorda em gênero/número com o substantivo ("as meninas bonitas").</li>
+<li><strong>Concordância verbal</strong>:</li>
+<li><strong>Sujeito composto anteposto</strong> → verbo <strong>no plural</strong> ("João e Maria chegaram").</li>
+<li><strong>Sujeito composto posposto</strong> → verbo pode concordar com o <strong>termo mais próximo</strong> ("Chegaram João e Maria" ou "Chegou João e Maria").</li>
+<li><strong>"É" com sujeito composto posposto</strong> → sempre <strong>singular</strong> ("É necessário paciência e cuidado").</li>
+<li><strong>Sujeito coletivo</strong> → verbo <strong>singular</strong> ("A multidão gritava"); <strong>coletivo + complemento plural</strong> → verbo <strong>plural</strong> ("Um bando de pássaros voavam" / "Uma porção de livros").</li>
+<li><strong>"Mais de um"</strong> → verbo <strong>singular</strong> ("Mais de um aluno faltou"); <strong>"um e meio"</strong> → plural ("Uma hora e meia se passaram").</li>
+<li><strong>Expressões partitivas</strong> ("a maioria de", "a maior parte de") → verbo <strong>singular</strong> ("A maioria dos alunos aprovou").</li>
+<li><strong>"Cada um"</strong> → <strong>singular</strong>; <strong>"ambos"</strong> → plural.</li>
+<li><strong>Orações com "que"</strong>: o verbo concorda com o <strong>sujeito da oração</strong>, não com o antecedente ("Os livros, que são novos, custam caro").</li>
+<li><strong>"Entre" + pronomes</strong> → oblíquos ("entre mim e ti"), mas em "entre nós e vós" e "entre vocês" o uso culto aceita retos em casos de ênfase.</li>
+<li><strong>"Senhor Doutor"</strong> → verbo <strong>plural</strong> ("Os senhores doutores estão"); "a senhora" → singular.</li>
+</ul>
+<h2 id="2-flexao-nominal-e-verbal">2. Flexão nominal e verbal</h2>
+<ul>
+<li><strong>Flexão nominal</strong>: gênero (masculino/feminino), número (singular/plural). <strong>Plurais irregulares</strong>: mão/mãos; pão/pães; capitão/capitães; alemão/alemães; jardim/jardins; farol/faróis; cardeal/cardeais.</li>
+<li><strong>Flexão verbal</strong>: modo (indicativo, subjuntivo, imperativo, infinitivo, gerúndio, particípio), tempo (presente, pretérito imperfeito, pretérito perfeito, pretérito mais-que-perfeito, futuro do presente, futuro do pretérito), pessoa/número.</li>
+<li><strong>Particípios irregulares</strong>: fazer (feito/feito), dizer (dito), ver (visto), vir (vindo), escrever (escrito), pôr (posto), prender (preso/prendido), imprimir (impresso/imprimido), abrir (aberto), cobrir (coberto).</li>
+</ul>
+<h2 id="3-vozes-do-verbo">3. Vozes do verbo</h2>
+<ul>
+<li><strong>Ativa</strong> (sujeito pratica): "O juiz julgou o processo." <strong>Passiva</strong> (sujeito sofre): "O processo <strong>foi julgado</strong> pelo juiz." <strong>Passiva sintética</strong> (com "se"): "<strong>Julgou-se</strong> o processo" (sujeito indeterminado); "Vendem-se casas" (casas = sujeito; verbo no plural).</li>
+<li><strong>Reflexiva</strong>: sujeito pratica e sofre ("Ele <strong>se</strong> vangloria"). <strong>Impessoal</strong>: sem sujeito ("<strong>Havia</strong> pessoas").</li>
+</ul>
+<h2 id="4-correlacao-de-tempos-e-modos-verbais">4. Correlação de tempos e modos verbais</h2>
+<table>
+<thead>
+<tr>
+<th>Conjunção</th>
+<th>Modo do verbo seguinte</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Se, caso, quando</strong> (futuro real)</td>
+<td><strong>Presente do indicativo</strong></td>
+<td>"Se <strong>vier</strong>, avisarei."</td>
+</tr>
+<tr>
+<td><strong>Se, caso</strong> (hipótese)</td>
+<td><strong>Pretérito imperfeito do subjuntivo</strong></td>
+<td>"Se <strong>viesse</strong>, avisaria."</td>
+</tr>
+<tr>
+<td><strong>Embora, ainda que</strong></td>
+<td><strong>Pretérito imperfeito do subjuntivo</strong></td>
+<td>"Embora <strong>fosse</strong>, não foi."</td>
+</tr>
+<tr>
+<td><strong>Para que, a fim de que</strong></td>
+<td><strong>Subjuntivo</strong></td>
+<td>"Estudo para que <strong>aprove</strong>."</td>
+</tr>
+<tr>
+<td><strong>Quando</strong> (passado)</td>
+<td><strong>Pretérito perfeito</strong></td>
+<td>"Quando <strong>cheguei</strong>, já saíram."</td>
+</tr>
+<tr>
+<td><strong>Depois que</strong></td>
+<td><strong>Pretérito perfeito</strong></td>
+<td>"Depois que <strong>chegou</strong>, saiu."</td>
+</tr>
+<tr>
+<td><strong>Antes que</strong></td>
+<td><strong>Pretérito imperfeito do subjuntivo</strong></td>
+<td>"Antes que <strong>chegasse</strong>, saí."</td>
+</tr>
+<tr>
+<td><strong>Conforme, segundo</strong></td>
+<td><strong>Indicativo ou subjuntivo</strong> (conforme a certeza)</td>
+<td>"Conforme <strong>quiseres</strong>."</td>
+</tr>
+<tr>
+<td><strong>Talvez</strong></td>
+<td><strong>Subjuntivo</strong></td>
+<td>"Talvez <strong>venha</strong>."</td>
+</tr>
+<tr>
+<td><strong>Oxalá</strong></td>
+<td><strong>Pretérito imperfeito do subjuntivo</strong></td>
+<td>"Oxalá <strong>fosse</strong>."</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Pretérito imperfeito do subjuntivo</strong> = hipótese/incerteza; <strong>pretérito perfeito do subjuntivo</strong> = fato passado ("Quando <strong>tiver</strong> pronto").</li>
+</ul>
+<h2 id="5-regencia-nominal-e-verbal">5. Regência nominal e verbal</h2>
+<ul>
+<li><strong>Regência nominal</strong> (preposição exigida pelo nome):</li>
+<li>"<strong>Acesso a</strong>" (não "de"); "<strong>anexo a</strong>" (não "de"); "<strong>analogia com</strong>"; "<strong>assistir a</strong>" (ver) × "<strong>assistir de</strong>" (ajudar); "<strong>casar com</strong>"; "<strong>coincidir com</strong>"; "<strong>combinar com</strong>"; "<strong>desconfiar de</strong>"; "<strong>filiar-se a</strong>"; "<strong>implicar em</strong>"; "<strong>irrigar com</strong>"; "<strong>opor-se a</strong>"; "<strong>preferir a</strong>"; "<strong>renunciar a</strong>"; "<strong>resistir a</strong>"; "<strong>sujeito a</strong>"; "<strong>visar a</strong>"; "<strong>prescindir de</strong>"; "<strong>necessitar de</strong>"; "<strong>semelhante a</strong>".</li>
+<li><strong>Regência verbal</strong> (preposição exigida pelo verbo):</li>
+<li>"<strong>Agradar a</strong>" (pessoa); "<strong>agradar de</strong>" (coisa); "<strong>assistir a</strong>" (ver); "<strong>aspirar a</strong>" (desejar); "<strong>atender a</strong>"; "<strong>casar-se com</strong>"; "<strong>chegar a</strong>" (local) × "<strong>chegar de</strong>" (origem); "<strong>comunicar a</strong>" (a alguém) × "<strong>comunicar com</strong>" (comunicar-se); "<strong>confiar em</strong>"; "<strong>confiar a</strong>" (entregar); "<strong>convir a</strong>" (ser conveniente); "<strong>convir com</strong>" (concordar); "<strong>defrontar-se com</strong>"; "<strong>depender de</strong>"; "<strong>desconfiar de</strong>"; "<strong>dispensar de</strong>"; "<strong>doer em</strong>"; "<strong>esquecer de</strong>"; "<strong>faltar a</strong>" (ausência) × "<strong>faltar de</strong>" (carecer); "<strong>implicar em</strong>"; "<strong>implicar com</strong>" (aborrecer-se); "<strong>irrigar com</strong>"; "<strong>obrigar a</strong>"; "<strong>ofender-se com</strong>"; "<strong>opor-se a</strong>"; "<strong>pensar em</strong>" (refletir) × "<strong>pensar de</strong>" (opinar); "<strong>preferir a</strong>"; "<strong>prevenir-se contra</strong>"; "<strong>renunciar a</strong>"; "<strong>responder a</strong>" (pergunta) × "<strong>responder de</strong>" (responsabilizar-se); "<strong>resistir a</strong>"; "<strong>restar a</strong>"; "<strong>semelhante a</strong>"; "<strong>soar a</strong>"; "<strong>sorrir de</strong>" (zombar) × "<strong>sorrir para</strong>"; "<strong>sujeitar-se a</strong>"; "<strong>tanger</strong> (instrumento)"; "<strong>visar a</strong>"; "<strong>votar em</strong>".</li>
+<li><strong>Verbos de ligação</strong> (ser, estar, parecer, tornar-se, permanecer, continuar, virar, ficar) → <strong>predicativo</strong> no <strong>nominativo</strong> ("Ele <strong>está cansado</strong>").</li>
+</ul>
+<h2 id="6-coordenacao-subordinacao-e-conectivos">6. Coordenação, subordinação e conectivos</h2>
+<ul>
+<li><strong>Coordenação</strong> (oração independente): <strong>aditivas</strong> (e, nem, também, ainda); <strong>adversativas</strong> (mas, porém, contudo, todavia, entretanto, não obstante); <strong>alternativas</strong> (ou, ora...ora); <strong>conclusivas</strong> (logo, portanto, por conseguinte, assim, pois); <strong>explicativas</strong> (pois, porque, que).</li>
+<li><strong>Subordinação</strong> (oração dependente):</li>
+<li><strong>Substantivas</strong> (subjetivas, objetivas diretas/indiretas, completivas nominais, adverbiais); <strong>adjetivas</strong> (restritivas <strong>sem vírgula</strong> × explicativas <strong>com vírgula</strong>); <strong>adverbiais</strong> (<strong>temporais</strong> — quando, assim que, logo que, enquanto; <strong>causais</strong> — porque, já que, visto que; <strong>concessivas</strong> — embora, ainda que, mesmo que; <strong>condicionais</strong> — se, caso, desde que; <strong>consecutivas</strong> — tal...que, tão...que; <strong>comparativas</strong> — como, assim como; <strong>finais</strong> — para que, a fim de que; <strong>modais</strong> — como, conforme).</li>
+<li><strong>Conectivos-chave</strong> (para questões de substituição):</li>
+<li><strong>Causa</strong>: porque, pois, visto que, posto que, uma vez que, já que.</li>
+<li><strong>Contraste</strong>: mas, porém, contudo, todavia, entretanto, não obstante, embora.</li>
+<li><strong>Conclusão</strong>: logo, portanto, assim, por conseguinte, de modo que, por isso.</li>
+<li><strong>Tempo</strong>: quando, assim que, logo que, enquanto, cada vez que.</li>
+<li><strong>Condição</strong>: se, caso, desde que, contanto que.</li>
+<li><strong>Finalidade</strong>: para que, a fim de que, com o fito de.</li>
+</ul>
+<h2 id="7-organizacao-e-reorganizacao-de-periodos-complemento">7. Organização e reorganização de períodos <em>(complemento)</em></h2>
+<ul>
+<li><strong>Equivalência</strong>: manter o sentido com outra estrutura (voz ativa ↔ passiva; oração relativa ↔ adjunto adnominal; coordenação ↔ subordinação). <em>Ex.: "O aluno, que era aplicado, passou" = "O aluno aplicado passou".</em></li>
+<li><strong>Transformações</strong>: DD↔DI; ativa↔passiva; oração↔locução verbal ("foi ver" = "viu"); expansão/redução de períodos (junção ou separação de orações).</li>
+<li><strong>Erros comuns em questões</strong>: dupla negação ("não...nada" = dupla negação é <strong>errada</strong> se houver negação anterior); <strong>pleonasmo vicioso</strong> ("subir para cima", "entrar para dentro", "anteontem"); <strong>estrangeirismo desnecessário</strong>; <strong>uso errado de crase/regência</strong>; <strong>concordância</strong> ("Fazem dois anos" → "<strong>Faz</strong> dois anos").</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>Redação oficial</strong>: impessoal, clara, concisa; "Respeitosamente" (ofício), "Atenciosamente" (memorando); datas por extenso até 20.</li>
+<li><strong>Crase</strong>: antes de <strong>palavras femininas</strong> regidas de "a"; <strong>NÃO</strong> antes de artigo masculino, plural, verbos, pronomes, "onde"; <strong>"à medida que"</strong> (crase); <strong>"a partir de"</strong> (sem crase); <strong>"às 8h"</strong> (crase com hora); <strong>"à moda de"</strong>.</li>
+<li><strong>Crase proibida</strong>: antes de verbo ("à partir"); antes de palavra masculina ("a o homem"); antes de plural ("aos meninos"); antes de pronome ("à ela" = <strong>errado</strong>).</li>
+<li><strong>Pronomes</strong>: <strong>próclise</strong> com negação, advérbio, "que" relativo, orações subordinadas; <strong>ênclise</strong> no início de frase, imperativo afirmativo; <strong>mesóclise</strong> no futuro sem atratores.</li>
+<li><strong>Concordância</strong>: sujeito composto posposto → singular ("É necessário paciência e cuidado"); "mais de um" → singular; "a maioria de" → singular; coletivo + plural → plural.</li>
+<li><strong>Regência crítica</strong>: "acesso <strong>a</strong>", "anexo <strong>a</strong>", "prescindir <strong>de</strong>", "implicar <strong>em</strong>", "preferir <strong>a</strong>", "opor-se <strong>a</strong>", "renunciar <strong>a</strong>", "resistir <strong>a</strong>".</li>
+<li><strong>Causa vs. adversativa</strong>: "embora" = concessão; "já que" = causa; "não obstante" = adversativa.</li>
+<li><strong>Crase "à moda de"</strong>, "à medida que", "às vezes" (crase); <strong>"a partir de"</strong>, <strong>"a menos que"</strong>, <strong>"a fim de"</strong> (sem crase).</li>
+<li><strong>Discurso indireto livre</strong>: mistura narrador/personagem, <strong>sem</strong> verbo introdutor nem "que".</li>
+<li><strong>Intertextualidade</strong>: paródia (muda sentido) ≠ paráfrase (repete).</li>
+<li><strong>Figuras</strong>: metáfora (implícita) ≠ comparação ("como"); metonímia (contiguidade) ≠ metáfora; antítese (palavras) ≠ paradoxo (ideias).</li>
+<li><strong>Voz passiva sintética</strong>: "Vendem-se casas" = <strong>casas</strong> é sujeito (verbo plural).</li>
+<li><strong>Correlação</strong>: "se + presente" = real ("Se vier, aviso"); "se + imperfeito do subjuntivo" = hipótese ("Se viesse, avisaria").</li>
+<li><strong>Pleonasmo vicioso</strong>: "subir para cima", "entrar para dentro" = <strong>errados</strong>; "subir acima" = errado.</li>
+<li><strong>"Fazem dois anos"</strong> = errado; "<strong>Faz</strong> dois anos" (tempo impessoal).</li>
+<li><strong>"Oxalá" + imperfeito do subjuntivo</strong> ("Oxalá fosse"); "Talvez" + <strong>subjuntivo</strong> ("Talvez venha").</li>
+<li><strong>Plurais irregulares</strong>: mão/mãos, pão/pães, capitão/capitães, alemão/alemães, farol/faróis.</li>
+<li><strong>"Entre mim e ti"</strong> (oblíquos); <strong>"senhor doutor"</strong> → verbo plural ("Os senhores doutores estão").</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) Assinale a opção em que o emprego do sinal indicativo de crase está correto:
+a) Chegamos à uma hora da tarde.
+b) Ele se referiu à ela.
+c) O pagamento será feito à vista.
+d) Fomos à praia ontem.
+e) Estudou à partir de ontem.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> "<strong>À vista</strong>" (feminino regido de "a"). <strong>a</strong> errado: "à uma hora" (correto: "<strong>a uma</strong> hora"); <strong>b</strong>: "à ela" (proibido antes de pronome); <strong>d</strong>: "à praia" está correto também, mas o gabarito é "à vista" (regra: crase antes de palavra feminina com artigo "a"); <strong>e</strong>: "a partir de" (sem crase).</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) A colocação pronominal está correta em:
+a) Não me avisaram.
+b) Avisaram-me não.
+c) Me avisaram não.
+d) Não avisaram-me.
+e) Avisaram não-me.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> <strong>Próclise</strong> obrigatória com <strong>negação</strong> ("<strong>Não</strong> me avisaram").</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) Assinale a frase com concordância verbal correta:
+a) Fazem dois anos que estudo.
+b) Faz dois anos que estudo.
+c) São dois anos que estudo (aceitável, mas o mais comum é "Faz").
+d) Fazem dois anos que estudo (errado).
+e) Fazem dois anos (errado).</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>"Faz"</strong> (impessoal) + tempo; <strong>"fazem"</strong> é <strong>errado</strong>.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (CESPE-style) A regência está correta em:
+a) Teve acesso de informações.
+b) Teve acesso a informações.
+c) Acessou informações.
+d) Acesso informações.
+e) Informações acessadas.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>"Acesso a"</strong> (regência nominal).</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (FCC-style) No trecho "Ele disse que sairia", o discurso é:
+a) direto.
+b) indireto.
+c) indireto livre.
+d) indireto livre misto.
+e) narrado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Verbo <em>dicendi</em> + <strong>"que"</strong> + 3ª pessoa = <strong>discurso indireto</strong>. <strong>Indireto livre</strong> = sem "que" e sem verbo introdutor.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (CESPE-style) O período "Ia sair. Não aguentava mais aquilo." exemplifica:
+a) discurso direto.
+b) discurso indireto.
+c) discurso indireto livre.
+d) discurso indireto livre misto.
+e) discurso citado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Indireto livre</strong>: mistura de narrador e personagem, <strong>sem</strong> verbo introdutor nem "que".</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (FCC-style) A figura de linguagem presente em "A Casa Branca divulgou nota" é:
+a) metáfora.
+b) metonímia.
+c) antítese.
+d) paradoxo.
+e) hipérbole.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Metonímia</strong> (relação de contiguidade: "A Casa Branca" = governo dos EUA).</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (CESPE-style) Assinale a opção com uso correto do pronome oblíquo:
+a) Deu-me o livro (ênclise).
+b) Deu o livro-me.
+c) Me deu o livro (próclise sem atrator).
+d) Deu-me o livro (correto).
+e) Deu-me-lhe o livro (correto).</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a/d.</strong> <strong>Ênclise</strong> após verbo no início de frase ("<strong>Deu-me</strong>"). <strong>c</strong> é errado (próclise sem atrator); <strong>e</strong> é aceitável mas o gabarito é "Deu-me o livro".</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) A voz do verbo em "Julgou-se o processo" é:
+a) ativa.
+b) passiva analítica.
+c) passiva sintética.
+d) reflexiva.
+e) impessoal.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Passiva sintética</strong> (com "se"): "O processo <strong>foi julgado</strong>" (análise) = "<strong>Julgou-se</strong> o processo".</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) A correlação de tempos está correta em:
+a) Se vier, avisarei (futuro real).
+b) Se viesse, avisarei (errado: hipótese + futuro do presente).
+c) Se vier, avisaria (errado: real + futuro do pretérito).
+d) Se viesse, avisou (errado).
+e) Se vier, avisou (errado).</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> <strong>Se + presente do indicativo</strong> = futuro real ("Se <strong>vier</strong>, <strong>avisarei</strong>"). <strong>Se + imperfeito do subjuntivo</strong> = hipótese ("Se <strong>viesse</strong>, <strong>avisaria</strong>").</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) Assinale a alternativa com concordância correta:
+a) A maioria dos alunos foram aprovados.
+b) A maioria dos alunos foi aprovada.
+c) A maioria dos alunos foram aprovadas.
+d) A maioria dos alunos foi aprovados.
+e) A maioria dos alunos aprovaram.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>"A maioria de"</strong> → verbo <strong>singular</strong> + <strong>feminino</strong> ("foi aprovada").</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre a intertextualidade, é correto afirmar:
+a) paródia e paráfrase são sinônimos.
+b) paródia muda o sentido (crítica/humor); paráfrase repete com outras palavras, mantendo o sentido.
+c) intertextualidade é o mesmo que plágio.
+d) paródia é sempre um elogio.
+e) paráfrase muda o sentido.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Paródia</strong> = <strong>muda</strong> o sentido (crítica); <strong>paráfrase</strong> = <strong>repete</strong> (mesmo sentido). <strong>Plágio</strong> = cópia desonesta.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) O sinal de crase está correto em: "O pagamento será feito à vista".
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> "<strong>À vista</strong>" (feminino regido de "a" = crase). "A vista" sem crase = "a visão".</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) A conjunção "embora" introduz oração:
+a) causal.
+b) concessiva.
+c) temporal.
+d) condicional.
+e) final.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>"Embora"</strong> = <strong>concessiva</strong> (mesmo que, ainda que). "Porque" = causal; "quando" = temporal; "se" = condicional; "para que" = final.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) Assinale a frase com pleonasmo vicioso:
+a) Ele subiu para cima.
+b) Ele subiu.
+c) Ele subiu acima.
+d) Ele subiu à montanha.
+e) Ele subiu o degrau.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> "<strong>Subir para cima</strong>" = pleonasmo vicioso (redundância). "Subir" já implica movimento para cima.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique as diferenças entre discurso direto, indireto e indireto livre, com exemplos.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> No <strong>discurso direto</strong>, reproduzem-se as palavras exatas do falante, com travessão/aspas e 1ª pessoa ("Ele disse: 'Vou sair'"). No <strong>indireto</strong>, o narrador reproduz o conteúdo com verbo <em>dicendi</em> e conjunção "que", na 3ª pessoa, com mudança de tempo verbal ("Ele disse que sairia"). No <strong>indireto livre</strong>, misturam-se a voz do narrador e a do personagem, <strong>sem</strong> verbo introdutor nem "que", com subjetividade ("Ia sair. Não aguentava mais aquilo") — reconhecido pela quebra de lógica entre a narração e o pensamento do personagem.</p></details>
+<p><strong>D2.</strong> Explique as regras de crase, colocação pronominal e concordância verbal, com exemplos.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>crase</strong> ocorre antes de palavra feminina regida de "a" ("à moda de", "à vista"); <strong>não</strong> ocorre antes de artigo masculino ("a o homem"), plural ("aos meninos"), pronomes ("à ela"), verbos ("à partir"). <strong>Colocação pronominal</strong>: próclise com negação ("Não me avisaram"), advérbio, "que" relativo e orações subordinadas; ênclise no início de frase ("Deu-me") e imperativo afirmativo; mesóclise no futuro sem atratores ("Dar-se-á"). <strong>Concordância verbal</strong>: sujeito composto posposto → verbo singular ("É necessário paciência e cuidado"); "mais de um" → singular; "a maioria de" → singular; coletivo + plural → plural ("Um bando de pássaros voavam"); "faz" impessoal para tempo ("Faz dois anos").</p></details>
+<hr />
+<p><em>Base: <code>01.Português</code> (Aulas 00–06 — concordância, regência, colocação pronominal, pontuação, crase, figuras de linguagem, discurso, hífen, formação de palavras), <code>lingua portuguesa</code> (SEFA), <code>02.Básico.para.Concursos.2020/01.Português</code>. Complemento: Redação Oficial (Manual de Redação da Presidência da República) e reorganização de períodos — detalhamento ausente na base de 2020.</em></p>
+<script>
+(function () {
+  const key = 'apostila-lingua-portuguesa-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

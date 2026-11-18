@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T2 — Gestão de Projetos e Governança de TI (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T2 — Gestão de Projetos e Governança de TI</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-conceito">1. Conceito</a></li>
+<li class="toc-h2"><a href="#2-governanca-gestao-cobit">2. Governança × Gestão (COBIT)</a></li>
+<li class="toc-h2"><a href="#1-fundamentos">1. Fundamentos</a></li>
+<li class="toc-h2"><a href="#2-cobit-5-base-historica">2. COBIT 5 (base histórica)</a></li>
+<li class="toc-h2"><a href="#1-itil-4-versao-atual-edital-itil-version-5">1. ITIL 4 (versão atual — edital "ITIL Version 5")</a></li>
+<li class="toc-h2"><a href="#2-itil-v3-ainda-cobrado">2. ITIL v3 (ainda cobrado)</a></li>
+<li class="toc-h2"><a href="#1-fundamentos-classicos-validos-em-qualquer-edicao">1. Fundamentos (clássicos, válidos em qualquer edição)</a></li>
+<li class="toc-h2"><a href="#2-pmbok-7a8a-complemento-dominios-de-performance">2. PMBOK 7ª/8ª — complemento (domínios de performance)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-2-gestao-de-projetos-e-governanca-de-ti">APOSTILA — TÓPICO 2: GESTÃO DE PROJETOS E GOVERNANÇA DE TI</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Gestão de Projetos e Governança de TI: PMBOK 8ª Edição; ITIL Version 5; COBIT 2019.</p>
+<p><strong>Base de conhecimento:</strong> <code>05.Governança de TI</code> (Curso Regular TI 2020.2 — PMBOK 6ª, ITIL v3/v4, COBIT 5 e 2019) + <strong>complemento</strong> para as versões que o edital exige (PMBOK 8ª; ITIL atual).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-governanca-de-ti">MÓDULO I — GOVERNANÇA DE TI</h1>
+<h2 id="1-conceito">1. Conceito</h2>
+<ul>
+<li><strong>TI (ISO/IEC 38500)</strong>: recursos para <strong>adquirir, processar, armazenar e disseminar informações</strong> — o cerne é a <strong>informação</strong>, não a tecnologia.</li>
+<li><strong>Governança de TI (Forrester)</strong>: processo de tomada de decisões sobre a TI. <strong>(ITGI)</strong>: responsabilidade da <strong>alta administração</strong>, garantindo que a TI sustente e estenda as estratégias do negócio.</li>
+<li><strong>Níveis de planejamento</strong>: <strong>estratégico → tático → operacional</strong>. Alinhamento <strong>negócio ↔ TI</strong>.</li>
+<li>Frameworks de referência: <strong>COBIT</strong>, <strong>ITIL</strong>, <strong>CMMI</strong>, <strong>PMBOK</strong>.</li>
+</ul>
+<h2 id="2-governanca-gestao-cobit">2. Governança × Gestão (COBIT)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Governança</th>
+<th>Gestão</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Verbos</td>
+<td><strong>Avaliar</strong>, <strong>Dirigir</strong>, <strong>Monitorar</strong></td>
+<td><strong>Planejar</strong>, <strong>Construir</strong>, <strong>Executar</strong>, Monitorar</td>
+</tr>
+<tr>
+<td>Domínio</td>
+<td>EDM</td>
+<td>APO + BAI + DSS + MEA</td>
+</tr>
+<tr>
+<td>Responsável</td>
+<td>Conselho de administração</td>
+<td>Diretoria executiva (CEO)</td>
+</tr>
+<tr>
+<td>Foco</td>
+<td>Necessidades das partes interessadas, direção, conformidade</td>
+<td>Executar conforme a direção</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="modulo-ii-cobit-2019">MÓDULO II — COBIT 2019</h1>
+<h2 id="1-fundamentos">1. Fundamentos</h2>
+<ul>
+<li>Framework de <strong>governança e gestão de I&amp;T empresarial</strong> (Enterprise I&amp;T — não só o departamento de TI); sucessor do COBIT 5.</li>
+<li><strong>3 resultados da EGIT</strong>: realização de <strong>benefícios</strong>; otimização de <strong>risco</strong> (preservar valor); otimização de <strong>recursos</strong>.</li>
+<li><strong>6 princípios do sistema de governança</strong>: (1) toda empresa precisa de um sistema de governança (equilíbrio benefícios–riscos–recursos); (2) construído por <strong>componentes</strong> que atuam holísticamente; (3) <strong>dinâmico</strong>; (4) <strong>distingue governança de gestão</strong>; (5) <strong>adaptado</strong> (design factors); (6) <strong>ponta a ponta</strong> (não só TI). <strong>3 princípios do framework</strong>: baseado em modelo conceitual; aberto e flexível; alinhado a padrões/regulamentos.</li>
+<li><strong>7 componentes</strong>: processos; estruturas organizacionais; princípios/políticas/procedimentos; informações; cultura, ética e comportamento; pessoas/habilidades; serviços, infraestrutura e aplicativos. Podem ser <strong>genéricos</strong> ou <strong>variantes</strong>.</li>
+<li><strong>Design factors</strong> (11) e <strong>áreas de foco (focus areas)</strong>: estratégia empresarial, metas, perfil de risco, cenário de ameaças, requisitos de conformidade, papel do TI, sourcing, métodos de implementação, adoção de tecnologia, porte da empresa etc.</li>
+<li><strong>Goals Cascade</strong>: necessidades das partes interessadas → <strong>metas empresariais (13)</strong> → <strong>metas de alinhamento</strong> → priorização dos objetivos de gestão.</li>
+<li><strong>5 domínios</strong> (verbos = propósito):</li>
+<li><strong>EDM</strong> — Avaliar, Dirigir e Monitorar (<strong>governança</strong>, conselho)</li>
+<li><strong>APO</strong> — Alinhar, Planejar e Organizar</li>
+<li><strong>BAI</strong> — Construir, Adquirir e Implementar</li>
+<li><strong>DSS</strong> — Entrega, Serviço e Suporte</li>
+<li><strong>MEA</strong> — Monitorar, Avaliar e Analisar</li>
+<li><strong>CPM (COBIT Performance Management)</strong> + <strong>níveis de capacidade 0 a 5</strong> (baseados no <strong>CMMI</strong>): <strong>capacidade</strong> associa-se a <strong>processos</strong>; <strong>maturidade</strong>, a <strong>áreas de foco</strong>.</li>
+<li><strong>O que o COBIT NÃO é</strong> (clássico de CESPE): não é descrição completa do ambiente de TI; não é estrutura para processos de negócio; não é framework técnico de toda tecnologia; <strong>não prescreve decisões</strong> (define <strong>quais</strong> decisões tomar, <strong>como</strong> e <strong>por quem</strong>).</li>
+<li>Publicações COBIT 2019: Introduction and Methodology; Governance and Management Objectives; Design Guide; Implementation Guide.</li>
+</ul>
+<h2 id="2-cobit-5-base-historica">2. COBIT 5 (base histórica)</h2>
+<ul>
+<li><strong>5 princípios</strong>: atender necessidades das partes interessadas (cascata de objetivos); cobrir a organização <strong>ponta a ponta</strong>; modelo único integrado; abordagem holística (<strong>habilitadores</strong>); distinguir governança de gestão.</li>
+<li><strong>37 processos</strong> em 5 domínios (5 EDM + 32 de gestão).</li>
+<li><em>COBIT 5 × 2019</em>: "habilitadores" → "<strong>componentes</strong>"; novos <strong>design factors</strong> e focus areas; mesmos 5 domínios.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-itil">MÓDULO III — ITIL</h1>
+<h2 id="1-itil-4-versao-atual-edital-itil-version-5">1. ITIL 4 (versão atual — edital "ITIL Version 5")</h2>
+<blockquote>
+<p>O material local cobre <strong>ITIL v3 e ITIL 4</strong>; o edital menciona "ITIL Version 5" — na prática, a família ITIL publicada é a <strong>ITIL 4</strong> (com atualizações posteriores do Axelos). Estude ITIL 4 como base e trate o nome do edital como sinônimo da versão corrente.</p>
+</blockquote>
+<ul>
+<li><strong>História</strong>: CCTA (governo britânico, anos 1980) → v2 (2001) → v3 (2007, ciclo de vida) → 2011 → <strong>ITIL 4 (2019)</strong>.</li>
+<li><strong>Valor</strong>: <strong>co-criação</strong> entre provedor, consumidor e terceiros (percebido). <strong>Utilidade</strong> = "o que o serviço faz" (fit for purpose) × <strong>Garantia/warranty</strong> = "como performa" (disponibilidade, capacidade, segurança, continuidade — fit for use).</li>
+<li><strong>7 princípios norteadores</strong>: 1) Foco no valor; 2) <strong>Começar de onde você está</strong> (não começar do zero); 3) Progredir iterativamente com feedback; 4) Colaborar e promover visibilidade (<strong>colaboração ≠ consenso</strong>); 5) Pensar e trabalhar holísticamente; 6) Manter simples e prático; 7) <strong>Otimizar e automatizar</strong>.</li>
+<li><strong>4 dimensões do gerenciamento de serviço</strong>: 1) Organizações e pessoas; 2) Tecnologia e informação; 3) Parceiros e fornecedores; 4) Fluxos de valor e processos.</li>
+<li><strong>SVS (Sistema de Valor do Serviço)</strong> — 5 componentes: Princípios norteadores; Governança; Cadeia de valor de serviço; Práticas; Melhoria contínua. Entradas = oportunidade e demanda; saídas = valor. Inimigo: silos organizacionais.</li>
+<li><strong>Cadeia de valor (6 atividades)</strong>: <strong>Planejar, Melhorar, Engajar, Desenho e transição, Obter/Construir, Entrega e suporte</strong>. Todas as interações externas passam por <strong>Engajar</strong>; novos recursos, por <strong>Obter/Construir</strong>. <em>Produtos, serviços, demanda e valor NÃO são atividades</em> (são componentes do SVS — pegadinha).</li>
+<li><strong>34 práticas</strong>: <strong>13 gerais</strong> (melhoria contínua, segurança da informação, conhecimento, risco, portfólio, relacionamento, financeiro de serviço, estratégia, fornecedor, força de trabalho...), <strong>17 de serviço</strong> (incidente, problema, mudança, catálogo, nível de serviço, configuração, disponibilidade, capacidade, continuidade, liberação, central de serviço...), <strong>3 técnicas</strong> (implantação; infraestrutura e plataforma; desenvolvimento de software).</li>
+<li>Conceitos: <strong>incidente</strong> = interrupção imprevista (restaurar rápido) ≠ <strong>problema</strong> = causa raiz (prevenir recorrência) ≠ <strong>requisição</strong> = solicitação normal. <strong>ICs</strong> (itens de configuração) = configuração de serviço.</li>
+</ul>
+<h2 id="2-itil-v3-ainda-cobrado">2. ITIL v3 (ainda cobrado)</h2>
+<ul>
+<li><strong>5 estágios do ciclo de vida</strong>: <strong>Estratégia de Serviço</strong> (núcleo) → <strong>Desenho</strong> → <strong>Transição</strong> → <strong>Operação</strong> → <strong>Melhoria Contínua</strong> (7 passos, baseado no <strong>PDCA</strong>).</li>
+<li><strong>Funções só na Operação</strong>: Central de Service Desk (local/centralizada/virtual/<strong>Follow the Sun</strong>), Gerenciamento Técnico, Operações de TI, Aplicações.</li>
+<li><strong>SLA</strong> (acordo com o <strong>cliente</strong>) × <strong>OLA</strong> (acordo <strong>interno</strong>) × <strong>UC</strong> (contrato com <strong>terceiros</strong>). 3 formas de SLA: por serviço, por cliente, multinível.</li>
+<li><strong>Catálogo de serviços</strong>: visão de <strong>negócio</strong> × visão <strong>técnica</strong>. Portfólio = funil + catálogo + obsoletos.</li>
+<li><strong>4 Ps do Desenho</strong>: Pessoas, Parceiros, Processos, Produtos.</li>
+<li><em>ITIL v3 × 4</em>: processos/funções → <strong>práticas</strong>; entrega de valor → <strong>co-criação</strong>; 5 livros → <strong>SVS + cadeia de valor</strong>.</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-pmbok-gestao-de-projetos">MÓDULO IV — PMBOK (GESTÃO DE PROJETOS)</h1>
+<blockquote>
+<p>O edital pede <strong>PMBOK 8ª Edição</strong>; o material local é <strong>6ª (2017)</strong>. Os fundamentos (projeto, ciclo de vida, áreas de conhecimento, restrições) permanecem; a 7ª (2021) substituiu "49 processos/10 áreas" por <strong>12 princípios + 8 domínios de performance</strong>; a 8ª é continuação dessa abordagem. Abaixo, a base clássica + o complemento da 7ª/8ª.</p>
+</blockquote>
+<h2 id="1-fundamentos-classicos-validos-em-qualquer-edicao">1. Fundamentos (clássicos, válidos em qualquer edição)</h2>
+<ul>
+<li><strong>Projeto</strong> = esforço <strong>temporário</strong> para criar um produto, serviço ou resultado <strong>exclusivo</strong>. <strong>Operação</strong> = contínua e repetitiva (não é projeto). Projeto <strong>pode gerar</strong> uma nova operação.</li>
+<li><strong>Gerenciamento de projetos</strong> = equilibrar restrições conflitantes: <strong>escopo, qualidade, cronograma (tempo), orçamento (custo), recursos e riscos</strong>.</li>
+<li><strong>Ciclo de vida</strong>: preditivo (cascata), <strong>adaptativo (ágil)</strong>, iterativo, incremental, híbrido. Influência das partes interessadas e risco altos no <strong>início</strong>; custo de mudança cresce com o tempo.</li>
+<li><strong>5 grupos de processos</strong> (≠ fases do ciclo de vida): <strong>Iniciação, Planejamento, Execução, Monitoramento e Controle, Encerramento</strong>. PMBOK 6: <strong>49 processos × 10 áreas</strong>.</li>
+<li><strong>Iniciação</strong>: <strong>Termo de Abertura (Project Charter)</strong> + registro das partes interessadas.</li>
+<li><strong>10 áreas (PMBOK 6)</strong>: Integração, Escopo, Cronograma, Custos, Qualidade, Recursos, Comunicações, Riscos, Aquisições, Partes Interessadas.</li>
+<li><strong>Escopo</strong>: escopo do <strong>projeto</strong> (trabalho) × escopo do <strong>produto</strong> (características). <strong>EAP/WBS</strong> = decomposição <strong>orientada a entregas</strong>; menor nível = <strong>pacote de trabalho</strong>. <strong>Scope creep</strong> = aumento não controlado. <strong>Validar escopo</strong> (aceitação do cliente) ≠ <strong>Controlar qualidade</strong> (cumprimento de requisitos).</li>
+<li><strong>Cronograma</strong>: <strong>CPM</strong> (caminho crítico = atividades <strong>sem folga</strong>; define a duração total) × tarefas com folga.</li>
+<li><strong>Custos</strong>: <strong>PERT</strong> — estimativa de 3 pontos: <strong>triangular tE = (tO + tM + tP)/3</strong>; <strong>beta tE = (tO + 4tM + tP)/6</strong>.</li>
+<li><strong>Riscos</strong>: identificar; análise <strong>qualitativa</strong> (matriz probabilidade × impacto) × <strong>quantitativa</strong> (efeito numérico); planejar e <strong>implementar respostas</strong>; monitorar.</li>
+<li><strong>Mudanças PMBOK 5 → 6</strong>: <strong>+3 processos</strong> (Gerenciar o Conhecimento do Projeto; Controlar os Recursos; Implementar Respostas aos Riscos), <strong>−1</strong> (Encerrar Aquisições) = <strong>49</strong>. <strong>Tempo → Cronograma</strong>; <strong>RH → Recursos</strong> (inclui materiais).</li>
+</ul>
+<h2 id="2-pmbok-7a8a-complemento-dominios-de-performance">2. PMBOK 7ª/8ª — complemento (domínios de performance)</h2>
+<p><em>(A 7ª edição (2021) reestruturou o guia; a 8ª dá continuidade.)</em>
+- <strong>12 princípios</strong>: ser um administrador diligente, respeitar e cuidar das pessoas, engajar as partes interessadas, focar no valor, pensar sistemicamente, <strong>liderar</strong>, <strong>adaptar baseado no contexto</strong>, <strong>construir qualidade</strong>, <strong>navegar na complexidade</strong>, otimizar respostas a riscos, <strong>adotar adaptabilidade e resiliência</strong>, permitir a mudança.
+- <strong>8 domínios de performance</strong> (substituem o foco em "áreas"): <strong>Partes Interessadas; Equipe; Abordagem de Desenvolvimento e Ciclo de Vida (preditivo/ágil/híbrido); Planejamento; Trabalho do Projeto; Entrega; Medida; Incerteza</strong>.
+- Ênfase: <strong>resultados e performance</strong> (não só processos), tailoring (adaptação ao contexto), governança do projeto, métricas de valor entregue.</p>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>Governança</strong> (conselho, EDM: avaliar/dirigir/monitorar) ≠ <strong>gestão</strong> (CEO: planejar/construir/executar).</li>
+<li><strong>COBIT não prescreve decisões</strong> — define quais, como e por quem decidir.</li>
+<li>Cascata COBIT: stakeholders → <strong>13 metas empresariais</strong> → metas de alinhamento → objetivos de gestão.</li>
+<li><strong>Capacidade</strong> (processos, 0–5, CMMI) × <strong>maturidade</strong> (áreas de foco).</li>
+<li><strong>COBIT 5: habilitadores</strong> → <strong>COBIT 2019: componentes</strong>; domínios <strong>EDM/APO/BAI/DSS/MEA</strong> mantidos.</li>
+<li>ITIL: <strong>incidente</strong> ≠ <strong>problema</strong> ≠ <strong>requisição</strong>.</li>
+<li><strong>SLA</strong> (cliente) × <strong>OLA</strong> (interno) × <strong>UC</strong> (terceiro).</li>
+<li>ITIL 4: <strong>utilidade</strong> (o que faz) × <strong>garantia</strong> (como performa); <strong>valor é co-criado</strong>.</li>
+<li><strong>Cadeia de valor tem 6 atividades</strong> — produtos/serviços/demanda/valor <strong>não</strong> são atividades.</li>
+<li><strong>Colaboração ≠ consenso</strong> (ITIL 4).</li>
+<li><strong>4 Ps</strong> (v3) ≠ <strong>4 dimensões</strong> (ITIL 4).</li>
+<li><strong>Grupos de processos ≠ fases do ciclo de vida</strong> (PMBOK).</li>
+<li><strong>Projeto</strong> = temporário + exclusivo; "contínuo e repetitivo" = <strong>operação</strong>.</li>
+<li>PMBOK 6: <strong>49 processos / 10 áreas / 5 grupos</strong>; <strong>caminho crítico não é área</strong> de conhecimento.</li>
+<li><strong>EAP</strong>: decomposição por <strong>entregas</strong>; menor nível = <strong>pacote de trabalho</strong>.</li>
+<li><strong>PERT beta = (O + 4M + P)/6</strong>; triangular = (O + M + P)/3.</li>
+<li><strong>Validar escopo</strong> = aceitação (cliente); <strong>controlar qualidade</strong> = requisitos.</li>
+<li>PMBOK 7ª/8ª: <strong>princípios + domínios de performance</strong> (não "49 processos" — mantenha o dual para o edital).</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) No COBIT 2019, a função da governança de TI é planejar, construir, executar e monitorar as atividades de TI, conforme a direção definida pelo conselho de administração.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Essas são as atividades da <strong>gestão</strong> (APO/BAI/DSS/MEA). A <strong>governança</strong> (EDM) <strong>avalia necessidades, define a direção e monitora</strong> desempenho e conformidade — responsabilidade do <strong>conselho</strong>.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) O domínio do COBIT 2019 exclusivamente dedicado à governança, e de responsabilidade do conselho de administração, é:
+a) APO.
+b) BAI.
+c) DSS.
+d) EDM.
+e) MEA.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> <strong>EDM</strong> (Evaluate, Direct and Monitor) = governança. APO/BAI/DSS/MEA = gestão.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) O COBIT 2019 tem como característica prescrever as melhores decisões de TI para cada organização, indicando a estratégia, a arquitetura e o orçamento ideais.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O COBIT <strong>não prescreve</strong> decisões — define <strong>quais</strong> decisões devem ser tomadas, <strong>como</strong> e <strong>por quem</strong>.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) Na cadeia de valor do serviço (ITIL 4), a atividade por onde passam todas as interações externas com clientes, usuários e fornecedores é:
+a) Planejar.
+b) Engajar.
+c) Melhorar.
+d) Obter/Construir.
+e) Entrega e suporte.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Engajar</strong> = todas as interações externas. Novos recursos passam por <strong>Obter/Construir</strong>.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) Na ITIL 4, o conceito de garantia (warranty) refere-se ao que o serviço faz para atender à necessidade do cliente, enquanto utilidade refere-se ao seu desempenho.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> É o inverso: <strong>utilidade</strong> = o que o serviço faz (adequado à finalidade); <strong>garantia</strong> = como performa (disponibilidade, capacidade, segurança, continuidade — adequado ao uso).</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) No ITIL, a causa raiz de um ou mais incidentes, cuja análise visa prevenir a recorrência, é registrada como:
+a) incidente.
+b) requisição de serviço.
+c) problema.
+d) mudança.
+e) evento.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Problema</strong> = causa raiz. <strong>Incidente</strong> = interrupção imprevista (restaurar o serviço). <strong>Requisição</strong> = solicitação padrão.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) O SLA (Service Level Agreement) é o acordo de nível de serviço firmado entre a área de TI e um fornecedor externo.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> SLA é com o <strong>cliente</strong>. Com <strong>terceiros/fornecedores</strong> é o <strong>UC (Underpinning Contract)</strong>; acordos <strong>internos</strong> são <strong>OLAs</strong>.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) No PMBOK, o documento que formalmente autoriza a existência de um projeto e confere autoridade ao gerente para aplicar recursos é:
+a) Termo de Abertura do Projeto (Project Charter).
+b) Plano de Gerenciamento do Projeto.
+c) EAP (WBS).
+d) Termo de Referência.
+e) Matriz de partes interessadas.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> <strong>Project Charter</strong> autoriza o projeto na <strong>Iniciação</strong> e nomeia o gerente.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) Os cinco grupos de processos do PMBOK (Iniciação, Planejamento, Execução, Monitoramento e Controle e Encerramento) equivalem às fases do ciclo de vida do projeto.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Grupos de processos ≠ fases</strong>. Os grupos são agrupamentos lógicos de processos e podem ocorrer em qualquer fase; as fases dependem do ciclo de vida (preditivo, ágil...).</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) Pela estimativa PERT beta, considerando os tempos otimista (tO = 10), provável (tM = 12) e pessimista (tP = 20), a duração esperada é:
+a) 12.
+b) 13.
+c) 14.
+d) 15.
+e) 16.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> tE = (tO + 4tM + tP)/6 = (10 + 48 + 20)/6 = 78/6 = <strong>13</strong>. (Fórmula beta; a triangular daria 14.)</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A EAP (Estrutura Analítica do Projeto) é uma decomposição hierárquica do escopo orientada a entregas, cujo nível mais baixo é o pacote de trabalho.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>EAP/WBS</strong> decompõe o escopo por <strong>entregas</strong>; o menor nível é o <strong>pacote de trabalho</strong> (produto/entrega, não atividade).</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre os princípios norteadores da ITIL 4, é correto afirmar:
+a) "Começar de onde você está" recomenda descartar os processos existentes e reiniciar.
+b) Colaborar e promover visibilidade significa que todas as decisões exigem consenso unânime.
+c) Otimizar e automatizar deve vir antes de simplificar o trabalho.
+d) Progredir iterativamente com feedback permite melhorias incrementais e validação contínua.
+e) Pensar e trabalhar holísticamente significa atuar em silos por especialidade.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> "Começar de onde você está" = <strong>não</strong> começar do zero; colaboração <strong>não</strong> é consenso; primeiro <strong>manter simples e prático</strong>, depois otimizar/automatizar; holístico = <strong>anti-silo</strong>.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) No PMBOK 6ª edição, foram acrescentados os processos "Gerenciar o Conhecimento do Projeto", "Controlar os Recursos" e "Implementar Respostas aos Riscos", totalizando 49 processos.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> +3 (Conhecimento, Controlar Recursos, Implementar Respostas aos Riscos) e −1 (Encerrar Aquisições) → <strong>49 processos</strong>.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) O caminho crítico de um projeto corresponde:
+a) à maior sequência de atividades com folga, que permite folga no cronograma.
+b) à sequência de atividades sem folga, que determina a duração total do projeto.
+c) à soma dos custos das atividades do projeto.
+d) ao grupo de processos de Monitoramento e Controle.
+e) à fase de maior risco do ciclo de vida.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Caminho crítico = atividades <strong>sem folga</strong> (float zero); define a <strong>duração total</strong>. Atraso em qualquer uma atrasa o projeto.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) Segundo o COBIT 2019, a capacidade de um processo está associada às áreas de foco (focus areas), enquanto a maturidade está associada aos processos.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> É o inverso: <strong>capacidade</strong> ↔ <strong>processos</strong> (níveis 0–5, base CMMI); <strong>maturidade</strong> ↔ <strong>áreas de foco</strong>.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Diferencie governança e gestão de TI segundo o COBIT 2019 e cite os três resultados esperados da EGIT.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>governança</strong> (domínio EDM) cabe ao <strong>conselho de administração</strong>: <strong>avalia</strong> as necessidades das partes interessadas, <strong>define a direção</strong> (priorização e decisões) e <strong>monitora</strong> desempenho e conformidade. A <strong>gestão</strong> (APO, BAI, DSS, MEA) cabe à <strong>diretoria executiva</strong>: <strong>planeja, constrói, executa e monitora</strong> em alinhamento à direção. Os três resultados da EGIT são: <strong>realização de benefícios</strong>, <strong>otimização de risco</strong> (preservar/atentar valor) e <strong>otimização de recursos</strong>.</p></details>
+<p><strong>D2.</strong> Descreva a cadeia de valor do serviço da ITIL 4 e explique a diferença entre utilidade e garantia de um serviço.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A cadeia de valor tem <strong>6 atividades</strong>: Planejar, Melhorar, Engajar, Desenho e transição, Obter/Construir e Entrega e suporte — todas as interações externas passam por <strong>Engajar</strong>. <strong>Utilidade</strong> (fit for purpose) = <strong>o que o serviço faz</strong> para atender à necessidade do cliente; <strong>Garantia</strong> (warranty, fit for use) = <strong>como o serviço performa</strong>: disponibilidade, capacidade, segurança e continuidade. O <strong>valor</strong> é <strong>co-criado</strong> entre provedor, consumidor e terceiros.</p></details>
+<hr />
+<p><em>Base: <code>05.Governança de TI</code> (Aulas 00–08 e material extra de ITIL v4, COBIT 2019) do material local (2020). Complemento: atualizações PMBOK 7ª/8ª (princípios e domínios de performance) — o material local cobre o PMBOK 6ª; ITIL 4 como versão corrente do edital ("ITIL Version 5").</em></p>
+<script>
+(function () {
+  const key = 'apostila-t2-gestao-de-projetos-e-governanca-de-ti-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

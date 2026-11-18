@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T14 — Gerenciamento de Redes (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T14 — Gerenciamento de Redes</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-arquitetura-snmp">1. Arquitetura SNMP</a></li>
+<li class="toc-h2"><a href="#2-versoes-do-snmp">2. Versões do SNMP</a></li>
+<li class="toc-h2"><a href="#1-tipos-e-niveis-de-servico">1. Tipos e níveis de serviço</a></li>
+<li class="toc-h2"><a href="#2-qos-quality-of-service">2. QoS (Quality of Service)</a></li>
+<li class="toc-h2"><a href="#3-metricas-de-desempenho">3. Métricas de desempenho</a></li>
+<li class="toc-h2"><a href="#1-da-base-local-2020">1. Da base local (2020)</a></li>
+<li class="toc-h2"><a href="#2-stack-elkefk-e-metricas-complemento-ausente-na-base-de-2020">2. Stack ELK/EFK e métricas (complemento — ausente na base de 2020)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-14-gerenciamento-de-redes-de-computadores">APOSTILA — TÓPICO 14: GERENCIAMENTO DE REDES DE COMPUTADORES</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Gerenciamento de redes de computadores: protocolo SNMP, agentes, gerentes e MIBs; tipos e níveis de serviço, qualidade de serviço (QoS); métricas de desempenho; métodos de avaliação de desempenho; ferramentas de monitoramento e alerta: Zabbix, Elasticsearch, Logstash, Kibana, Grafana, Prometheus e Fluentd.</p>
+<p><strong>Base de conhecimento:</strong> <code>02.Redes de Computadores</code> (Aula10 — SNMP/Nagios/Zabbix/Cacti/NetFlow/sFlow/Syslog), <code>10.Segurança da Informação e Armazenamento de Dados</code> (Aula08 — QoS/métricas) — Curso Regular TI 2020.2 + <strong>complemento</strong> (ELK/EFK, Grafana, Prometheus, Fluentd — ausentes na base).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-snmp-agentes-gerentes-e-mibs">MÓDULO I — SNMP, AGENTES, GERENTES E MIBs</h1>
+<h2 id="1-arquitetura-snmp">1. Arquitetura SNMP</h2>
+<ul>
+<li><strong>SNMP</strong> (Simple Network Management Protocol): arquitetura de gerenciamento com <strong>NMS (gerente/manager)</strong> + <strong>dispositivos gerenciados</strong> + <strong>agentes</strong> (daemon; <strong>proxy agents</strong> para interoperabilidade entre versões). <strong>Não é</strong> cliente-servidor clássico.</li>
+<li><strong>MIB</strong> (Management Information Base): base hierárquica de objetos gerenciados, modelada por <strong>SMI</strong> (Structure of Management Information). MIB I/II, experimental, privada.</li>
+<li><strong>Coleta</strong>: por <strong>request/response</strong> (porta <strong>161/UDP</strong>) ou <strong>traps</strong> (<strong>162/UDP</strong> — unidirecional; ex.: alerta de 80% de banda).</li>
+<li><strong>Mensagens SNMP</strong>: GET REQUEST, GETNEXT REQUEST, SET REQUEST, INFORM REQUEST, GET BULK, RESPONSE, TRAP.</li>
+</ul>
+<h2 id="2-versoes-do-snmp">2. Versões do SNMP</h2>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Características</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>v1</strong></td>
+<td>Senhas em <strong>texto simples</strong></td>
+</tr>
+<tr>
+<td><strong>v2</strong></td>
+<td>Autenticação via mudança de PDU, DES, GetBulk/Inform; <strong>incompatível com v1</strong></td>
+</tr>
+<tr>
+<td><strong>v2c</strong></td>
+<td>Compatibilidade com v1 (community strings)</td>
+</tr>
+<tr>
+<td><strong>v3</strong></td>
+<td><strong>Segurança</strong>: DES, hashes MD5/SHA, modelos <strong>USM/TSM</strong>, túneis SSL, senhas separadas read/write</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>RMON</strong> (Remote Monitoring): <strong>v1</strong> (camadas 1/2), <strong>v2</strong> (acrescenta 3/7).</li>
+<li><strong>Áreas de gerência</strong>: desempenho; <strong>falhas</strong> (imediata vs. longo prazo); configuração (inventário); segurança (políticas de acesso).</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-qos-e-metricas-de-desempenho">MÓDULO II — QoS E MÉTRICAS DE DESEMPENHO</h1>
+<h2 id="1-tipos-e-niveis-de-servico">1. Tipos e níveis de serviço</h2>
+<ul>
+<li>Níveis de serviço e SLA/ANS (<strong>Acordo de Nível de Serviço</strong>) definem requisitos de desempenho por serviço (disponibilidade, latência, perda).</li>
+<li><strong>Traffic shaping</strong>: restringe banda de aplicações volumosas (P2P, FTP). <strong>WQF</strong> (Weighted Fair Queuing); <strong>token bucket</strong> (descarta <strong>símbolos</strong>, não pacotes).</li>
+</ul>
+<h2 id="2-qos-quality-of-service">2. QoS (Quality of Service)</h2>
+<ul>
+<li>Mecanismos por camada: <strong>802.1P</strong> (L2, 3 bits), <strong>TOS/DSCP</strong> no IPv4 (6 bits, RFC 2474), <strong>MPLS</strong> (campo Exp/QoS 3 bits = 8 classes).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Modelo</th>
+<th>Mecanismo</th>
+<th>Observação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IntServ</strong></td>
+<td>Reserva de recursos via <strong>RSVP</strong></td>
+<td>Exige suporte dos nós intermediários; complexo; uso limitado na Internet</td>
+</tr>
+<tr>
+<td><strong>DiffServ</strong></td>
+<td>Classes de serviço (campo TOS)</td>
+<td><strong>Mais simples e barato</strong>; é o usado na Internet hoje; <strong>não garante fim a fim</strong> (roteadores de terceiros podem descartar a marcação)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-metricas-de-desempenho">3. Métricas de desempenho</h2>
+<ul>
+<li><strong>Largura de banda/taxa/vazão</strong> (throughput); <strong>perda de pacotes</strong>; <strong>atraso/latência/retardo</strong> (propagação + transmissão + processamento + fila); <strong>jitter</strong> (variação de atraso — crítico para <strong>VoIP/vídeo</strong>); <strong>disponibilidade</strong> (noves: 99,9%... 99,999%).</li>
+<li><strong>Métodos de avaliação</strong>: medição ativa (tráfego sintético/ex.: ping) × passiva (observação do tráfego real); baseline de tráfego; análise de tendências; testes de carga; comparação com SLA.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-ferramentas-de-monitoramento-e-alerta">MÓDULO III — FERRAMENTAS DE MONITORAMENTO E ALERTA</h1>
+<h2 id="1-da-base-local-2020">1. Da base local (2020)</h2>
+<ul>
+<li><strong>Nagios</strong>: plug-ins, arquivos de configuração, check_hpjd para impressoras; armazena em /var (MySQL ou PostgreSQL).</li>
+<li><strong>Zabbix</strong>: open source, monitora <strong>rede + aplicações</strong>, <strong>suporta SNMP</strong> (templates/scripts), agentes e tráfego passivo, alertas e gráficos.</li>
+<li><strong>Cacti</strong>: PHP/MySQL + <strong>RRDTool</strong> (gráficos históricos).</li>
+<li><strong>NetFlow</strong> (Cisco): dispositivos L3; <strong>IPFIX</strong> (RFC 5101/5102); perfilamento de tráfego/custos. <strong>sFlow</strong> (RFC 3176): <strong>amostragem</strong>, versões 2–4, Gigabit+, escalável.</li>
+<li><strong>Syslog</strong>: logs centralizados (514; TLS 6514); 3 papéis (origem/armazenamento/análise). <strong>System Center</strong> (Operations/Service Manager), ITIL/MOF.</li>
+</ul>
+<h2 id="2-stack-elkefk-e-metricas-complemento-ausente-na-base-de-2020">2. Stack ELK/EFK e métricas <em>(complemento — ausente na base de 2020)</em></h2>
+<ul>
+<li><strong>Elasticsearch</strong>: motor de busca/análise distribuído (NoSQL de documentos; índice invertido) — armazena e indexa logs/métricas.</li>
+<li><strong>Logstash</strong>: coleta, transforma e envia dados (inputs/filters/outputs) para o Elasticsearch. <strong>Fluentd</strong>: coletor de logs leve (CNCF) — alternativa ao Logstash (stack <strong>EFK</strong>: Elasticsearch+Fluentd+Kibana).</li>
+<li><strong>Kibana</strong>: visualização/dashboards sobre o Elasticsearch (gráficos, buscas, mapas).</li>
+<li><strong>Grafana</strong>: dashboards multi-fonte (Prometheus, Elasticsearch, Zabbix, InfluxDB...) com alertas.</li>
+<li><strong>Prometheus</strong>: coleta de <strong>métricas</strong> por scraping (pull), modelo dimensional com labels, <strong>PromQL</strong>, alertas (<strong>Alertmanager</strong>), exportadores (node_exporter, snmp_exporter...).</li>
+<li><em>Padrão moderno</em>: <strong>métricas → Prometheus → Grafana</strong>; <strong>logs → Fluentd/Logstash → Elasticsearch → Kibana</strong>; <strong>alertas → Alertmanager/Zabbix</strong>.</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>SNMP: 161/UDP (requests), 162/UDP (traps)</strong> — <strong>não</strong> é porta 22 (SSH).</li>
+<li><strong>MIB</strong> = base hierárquica de objetos (modelada por <strong>SMI</strong>).</li>
+<li><strong>SNMPv1</strong> = senhas em texto simples; <strong>v2 incompatível com v1</strong>; <strong>v2c</strong> mantém compatibilidade; <strong>v3</strong> = segurança (USM/TSM, MD5/SHA).</li>
+<li><strong>RMON v1</strong> = camadas 1/2; <strong>v2</strong> = acrescenta 3/7.</li>
+<li><strong>IntServ</strong> = RSVP/reserva (complexo); <strong>DiffServ</strong> = classes (usado na Internet; <strong>não garante fim a fim</strong>).</li>
+<li><strong>Jitter</strong> = variação de atraso (crítico em <strong>VoIP/vídeo</strong>).</li>
+<li><strong>Token bucket descarta símbolos</strong>, não pacotes.</li>
+<li><strong>Zabbix suporta SNMP</strong> (falso dizer o contrário).</li>
+<li><strong>sFlow = amostragem</strong>; <strong>NetFlow</strong> = fluxos completos (Cisco), IPFIX.</li>
+<li><strong>Prometheus</strong> = métricas (pull/scraping, PromQL); <strong>Elasticsearch</strong> = logs/busca; <strong>Kibana/Grafana</strong> = dashboards; <strong>Logstash/Fluentd</strong> = coleta.</li>
+<li><strong>Syslog 514 (TCP/UDP), 6514 (TLS)</strong>; papéis: origem/armazenamento/análise.</li>
+<li><strong>Fluentd</strong> = alternativa ao Logstash (stack <strong>EFK</strong>).</li>
+<li><strong>SNMP não é cliente-servidor clássico</strong> — é gerente/agentes.</li>
+<li><strong>Proxy agent</strong> do SNMP permite interoperabilidade entre versões.</li>
+<li><strong>Traps = unidirecional</strong> (dispositivo → gerente, sem requisição).</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) No protocolo SNMP, as portas UDP utilizadas para requisições e para traps são, respectivamente, 161 e 162.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>161/UDP</strong> = requests; <strong>162/UDP</strong> = traps (unidirecional). (22 = SSH.)</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) A Management Information Base (MIB) do SNMP corresponde a:
+a) um protocolo de transporte.
+b) uma base hierárquica de objetos gerenciados, modelada por SMI.
+c) um servidor de aplicação.
+d) um firewall.
+e) um sistema de arquivos.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>MIB</strong> = base hierárquica de objetos (modelada pelo <strong>SMI</strong>); não é protocolo nem software.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) A versão 3 do SNMP diferencia-se das anteriores por oferecer recursos de segurança, como autenticação e criptografia, com senhas separadas para leitura e escrita.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>v3</strong>: DES, hashes MD5/SHA, modelos USM/TSM, túneis SSL, senhas read/write separadas. v1 = texto simples.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) O modelo de QoS que realiza reserva de recursos ponta a ponta por meio do protocolo RSVP, exigindo suporte dos nós intermediários, é o:
+a) DiffServ.
+b) IntServ.
+c) Best-Effort.
+d) MPLS.
+e) 802.1P.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>IntServ</strong> = RSVP/reserva (complexo, uso limitado). <strong>DiffServ</strong> = classes (usado na Internet; sem garantia fim a fim).</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O modelo DiffServ garante qualidade de serviço fim a fim em toda a Internet, pois todos os roteadores respeitam a marcação de classes.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>DiffServ não garante fim a fim</strong> — roteadores de terceiros podem descartar a marcação. É simples e barato, mas sem garantia absoluta.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) A métrica de desempenho que representa a variação do atraso (latência) entre pacotes e é crítica para aplicações de VoIP e vídeo é:
+a) throughput.
+b) perda de pacotes.
+c) jitter.
+d) disponibilidade.
+e) largura de banda.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Jitter</strong> = variação de atraso (instabilidade prejudicial a tempo real). Throughput = vazão.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) O Zabbix não suporta o protocolo SNMP, sendo restrito a agentes proprietários.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Zabbix suporta SNMP</strong> (templates/scripts), além de agentes e tráfego passivo.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) A diferença entre NetFlow e sFlow é que:
+a) NetFlow usa amostragem; sFlow analisa todos os pacotes.
+b) NetFlow analisa fluxos completos (Cisco/IPFIX); sFlow baseia-se em amostragem de pacotes.
+c) ambos são idênticos.
+d) sFlow opera apenas em camada 1.
+e) NetFlow é open source exclusivo de Linux.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>NetFlow</strong> = fluxos (Cisco, IPFIX); <strong>sFlow</strong> = <strong>amostragem</strong> (RFC 3176), escalável em Gigabit+.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) O RMON (Remote Monitoring) versão 2 acrescenta monitoramento das camadas de rede e de aplicação às capacidades da versão 1, que abrange apenas as camadas física e de enlace.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>RMON v1</strong> = camadas 1/2; <strong>v2</strong> = acrescenta 3/7.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) Na stack de monitoramento moderna, o componente responsável por coletar, transformar e encaminhar logs ao Elasticsearch é:
+a) Kibana.
+b) Grafana.
+c) Logstash (ou Fluentd).
+d) Prometheus.
+e) Nagios.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Logstash/Fluentd</strong> = coleta/transformação. <strong>Kibana/Grafana</strong> = visualização; <strong>Prometheus</strong> = métricas (pull).</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) O Prometheus coleta métricas por modelo de push, no qual cada host envia continuamente seus valores ao servidor central.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Prometheus</strong> usa <strong>pull/scraping</strong> (o servidor busca os targets/exportadores), com <strong>PromQL</strong> e Alertmanager.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre o SNMP, é correto afirmar:
+a) a arquitetura é de cliente-servidor clássico.
+b) os traps são enviados pelo gerente aos agentes mediante solicitação.
+c) agentes rodam nos dispositivos gerenciados e respondem a requisições do NMS, podendo enviar traps.
+d) a MIB é um protocolo de transporte.
+e) o SNMPv2 é compatível com o SNMPv1.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Agentes</strong> nos dispositivos respondem ao <strong>NMS</strong> e emitem <strong>traps</strong> (unidirecionais, sem solicitação). SNMP <strong>não</strong> é cliente-servidor clássico; <strong>v2 incompatível com v1</strong> (v2c é compatível).</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) O token bucket, mecanismo de controle de tráfego, descarta pacotes excedentes da rajada.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O <strong>token bucket</strong> descarta <strong>símbolos (tokens)</strong> excedentes, não pacotes diretamente.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) As ferramentas Elasticsearch, Logstash e Kibana (ELK) relacionam-se, respectivamente, a:
+a) coleta, armazenamento/busca e visualização.
+b) armazenamento/busca, coleta/transformação e visualização.
+c) visualização, coleta e armazenamento.
+d) métricas, alertas e dashboards.
+e) firewall, proxy e IDS.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Elasticsearch</strong> = armazenamento/busca (índice invertido); <strong>Logstash</strong> = coleta/transformação; <strong>Kibana</strong> = visualização. (Fluentd substitui Logstash = <strong>EFK</strong>.)</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) O Grafana é uma ferramenta de coleta de métricas por scraping, com linguagem de consulta própria denominada PromQL.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Isso é o <strong>Prometheus</strong> (PromQL, pull). <strong>Grafana</strong> = <strong>dashboards</strong> multi-fonte (Prometheus, Elasticsearch, Zabbix...) com alertas.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique a arquitetura SNMP (gerente, agentes e MIBs), as diferenças entre suas versões e o papel dos traps.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O SNMP tem <strong>NMS (gerente)</strong> que consulta <strong>agentes</strong> rodando nos dispositivos gerenciados; a descrição dos objetos fica nas <strong>MIBs</strong> (hierárquicas, modeladas por SMI). A coleta ocorre por <strong>request/response (161/UDP)</strong> ou por <strong>traps (162/UDP)</strong>, mensagens unidirecionais enviadas pelo agente ao gerente sem solicitação (ex.: alerta de banda). <strong>v1</strong> tem senhas em texto simples; <strong>v2</strong> introduz GetBulk/Inform, mas é incompatível com v1 (a <strong>v2c</strong> restaura a compatibilidade); <strong>v3</strong> acrescenta segurança (autenticação MD5/SHA, criptografia DES, modelos USM/TSM, senhas separadas de leitura/escrita).</p></details>
+<p><strong>D2.</strong> Diferencie IntServ e DiffServ em QoS e explique o papel das ferramentas Zabbix, Prometheus, Elasticsearch, Logstash/Fluentd, Kibana e Grafana no monitoramento de redes.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> <strong>IntServ</strong> reserva recursos ponta a ponta via <strong>RSVP</strong>, exigindo suporte dos nós intermediários (complexo, pouco usado na Internet). <strong>DiffServ</strong> classifica o tráfego em serviços (campo TOS/DSCP), sendo simples e adotado na Internet, mas <strong>sem garantia fim a fim</strong>. No monitoramento: <strong>Zabbix</strong> monitora rede e aplicações (suporta SNMP, alertas); <strong>Prometheus</strong> coleta <strong>métricas</strong> por scraping (PromQL, Alertmanager); <strong>Elasticsearch</strong> armazena e indexa logs; <strong>Logstash/Fluentd</strong> coletam e transformam dados (stack ELK/EFK); <strong>Kibana</strong> e <strong>Grafana</strong> são de visualização — a Kibana sobre o Elasticsearch, a Grafana multi-fonte (Prometheus, Zabbix etc.).</p></details>
+<hr />
+<p><em>Base: <code>02.Redes de Computadores</code> (Aula10 — SNMP/MIB/RMON/Nagios/Zabbix/Cacti/NetFlow/sFlow/Syslog) e <code>10.Segurança da Informação e Armazenamento de Dados</code> (Aula08 — QoS IntServ/DiffServ/RSVP, métricas de desempenho). Complemento: stack ELK/EFK (Elasticsearch, Logstash, Kibana, Fluentd), Grafana e Prometheus — ausentes da base de 2020 (o edital os exige explicitamente).</em></p>
+<script>
+(function () {
+  const key = 'apostila-t14-gerenciamento-de-redes-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

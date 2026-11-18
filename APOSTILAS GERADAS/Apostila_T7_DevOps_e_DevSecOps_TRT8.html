@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T7 — DevOps e DevSecOps (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T7 — DevOps e DevSecOps</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-conceito">1. Conceito</a></li>
+<li class="toc-h2"><a href="#2-devops-itil-agile-pegadinha">2. DevOps × ITIL × Agile (pegadinha)</a></li>
+<li class="toc-h2"><a href="#1-fundamentos">1. Fundamentos</a></li>
+<li class="toc-h2"><a href="#2-comandos-essenciais">2. Comandos essenciais</a></li>
+<li class="toc-h2"><a href="#3-fluxos-de-trabalho">3. Fluxos de trabalho</a></li>
+<li class="toc-h2"><a href="#1-conceito_1">1. Conceito</a></li>
+<li class="toc-h2"><a href="#2-ciclo-de-vida-lifecycle-e-fases">2. Ciclo de vida (lifecycle) e fases</a></li>
+<li class="toc-h2"><a href="#3-comandos-usuais">3. Comandos usuais</a></li>
+<li class="toc-h2"><a href="#1-conceitos">1. Conceitos</a></li>
+<li class="toc-h2"><a href="#2-ferramentas">2. Ferramentas</a></li>
+<li class="toc-h2"><a href="#3-estrategias-de-deploy">3. Estratégias de deploy</a></li>
+<li class="toc-h2"><a href="#4-infraestrutura-como-codigo-e-gitops">4. Infraestrutura como código e GitOps</a></li>
+<li class="toc-h2"><a href="#1-piramide-de-testes-mike-cohn">1. Pirâmide de testes (Mike Cohn)</a></li>
+<li class="toc-h2"><a href="#2-tdd-e-bdd">2. TDD e BDD</a></li>
+<li class="toc-h2"><a href="#3-metricas-e-conceitos">3. Métricas e conceitos</a></li>
+<li class="toc-h2"><a href="#1-conceito_2">1. Conceito</a></li>
+<li class="toc-h2"><a href="#2-praticas-e-ferramentas">2. Práticas e ferramentas</a></li>
+<li class="toc-h2"><a href="#3-outros-pontos">3. Outros pontos</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-7-devops-e-devsecops">APOSTILA — TÓPICO 7: DEVOPS E DEVSECOPS</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Maven; Git; CI/CD; Testes Automatizados.</p>
+<p><strong>Base de conhecimento:</strong> conteúdo técnico complementar (o material-base local de 2020 não cobre DevOps de forma sistemática) — a apostila segue o estado da prática, com foco no que banca cobra.</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-cultura-devops">MÓDULO I — CULTURA DEVOPS</h1>
+<h2 id="1-conceito">1. Conceito</h2>
+<ul>
+<li><strong>DevOps</strong>: união de <strong>Dev</strong>elopment e <strong>Op</strong>erations — cultura, práticas e ferramentas que visam <strong>entregar software de forma rápida, frequente e confiável</strong>, com colaboração entre desenvolvimento, operações e segurança.</li>
+<li><strong>Objetivos (DORA)</strong>: frequência de deploy alta, lead time baixo, <strong>MTTR</strong> (tempo médio de recuperação) baixo, taxa de falha de mudança baixa.</li>
+<li><strong>Os Três Caminhos</strong> (Gene Kim, <em>The Phoenix Project</em> / <em>DevOps Handbook</em>):</li>
+<li><strong>Fluxo</strong> (sistemas thinking): acelerar o fluxo do trabalho da esquerda para a direita (dev → operações).</li>
+<li><strong>Feedback</strong>: criar laços de feedback à direita para a esquerda (operacoes → dev), o mais cedo possível.</li>
+<li><strong>Aprendizado e experimentação</strong>: cultura de aprendizado contínuo, experimentação e coragem para assumir riscos calculados.</li>
+<li><strong>CALMS</strong>: <strong>C</strong>ultura, <strong>A</strong>utomação, <strong>L</strong>ean, <strong>M</strong>ensuração (métricas), <strong>S</strong>haring (compartilhamento).</li>
+<li><strong>Lean/Kanban no DevOps</strong>: limitar WIP, eliminar desperdício, fluxo contínuo.</li>
+</ul>
+<h2 id="2-devops-itil-agile-pegadinha">2. DevOps × ITIL × Agile (pegadinha)</h2>
+<ul>
+<li><strong>Agile</strong> acelera o <strong>desenvolvimento</strong>; <strong>DevOps</strong> estende a agilidade até <strong>operações/produção</strong>; <strong>ITIL</strong> estrutura o <strong>serviço</strong> (processos de incidente, mudança, configuração). Complementares, não antagônicos.</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-git-e-versionamento-de-codigo">MÓDULO II — GIT E VERSIONAMENTO DE CÓDIGO</h1>
+<h2 id="1-fundamentos">1. Fundamentos</h2>
+<ul>
+<li><strong>Git</strong>: sistema de controle de versão <strong>distribuído</strong> (cada dev tem o repositório completo — diferente do SVN/CVS, centralizados).</li>
+<li><strong>Conceitos-chave</strong>:</li>
+<li><strong>Repositório local</strong> × <strong>remoto</strong> (origin); <strong>working tree</strong> × <strong>staging area (index)</strong> × <strong>repositório local</strong>.</li>
+<li><strong>Commit</strong>: snapshot imutável identificado por <strong>hash SHA-1</strong> (chave criptográfica do conteúdo + metadados).</li>
+<li><strong>Branch</strong>: ponteiro leve para um commit; <strong>HEAD</strong> aponta para o branch atual.</li>
+<li><strong>Merge</strong> × <strong>rebase</strong>: merge preserva a história (commit de merge); <strong>rebase reescreve a história</strong> (aplica commits sobre a base nova — não usar em branches compartilhados).</li>
+<li><strong>Fast-forward</strong> × <strong>3-way merge</strong> (com commit de merge quando há divergência).</li>
+</ul>
+<h2 id="2-comandos-essenciais">2. Comandos essenciais</h2>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git init</code> / <code>git clone &lt;url&gt;</code></td>
+<td>Cria / copia repositório</td>
+</tr>
+<tr>
+<td><code>git status</code> / <code>git log --oneline</code></td>
+<td>Estado / histórico</td>
+</tr>
+<tr>
+<td><code>git add &lt;arquivo&gt;</code> (staging) / <code>git commit -m "msg"</code></td>
+<td>Prepara / registra</td>
+</tr>
+<tr>
+<td><code>git push</code> / <code>git pull</code> / <code>git fetch</code></td>
+<td>Envia / baixa+integra / só baixa</td>
+</tr>
+<tr>
+<td><code>git branch &lt;nome&gt;</code> / <code>git checkout -b &lt;nome&gt;</code> / <code>git switch</code></td>
+<td>Cria/alterna branch</td>
+</tr>
+<tr>
+<td><code>git merge &lt;branch&gt;</code> / <code>git rebase &lt;branch&gt;</code></td>
+<td>Integra commits</td>
+</tr>
+<tr>
+<td><code>git revert &lt;commit&gt;</code></td>
+<td><strong>Cria commit novo desfazendo</strong> o anterior (seguro — preserva história)</td>
+</tr>
+<tr>
+<td><code>git reset --soft/--mixed/--hard</code></td>
+<td>Move o ponteiro (hard descarta mudanças — perigoso)</td>
+</tr>
+<tr>
+<td><code>git stash</code> / <code>git stash pop</code></td>
+<td>Guarda/restaura mudanças temporárias</td>
+</tr>
+<tr>
+<td><code>git cherry-pick &lt;commit&gt;</code></td>
+<td>Aplica um commit específico em outro branch</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-fluxos-de-trabalho">3. Fluxos de trabalho</h2>
+<ul>
+<li><strong>Git Flow</strong> (Vincent Driessen): <code>main</code> (produção), <code>develop</code>, <code>feature/*</code>, <code>release/*</code>, <code>hotfix/*</code> — mais formal, bom para releases versionados.</li>
+<li><strong>GitHub Flow / Trunk-based</strong>: <code>main</code> sempre deployável + branches de feature curtos + <strong>PRs (pull requests)</strong>; integração frequente.</li>
+<li><strong>Convenções</strong>: mensagens de commit claras (imperativo); tags para versões (<code>v1.2.0</code> — semver: major.minor.patch); <code>.gitignore</code> para artefatos.</li>
+</ul>
+<p><em>Pegadinhas</em>: <strong>revert</strong> desfaz <strong>preservando</strong> a história; <strong>reset</strong> reescreve/remonta. <strong>fetch</strong> só baixa; <strong>pull</strong> = fetch + merge. Rebase <strong>não</strong> deve ser usado em branches já publicados.</p>
+<hr />
+<h1 id="modulo-iii-maven">MÓDULO III — MAVEN</h1>
+<h2 id="1-conceito_1">1. Conceito</h2>
+<ul>
+<li><strong>Maven</strong>: ferramenta de <strong>automação de build e gerência de dependências</strong> para projetos <strong>Java</strong> (Apache). Filosofia: <strong>convenção sobre configuração</strong> (estrutura de pastas padrão: <code>src/main/java</code>, <code>src/test/java</code>).</li>
+<li><strong>POM (Project Object Model)</strong> — <code>pom.xml</code>: coração do projeto. Declara groupId, artifactId, version (<strong>GAV</strong> — coordenadas), dependências, plugins, propriedades, módulos (multi-módulo).</li>
+<li><strong>Repositórios</strong>: <strong>local</strong> (<code>~/.m2/repository</code>), <strong>central</strong> (Maven Central) e <strong>privado/corporativo</strong> (Nexus, Artifactory). Ordem de resolução: local → remoto configurado → central.</li>
+</ul>
+<h2 id="2-ciclo-de-vida-lifecycle-e-fases">2. Ciclo de vida (lifecycle) e fases</h2>
+<ul>
+<li><strong>Default lifecycle</strong>: <code>validate → compile → test → package → verify → install → deploy</code>.</li>
+<li><code>mvn compile</code> compila; <code>mvn test</code> roda testes (Surefire); <code>mvn package</code> gera o artefato (<strong>jar/war</strong>); <code>mvn install</code> instala no repositório local; <code>mvn deploy</code> publica no remoto.</li>
+<li><strong>Clean lifecycle</strong>: <code>mvn clean</code> remove o <code>target/</code> (build anterior).</li>
+<li><strong>Site lifecycle</strong>: gera documentação.</li>
+<li><strong>Plugins</strong>: cada fase executa <strong>goals</strong> de plugins (ex.: maven-compiler-plugin, maven-surefire-plugin).</li>
+<li><strong>Dependências</strong>: <code>scope</code> define o alcance — <code>compile</code> (padrão), <code>provided</code> (ex.: servlet-api), <code>runtime</code>, <code>test</code> (ex.: JUnit), <code>system</code>, <code>import</code>.</li>
+<li><strong>Resolução transitiva</strong>: dependências de dependências são baixadas automaticamente; <strong>conflitos</strong> resolvidos pela versão <strong>mais próxima</strong> da raiz (e dependencyManagement para controlar).</li>
+</ul>
+<h2 id="3-comandos-usuais">3. Comandos usuais</h2>
+<pre><code class="language-bash">mvn clean install        # limpa, compila, testa e instala
+mvn clean package -DskipTests   # gera artefato sem testes
+mvn dependency:tree      # árvore de dependências (conflitos)
+mvn test -Dtest=MinhaClasseTest  # roda teste específico
+</code></pre>
+<p><em>Pegadinhas</em>: Maven é <strong>declarativo</strong> (pom.xml) × Ant (<strong>imperativo</strong> — build.xml). <code>install</code> publica no repositório <strong>local</strong>; <code>deploy</code>, no <strong>remoto</strong>. Escopo <code>test</code> <strong>não</strong> vai para produção.</p>
+<hr />
+<h1 id="modulo-iv-cicd">MÓDULO IV — CI/CD</h1>
+<h2 id="1-conceitos">1. Conceitos</h2>
+<ul>
+<li><strong>CI (Integração Contínua)</strong>: prática de <strong>integrar código no repositório central várias vezes ao dia</strong>, com build e testes <strong>automáticos</strong> a cada commit. Objetivo: detectar erros cedo (feedback rápido).</li>
+<li><strong>CD</strong>: <strong>Continuous Delivery</strong> (entrega contínua — artefato <strong>sempre pronto</strong> para deploy, que é manual) × <strong>Continuous Deployment</strong> (implantação contínua — <strong>todo</strong> build aprovado vai <strong>automaticamente</strong> para produção).</li>
+<li><strong>Pipeline típico de CI/CD</strong>: checkout → build (Maven/npm) → testes unitários → análise estática → testes de integração → empacotamento → deploy em staging → testes E2E → aprovação → deploy em produção → monitoramento.</li>
+</ul>
+<h2 id="2-ferramentas">2. Ferramentas</h2>
+<ul>
+<li><strong>Jenkins</strong> (open source, master/agents, Jenkinsfile — pipelines como código), <strong>GitLab CI/CD</strong> (.gitlab-ci.yml), <strong>GitHub Actions</strong> (workflows YAML), <strong>Azure DevOps Pipelines</strong>, <strong>CircleCI</strong>, <strong>Travis CI</strong>, <strong>Argo CD</strong> (GitOps), <strong>SonarQube</strong> (qualidade de código).</li>
+</ul>
+<h2 id="3-estrategias-de-deploy">3. Estratégias de deploy</h2>
+<table>
+<thead>
+<tr>
+<th>Estratégia</th>
+<th>Descrição</th>
+<th>Risco</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Recreate</strong> (big bang)</td>
+<td>Derruba a versão antiga e sobe a nova</td>
+<td>Janela de indisponibilidade</td>
+</tr>
+<tr>
+<td><strong>Rolling update</strong></td>
+<td>Substitui instâncias aos poucos</td>
+<td>Médio (Kubernetes padrão)</td>
+</tr>
+<tr>
+<td><strong>Blue-green</strong></td>
+<td>Dois ambientes idênticos; troca o tráfego de uma vez</td>
+<td>Baixo; rollback = trocar de volta</td>
+</tr>
+<tr>
+<td><strong>Canary</strong></td>
+<td>Encaminha pequena % do tráfego à versão nova e aumenta gradualmente</td>
+<td>Baixo; detecta problemas cedo</td>
+</tr>
+<tr>
+<td><strong>Shadow (dark launch)</strong></td>
+<td>Tráfego real espelhado na nova versão sem retornar ao usuário</td>
+<td>Sem impacto; exige infra dobrada</td>
+</tr>
+<tr>
+<td><strong>Feature flags (toggles)</strong></td>
+<td>Liga/desliga funcionalidades em produção sem deploy</td>
+<td>Desacopla deploy de release</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-infraestrutura-como-codigo-e-gitops">4. Infraestrutura como código e GitOps</h2>
+<ul>
+<li><strong>IaC</strong> (Terraform, CloudFormation, Ansible): infraestrutura versionada como código.</li>
+<li><strong>GitOps</strong>: o repositório Git é a <strong>fonte única de verdade</strong>; mudanças de infra/deploy via PR; o orquestrador (ex.: Argo CD) converge o estado real para o declarado.</li>
+</ul>
+<hr />
+<h1 id="modulo-v-testes-automatizados">MÓDULO V — TESTES AUTOMATIZADOS</h1>
+<h2 id="1-piramide-de-testes-mike-cohn">1. Pirâmide de testes (Mike Cohn)</h2>
+<pre><code>       /  E2E  \          poucos, lentos, caros
+      / Integração \      meio-termo
+     / Unitários     \    muitos, rápidos, baratos
+</code></pre>
+<ul>
+<li><strong>Testes unitários</strong>: testam <strong>unidade isolada</strong> (método/classe), com <strong>mocks/stubs</strong> para dependências; rápidos; executam a cada build. Ferramentas: <strong>JUnit</strong> (Java), <strong>pytest</strong> (Python), <strong>Jest/JUnit</strong> (JS/TS).</li>
+<li><strong>Testes de integração</strong>: verificam a <strong>interação entre componentes</strong> (API + banco, serviços). Ferramentas: Testcontainers, Postman/Newman, RestAssured.</li>
+<li><strong>Testes E2E (ponta a ponta)</strong>: simulam o <strong>usuário real</strong> no sistema completo. Ferramentas: <strong>Selenium</strong>, <strong>Cypress</strong>, <strong>Playwright</strong>.</li>
+<li><strong>Testes de regressão</strong>: garantem que mudanças não quebraram o que funcionava (suíte automatizada re-executada).</li>
+<li><strong>Testes de carga/desempenho</strong>: JMeter, Gatling, k6.</li>
+</ul>
+<h2 id="2-tdd-e-bdd">2. TDD e BDD</h2>
+<ul>
+<li><strong>TDD (Test-Driven Development)</strong>: ciclo <strong>Red</strong> (escrever teste que falha) → <strong>Green</strong> (código mínimo para passar) → <strong>Refactor</strong> (melhorar mantendo testes verdes). Teste vem <strong>antes</strong> do código.</li>
+<li><strong>BDD (Behavior-Driven Development)</strong>: testes em linguagem natural (Given/When/Then — ex.: Cucumber/Gherkin), comunicação dev × negócio.</li>
+</ul>
+<h2 id="3-metricas-e-conceitos">3. Métricas e conceitos</h2>
+<ul>
+<li><strong>Cobertura de código</strong> (% de linhas/ramos executados pelos testes) — alta cobertura <strong>não</strong> garante qualidade (falta a <strong>asserção</strong> correta).</li>
+<li><strong>Mock × stub × fake</strong>: mock = expectativas verificáveis; stub = respostas pré-programadas; fake = implementação simplificada real (ex.: in-memory DB).</li>
+<li><strong>Testes determinísticos</strong>: sempre o mesmo resultado; flaky tests (intermitentes) corroem a confiança no pipeline.</li>
+</ul>
+<hr />
+<h1 id="modulo-vi-devsecops">MÓDULO VI — DEVSECOPS</h1>
+<h2 id="1-conceito_2">1. Conceito</h2>
+<ul>
+<li><strong>DevSecOps</strong>: integra a <strong>segurança</strong> ao ciclo DevOps desde o início (<strong>shift-left security</strong> — "empurrar a segurança para a esquerda"), em vez de inspecionar apenas no fim.</li>
+<li><strong>Princípios</strong>: segurança como código; automação de controles; monitoramento contínuo em produção; <strong>least privilege</strong>; segurança compartilhada por todos os times.</li>
+</ul>
+<h2 id="2-praticas-e-ferramentas">2. Práticas e ferramentas</h2>
+<table>
+<thead>
+<tr>
+<th>Prática</th>
+<th>O que faz</th>
+<th>Exemplos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SAST</strong> (análise estática)</td>
+<td>Examina o <strong>código-fonte</strong> sem executar (bugs, vulnerabilidades)</td>
+<td>SonarQube, Checkmarx, Semgrep</td>
+</tr>
+<tr>
+<td><strong>DAST</strong> (análise dinâmica)</td>
+<td>Testa a aplicação <strong>em execução</strong> (ataques simulados, sem ver o código)</td>
+<td>OWASP ZAP, Burp Suite</td>
+</tr>
+<tr>
+<td><strong>SCA</strong> (análise de componentes)</td>
+<td>Varre <strong>dependências de terceiros</strong> por vulnerabilidades conhecidas (CVE)</td>
+<td>Dependabot, Snyk, OWASP Dependency-Check</td>
+</tr>
+<tr>
+<td><strong>Secrets scanning</strong></td>
+<td>Impede credenciais/chaves commitadas no repositório</td>
+<td>git-secrets, truffleHog</td>
+</tr>
+<tr>
+<td><strong>IaC scanning</strong></td>
+<td>Analisa templates de infraestrutura</td>
+<td>tfsec, Checkov</td>
+</tr>
+<tr>
+<td><strong>Container scanning</strong></td>
+<td>Varre imagens de contêiner</td>
+<td>Trivy, Clair</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-outros-pontos">3. Outros pontos</h2>
+<ul>
+<li><strong>Gerenciamento de vulnerabilidades</strong>: triagem por severidade (CVSS), SLA de correção, remediação contínua.</li>
+<li><strong>Supply chain de software</strong>: SBOM (lista de materiais do software), verificação de artefatos assinados (ex.: Sigstore), princípios do <strong>SLSA</strong>.</li>
+<li><strong>OWASP Top 10</strong>: ranking das vulnerabilidades web mais críticas (injeção, broken access control, XSS etc.) — referência clássica de banca.</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>Continuous Delivery ≠ Continuous Deployment</strong>: delivery = pronto para deploy (manual); deployment = vai automático para produção.</li>
+<li><strong>Git revert</strong> desfaz preservando a história; <strong>reset</strong> reescreve. <strong>fetch</strong> só baixa; <strong>pull</strong> = fetch + merge.</li>
+<li><strong>Rebase reescreve a história</strong> — evitar em branches compartilhados.</li>
+<li>Maven: <strong>install</strong> → repositório <strong>local</strong>; <strong>deploy</strong> → <strong>remoto</strong>. Escopo <strong>test</strong> não vai para produção.</li>
+<li>Maven é <strong>declarativo</strong>; Ant é <strong>imperativo</strong>.</li>
+<li><strong>Cobertura alta ≠ qualidade</strong> — o teste precisa asserir o comportamento certo.</li>
+<li><strong>TDD</strong>: teste <strong>antes</strong> do código (Red → Green → Refactor).</li>
+<li><strong>Blue-green</strong> troca o tráfego de uma vez; <strong>canary</strong> libera gradualmente.</li>
+<li><strong>SAST</strong> = código parado; <strong>DAST</strong> = aplicação rodando; <strong>SCA</strong> = dependências.</li>
+<li>DevOps <strong>Três Caminhos</strong>: fluxo, feedback, aprendizado. <strong>CALMS</strong>: cultura, automação, lean, mensuração, sharing.</li>
+<li><strong>Git Flow</strong> tem <code>develop</code> + <code>release</code> + <code>hotfix</code>; <strong>GitHub Flow</strong> tem só <code>main</code> + features.</li>
+<li><strong>Feature flag</strong> desacopla deploy de release.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) No Git, o comando <code>git revert</code> apaga o commit do histórico do repositório, reescrevendo a linha do tempo.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <code>git revert</code> <strong>cria um novo commit</strong> que desfaz as mudanças do anterior — <strong>preserva</strong> a história. Quem reescreve história é <code>git reset</code> / <code>rebase</code>.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) No Maven, o comando que compila, executa os testes, empacota o projeto e o instala no repositório local do desenvolvedor é:
+a) mvn deploy.
+b) mvn verify.
+c) mvn clean install.
+d) mvn package.
+e) mvn compile.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> O ciclo default executa <code>validate → compile → test → package → verify → install</code> — <code>install</code> deposita o artefato no repositório <strong>local</strong> (<code>~/.m2</code>). <code>deploy</code> publica no <strong>remoto</strong>.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) Continuous Deployment consiste em manter o código sempre em condições de ser implantado, cabendo à equipe a decisão manual do momento do deploy em produção.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Essa é a definição de <strong>Continuous Delivery</strong> (deploy manual). No <strong>Continuous Deployment</strong>, todo build aprovado pelos testes vai <strong>automaticamente</strong> para produção.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) A prática de TDD (Test-Driven Development) é caracterizada pelo ciclo:
+a) Escrever o código, depois o teste, e por fim a documentação.
+b) Red, Green, Refactor.
+c) Planejar, Projetar, Codificar, Testar, Manter.
+d) Testar em produção com usuários reais.
+e) Escrever todos os testes de integração no fim do sprint.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> TDD = <strong>Red</strong> (teste que falha) → <strong>Green</strong> (código mínimo) → <strong>Refactor</strong>. O teste é escrito <strong>antes</strong> do código.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) Um teste automatizado que verifica a integração entre a aplicação e o banco de dados, sem isolar dependências, é classificado como teste unitário.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Teste <strong>unitário</strong> isola a unidade (com mocks). A verificação da interação entre componentes é teste de <strong>integração</strong>.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) Na pirâmide de testes de Mike Cohn, a base é composta por:
+a) testes E2E, em maior quantidade.
+b) testes de aceitação.
+c) testes unitários, rápidos e em grande quantidade.
+d) testes manuais exploratórios.
+e) testes de performance.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> Base = <strong>unitários</strong> (muitos, rápidos, baratos); meio = integração; topo = <strong>E2E</strong> (poucos, lentos, caros).</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) No Git Flow, os branches <code>release/*</code> destinam-se exclusivamente à correção de falhas críticas detectadas em produção.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Correções em produção são dos branches <strong><code>hotfix/*</code></strong>. Os <code>release/*</code> preparam uma <strong>versão para release</strong> (acertos finais, versão, changelog).</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) A análise de segurança de aplicações que examina o código-fonte estaticamente, sem executar o programa, é denominada:
+a) DAST.
+b) SCA.
+c) SAST.
+d) Pentest.
+e) Fuzzing.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>SAST</strong> = análise <strong>estática</strong> (código parado). <strong>DAST</strong> = dinâmica (app rodando). <strong>SCA</strong> = componentes/dependências.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) A estratégia de deploy canary consiste em substituir integralmente o ambiente de produção pela nova versão, com retorno imediato à versão anterior em caso de falha.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Essa é a <strong>blue-green</strong> (dois ambientes, troca total do tráfego). <strong>Canary</strong> libera a versão nova para <strong>pequena fatia do tráfego</strong> e aumenta gradativamente.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) No Maven, a dependência declarada com o escopo <code>test</code>:
+a) é incluída no artefato final para uso em produção.
+b) está disponível apenas na fase de compilação.
+c) é usada apenas pelos testes e não acompanha o artefato final.
+d) substitui as dependências <code>compile</code> em tempo de execução.
+e) é ignorada pelo ciclo de build.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> Escopo <code>test</code> (ex.: JUnit) vale só para a compilação/execução de testes — <strong>não</strong> vai para o jar/war de produção.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) Os Três Caminhos do DevOps são: fluxo, feedback e aprendizado/ experimentação.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Gene Kim: <strong>Fluxo</strong> (dev→ops), <strong>Feedback</strong> (ops→dev, cedo) e <strong>Aprendizado e experimentação</strong> (cultura de melhoria contínua).</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre Git, é INCORRETO afirmar:
+a) <code>git fetch</code> atualiza as referências remotas locais sem integrar ao branch de trabalho.
+b) <code>git pull</code> equivale a <code>git fetch</code> seguido de <code>merge</code>.
+c) <code>git rebase</code> reaplica commits sobre outra base, reescrevendo o histórico.
+d) <code>git merge</code> sempre reescreve o histórico do branch de destino.
+e) Branches no Git são ponteiros leves para commits.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> <code>git merge</code> <strong>preserva</strong> a história (pode criar um commit de merge); quem reescreve é o <code>rebase</code>.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) O GitOps tem como princípio central que o estado desejado da infraestrutura e dos deploys é declarado em um repositório Git, que serve como fonte única de verdade, com convergência automática do ambiente real.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> GitOps: tudo declarado no Git (PRs como mudança), e ferramentas (ex.: Argo CD) convergem o ambiente para o estado declarado.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) Entre as métricas do relatório DORA de desempenho de equipes de software, NÃO se inclui:
+a) frequência de deploy.
+b) lead time para mudanças.
+c) tempo médio de recuperação (MTTR).
+d) taxa de falha de mudança.
+e) número de linhas de código produzidas por desenvolvedor.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: e.</strong> As 4 métricas DORA são as letras a-d. "Linhas de código por dev" <strong>não</strong> é métrica de desempenho (e é um antipadrão clássico).</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) A ferramenta Maven executa seus builds com base em um arquivo de configuração imperativo chamado build.xml.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O Maven é <strong>declarativo</strong>: seu descritor é o <strong><code>pom.xml</code></strong> (Project Object Model). O <code>build.xml</code> é do <strong>Ant</strong>, que é imperativo.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique a diferença entre Continuous Delivery e Continuous Deployment e cite duas estratégias de deploy de baixo risco.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> No <strong>Continuous Delivery</strong>, o pipeline mantém o software sempre pronto para produção, mas a implantação depende de <strong>aprovação manual</strong>; no <strong>Continuous Deployment</strong>, todo artefato que passa nos testes é implantado <strong>automaticamente</strong> em produção. Estratégias de baixo risco: <strong>blue-green</strong> (dois ambientes idênticos, troca do tráfego e retorno imediato) e <strong>canary</strong> (liberação gradual para uma fração dos usuários), além de <strong>feature flags</strong> e <strong>rolling updates</strong>.</p></details>
+<p><strong>D2.</strong> Diferencie SAST, DAST e SCA no contexto de DevSecOps.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> <strong>SAST</strong> (Static Application Security Testing) analisa o <strong>código-fonte estaticamente</strong>, sem executar o programa, identificando vulnerabilidades na implementação. <strong>DAST</strong> (Dynamic Application Security Testing) testa a aplicação <strong>em execução</strong>, simulando ataques, sem acesso ao código. <strong>SCA</strong> (Software Composition Analysis) varre as <strong>dependências de terceiros</strong> do projeto procurando vulnerabilidades conhecidas (CVEs). Todos integram o pipeline desde cedo (shift-left security).</p></details>
+<hr />
+<p><em>Conteúdo técnico complementar (o material-base local não cobre DevOps de forma sistemática). Referências: Phoenix Project/DevOps Handbook (Três Caminhos), Scrum Guide, Maven Documentation, Git Documentation, DORA State of DevOps, OWASP.</em></p>
+<script>
+(function () {
+  const key = 'apostila-t7-devops-e-devsecops-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T17 — Normativos PDPJ-Br (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>T17 — Normativos PDPJ-Br</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-o-que-e-a-pdpj-br">1. O que é a PDPJ-Br</a></li>
+<li class="toc-h2"><a href="#2-estrutura-normativa-mapa-do-edital">2. Estrutura normativa (mapa do edital)</a></li>
+<li class="toc-h2"><a href="#1-resolucao-cnj-no-3352020-processo-judicial-eletronico-na-justica-do-trabalho">1. Resolução CNJ nº 335/2020 — processo judicial eletrônico na Justiça do Trabalho</a></li>
+<li class="toc-h2"><a href="#2-resolucao-cnj-no-5222023-regulamentacao-da-pdpj-br">2. Resolução CNJ nº 522/2023 — regulamentação da PDPJ-Br</a></li>
+<li class="toc-h2"><a href="#3-portarias-cnj-no-2522020-e-no-2532020-fluxos-e-padroes-de-servico">3. Portarias CNJ nº 252/2020 e nº 253/2020 — fluxos e padrões de serviço</a></li>
+<li class="toc-h2"><a href="#4-portaria-cnj-no-1312021-forum-de-arquitetura">4. Portaria CNJ nº 131/2021 — Fórum de Arquitetura</a></li>
+<li class="toc-h2"><a href="#5-resolucao-cnj-no-3962021-interoperabilidade-e-padroes">5. Resolução CNJ nº 396/2021 — interoperabilidade e padrões</a></li>
+<li class="toc-h2"><a href="#6-portaria-cnj-no-1622021-regras-operacionais">6. Portaria CNJ nº 162/2021 — regras operacionais</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-17-normativos-da-plataforma-digital-do-poder-judiciario-pdpj-br">APOSTILA — TÓPICO 17: NORMATIVOS DA PLATAFORMA DIGITAL DO PODER JUDICIÁRIO – PDPJ-Br</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Normativos da Plataforma Digital do Poder Judiciário – PDPJ-Br: Resolução CNJ nº 522/2023; Resolução CNJ nº 335/2020; Portaria CNJ nº 252/2020; Portaria CNJ nº 253/2020; Portaria CNJ nº 131/2021; Resolução CNJ nº 396/2021; Portaria CNJ nº 162/2021.</p>
+<p><strong>Base de conhecimento:</strong> <strong>complemento</strong> — os normativos PDPJ-Br não constam das apostilas locais (base de 2020, anterior à PDPJ). Conteúdo elaborado a partir do conhecimento normativo dos atos citados no edital. <strong>Atenção:</strong> revise os textos oficiais no portal do CNJ (https://www.cnj.jus.br/programas-e-acoes/pdpj/).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-panorama-da-pdpj-br">MÓDULO I — PANORAMA DA PDPJ-Br</h1>
+<h2 id="1-o-que-e-a-pdpj-br">1. O que é a PDPJ-Br</h2>
+<ul>
+<li><strong>Plataforma Digital do Poder Judiciário Brasileiro (PDPJ-Br)</strong>: ecossistema de soluções digitais compartilhadas entre todos os órgãos do Poder Judiciário, coordenado pelo <strong>CNJ</strong> com apoio do <strong>CSJT</strong> e das Escolas Judiciais. Objetivo: <strong>interoperabilidade</strong>, acesso à justiça digital, padronização de fluxos e dados e migração do processo judicial do formato físico para o digital.</li>
+<li><strong>Objetivos estratégicos</strong>: fluxo processual digital único; compartilhamento de dados e serviços entre tribunais; redução de custos; suporte a decisões orientadas a dados; transparência e acessibilidade.</li>
+<li><strong>Ecossistema de soluções</strong> (Domicílio Eletrônico, Conta Única, Integrações com Legislação, Lexml, Rede Nacional de Dados, painéis de dados, Fóruns de Arquitetura, Padrões de Dados etc.).</li>
+</ul>
+<h2 id="2-estrutura-normativa-mapa-do-edital">2. Estrutura normativa (mapa do edital)</h2>
+<table>
+<thead>
+<tr>
+<th>Normativo</th>
+<th>Objeto resumido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Resolução CNJ nº 335/2020</strong></td>
+<td>Institui o <strong>processo judicial eletrônico</strong> no âmbito da Justiça do Trabalho (e dá diretrizes gerais de digitalização)</td>
+</tr>
+<tr>
+<td><strong>Resolução CNJ nº 522/2023</strong></td>
+<td>Regulamenta a <strong>PDPJ-Br</strong> (governança, arquitetura, interoperabilidade, padrões)</td>
+</tr>
+<tr>
+<td><strong>Portaria CNJ nº 252/2020</strong></td>
+<td>Fluxo de serviços tecnológicos da PDPJ; contratações/uso das soluções do ecossistema</td>
+</tr>
+<tr>
+<td><strong>Portaria CNJ nº 253/2020</strong></td>
+<td>Padrões técnicos e fluxos de integração/integração com sistemas locais</td>
+</tr>
+<tr>
+<td><strong>Portaria CNJ nº 131/2021</strong></td>
+<td>Fórum de Arquitetura / arranjo de governança técnica da PDPJ</td>
+</tr>
+<tr>
+<td><strong>Resolução CNJ nº 396/2021</strong></td>
+<td>Padrões de interoperabilidade e integração de sistemas / credenciamento de soluções</td>
+</tr>
+<tr>
+<td><strong>Portaria CNJ nº 162/2021</strong></td>
+<td>Regras operacionais de soluções/fluxos (ex.: integrações, dados compartilhados)</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Complemento: conteúdo próprio; confirme artigos e dispositivos nos textos oficiais do CNJ.)</em></p>
+<hr />
+<h1 id="modulo-ii-principais-normativos">MÓDULO II — PRINCIPAIS NORMATIVOS</h1>
+<h2 id="1-resolucao-cnj-no-3352020-processo-judicial-eletronico-na-justica-do-trabalho">1. Resolução CNJ nº 335/2020 — processo judicial eletrônico na Justiça do Trabalho</h2>
+<ul>
+<li>Institui o <strong>processo judicial eletrônico</strong> no âmbito da <strong>Justiça do Trabalho</strong>, estabelecendo diretrizes para digitalização de processos e documentos, autuação eletrônica, assinatura eletrônica e preservação do original digital.</li>
+<li>Princípios: <strong>eficiência, interoperabilidade, padronização, acesso à justiça, segurança e autenticidade</strong> dos atos processuais.</li>
+<li>Relação com a PDPJ: solução base (ex.: PJe e sistemas homologados) integrada ao ecossistema digital compartilhado.</li>
+</ul>
+<h2 id="2-resolucao-cnj-no-5222023-regulamentacao-da-pdpj-br">2. Resolução CNJ nº 522/2023 — regulamentação da PDPJ-Br</h2>
+<ul>
+<li><strong>Regulamenta a Plataforma Digital do PDPJ</strong>, fixando a <strong>arquitetura de governança</strong>, os <strong>padrões obrigatórios de interoperabilidade</strong>, a integração dos sistemas dos órgãos do Judiciário e as regras de adesão das soluções.</li>
+<li>Define atribuições de: <strong>Conselho de Governança</strong>, comitês técnicos, <strong>Fórum de Arquitetura</strong> (revisões de arquitetura de soluções) e centros de excelência.</li>
+<li>Estabelece a <strong>Rede Nacional de Dados</strong>, o <strong>Domicílio Eletrônico</strong>, a <strong>Conta Única</strong> (identidade digital do usuário) e o compartilhamento de APIs/serviços.</li>
+<li>Regras de segurança, privacidade (<strong>LGPD</strong>), retenção de logs e auditoria das integrações.</li>
+<li>Obrigações dos tribunais: mapear sistemas, alinhar à arquitetura de referência, aderir aos padrões de dados (JSON/REST etc. — ver apostila T8) e às linhas do fluxo processual digital.</li>
+</ul>
+<h2 id="3-portarias-cnj-no-2522020-e-no-2532020-fluxos-e-padroes-de-servico">3. Portarias CNJ nº 252/2020 e nº 253/2020 — fluxos e padrões de serviço</h2>
+<ul>
+<li><strong>252/2020</strong>: disciplina o <strong>fluxo de serviços tecnológicos</strong> do ecossistema PDPJ: solicitação, integração e operação de soluções; responsabilidades do tribunal solicitante e das equipes de TI; conformidade com a arquitetura.</li>
+<li><strong>253/2020</strong>: <strong>padrões técnicos</strong> de integração (contratos de API, autenticação/autorização, mensagem/evento, versionamento), qualidade de software, testes e homologação; interoperação com sistemas locais via serviços compartilhados.</li>
+</ul>
+<h2 id="4-portaria-cnj-no-1312021-forum-de-arquitetura">4. Portaria CNJ nº 131/2021 — Fórum de Arquitetura</h2>
+<ul>
+<li>Cria/organiza o <strong>Fórum de Arquitetura da PDPJ</strong>: colegiado técnico responsável por analisar e homologar a arquitetura de soluções propostas por órgãos do Judiciário, garantir alinhamento à arquitetura de referência, avaliar interoperabilidade, segurança e escalabilidade.</li>
+<li>Composição com representantes de tribunais (incluindo <strong>TRTs/CSJT</strong>), membros do CNJ e especialistas técnicos.</li>
+<li>Fluxo: proposta de solução → análise do Fórum → homologação ou ajustes → integração ao ecossistema.</li>
+</ul>
+<h2 id="5-resolucao-cnj-no-3962021-interoperabilidade-e-padroes">5. Resolução CNJ nº 396/2021 — interoperabilidade e padrões</h2>
+<ul>
+<li>Estabelece <strong>padrões e diretrizes de interoperabilidade</strong> de sistemas e dados do Poder Judiciário: catálogo de serviços, APIs, formatos de dados (JSON/XML), segurança das integrações (OAuth2/OpenID — ver T8/T16), versionamento, gestão de contratos de API e monitoramento.</li>
+<li>Regras de <strong>credenciamento de soluções</strong> e de compartilhamento de dados entre órgãos, com conformidade à LGPD.</li>
+<li>Alinha-se ao Decreto nº 10.278/2020 (padrões de interoperabilidade do governo federal, referência técnica recorrente).</li>
+</ul>
+<h2 id="6-portaria-cnj-no-1622021-regras-operacionais">6. Portaria CNJ nº 162/2021 — regras operacionais</h2>
+<ul>
+<li>Normas operacionais para uso das soluções do ecossistema (ex.: fluxos de integração, compartilhamento de dados e serviços, credenciamento de usuários), incluindo prazos, responsabilidades e indicadores de qualidade dos serviços compartilhados.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-tema-transversal-governanca-seguranca-e-padroes">MÓDULO III — TEMA TRANSVERSAL: GOVERNANÇA, SEGURANÇA E PADRÕES</h1>
+<ul>
+<li><strong>Governança</strong>: Comitê de Governança, Comitê Gestor de Projetos e Fóruns temáticos (Arquitetura, Dados, Acesso à Justiça); ritos de aprovação e revisão de soluções.</li>
+<li><strong>Segurança e LGPD</strong>: autenticação (Conta Única, SSO — ver T8: Keycloak/OAuth2), controle de acesso, logs, criptografia, avaliação de impacto, privacy by design.</li>
+<li><strong>Padrões técnicos recorrentes nos normativos</strong>: API <strong>RESTful</strong>, <strong>JSON</strong>, microsserviços, <strong>Spring Boot/Spring Cloud</strong>, documentação <strong>Swagger/OpenAPI</strong>, Service Discovery (Eureka), API Gateway (Zuul/Gateway), integração assíncrona (<strong>RabbitMQ</strong>, webhooks) — ver apostila <strong>T8 (PDPJ-Br / arquitetura de desenvolvimento)</strong> para a aplicação técnica; este tópico cobre os <strong>normativos</strong>.</li>
+<li><strong>Arquitetura de referência</strong>: integração por serviços, interoperabilidade por API, reuso de componentes, escala horizontal, observabilidade (logs/métricas — ver T14).</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>PDPJ-Br</strong> = Plataforma Digital do Poder Judiciário <strong>Brasileiro</strong> (ecossistema do <strong>CNJ</strong>, não de um tribunal).</li>
+<li><strong>Res. 522/2023 = regulamenta a PDPJ</strong> (governança, arquitetura, interoperabilidade).</li>
+<li><strong>Res. 335/2020 = processo judicial eletrônico na Justiça do Trabalho</strong> (não é a resolução da PDPJ).</li>
+<li><strong>Portarias 252 e 253/2020</strong> = fluxos de serviços + <strong>padrões técnicos de integração</strong>.</li>
+<li><strong>Portaria 131/2021 = Fórum de Arquitetura</strong> (homologação de soluções).</li>
+<li><strong>Res. 396/2021 = interoperabilidade/credenciamento</strong> de soluções (padrões de API/dados).</li>
+<li><strong>Portaria 162/2021</strong> = regras operacionais de integração/compartilhamento.</li>
+<li><strong>Conta Única</strong> = identidade digital do usuário; <strong>Domicílio Eletrônico</strong> = canal de comunicação oficial.</li>
+<li><strong>LGPD e segurança</strong> são exigência transversal dos normativos.</li>
+<li><strong>Fórum de Arquitetura</strong> homologa a arquitetura das soluções antes da integração.</li>
+<li><strong>Padrões técnicos</strong>: API REST/JSON, microsserviços, Swagger, Service Discovery, API Gateway (ver T8).</li>
+<li><strong>Rede Nacional de Dados</strong> = compartilhamento de dados entre órgãos do Judiciário.</li>
+<li><strong>Res. 522/2023 não substitui</strong> as demais — elas coexistem (335 processo, 252/253 fluxos, 131 Fórum, 396 interoperabilidade, 162 operação).</li>
+<li>O edital exige <strong>atenção às versões e datas</strong> (ex.: Regimento Interno TRT8 atualizado em 2026 — ver Legislação).</li>
+<li><strong>Conteúdo complementar</strong>: normativos ausentes da base local de 2020 — consulte os textos oficiais do CNJ.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) A Resolução CNJ nº 335/2020 institui o processo judicial eletrônico no âmbito da Justiça do Trabalho, estabelecendo diretrizes de digitalização e autuação eletrônica.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Res. 335/2020</strong> = processo judicial eletrônico na <strong>Justiça do Trabalho</strong> (diretrizes de digitalização, assinatura eletrônica, preservação do original).</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) O normativo que regulamenta a Plataforma Digital do Poder Judiciário (PDPJ-Br), fixando governança, arquitetura e padrões de interoperabilidade, é:
+a) Resolução CNJ nº 335/2020.
+b) Resolução CNJ nº 522/2023.
+c) Portaria CNJ nº 252/2020.
+d) Portaria CNJ nº 131/2021.
+e) Portaria CNJ nº 162/2021.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Res. 522/2023</strong> regulamenta a <strong>PDPJ-Br</strong>. A 335/2020 trata do processo eletrônico na Justiça do Trabalho; as portarias tratam de fluxos/padrões.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) A Portaria CNJ nº 131/2021 trata do Fórum de Arquitetura da PDPJ, colegiado que analisa e homologa a arquitetura das soluções propostas por órgãos do Judiciário.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Portaria 131/2021</strong> = <strong>Fórum de Arquitetura</strong> (análise/homologação de arquitetura de soluções, alinhamento à arquitetura de referência).</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) As Portarias CNJ nº 252/2020 e nº 253/2020 relacionam-se, respectivamente, a:
+a) processo eletrônico e credenciamento de soluções.
+b) fluxo de serviços tecnológicos e padrões técnicos de integração.
+c) governança da PDPJ e processo eletrônico.
+d) LGPD e segurança da informação.
+e) Fórum de Arquitetura e rede de dados.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>252/2020</strong> = fluxo de serviços tecnológicos; <strong>253/2020</strong> = <strong>padrões técnicos</strong> de integração (contratos de API, homologação).</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) A Resolução CNJ nº 396/2021 estabelece padrões e diretrizes de interoperabilidade de sistemas e dados do Poder Judiciário, incluindo credenciamento de soluções.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Res. 396/2021</strong> = interoperabilidade/padrões de dados e APIs, credenciamento de soluções, conformidade com LGPD.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) A Portaria CNJ nº 162/2021 disciplina:
+a) a criação da PDPJ.
+b) o processo judicial eletrônico trabalhista.
+c) regras operacionais de integração e compartilhamento de dados e serviços do ecossistema PDPJ.
+d) o Estatuto de Roma.
+e) o Código de Ética do TRT8.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> <strong>Portaria 162/2021</strong> = regras <strong>operacionais</strong> de uso/integração das soluções do ecossistema.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) A PDPJ-Br é uma plataforma criada e operada exclusivamente pelo TRT8, sem participação do CNJ.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A PDPJ-Br é do <strong>Poder Judiciário nacional</strong>, coordenada pelo <strong>CNJ</strong> (com CSJT e tribunais) — ecossistema <strong>compartilhado</strong>.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) O Fórum de Arquitetura da PDPJ tem por atribuição:
+a) julgar processos administrativos.
+b) analisar e homologar a arquitetura de soluções, garantindo interoperabilidade e alinhamento à arquitetura de referência.
+c) substituir o Poder Judiciário no julgamento de recursos.
+d) gerir o orçamento do CNJ.
+e) definir a política de recursos humanos dos tribunais.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Fórum = instância <strong>técnica</strong> de análise/homologação de <strong>arquitetura</strong> (segurança, escalabilidade, interoperabilidade).</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) A Conta Única e o Domicílio Eletrônico são componentes do ecossistema PDPJ, destinados, respectivamente, à identidade digital do usuário e ao canal de comunicação oficial eletrônica.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Conta Única</strong> = identidade digital; <strong>Domicílio Eletrônico</strong> = canal oficial de comunicação/intimações.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) A Resolução CNJ nº 522/2023 tem aplicação restrita à Justiça do Trabalho, não alcançando demais ramos do Poder Judiciário.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A PDPJ-Br é <strong>nacional</strong> (todos os ramos/tribunais). A <strong>335/2020</strong> é que é específica da Justiça do Trabalho.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) Os normativos da PDPJ dispensam a observância da LGPD no compartilhamento de dados entre órgãos do Judiciário.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>LGPD</strong> é exigência <strong>transversal</strong>: segurança, privacidade, avaliação de impacto, logs — todos os normativos a exigem.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre os normativos da PDPJ-Br, é correto afirmar:
+a) a Resolução CNJ nº 522/2023 regulamenta a PDPJ, fixando governança, arquitetura de referência e padrões de interoperabilidade.
+b) a Portaria CNJ nº 252/2020 cria o Fórum de Arquitetura.
+c) a Resolução CNJ nº 335/2020 trata exclusivamente de credenciamento de soluções.
+d) a Portaria CNJ nº 131/2021 institui o processo eletrônico.
+e) a Portaria CNJ nº 162/2021 regulamenta o Estatuto de Roma.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a.</strong> <strong>522/2023</strong> = regulamentação da PDPJ. Fórum = <strong>131/2021</strong>; processo eletrônico trabalhista = <strong>335/2020</strong>; fluxos/padrões = <strong>252/253</strong>.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) A interoperabilidade na PDPJ é apoiada por padrões técnicos como APIs RESTful, JSON e contratos de serviço, conforme os normativos e a arquitetura de referência.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Padrões: <strong>API REST/JSON</strong>, microsserviços, Swagger/OpenAPI, versionamento, segurança (OAuth2/SSO) — ver T8 e Res. 396/2021.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) A Rede Nacional de Dados da PDPJ destina-se a:
+a) armazenar processos físicos.
+b) compartilhar dados e informações entre os órgãos do Poder Judiciário, com padronização e segurança.
+c) substituir o sistema de correios.
+d) gerir redes de telefonia.
+e) controlar o acesso à internet pública.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Rede Nacional de Dados</strong> = compartilhamento <strong>padronizado e seguro</strong> de dados entre órgãos do Judiciário.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) A Portaria CNJ nº 162/2021 tem por objeto a criação do Fórum de Arquitetura, enquanto a Portaria CNJ nº 131/2021 trata das regras operacionais de integração.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Está invertido: <strong>131/2021 = Fórum de Arquitetura</strong>; <strong>162/2021 = regras operacionais</strong> de integração/compartilhamento.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique a finalidade da PDPJ-Br e o papel dos normativos Resolução CNJ nº 522/2023, Resolução CNJ nº 335/2020 e Portaria CNJ nº 131/2021.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>PDPJ-Br</strong> é a Plataforma Digital do Poder Judiciário Brasileiro, ecossistema nacional de soluções digitais coordenado pelo CNJ, destinado à interoperabilidade, à migração do processo judicial para o digital e ao compartilhamento de dados e serviços entre tribunais. A <strong>Resolução CNJ nº 522/2023</strong> regulamenta a plataforma, fixando governança, arquitetura de referência, padrões de interoperabilidade, segurança e conformidade com a LGPD. A <strong>Resolução CNJ nº 335/2020</strong> institui o processo judicial eletrônico no âmbito da Justiça do Trabalho, com diretrizes de digitalização, autuação eletrônica e assinatura eletrônica. A <strong>Portaria CNJ nº 131/2021</strong> organiza o Fórum de Arquitetura, colegiado técnico que analisa e homologa a arquitetura das soluções propostas pelos órgãos do Judiciário, assegurando interoperabilidade, segurança e escalabilidade.</p></details>
+<p><strong>D2.</strong> Diferencie os objetos das Portarias CNJ nº 252/2020, nº 253/2020 e nº 162/2021 e da Resolução CNJ nº 396/2021.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> A <strong>Portaria 252/2020</strong> disciplina o <strong>fluxo de serviços tecnológicos</strong> da PDPJ (solicitação, integração e operação de soluções; responsabilidades das equipes de TI). A <strong>Portaria 253/2020</strong> fixa os <strong>padrões técnicos de integração</strong> (contratos de API, autenticação, versionamento, testes e homologação). A <strong>Resolução 396/2021</strong> trata de <strong>interoperabilidade</strong> e <strong>credenciamento de soluções</strong>, com padrões de dados e APIs e conformidade com a LGPD. A <strong>Portaria 162/2021</strong> estabelece <strong>regras operacionais</strong> de uso das soluções e compartilhamento de dados/serviços entre órgãos, com prazos, responsabilidades e indicadores de qualidade. Em conjunto, esses atos estruturam a integração dos sistemas locais ao ecossistema PDPJ.</p></details>
+<hr />
+<p><em>Conteúdo <strong>complementar</strong>: os normativos PDPJ-Br (Res. CNJ 522/2023, 335/2020; Portarias CNJ 252/2020, 253/2020, 131/2021; Res. CNJ 396/2021; Portaria CNJ 162/2021) não constam das apostilas locais (base de 2020). Elaborado a partir do conhecimento dos atos citados no edital. <strong>Recomenda-se a leitura dos textos oficiais no portal do CNJ</strong> para conferência de dispositivos. Aplicação técnica dos padrões (Spring, microsserviços, API REST/JSON, Keycloak/OAuth2, RabbitMQ, Docker/Kubernetes): ver apostila T8.</em></p>
+<script>
+(function () {
+  const key = 'apostila-t17-normativos-pdpj-br-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

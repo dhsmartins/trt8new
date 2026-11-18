@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noções de Legislação (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>Noções de Legislação</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-resolucao-cnj-no-4002021-sustentabilidade">1. Resolução CNJ nº 400/2021 — Sustentabilidade</a></li>
+<li class="toc-h2"><a href="#2-codigo-de-etica-do-trt8-resolucao-trt8-no-882012">2. Código de Ética do TRT8 (Resolução TRT8 nº 88/2012)</a></li>
+<li class="toc-h2"><a href="#3-regimento-interno-do-trt8-atualizado-em-22-de-junho-de-2026">3. Regimento Interno do TRT8 (atualizado em 22 de junho de 2026)</a></li>
+<li class="toc-h2"><a href="#4-politica-de-prevencao-e-enfrentamento-da-violencia-res-trt8-0672021">4. Política de Prevenção e Enfrentamento da Violência (Res. TRT8 067/2021)</a></li>
+<li class="toc-h2"><a href="#5-perspectiva-de-genero-res-cnj-no-4922023">5. Perspectiva de Gênero (Res. CNJ nº 492/2023)</a></li>
+<li class="toc-h2"><a href="#6-programa-de-equidade-de-raca-genero-e-diversidade-res-csjt-no-3682023">6. Programa de Equidade de Raça, Gênero e Diversidade (Res. CSJT nº 368/2023)</a></li>
+<li class="toc-h2"><a href="#1-estatuto-de-roma-1998-e-decreto-no-43882002">1. Estatuto de Roma (1998) e Decreto nº 4.388/2002</a></li>
+<li class="toc-h2"><a href="#2-direito-humanitario-e-a-cf88">2. Direito Humanitário e a CF/88</a></li>
+<li class="toc-h2"><a href="#1-carta-da-onu-1945">1. Carta da ONU (1945)</a></li>
+<li class="toc-h2"><a href="#2-corte-internacional-de-justica-cij">2. Corte Internacional de Justiça (CIJ)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-nocoes-de-legislacao">APOSTILA — NOÇÕES DE LEGISLAÇÃO</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Sustentabilidade: Resolução CNJ nº 400/2021. Código de Ética do TRT8 (Resolução TRT8 nº 88/2012). Regimento Interno do Egrégio TRT8 (atualizado em 22 de junho de 2026). Política de Prevenção e Enfrentamento da Violência, do Assédio e de Todas as Formas de Discriminação no TRT8 (Resolução TRT8 nº 067/2021, alinhada à Resolução CNJ nº 351/2020 e Resolução CSJT nº 360/2023). Perspectiva de Gênero no Poder Judiciário e Comitê de Incentivo à Participação Institucional Feminina (Resolução CNJ nº 492/2023). Programa de Equidade de Raça, Gênero e Diversidade na Justiça do Trabalho (Resolução CSJT nº 368/2023). Tribunal Penal Internacional: Estatuto de Roma e Decreto nº 4.388/2002. Carta das Nações Unidas e Estatuto da Corte Internacional de Justiça (Decreto nº 19.841/1945).</p>
+<p><strong>Base de conhecimento:</strong> <strong>complemento</strong> — os normativos do TRT8/CNJ/CSJT e o Direito Internacional Público não constam das apostilas locais (base de 2020). Conteúdo elaborado a partir do conhecimento dos atos citados no edital. <strong>Atenção:</strong> revise os textos oficiais (TRT8, CNJ, CSJT) — especialmente o <strong>Regimento Interno atualizado em 22/06/2026</strong>.</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-legislacao-institucional-do-trt8-e-do-cnjcsjt">MÓDULO I — LEGISLAÇÃO INSTITUCIONAL DO TRT8 E DO CNJ/CSJT</h1>
+<h2 id="1-resolucao-cnj-no-4002021-sustentabilidade">1. Resolução CNJ nº 400/2021 — Sustentabilidade</h2>
+<ul>
+<li>Dispõe sobre a <strong>Política de Sustentabilidade no âmbito do Poder Judiciário</strong> (e dá outras providências). Objetivo: <strong>minimizar os impactos ambientais</strong> das atividades judiciais e promover o <strong>desenvolvimento sustentável</strong> (tríplice dimensão: ambiental, social e econômica).</li>
+<li>Eixos: <strong>gestão ambiental</strong> (consumo de água/energia, resíduos, papel, mobilidade); <strong>sustentabilidade nos prédios/serviços</strong> (edifícios verdes, logística reversa, compras sustentáveis); <strong>educação e sensibilização</strong>; <strong>gestão de resíduos</strong> e racionalização do uso de papel (<strong>processo judicial eletrônico</strong> como ferramenta ambiental).</li>
+<li>Metas e indicadores de sustentabilidade; responsabilidades dos tribunais e de cada servidor; <strong>compras públicas sustentáveis</strong> (Lei 12.349/2010); contratos com cláusulas ambientais.</li>
+<li>Relação com o edital: <strong>consciência ambiental</strong> e cidadania ambiental; <strong>EC 100/2019</strong> (vedação à distribuição de embalagens plásticas descartáveis nos órgãos do Poder Judiciário — norma correlata).</li>
+</ul>
+<h2 id="2-codigo-de-etica-do-trt8-resolucao-trt8-no-882012">2. Código de Ética do TRT8 (Resolução TRT8 nº 88/2012)</h2>
+<ul>
+<li>Estabelece <strong>valores, princípios e regras de conduta</strong> dos servidores e magistrados do TRT8 (e do Poder Judiciário do Trabalho), com base na <strong>ética, na cidadania e na justiça</strong>.</li>
+<li><strong>Valores/princípios</strong> (do Código de Ética dos Servidores Públicos Civis da União — Decreto 1.171/1994 — e do Código de Ética do Poder Judiciário — Res. CNJ 57/2008): <strong>dignidade, honradez, integridade moral, zelo, dedicação, respeito, imparcialidade, lealdade, publicidade, eficiência</strong>.</li>
+<li><strong>Deveres</strong>: tratar o público com respeito e atenção; <strong>observar as normas</strong> e cumprir as ordens legais; <strong>assiduidade, pontualidade, cortesia</strong>; <strong>não usar a função para proveito pessoal</strong>; guardar <strong>sigilo</strong>; zelar pelo patrimônio público; <strong>transparência</strong>; <strong>não praticar assédio</strong> nem discriminação; participação em <strong>treinamentos</strong>.</li>
+<li><strong>Proibições</strong>: praticar atos de <strong>assédio moral ou sexual</strong> (infração grave); receber <strong>presentes</strong> ou vantagens indevidas; usar <strong>recursos públicos</strong> em benefício próprio; <strong>política partidária</strong> em serviço; deixar de comunicar irregularidades; <strong>falta de respeito</strong> ao público/ colegas; falsidade ideológica.</li>
+<li><strong>Ética no atendimento</strong>: cortesia, <strong>presteza</strong>, <strong>imparcialidade</strong>, respeito à diversidade; postura compatível com a instituição (inclusive em redes sociais — uso responsável).</li>
+<li><strong>Consequências</strong>: advertência, censura, suspensão, demissão (processo administrativo disciplinar — Lei 8.112/1990); responsabilização civil e penal.</li>
+</ul>
+<h2 id="3-regimento-interno-do-trt8-atualizado-em-22-de-junho-de-2026">3. Regimento Interno do TRT8 (atualizado em 22 de junho de 2026)</h2>
+<ul>
+<li><strong>Regimento Interno</strong>: norma interna que organiza o <strong>funcionamento do Tribunal</strong> — competências dos órgãos (Câmaras, Turmas, Seção Especializada em Dissídios Coletivos, Seção Especializada em Dissídios Individuais, Órgão Especial), <strong>distribuição de processos</strong>, sessões, julgamentos, <strong>governança</strong>, estrutura administrativa (Secretaria, Corregedoria, Procuradoria), <strong>conciliação</strong> e mediação, e <strong>relações com o PDPJ</strong>.</li>
+<li><strong>Atualização em 22/06/2026</strong> (data citada no edital): revisão que provavelmente alinha o Regimento à <strong>PDPJ-Br</strong> (processo eletrônico), à <strong>governança</strong> e às normas de <strong>segurança e ética</strong> — <strong>confirme os dispositivos no texto oficial do TRT8</strong> (https://www.trt8.jus.br).</li>
+<li>Órgãos principais: <strong>Órgão Especial</strong>, <strong>Câmaras</strong> (por região do TRT), <strong>SEDI/SEDC</strong>, <strong>Corregedoria</strong>, <strong>Conselho de Administração</strong>, <strong>Comissão de Ética</strong> (com Código de Ética — Res. 88/2012), <strong>Núcleo de Justiça 4.0</strong> (inovação).</li>
+</ul>
+<h2 id="4-politica-de-prevencao-e-enfrentamento-da-violencia-res-trt8-0672021">4. Política de Prevenção e Enfrentamento da Violência (Res. TRT8 067/2021)</h2>
+<ul>
+<li><strong>Alinhamento</strong>: <strong>Resolução CNJ nº 351/2020</strong> (Política Nacional de Prevenção e Enfrentamento da Violência contra Mulheres no Poder Judiciário) e <strong>Resolução CSJT nº 360/2023</strong> (Política na Justiça do Trabalho — violência, assédio e discriminação).</li>
+<li><strong>Objetivo</strong>: <strong>prevenir, reprimir e enfrentar</strong> a <strong>violência, o assédio</strong> (moral e sexual) e <strong>todas as formas de discriminação</strong> (gênero, raça, cor, etnia, orientação sexual, religião, deficiência...) no âmbito do TRT8 — em relação a servidores, magistrados e usuários.</li>
+<li><strong>Definições</strong>:</li>
+<li><strong>Assédio moral</strong>: conduta reiterada que humilha/desqualifica (ex.: humilhações públicas, tarefas inúteis, isolamento).</li>
+<li><strong>Assédio sexual</strong>: constrangimento para obter <strong>favor sexual</strong> (chantagem) ou assédio <strong>ambiental</strong> (ambiente hostil) — <strong>Lei 10.224/2001</strong> (crime); <strong>Lei 13.784/2018</strong> (assédio sexual e na administração pública; §1º do art. 216-A).</li>
+<li><strong>Violência psicológica/moral/física/econômica/símbolica</strong> (Lei Maria da Penha — Lei 11.340/2006 — aplicável por analogia a servidoras).</li>
+<li><strong>Mecanismos</strong>: <strong>canal de denúncia</strong> (sigilo, anonimato), <strong>Núcleo de Apoio</strong>, medidas protetivas, <strong>capacitações</strong>, <strong>cuidado com a vítima</strong>, <strong>responsabilização</strong> (PAD, processo judicial). <strong>Gênero</strong>: perspectiva de gênero na análise; interseccionalidade (raça, deficiência).</li>
+<li><strong>Fluxo</strong>: acolhimento → apuração → responsabilização → medidas de reparação e prevenção.</li>
+</ul>
+<h2 id="5-perspectiva-de-genero-res-cnj-no-4922023">5. Perspectiva de Gênero (Res. CNJ nº 492/2023)</h2>
+<ul>
+<li><strong>Política Nacional de Perspectiva de Gênero no Poder Judiciário</strong> e <strong>Comitê de Incentivo à Participação Institucional Feminina</strong> (no CNJ e nos tribunais).</li>
+<li><strong>Perspectiva de gênero</strong>: análise das normas, políticas e práticas considerando <strong>as assimetrias de poder entre homens e mulheres</strong> (e pessoas LGBTQIAP+), com <strong>não discriminação</strong> e <strong>equidade</strong>.</li>
+<li><strong>Comitê de Incentivo à Participação Institucional Feminina</strong>: promove a <strong>participação de mulheres</strong> em cargos de liderança e decisão (concursos, colegiados, magistratura, administração); combate o <strong>teto de vidro</strong>; políticas de <strong>cuidado</strong> (creche, licenças); dados de <strong>diversidade</strong>.</li>
+<li><strong>Interseccionalidade</strong> (gênero × raça × deficiência): alinhamento com a <strong>Res. CSJT 368/2023</strong>.</li>
+</ul>
+<h2 id="6-programa-de-equidade-de-raca-genero-e-diversidade-res-csjt-no-3682023">6. Programa de Equidade de Raça, Gênero e Diversidade (Res. CSJT nº 368/2023)</h2>
+<ul>
+<li>Institui o <strong>Programa de Equidade de Raça, Gênero e Diversidade na Justiça do Trabalho</strong>: <strong>combate ao racismo</strong>, à discriminação de <strong>gênero</strong> e à exclusão de <strong>LGBTQIAP+</strong>, pessoas com <strong>deficiência</strong> e outras minorias.</li>
+<li><strong>Eixos</strong>: <strong>formação</strong> (capacitação em equidade, não discriminação), <strong>dados</strong> (estatísticas de raça/cor/gênero), <strong>representatividade</strong> (cotas e medidas de inclusão), <strong>cultura organizacional</strong>, <strong>assistência</strong> a vítimas.</li>
+<li>Alinhamento: <strong>Lei 12.288/2010</strong> (Estatuto da Igualdade Racial), <strong>Lei 7.716/1989</strong> (crimes de racismo/discriminação), <strong>Lei 13.146/2015</strong> (LBI), <strong>Res. CNJ 492/2023</strong>, <strong>Res. TRT8 067/2021</strong>.</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-tribunal-penal-internacional-tpi">MÓDULO II — TRIBUNAL PENAL INTERNACIONAL (TPI)</h1>
+<h2 id="1-estatuto-de-roma-1998-e-decreto-no-43882002">1. Estatuto de Roma (1998) e Decreto nº 4.388/2002</h2>
+<ul>
+<li><strong>Estatuto de Roma</strong>: tratado internacional que cria o <strong>Tribunal Penal Internacional (TPI)</strong>, com sede em <strong>Haia</strong> (Países Baixos). <strong>Decreto 4.388/2002</strong> promulga o Estatuto no Brasil.</li>
+<li><strong>Competência</strong>: <strong>crime de genocídio</strong>, <strong>crimes contra a humanidade</strong>, <strong>crimes de guerra</strong>, <strong>crime de agressão</strong> (art. 5º do Estatuto). <strong>Complementaridade</strong> (art. 17): o TPI só age quando o Estado <strong>não investiga/julga</strong> de boa-fé (subsidiariedade).</li>
+<li><strong>Princípios</strong>: <strong>nullum crimen sine lege</strong> (art. 22), <strong>irretroatividade</strong> (art. 24), <strong>individualidade de responsabilidade</strong> (art. 25 — não pune Estado), <strong>imunidade</strong> (art. 27 — chefes de Estado <strong>não</strong> têm imunidade perante o TPI), <strong>prescrição</strong> (não se aplica — crimes imprescritíveis).</li>
+<li><strong>Órgãos</strong>: Presidência, <strong>Câmara de Questões Preliminares</strong>, <strong>Câmara de Julgamento</strong>, <strong>Câmara de Apelação</strong>, <strong>Procuradoria</strong>, <strong>Secretaria</strong>. <strong>123 Estados-partes</strong> (EUA, Rússia, China, Israel <strong>não</strong> assinaram/ratificaram; Índia, Brasil sim).</li>
+<li><strong>Natureza jurídica</strong>: <strong>tribunal internacional permanente</strong> de <strong>Direito Penal Internacional</strong> — <strong>não</strong> substitui a jurisdição interna; <strong>não</strong> é "Tribunal Internacional de Direitos Humanos" (ver Módulo III).</li>
+</ul>
+<h2 id="2-direito-humanitario-e-a-cf88">2. Direito Humanitário e a CF/88</h2>
+<ul>
+<li><strong>Direito Internacional Humanitário</strong> (Direito da Guerra): <strong>Convenções de Genebra</strong> (1949) e <strong>Protocolos Adicionais</strong> (1977); proteção de vítimas de conflitos (combatentes, civis, prisioneiros). <strong>Princípios</strong>: distinção, humanidade, proporcionalidade, precaução.</li>
+<li><strong>CF/88 art. 5º XLII</strong>: a prática do <strong>racismo</strong> constitui crime <strong>inafiançável e imprescritível</strong>; <strong>art. 5º XLIII</strong>: <strong>terrorismo, tráfico de entorpecentes e tortura</strong> são inafiançáveis; <strong>art. 5º XLIV</strong>: <strong>ação de grupos armados</strong> contra o Estado democrático = crime permanente; <strong>art. 5º §4º</strong>: o Brasil <strong>adere ao Estatuto de Roma</strong> e reconhece a competência do TPI (o TPI está no <strong>bloco de constitucionalidade</strong> — 2ª vertente humanitária).</li>
+<li><em>Pegadinha</em>: o TPI julga <strong>indivíduos</strong>, não Estados; <strong>não</strong> é da ONU (é autônomo — tratado multilateral, embora a ONU possa remeter casos ao Conselho de Segurança).</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-carta-das-nacoes-unidas-e-corte-internacional-de-justica-cij">MÓDULO III — CARTA DAS NAÇÕES UNIDAS E CORTE INTERNACIONAL DE JUSTIÇA (CIJ)</h1>
+<h2 id="1-carta-da-onu-1945">1. Carta da ONU (1945)</h2>
+<ul>
+<li><strong>Carta das Nações Unidas</strong> (São Francisco, 1945): tratado constitutivo da <strong>ONU</strong> — <strong>Decreto nº 19.841/1945</strong> promulga a Carta (e o <strong>Estatuto da CIJ</strong>, que é <strong>anexo</strong> integral à Carta).</li>
+<li><strong>Princípios</strong> (art. 2º): <strong>igualdade soberana</strong> dos Estados (§1º); <strong>cumprimento de boa-fé</strong> das obrigações (§2º); <strong>solução pacífica de controvérsias</strong> (§3º); <strong>proibição da ameaça ou uso da força</strong> (§4º) — <strong>guerra é ilícito internacional</strong> (só legítima defesa art. 51 e decisão do Conselho de Segurança art. 42); <strong>assistência à ONU</strong> (§5º); <strong>abstenção de intervenção</strong> (§7º); <strong>autodeterminação dos povos</strong> (art. 1º §2).</li>
+<li><strong>Órgãos</strong>: <strong>Assembleia Geral</strong> (art. 9–22), <strong>Conselho de Segurança</strong> (art. 23–32 — 5 membros permanentes com <strong>direito a veto</strong>: EUA, Rússia, China, França, Reino Unido), <strong>Conselho Econômico e Social (ECOSOC)</strong>, <strong>Conselho de Tutela</strong>, <strong>Secretaria</strong> (art. 97–101), <strong>CIJ</strong> (art. 92–96).</li>
+<li><em>Pegadinha clássica</em>: <strong>não existe "Tribunal Internacional de Direitos Humanos"</strong> criado pela Carta da ONU. A <strong>CIJ</strong> julga <strong>controvérsias entre Estados</strong> (não indivíduos); os tribunais de DH são a <strong>Corte IDH</strong> (Pacto de San José) e o <strong>Comitê de DH da ONU</strong> (PIDCP).</li>
+</ul>
+<h2 id="2-corte-internacional-de-justica-cij">2. Corte Internacional de Justiça (CIJ)</h2>
+<ul>
+<li><strong>Estatuto da CIJ = anexo da Carta da ONU</strong> (Decreto 19.841/1945). Sede em <strong>Haia</strong>; <strong>15 juízes</strong> (mandato 9 anos, reeleição); línguas oficiais: <strong>francês e inglês</strong>.</li>
+<li><strong>Competência</strong>: <strong>contenciosa</strong> (controvérsias <strong>entre Estados</strong> que aceitam sua jurisdição) e <strong>consultiva</strong> (pareceres a órgãos da ONU — Assembleia Geral, Conselho de Segurança, ECOSOC, Secretaria).</li>
+<li><strong>Fontes do direito</strong> (art. 38): <strong>tratados</strong>, <strong>costumes internacionais</strong>, <strong>princípios gerais de direito</strong>, <strong>jurisprudência</strong> (meio subsidiário) e <strong>doutrina</strong> (meio subsidiário).</li>
+<li><strong>Decisões</strong>: <strong>sentenças</strong> (obrigatórias para as partes — art. 59), <strong>pareceres</strong> (não vinculam, mas têm peso moral). <strong>Não julga indivíduos</strong> nem questões de DH diretamente (só entre Estados).</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>Res. CNJ 400/2021</strong> = <strong>sustentabilidade</strong> no Poder Judiciário (gestão ambiental, compras sustentáveis, papel, resíduos).</li>
+<li><strong>EC 100/2019</strong> = veda embalagens plásticas descartáveis no Judiciário (correlata à sustentabilidade).</li>
+<li><strong>Código de Ética TRT8</strong> = <strong>Res. 88/2012</strong> (valores: dignidade, zelo, respeito, imparcialidade; <strong>assédio = infração grave</strong>).</li>
+<li><strong>Regimento Interno TRT8</strong> = organiza o Tribunal; edital exige a versão <strong>atualizada em 22/06/2026</strong>.</li>
+<li><strong>Res. TRT8 067/2021</strong> = violência/assédio/discriminação; alinhada à <strong>CNJ 351/2020</strong> (mulheres) e <strong>CSJT 360/2023</strong> (Justiça do Trabalho).</li>
+<li><strong>Assédio sexual</strong> = <strong>Lei 10.224/2001</strong> (crime) + <strong>Lei 13.784/2018</strong> (assédio na administração pública).</li>
+<li><strong>Res. CNJ 492/2023</strong> = perspectiva de <strong>gênero</strong> + <strong>Comitê de Incentivo à Participação Institucional Feminina</strong>.</li>
+<li><strong>Res. CSJT 368/2023</strong> = <strong>equidade de raça, gênero e diversidade</strong> na Justiça do Trabalho.</li>
+<li><strong>TPI</strong> = Estatuto de <strong>Roma</strong> (1998) + <strong>Decreto 4.388/2002</strong>; julga <strong>indivíduos</strong> (genocídio, crimes contra a humanidade, guerra, agressão).</li>
+<li><strong>Complementaridade</strong> = TPI só age se o Estado <strong>não</strong> julgar (subsidiário).</li>
+<li><strong>Chefes de Estado NÃO têm imunidade</strong> perante o TPI (art. 27).</li>
+<li><strong>CF art. 5º §4º</strong> = Brasil adere ao <strong>Estatuto de Roma</strong> (TPI no bloco de constitucionalidade).</li>
+<li><strong>Carta da ONU + Estatuto da CIJ</strong> = <strong>Decreto 19.841/1945</strong>; CIJ = <strong>anexo</strong> da Carta.</li>
+<li><strong>Proibição do uso da força</strong> = art. 2º §§3º e 4º da Carta (guerra = ilícito internacional).</li>
+<li><strong>CIJ</strong> julga <strong>controvérsias entre Estados</strong> (não indivíduos) — <strong>não</strong> existe "Tribunal Internacional de DH" na Carta da ONU (distrator).</li>
+<li><strong>CIJ fontes (art. 38)</strong>: tratados, costumes, princípios gerais, jurisprudência e doutrina (subsidiários).</li>
+<li><strong>Conselho de Segurança</strong>: 5 permanentes com <strong>veto</strong> (EUA, Rússia, China, França, RU).</li>
+<li><strong>Racismo = inafiançável e imprescritível</strong> (CF art. 5º XLII); terrorismo/tráfico/tortura = inafiançáveis.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) A Resolução CNJ nº 400/2021 dispõe sobre a política de sustentabilidade no âmbito do Poder Judiciário, promovendo a gestão ambiental e a racionalização do uso de recursos.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Res. CNJ 400/2021</strong> = <strong>Política de Sustentabilidade</strong> (consumo, resíduos, compras sustentáveis, prédios verdes, papel).</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) O Código de Ética do TRT8 foi instituído pela Resolução:
+a) TRT8 nº 067/2021.
+b) TRT8 nº 88/2012.
+c) CNJ nº 351/2020.
+d) CNJ nº 492/2023.
+e) CSJT nº 368/2023.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Res. TRT8 88/2012</strong> = Código de Ética. <strong>067/2021</strong> = violência/assédio.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) A Política de Prevenção e Enfrentamento da Violência do TRT8 (Res. TRT8 067/2021) está alinhada à Resolução CNJ nº 351/2020 e à Resolução CSJT nº 360/2023.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Res. <strong>TRT8 067/2021</strong> alinha-se à <strong>CNJ 351/2020</strong> (mulheres no Judiciário) e <strong>CSJT 360/2023</strong> (Justiça do Trabalho).</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) A Resolução CNJ nº 492/2023 trata de:
+a) sustentabilidade.
+b) perspectiva de gênero e Comitê de Incentivo à Participação Institucional Feminina.
+c) processo eletrônico.
+d) código de ética.
+e) equidade de raça.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>CNJ 492/2023</strong> = <strong>perspectiva de gênero</strong> + <strong>Comitê de Incentivo à Participação Institucional Feminina</strong>.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O Programa de Equidade de Raça, Gênero e Diversidade na Justiça do Trabalho foi instituído pela Resolução CSJT nº 368/2023.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Res. CSJT 368/2023</strong> = <strong>equidade de raça, gênero e diversidade</strong> (formação, dados, representatividade).</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) O Estatuto de Roma, promulgado no Brasil pelo Decreto nº 4.388/2002, trata do:
+a) Tribunal Internacional de Direitos Humanos.
+b) Tribunal Penal Internacional (TPI).
+c) Corte Internacional de Justiça.
+d) Comitê de Direitos Humanos da ONU.
+e) Poder Judiciário nacional.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Estatuto de Roma</strong> (Decreto <strong>4.388/2002</strong>) = <strong>TPI</strong> (Haia). Não existe "Tribunal Internacional de DH" (distrator clássico).</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) O Tribunal Penal Internacional tem competência para julgar Estados que pratiquem crimes internacionais, como genocídio e crimes contra a humanidade.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O TPI julga <strong>indivíduos</strong> (pessoas físicas), não Estados. Competência: <strong>genocídio, crimes contra a humanidade, crimes de guerra, agressão</strong>.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) O princípio da complementaridade, previsto no Estatuto de Roma, significa que:
+a) o TPI substitui os tribunais nacionais.
+b) o TPI só atua quando o Estado não investiga ou julga de boa-fé (subsidiariedade).
+c) o TPI julga apenas crimes ambientais.
+d) o TPI tem prioridade absoluta sobre o Estado.
+e) o TPI não tem competência para crimes de guerra.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Complementaridade</strong> (art. 17): TPI é <strong>subsidiário</strong> — só age se o Estado não investigar/julgar de boa-fé.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) Nos termos do Estatuto de Roma, chefes de Estado gozam de imunidade perante o Tribunal Penal Internacional.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Art. 27</strong>: <strong>imunidade</strong> (funcional ou pessoal) <strong>não</strong> impede julgamento perante o TPI.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O Estatuto da Corte Internacional de Justiça (CIJ) é:
+a) um tratado autônomo, separado da ONU.
+b) anexo integral à Carta das Nações Unidas (Decreto nº 19.841/1945).
+c) um protocolo do PIDCP.
+d) regulado pelo Decreto 4.388/2002.
+e) uma norma interna do Brasil.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> O <strong>Estatuto da CIJ é anexo à Carta da ONU</strong> (promulgados pelo <strong>Decreto 19.841/1945</strong>).</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A Carta das Nações Unidas estabelece o princípio da proibição do uso da força, admitindo a guerra como meio lícito de solução de controvérsias.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Art. 2º §§3º e 4º: <strong>guerra é ilícito internacional</strong> — solução pacífica é obrigatória (exceções: legítima defesa art. 51; Conselho de Segurança art. 42).</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre a Corte Internacional de Justiça (CIJ), é correto afirmar:
+a) julga indivíduos acusados de crimes internacionais.
+b) julga controvérsias entre Estados e emite pareceres consultivos aos órgãos da ONU.
+c) é o mesmo que Tribunal Penal Internacional.
+d) foi criada pelo Estatuto de Roma.
+e) não tem fontes de direito definidas.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>CIJ</strong>: controvérsias <strong>entre Estados</strong> + <strong>pareceres consultivos</strong>. Fontes (art. 38): tratados, costumes, princípios gerais, jurisprudência, doutrina. <strong>TPI</strong> = Estatuto de Roma (indivíduos).</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) A Carta das Nações Unidas cria um Tribunal Internacional de Direitos Humanos, encarregado de julgar violações de direitos humanos em todo o mundo.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Não existe</strong> "Tribunal Internacional de DH" na Carta da ONU. A CIJ julga <strong>Estados</strong>; a <strong>Corte IDH</strong> (Pacto de San José) e o <strong>Comitê de DH</strong> (PIDCP) são de DH — <strong>não</strong> criados pela Carta.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) No Conselho de Segurança da ONU, o direito a veto é exercido por:
+a) todos os membros.
+b) apenas os 5 membros permanentes (EUA, Rússia, China, França e Reino Unido).
+c) apenas membros não permanentes.
+d) apenas o Secretário-Geral.
+e) apenas a Assembleia Geral.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>5 permanentes</strong> com <strong>veto</strong> (EUA, Rússia, China, França, RU) — art. 23/27 da Carta.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) Conforme a Constituição Federal, a prática do racismo constitui crime inafiançável e imprescritível, e o Brasil adere ao Estatuto de Roma do Tribunal Penal Internacional.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>CF art. 5º XLII</strong>: racismo = <strong>inafiançável e imprescritível</strong>; <strong>art. 5º §4º</strong>: adesão ao <strong>Estatuto de Roma</strong> (TPI).</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique o Código de Ética do TRT8 (Res. 88/2012), a Política de Prevenção e Enfrentamento da Violência (Res. TRT8 067/2021) e as normas de gênero e equidade (Res. CNJ 492/2023 e Res. CSJT 368/2023).</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O <strong>Código de Ética (Res. TRT8 88/2012)</strong> fixa valores (dignidade, zelo, respeito, imparcialidade), deveres (assiduidade, cortesia, sigilo) e proibições (assédio, uso indevido de recursos, proveito pessoal), com consequências administrativas. A <strong>Política de Prevenção e Enfrentamento da Violência (Res. TRT8 067/2021)</strong> previne e reprime <strong>violência, assédio moral/sexual e discriminação</strong>, alinhada à <strong>Res. CNJ 351/2020</strong> e <strong>Res. CSJT 360/2023</strong>, com canais de denúncia, apoio à vítima e responsabilização. A <strong>Res. CNJ 492/2023</strong> institui a <strong>perspectiva de gênero</strong> e o <strong>Comitê de Incentivo à Participação Institucional Feminina</strong>; a <strong>Res. CSJT 368/2023</strong> institui o <strong>Programa de Equidade de Raça, Gênero e Diversidade</strong> na Justiça do Trabalho — formação, dados, representatividade e combate à discriminação.</p></details>
+<p><strong>D2.</strong> Explique a competência e os princípios do Tribunal Penal Internacional (Estatuto de Roma) e a estrutura da ONU e da Corte Internacional de Justiça.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O <strong>TPI</strong> (Estatuto de Roma, Decreto 4.388/2002) é tribunal permanente que julga <strong>indivíduos</strong> por <strong>genocídio, crimes contra a humanidade, crimes de guerra e agressão</strong>, com princípio da <strong>complementaridade</strong> (só age se o Estado não julgar de boa-fé) e sem imunidade para chefes de Estado (art. 27). A <strong>Carta da ONU</strong> (Decreto 19.841/1945) cria a ONU e veda a <strong>guerra</strong> (art. 2º §§3º e 4º), com órgãos como a Assembleia Geral e o Conselho de Segurança (5 permanentes com veto). O <strong>Estatuto da CIJ</strong> é anexo à Carta: a CIJ julga <strong>controvérsias entre Estados</strong> e emite <strong>pareceres consultivos</strong>, aplicando tratados, costumes, princípios gerais, jurisprudência e doutrina (art. 38). Não existe "Tribunal Internacional de Direitos Humanos" criado pela Carta.</p></details>
+<hr />
+<p><em>Conteúdo <strong>complementar</strong>: Res. CNJ 400/2021; Res. TRT8 88/2012; Regimento Interno TRT8 (atualizado 22/06/2026); Res. TRT8 067/2021 + CNJ 351/2020 + CSJT 360/2023; Res. CNJ 492/2023; Res. CSJT 368/2023; Estatuto de Roma + Decreto 4.388/2002; Carta da ONU + Estatuto da CIJ (Decreto 19.841/1945) — ausentes da base local de 2020. Elaborado a partir do conhecimento dos atos. <strong>Confirme dispositivos nos textos oficiais</strong> (TRT8, CNJ, CSJT, planalto). Ver também apostilas de Direitos Humanos, PcD e T17 (Normativos PDPJ).</em> </p>
+<script>
+(function () {
+  const key = 'apostila-legisla-o-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

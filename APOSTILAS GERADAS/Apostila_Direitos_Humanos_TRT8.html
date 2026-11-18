@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noções de Direitos Humanos (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>Noções de Direitos Humanos</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-homem-direitos-do-homem-direitos-humanos-fundamentais">1. Homem × direitos do homem × direitos humanos × fundamentais</a></li>
+<li class="toc-h2"><a href="#2-caracteristicas-e-principios">2. Características e princípios</a></li>
+<li class="toc-h2"><a href="#3-fontes-e-classificacao">3. Fontes e classificação</a></li>
+<li class="toc-h2"><a href="#1-interpretacao-dos-tratados-convencao-de-viena-1969">1. Interpretação dos tratados (Convenção de Viena, 1969)</a></li>
+<li class="toc-h2"><a href="#2-colisao-entre-direitos-humanos">2. Colisão entre direitos humanos</a></li>
+<li class="toc-h2"><a href="#1-hierarquia-4-teses">1. Hierarquia (4 teses)</a></li>
+<li class="toc-h2"><a href="#2-casos-classicos">2. Casos clássicos</a></li>
+<li class="toc-h2"><a href="#3-controle-de-convencionalidade">3. Controle de convencionalidade</a></li>
+<li class="toc-h2"><a href="#1-declaracao-universal-dos-direitos-humanos-dudh-1948">1. Declaração Universal dos Direitos Humanos (DUDH, 1948)</a></li>
+<li class="toc-h2"><a href="#2-pidcp-pacto-internacional-dos-direitos-civis-e-politicos-1966">2. PIDCP — Pacto Internacional dos Direitos Civis e Políticos (1966)</a></li>
+<li class="toc-h2"><a href="#3-pidesc-pacto-internacional-dos-direitos-economicos-sociais-e-culturais-1966-complemento">3. PIDESC — Pacto Internacional dos Direitos Econômicos, Sociais e Culturais (1966) (complemento)</a></li>
+<li class="toc-h2"><a href="#4-outros-marcos-consulta">4. Outros marcos (consulta)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-nocoes-de-direitos-humanos">APOSTILA — NOÇÕES DE DIREITOS HUMANOS</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Evolução histórica dos Direitos Humanos. Fundamentos filosóficos. Fontes, classificação, princípios, características e gerações de direitos humanos. Interpretação dos tratados de Direitos Humanos. Colisão entre direitos humanos: teorias para resolução. Tratados internacionais de Direitos Humanos em face da CF/88. Controle de convencionalidade. Declaração Universal dos Direitos Humanos. Pacto Internacional dos Direitos Civis e Políticos (PIDCP) e protocolos facultativos. Pacto Internacional dos Direitos Econômicos, Sociais e Culturais (PIDESC) e protocolos facultativos.</p>
+<p><strong>Base de conhecimento:</strong> <code>05.Direito Constitucional</code> (Aulas 09–10 — DH e tratados), <code>06.Direito Administrativo</code> (princípios), apostilas ESTRATEGIA/SEFA (Direito Constitucional) — Curso 2020 + <strong>complemento</strong> (PIDESC e protocolos facultativos).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-conceito-evolucao-e-fundamentos">MÓDULO I — CONCEITO, EVOLUÇÃO E FUNDAMENTOS</h1>
+<h2 id="1-homem-direitos-do-homem-direitos-humanos-fundamentais">1. Homem × direitos do homem × direitos humanos × fundamentais</h2>
+<ul>
+<li><strong>Direitos do homem</strong> = naturais, inatos (não dependem de norma escrita). <strong>Direitos humanos</strong> = os mesmos direitos <strong>reconhecidos e positivados na esfera internacional</strong> (declarações/tratados). <strong>Direitos fundamentais</strong> = os direitos humanos <strong>positivados na Constituição</strong> de cada Estado (dimensão interna).</li>
+<li><strong>Três vertentes (Cançado Trindade)</strong>: <strong>jusnaturalista</strong> (direitos naturais); <strong>positivista</strong> (dependem de reconhecimento estatal); <strong>jus-internacionalista</strong> (devem ser reconhecidos em âmbito internacional).</li>
+<li><strong>Evolução histórica (gerações/dimensões)</strong>:</li>
+<li><strong>1ª — liberdade</strong> (séc. XVIII): civis e políticos; Estado mínimo; Revoluções Americana (Declaração de 1776) e Francesa (1789). Ex.: vida, liberdade, propriedade, devido processo.</li>
+<li><strong>2ª — igualdade</strong> (séc. XIX–XX): econômicos, sociais e culturais; Estado providência (Revolução Russa; Constituição Mexicana de 1917; Declaração de Weimar). Ex.: saúde, educação, trabalho, previdência.</li>
+<li><strong>3ª — solidariedade/fraternidade</strong> (séc. XX): difusos e coletivos (meio ambiente, paz, autodeterminação, desenvolvimento, comunicação). Relação <strong>direitos × deveres</strong>.</li>
+<li><em>Complemento</em>: <strong>4ª dimensão</strong> (bioética, democracia, informação) e <strong>5ª</strong> (paz) — autores como Paulo Bonavides; <strong>não confundir</strong> com as três clássicas de cobrança.</li>
+<li><strong>Fundamentos filosóficos</strong>: jusnaturalismo (Locke, Rousseau), Kant (dignidade), utilitarismo; <strong>dignidade da pessoa humana</strong> = fundamento da República (CF art. 1º III) e <strong>núcleo essencial</strong> dos DH.</li>
+</ul>
+<h2 id="2-caracteristicas-e-principios">2. Características e princípios</h2>
+<ul>
+<li><strong>Características</strong>: <strong>universalidade</strong> (todos os seres humanos), <strong>inviolabilidade</strong>, <strong>irrenunciabilidade</strong>, <strong>imprescritibilidade</strong>, <strong>relatividade</strong> (não são absolutos), <strong>concorrência</strong> (exercem-se cumulativamente), <strong>inalienabilidade</strong>, <strong>efetividade</strong>, <strong>complementaridade</strong>.</li>
+<li><strong>Princípios</strong> (Direito Internacional dos DH): <strong>universalidade e indivisibilidade</strong>; <strong>igualdade e não discriminação</strong>; <strong>participação e inclusão</strong>; <strong>responsabilidade do Estado</strong>; <strong>prestação de contas</strong>; <strong>pro homine/pro persona</strong> (interpretação mais favorável ao indivíduo); <strong>efetividade</strong>.</li>
+<li><strong>Relatividade dos direitos</strong> (o mais cobrado): nenhum direito é absoluto — <strong>colisão</strong> e <strong>limites</strong>. "Direitos humanos são absolutos" = <strong>FALSO</strong>.</li>
+</ul>
+<h2 id="3-fontes-e-classificacao">3. Fontes e classificação</h2>
+<ul>
+<li><strong>Fontes</strong>: <strong>normativas</strong> (declarações, tratados, costume, princípios gerais) × <strong>não normativas</strong> (doutrina, soft law, recomendações).</li>
+<li><strong>Classificação</strong>: 1ª geração (civis/políticos — <strong>liberdade</strong>); 2ª (econômicos/sociais/culturais — <strong>igualdade</strong>); 3ª (difusos/coletivos — <strong>solidariedade</strong>).</li>
+<li><strong>Tratados de DH ≠ tratados comuns</strong>: <strong>Interpretação</strong>, <strong>colisão</strong>, <strong>hierarquia</strong> e <strong>controle de convencionalidade</strong> têm regime próprio (ver Módulos II–III).</li>
+</ul>
+<hr />
+<h1 id="modulo-ii-interpretacao-dos-tratados-e-colisao-de-direitos">MÓDULO II — INTERPRETAÇÃO DOS TRATADOS E COLISÃO DE DIREITOS</h1>
+<h2 id="1-interpretacao-dos-tratados-convencao-de-viena-1969">1. Interpretação dos tratados (Convenção de Viena, 1969)</h2>
+<ul>
+<li><strong>Art. 31</strong>: interpretação <strong>conforme o sentido próprio</strong> dos termos, <strong>contexto</strong>, objeto e <strong>finalidade</strong>; trabalha-se <strong>in bonam partem</strong>.</li>
+<li><strong>Art. 32</strong>: meios <strong>complementares</strong> (trabalhos preparatórios, circunstâncias do tratado).</li>
+<li>Princípio basilar: <strong>pro homine</strong> — prevalece a interpretação <strong>mais favorável</strong> ao titular dos direitos (pessoa humana).</li>
+<li><strong>Incorporação dos tratados de DH em 4 fases</strong>: celebração/aprovação (Congresso, art. 49 I — maioria absoluta); ratificação (Presidente); depósito (chancelaria); <strong>promulgação (Decreto) e publicação</strong> — só então vigora no Brasil.</li>
+</ul>
+<h2 id="2-colisao-entre-direitos-humanos">2. Colisão entre direitos humanos</h2>
+<ul>
+<li><strong>Teoria interna</strong>: a colisão é <strong>aparente</strong> — o direito não cede; interpreta-se restritivamente a norma restritiva (equilíbrio sem sacrifício).</li>
+<li><strong>Teoria externa</strong>: há <strong>colisão real</strong>; resolve-se pela <strong>ponderação</strong> (proporcionalidade em sentido estrito) — sopesamento no caso concreto (Alexy).</li>
+<li><strong>Limites dos limites</strong> (Gilmar Mendes): restrições têm limites — <strong>proibição do excesso</strong>, proteção do <strong>núcleo essencial</strong>; a limitação é <strong>implícita na CF</strong> (art. 5º).</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-tratados-cf88-e-controle-de-convencionalidade">MÓDULO III — TRATADOS × CF/88 E CONTROLE DE CONVENCIONALIDADE</h1>
+<h2 id="1-hierarquia-4-teses">1. Hierarquia (4 teses)</h2>
+<ol>
+<li><strong>Supraconstitucional</strong> (não prevalece no Brasil).</li>
+<li><strong>Constitucional</strong> — <strong>DUPLO ESTATUTO</strong> (STF, RE 466.343):</li>
+<li>Tratado de DH <strong>incorporado com o rito do art. 5º §3º</strong> (emenda constitucional: maioria + 2 turnos) = <strong>status de EMENDA</strong> (no bloco de constitucionalidade).</li>
+<li>Tratado de DH <strong>incorporado pelo rito ordinário</strong> (art. 49 I) = <strong>status SUPRALEGAL</strong> (abaixo da CF, acima da lei ordinária).</li>
+<li><strong>Legal</strong> (paridade com lei).</li>
+<li>
+<p><strong>Supralegal</strong> — <strong>tese vencedora</strong> para tratados ordinários (Súmula Vinculante 25, STF).</p>
+</li>
+<li>
+<p><strong>Direitos humanos no bloco de constitucionalidade</strong>: art. 5º §2º (direitos expressos + implícitos) e §3º (tratados-Emenda). <strong>Súmulas 640 e 641</strong> (STF) — trata-se de direitos humanos, <strong>dispensa</strong> súmula ou recurso.</p>
+</li>
+<li><strong>Clausula pétrea?</strong> Não se coloca a questão: tratados-Emenda <strong>podem</strong> limitar direitos clássicos (ex.: prisão civil do <strong>depositário infiel</strong> <strong>não</strong> mais subsiste — ver Súmula 25).</li>
+</ol>
+<h2 id="2-casos-classicos">2. Casos clássicos</h2>
+<ul>
+<li><strong>Depósitoário infiel</strong>: <strong>RE 466.343</strong> (Súmula Vinculante <strong>25</strong>) e <strong>HC 87.585</strong> — prisão civil <strong>ilícita</strong> (Pacto de San José da Costa Rica art. 7º 7 — <strong>supralegal</strong> vence a <strong>lei</strong>). <strong>Só o devedor de alimentos</strong> pode ser preso civilmente (CF art. 5º LXVII).</li>
+<li><strong>Convenção sobre os Direitos das Pessoas com Deficiência + Protocolo Facultativo</strong> (Decreto <strong>6.949/2009</strong>) = <strong>1º tratado</strong> com status de <strong>Emenda</strong> (art. 5º §3º).</li>
+<li><strong>Tratado de Marraqueche</strong> (Decreto 8.734/2016) = <strong>3º</strong> tratado-Emenda (acessibilidade de obras literárias para cegos).</li>
+<li><strong>Pacto de San José da Costa Rica</strong> (Decreto 678/1992) = rito ordinário = <strong>supralegal</strong>.</li>
+</ul>
+<h2 id="3-controle-de-convencionalidade">3. Controle de convencionalidade</h2>
+<ul>
+<li><strong>Conceito</strong>: compatibilidade da norma/prática interna com os <strong>tratados de DH</strong> (não só com a CF — controle de constitucionalidade).</li>
+<li><strong>No plano internacional</strong>: Corte Internacional de Justiça (CIJ) e <strong>Corte Interamericana de Direitos Humanos (Corte IDH)</strong>.</li>
+<li><strong>No Brasil (paradigmas)</strong>:</li>
+<li><strong>Controle concentrado de convencionalidade</strong>: <strong>só</strong> tratados-Emenda (art. 5º §3º) são paradigma do ADI/ADC/ADPF (STF).</li>
+<li><strong>Controle difuso</strong>: <strong>qualquer tratado de DH</strong> (inclusive supralegal, como o Pacto de San José) pode ser paradigma no caso concreto (juiz afasta a lei interna incompatível).</li>
+<li><em>Pegadinha</em>: "não existe controle de convencionalidade no Brasil" = <strong>FALSO</strong>. "Todo tratado é paradigma de ADI" = <strong>FALSO</strong> (só os do §3º).</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-documentos-fundamentais">MÓDULO IV — DOCUMENTOS FUNDAMENTAIS</h1>
+<h2 id="1-declaracao-universal-dos-direitos-humanos-dudh-1948">1. Declaração Universal dos Direitos Humanos (DUDH, 1948)</h2>
+<ul>
+<li><strong>Resolução 217A (III) da Assembleia Geral da ONU</strong>, em Paris (10/12/1948 — <strong>Dia dos Direitos Humanos</strong>). 30 artigos.</li>
+<li><strong>É DECLARAÇÃO — NÃO cria obrigação jurídica vinculante como tratado</strong>; mas é <strong>costume internacional</strong> e fonte interpretativa (o art. 1º — dignidade e igualdade — está no preâmbulo da CF/88).</li>
+<li>Conteúdo-chave: dignidade, igualdade, liberdades civis/políticas, direitos sociais, devido processo (art. 10, 11).</li>
+</ul>
+<h2 id="2-pidcp-pacto-internacional-dos-direitos-civis-e-politicos-1966">2. PIDCP — Pacto Internacional dos Direitos Civis e Políticos (1966)</h2>
+<ul>
+<li><strong>Pacto</strong> (tratado vinculante) da ONU. Direitos <strong>civis e políticos</strong> (1ª geração): vida (art. 6º), integridade pessoal, liberdade, devido processo, votar, manifestação, consciência/religião, privacidade.</li>
+<li><strong>Protocolos Facultativos</strong>: <strong>1º</strong> — <strong>Comunicação Individual</strong> (queixa ao Comitê de Direitos Humanos da ONU); <strong>2º</strong> — <strong>abolir pena de morte</strong> (o Brasil ratificou os dois).</li>
+<li>Mecanismo: <strong>Comitê de Direitos Humanos</strong> (observações gerais).</li>
+</ul>
+<h2 id="3-pidesc-pacto-internacional-dos-direitos-economicos-sociais-e-culturais-1966-complemento">3. PIDESC — Pacto Internacional dos Direitos Econômicos, Sociais e Culturais (1966) <em>(complemento)</em></h2>
+<ul>
+<li><strong>Pacto</strong> da ONU sobre direitos de <strong>2ª geração</strong>: trabalho (art. 6º–7º), sindicatos (art. 8º), seguridade (art. 9º), família (art. 10), padrão de vida, alimentação, <strong>saúde (art. 12)</strong>, <strong>educação (arts. 13–14)</strong>, cultura (art. 15).</li>
+<li><strong>Protocolos Facultativos</strong>: <strong>1º</strong> (2008) — <strong>Comunicação Individual</strong> ao <strong>Comitê de Direitos Econômicos, Sociais e Culturais</strong> (protocolo relativo ao PIDESC; o Brasil <strong>assinou</strong>, verifique a ratificação); <strong>2º</strong> (não existe — não confundir: só há 1 protocolo facultativo para o PIDESC; o protocolo de <strong>abolir pena de morte</strong> pertence ao <strong>PIDCP</strong>).</li>
+<li><em>Pegadinha clássica</em>: "protocolo facultativo do PIDESC versa sobre pena de morte" = <strong>FALSO</strong> (isso é <strong>PIDCP 2º</strong>).</li>
+</ul>
+<h2 id="4-outros-marcos-consulta">4. Outros marcos (consulta)</h2>
+<ul>
+<li>OIT = tratados de DH (Convenções 29/100/105/111/138/182...); Pacto de San José (Corte IDH); Convenções de Genebra (Direito Humanitário — 3ª vertente); Carta da ONU (ver Legislação).</li>
+<li><strong>Brasil</strong>: CF/88 art. 5º (princípio da universalidade), art. 4º II ("<strong>promover os direitos humanos</strong>" = princípio das relações exteriores), art. 7º, 6º (2ª geração).</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>DH ≠ direitos fundamentais</strong>: DH = esfera internacional; fundamentais = na CF. <strong>Direitos do homem</strong> = naturais/inatos.</li>
+<li><strong>3 gerações</strong>: liberdade (civis/políticos), igualdade (sociais/econômicos/culturais), solidariedade (difusos/coletivos).</li>
+<li><strong>Direitos humanos NÃO são absolutos</strong> — relatividade + colisão (questão clássica).</li>
+<li><strong>Pro homine</strong> = interpretação mais favorável à pessoa humana (Viena: arts. 31/32 + finalidade).</li>
+<li><strong>Duplo Estatuto (RE 466.343)</strong>: §3º = <strong>Emenda</strong>; ordinário = <strong>supralegal</strong>. Nenhuma tese supraconstitucional.</li>
+<li><strong>Súmula Vinculante 25</strong>: prisão do <strong>depositário infiel</strong> é <strong>ilícita</strong> (supralegal vence a lei). Só <strong>alimentos</strong>.</li>
+<li><strong>1º tratado-Emenda</strong>: Convenção da PcD (Decreto <strong>6.949/2009</strong>). <strong>3º</strong>: Marraqueche. <strong>Pacto de San José</strong> = supralegal.</li>
+<li><strong>Controle de constitucionalidade</strong> = paradigma CF; <strong>controle de convencionalidade</strong> = paradigma <strong>tratado de DH</strong>.</li>
+<li><strong>ADI/ADC/ADPF</strong>: paradigma = tratado-Emenda (<strong>§3º</strong>) só; <strong>difuso</strong>: qualquer tratado de DH.</li>
+<li><strong>DUDH = DECLARAÇÃO</strong> (não vincula como tratado; é costume/fonte) — 10/12/1948.</li>
+<li><strong>PIDCP</strong> = civis/políticos; protocolos: <strong>1º comunicação individual; 2º abolição da pena de morte</strong>.</li>
+<li><strong>PIDESC</strong> = econômicos/sociais/culturais; <strong>protocolo facultativo = comunicação individual</strong> (não é sobre pena de morte).</li>
+<li><strong>Súmulas 640 e 641</strong> (STF): em matéria de DH, <strong>dispensa</strong> súmula/recurso (interpretação restritiva).</li>
+<li><strong>CF art. 4º II</strong>: <strong>promover os DH</strong> = princípio da política externa brasileira.</li>
+<li><strong>Teoria interna</strong> = colisão aparente; <strong>teoria externa</strong> = colisão real (ponderação/Alexy).</li>
+<li><strong>Limites dos limites</strong> (Gilmar Mendes): proibição do excesso; núcleo essencial; limite <strong>implícito</strong> na CF.</li>
+<li><strong>Incorporação em 4 fases</strong>: aprovação (Congresso) → ratificação → depósito → <strong>promulgação/publicação</strong> (Decreto).</li>
+<li><strong>Cançado Trindade</strong>: 3 vertentes (jusnaturalista, positivista, <strong>jus-internacionalista</strong>).</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) Os direitos humanos são absolutos, não podendo sofrer limitações ou restrições em caso de colisão com outros direitos.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Relatividade</strong>: nenhum direito é absoluto; há <strong>colisão</strong> resolvida por ponderação/proporcionalidade (teorias interna/externa).</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) A diferença entre direitos humanos e direitos fundamentais é que:
+a) são sinônimos perfeitos.
+b) direitos humanos são reconhecidos na esfera internacional; fundamentais são os positivados na Constituição do Estado.
+c) fundamentais são universais; humanos, só locais.
+d) humanos só existem após a CF/88.
+e) fundamentais dependem de tratado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>DH</strong> = positivados internacionalmente (declarações/tratados); <strong>fundamentais</strong> = <strong>na Constituição</strong> (dimensão interna).</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) Conforme a tese do duplo estatuto (RE 466.343), tratado de DH incorporado pelo rito ordinário possui status de emenda constitucional.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Duplo estatuto</strong>: rito <strong>ordinário</strong> = <strong>supralegal</strong>; só o rito do <strong>art. 5º §3º</strong> (emenda) dá status constitucional.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) A Declaração Universal dos Direitos Humanos (1948) caracteriza-se por:
+a) ser um tratado internacional vinculante.
+b) ser uma declaração que, embora não crie obrigação como tratado, é fonte de direito costumeiro e interpretativa.
+c) tratar apenas de direitos sociais.
+d) ter sido editada pela OIT.
+e) instituir a Corte Internacional de Justiça.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> A DUDH é <strong>declaração</strong> (Res. 217A da ONU) — não vincula como tratado, mas é <strong>costume</strong> e fonte interpretativa (dignidade).</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O controle de convencionalidade consiste em aferir a compatibilidade da norma interna com tratados de direitos humanos, não se confundindo com o controle de constitucionalidade.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Convencionalidade</strong> = norma interna × <strong>tratado de DH</strong>. No Brasil: <strong>concentrado</strong> só com tratados-Emenda (§3º); <strong>difuso</strong> com qualquer tratado de DH.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) O primeiro tratado internacional de DH brasileiro a receber status de emenda constitucional (art. 5º §3º) foi:
+a) o Pacto de San José da Costa Rica.
+b) a Convenção sobre os Direitos das Pessoas com Deficiência (Decreto 6.949/2009).
+c) a DUDH.
+d) o Estatuto de Roma.
+e) o Tratado de Marraqueche.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Convenção da PcD + Protocolo</strong> (Decreto <strong>6.949/2009</strong>) = <strong>1º</strong> tratado-Emenda. San José = <strong>supralegal</strong>; Marraqueche = <strong>3º</strong>.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) É lícita a prisão civil do depositário infiel, por força do Código Civil, prevalecendo sobre o Pacto de San José.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Prisão do <strong>depositário infiel</strong> é <strong>ilícita</strong> (Súmula Vinculante <strong>25</strong>; HC 87.585; RE 466.343) — <strong>supralegal</strong> (San José) vence a <strong>lei</strong>. Só <strong>alimentos</strong> (CF art. 5º LXVII).</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) As gerações/dimensões de direitos humanos correspondem, respectivamente, a:
+a) igualdade, liberdade e solidariedade.
+b) liberdade (civis/políticos), igualdade (sociais/econômicos/culturais) e solidariedade (difusos/coletivos).
+c) solidariedade, liberdade e igualdade.
+d) liberdade, propriedade e segurança.
+e) civis, políticos e penais.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>1ª liberdade</strong>; <strong>2ª igualdade</strong>; <strong>3ª solidariedade</strong>.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) O primeiro Protocolo Facultativo do PIDCP trata da abolição da pena de morte; o segundo trata da comunicação individual.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Está invertido: <strong>1º</strong> = <strong>comunicação individual</strong>; <strong>2º</strong> = <strong>abolir pena de morte</strong>.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O PIDESC (Pacto Internacional dos Direitos Econômicos, Sociais e Culturais) abriga direitos de primeira geração, como liberdade de manifestação.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>PIDESC</strong> = direitos de <strong>2ª geração</strong> (trabalho, saúde, educação, cultura...). Liberdades civis/políticas = <strong>PIDCP</strong> (1ª geração).</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) O princípio pro homine determina que, na interpretação dos tratados de DH, prevalece a norma mais favorável à proteção da pessoa humana.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> <strong>Pro homine</strong> = interpretação <strong>mais favorável</strong> ao titular (princípio basilar da Convenção de Viena em DH).</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Sobre a hierarquia dos tratados de DH no Brasil, é correto afirmar:
+a) todos têm status supraconstitucional.
+b) tratados de DH incorporados com o rito do art. 5º §3º equivalem a emenda constitucional; os incorporados pelo rito ordinário são supralegais.
+c) todos têm status de lei ordinária.
+d) tratados de DH são inferiores à lei ordinária.
+e) o STF adota a tese legalista.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Duplo estatuto</strong> (RE 466.343): §3º = <strong>Emenda</strong>; ordinário = <strong>supralegal</strong>. Não há tese supraconstitucional.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) A colisão entre direitos humanos, segundo a teoria externa, é apenas aparente, devendo o intérprete reputar inexistente o conflito.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Teoria externa</strong> = colisão <strong>real</strong> (ponderação/proporcionalidade — Alexy). <strong>Teoria interna</strong> é que diz ser a colisão <strong>aparente</strong>.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) O controle de convencionalidade em sentido concentrado no Brasil tem como paradigma:
+a) qualquer tratado internacional.
+b) somente tratados de DH incorporados com o rito do art. 5º §3º (emenda constitucional).
+c) somente a DUDH.
+d) somente o Código Civil.
+e) somente leis delegadas.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Concentrado</strong> (ADI/ADC/ADPF) = só tratados-<strong>Emenda</strong> (§3º). <strong>Difuso</strong> = <strong>qualquer</strong> tratado de DH (inclusive supralegal).</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) Os direitos humanos têm como características a universalidade e a indivisibilidade, mas também a relatividade, admitindo-se limitações em determinadas situações.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Universalidade + indivisibilidade + <strong>relatividade</strong> (não são absolutos) — ex.: colisão, limites dos limites, núcleo essencial.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique as gerações de direitos humanos, a diferença entre direitos humanos e direitos fundamentais e o princípio pro homine.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> As gerações/dimensões de direitos humanos são: <strong>1ª (liberdade)</strong> — direitos civis e políticos, de resistência ao Estado; <strong>2ª (igualdade)</strong> — direitos econômicos, sociais e culturais, exigindo prestações estatais; <strong>3ª (solidariedade/fraternidade)</strong> — direitos difusos e coletivos (meio ambiente, paz, autodeterminação). <strong>Direitos humanos</strong> são reconhecidos na esfera internacional (declarações/tratados), enquanto <strong>direitos fundamentais</strong> são os positivados na Constituição. O princípio <strong>pro homine</strong> determina que, na interpretação dos tratados de DH (Convenção de Viena, arts. 31/32), prevalece sempre a interpretação mais favorável à proteção da pessoa humana.</p></details>
+<p><strong>D2.</strong> Explique o duplo estatuto dos tratados de DH, o controle de convencionalidade e a diferença entre PIDCP e PIDESC.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> Conforme o STF (RE 466.343), vigora o <strong>duplo estatuto</strong>: tratados de DH incorporados com o rito do art. 5º §3º da CF/88 têm status de <strong>emenda constitucional</strong>; os incorporados pelo rito ordinário têm status <strong>supralegal</strong> (abaixo da CF, acima da lei). O <strong>controle de convencionalidade</strong> afera a compatibilidade da norma interna com tratados de DH: em controle <strong>concentrado</strong>, o paradigma são os tratados-Emenda; em controle <strong>difuso</strong>, qualquer tratado de DH (ex.: Pacto de San José). O <strong>PIDCP</strong> protege direitos civis e políticos (vida, liberdade, devido processo), com dois protocolos facultativos (comunicação individual e abolição da pena de morte). O <strong>PIDESC</strong> protege direitos econômicos, sociais e culturais (trabalho, saúde, educação, cultura), com protocolo facultativo de comunicação individual.</p></details>
+<hr />
+<p><em>Base: <code>05.Direito Constitucional</code> (Aulas 09–10 — DH, tratados, RE 466.343, SV 25, Súmulas 640/641, controle de convencionalidade), <code>02.Básico.para.Concursos.2020/05.Direito Constitucional</code> (Aulas 07–08 — art. 5º). Complemento: PIDESC e protocolos facultativos (detalhamento ausente na base de 2020). Ver também apostilas de Direito Constitucional e Direitos das Pessoas com Deficiência.</em></p>
+<script>
+(function () {
+  const key = 'apostila-direitos-humanos-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

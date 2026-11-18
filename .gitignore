@@ -1,0 +1,13 @@
+# --- Material de base do usuário (não versionar) ---
+APOSTILAS ESTRATEGIA MD/
+APOSTILAS SEFA MD/
+
+# --- Configuração/cache da sessão Claude Code ---
+.claude/
+**/.claude/
+
+# --- Sistema ---
+Thumbs.db
+.DS_Store
+*.log
+.env

@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arquitetura PDPJ-Br — V2 (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>Arquitetura PDPJ-Br — V2</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-pdpj-br-plataforma-digital-do-poder-judiciario">1. PDPJ-Br (Plataforma Digital do Poder Judiciário)</a></li>
+<li class="toc-h2"><a href="#2-arquitetura-de-microsservicos-conceito-aprofundado">2. Arquitetura de microsserviços (conceito aprofundado)</a></li>
+<li class="toc-h2"><a href="#3-comparacao-estilos-arquiteturais-similares">3. Comparação: estilos arquiteturais similares</a></li>
+<li class="toc-h2"><a href="#4-comparacao-comunicacao-sincrona-assincrona">4. Comparação: comunicação síncrona × assíncrona</a></li>
+<li class="toc-h2"><a href="#1-java-pontos-de-prova">1. Java (pontos de prova)</a></li>
+<li class="toc-h2"><a href="#2-spring-boot">2. Spring Boot</a></li>
+<li class="toc-h2"><a href="#3-spring-cloud">3. Spring Cloud</a></li>
+<li class="toc-h2"><a href="#4-mapstruct-swagger">4. MapStruct, Swagger</a></li>
+<li class="toc-h2"><a href="#5-comparacao-tecnologias-similares-do-ecossistema-java">5. Comparação: tecnologias similares do ecossistema Java</a></li>
+<li class="toc-h2"><a href="#1-rest-conceito-aprofundado">1. REST (conceito aprofundado)</a></li>
+<li class="toc-h2"><a href="#2-comparacao-estilos-de-api-similares">2. Comparação: estilos de API similares</a></li>
+<li class="toc-h2"><a href="#3-json-conceito-aprofundado">3. JSON (conceito aprofundado)</a></li>
+<li class="toc-h2"><a href="#4-comparacao-formatos-de-dados-similares">4. Comparação: formatos de dados similares</a></li>
+<li class="toc-h2"><a href="#1-jpa-e-hibernate-conceito-aprofundado">1. JPA e Hibernate (conceito aprofundado)</a></li>
+<li class="toc-h2"><a href="#2-comparacao-formas-de-acesso-a-dados-similares">2. Comparação: formas de acesso a dados similares</a></li>
+<li class="toc-h2"><a href="#3-hibernate-envers">3. Hibernate Envers</a></li>
+<li class="toc-h2"><a href="#4-flyway-liquibase-migrations">4. Flyway × Liquibase (migrations)</a></li>
+<li class="toc-h2"><a href="#5-bancos-de-dados-do-edital">5. Bancos de dados do edital</a></li>
+<li class="toc-h2"><a href="#1-sso-e-keycloak-conceito-aprofundado">1. SSO e Keycloak (conceito aprofundado)</a></li>
+<li class="toc-h2"><a href="#2-autenticacao-autorizacao-nao-confundir">2. Autenticação × autorização (não confundir!)</a></li>
+<li class="toc-h2"><a href="#3-oauth-20-rfc-6749-conceito-aprofundado">3. OAuth 2.0 (RFC 6749) — conceito aprofundado</a></li>
+<li class="toc-h2"><a href="#4-comparacao-protocolos-de-identidade-similares">4. Comparação: protocolos de identidade similares</a></li>
+<li class="toc-h2"><a href="#5-comparacao-tipos-de-token">5. Comparação: tipos de token</a></li>
+<li class="toc-h2"><a href="#6-boas-praticas-de-seguranca-rfc-9700-oauth-20-security-bcp">6. Boas práticas de segurança — RFC 9700 (OAuth 2.0 Security BCP)</a></li>
+<li class="toc-h2"><a href="#1-message-broker-e-rabbitmq-conceito-aprofundado">1. Message Broker e RabbitMQ (conceito aprofundado)</a></li>
+<li class="toc-h2"><a href="#2-comparacao-brokers-e-padroes-de-integracao-similares">2. Comparação: brokers e padrões de integração similares</a></li>
+<li class="toc-h2"><a href="#3-evento-negocial-webhooks-e-api-reversa">3. Evento negocial, webhooks e API reversa</a></li>
+<li class="toc-h2"><a href="#1-git">1. Git</a></li>
+<li class="toc-h2"><a href="#2-docker-conceito-aprofundado">2. Docker (conceito aprofundado)</a></li>
+<li class="toc-h2"><a href="#3-comparacao-virtualizacao-conteineres">3. Comparação: virtualização × contêineres</a></li>
+<li class="toc-h2"><a href="#4-kubernetes-k8s-e-rancher-conceito-aprofundado">4. Kubernetes (K8s) e Rancher (conceito aprofundado)</a></li>
+<li class="toc-h2"><a href="#5-comparacao-orquestradores-e-ferramentas-similares">5. Comparação: orquestradores e ferramentas similares</a></li>
+<li class="toc-h2"><a href="#6-cicd-conceito-aprofundado">6. CI/CD (conceito aprofundado)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-topico-8-v2-arquitetura-de-desenvolvimento-da-plataforma-digital-do-poder-judiciario-pdpj-br">APOSTILA — TÓPICO 8 (V2): ARQUITETURA DE DESENVOLVIMENTO DA PLATAFORMA DIGITAL DO PODER JUDICIÁRIO (PDPJ-Br)</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Java; arquitetura de microsserviços; API RESTful; JSON; Spring (Spring Cloud, Spring Boot, Spring Eureka, Zuul); MapStruct; Swagger; Service Discovery; API Gateway; persistência (JPA 2.0, Hibernate 4.3+, Hibernate Envers, Flyway); PostgreSQL e H2; autenticação SSO, Keycloak, OAuth2 (RFC 6749), boas práticas RFC 9700; mensageria e webhooks (RabbitMQ, evento negocial, APIs reversas); Git; Docker, Kubernetes, Rancher; CI/CD.</p>
+<p><strong>Base de conhecimento:</strong> conteúdo técnico complementar (o material-base local não cobre a PDPJ-Br). <strong>V2 ampliada</strong>: conceitos explicados com mais profundidade e <strong>quadros comparativos entre tecnologias similares</strong> (o que a banca usa para confundir alternativas).</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-a-pdpj-br-e-a-arquitetura-de-microservicos">MÓDULO I — A PDPJ-Br E A ARQUITETURA DE MICROSERVIÇOS</h1>
+<h2 id="1-pdpj-br-plataforma-digital-do-poder-judiciario">1. PDPJ-Br (Plataforma Digital do Poder Judiciário)</h2>
+<ul>
+<li><strong>Iniciativa do CNJ</strong> para padronizar e compartilhar a <strong>transformação digital</strong> dos tribunais: componentes reutilizáveis (ex.: <strong>PDPJ-Core</strong>, sistemas processuais, autenticação unificada), interoperabilidade e <strong>padrões técnicos</strong> (Resolução CNJ nº 352/2020 e alterações; guias de arquitetura — ver também o Tópico 17, sobre os normativos).</li>
+<li>Objetivos: reduzir retrabalho entre tribunais, garantir interoperabilidade (Base Nacional de Dados Processuais), acelerar a digitalização de serviços judiciais.</li>
+<li>Padrões técnicos relevantes: <strong>API RESTful em JSON</strong>, autenticação <strong>SSO/OAuth2</strong>, versionamento com <strong>Git</strong>, containers (<strong>Docker/Kubernetes</strong>), CI/CD.</li>
+</ul>
+<h2 id="2-arquitetura-de-microsservicos-conceito-aprofundado">2. Arquitetura de microsserviços (conceito aprofundado)</h2>
+<ul>
+<li><strong>Microsserviços</strong>: estilo arquitetural em que o sistema é decomposto em <strong>serviços pequenos, independentes e acoplados por contrato</strong> (API), cada um com <strong>própria base de dados</strong> (<em>database per service</em>), deploy e escalabilidade independentes, organizados por <strong>domínio de negócio</strong> (ex.: serviço de intimações, de petições, de autenticação).</li>
+<li><strong>Por que existe</strong>: em um monolito, qualquer mudança exige rebuild/redeploy de tudo; um único bug derruba o sistema inteiro; times grandes trabalham no mesmo código e conflitam. Microsserviços separam <strong>responsabilidade, escala e falha</strong> por serviço.</li>
+<li><strong>Conceitos-chave</strong>:</li>
+<li><strong>Comunicação síncrona</strong> (HTTP/REST, gRPC — o chamador espera a resposta) × <strong>assíncrona</strong> (mensageria — RabbitMQ, Kafka — o chamador publica e segue; o consumidor processa quando puder).</li>
+<li><strong>Service Discovery</strong> (descoberta de serviços): em vez de endereços fixos, os serviços <strong>registam</strong> instâncias vivas em um servidor de registro e <strong>localizam</strong> uns aos outros dinamicamente (<strong>Spring Eureka</strong> / Netflix Eureka) — essencial quando instâncias sobem/descem (escala automática).</li>
+<li><strong>API Gateway</strong> (ponto de entrada único do exterior: roteamento, autenticação, rate limit, agregação) — <strong>Zuul</strong> (Netflix) / Spring Cloud Gateway.</li>
+<li><strong>Configuração centralizada</strong> (Spring Cloud Config), <strong>circuit breaker</strong> (Resilience4j, Hystrix — "disjuntor" que corta chamadas a serviço falho para não propagar indisponibilidade), <strong>observabilidade</strong> (logs, métricas, tracing — ELK, Prometheus, Jaeger).</li>
+<li><strong>Padrão BFF</strong> (Backend For Frontend), <strong>saga</strong> (consistência eventual entre serviços por eventos), <strong>CQRS/Event Sourcing</strong> (casos avançados).</li>
+</ul>
+<h2 id="3-comparacao-estilos-arquiteturais-similares">3. Comparação: estilos arquiteturais similares</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>Monolito</strong></th>
+<th><strong>Microsserviços</strong></th>
+<th><strong>SOA</strong></th>
+<th><strong>Serverless (FaaS)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unidade</td>
+<td>um único deploy</td>
+<td>vários serviços pequenos</td>
+<td>serviços "grandes" (ESB)</td>
+<td>funções por evento</td>
+</tr>
+<tr>
+<td>Base de dados</td>
+<td>compartilhada</td>
+<td><strong>própria por serviço</strong></td>
+<td>compartilhada/central</td>
+<td>gerenciada pelo provedor</td>
+</tr>
+<tr>
+<td>Escala</td>
+<td>do sistema inteiro</td>
+<td><strong>por serviço</strong></td>
+<td>por serviço (menos granular)</td>
+<td>por invocação</td>
+</tr>
+<tr>
+<td>Deploy</td>
+<td>tudo junto</td>
+<td><strong>independente</strong></td>
+<td>acoplado ao ESB</td>
+<td>por função</td>
+</tr>
+<tr>
+<td>Complexidade</td>
+<td>baixa no início, alta no crescimento</td>
+<td>alta (rede, consistência distribuída)</td>
+<td>alta (ESB, XML)</td>
+<td>baixa operação, lock-in do provedor</td>
+</tr>
+<tr>
+<td>Falha</td>
+<td>derruba o sistema</td>
+<td><strong>isolada por serviço</strong></td>
+<td>propaga pelo ESB</td>
+<td>isolada por função</td>
+</tr>
+<tr>
+<td>Quando usar</td>
+<td>sistemas pequenos/médios</td>
+<td>sistemas grandes, times autônomos</td>
+<td>integração corporativa legada</td>
+<td>cargas esparsas/eventos</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>SOA × microsserviços</strong>: SOA usa ESB (barramento) e XML/WS-*; microsserviços usam APIs leves (REST/JSON) e inteligência nas pontas, <strong>sem barramento central</strong>.</li>
+<li><strong>Monolito modular</strong> (monólito bem separado internamente) é etapa intermediária: muitos projetos migram de monolito modular → microsserviços.</li>
+</ul>
+<h2 id="4-comparacao-comunicacao-sincrona-assincrona">4. Comparação: comunicação síncrona × assíncrona</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>Síncrona</strong> (REST/gRPC)</th>
+<th><strong>Assíncrona</strong> (mensageria/webhook)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Acoplamento</td>
+<td>tempo (ambos vivos no mesmo instante)</td>
+<td><strong>desacoplada no tempo</strong></td>
+</tr>
+<tr>
+<td>Resposta</td>
+<td>imediata (o chamador espera)</td>
+<td>posterior (fila/evento)</td>
+</tr>
+<tr>
+<td>Picos de carga</td>
+<td>derruba o chamado</td>
+<td><strong>fila absorve</strong> o pico</td>
+</tr>
+<tr>
+<td>Falha do receptor</td>
+<td>a chamada falha</td>
+<td>mensagem fica na fila (retry)</td>
+</tr>
+<tr>
+<td>Exemplo PDPJ</td>
+<td>consultar dados de processo</td>
+<td>notificar "movimentação processual"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="modulo-ii-java-e-o-ecossistema-spring">MÓDULO II — JAVA E O ECOSSISTEMA SPRING</h1>
+<h2 id="1-java-pontos-de-prova">1. Java (pontos de prova)</h2>
+<ul>
+<li>Linguagem <strong>orientada a objetos, compilada (bytecode JVM) e multiplataforma</strong> ("write once, run anywhere"): o código compila para <strong>bytecode</strong>, que roda em qualquer <strong>JVM</strong> — o mesmo .jar roda em Windows/Linux sem recompilar.</li>
+<li><strong>JDK (Development Kit)</strong> = ferramentas de desenvolvimento (compilador <code>javac</code>, JVM, bibliotecas) × <strong>JRE (Runtime)</strong> = apenas o que roda aplicações (JVM + bibliotecas) × <strong>JVM (Virtual Machine)</strong> = executa o bytecode e gerencia memória. <em>Analogia: JDK = oficina completa; JRE = só o motor; JVM = o motor.</em></li>
+<li><strong>POO</strong>: encapsulamento (esconder detalhes internos), herança (reuso por especialização), polimorfismo (mesma chamada, comportamentos diferentes), abstração (modelar o essencial); <strong>interfaces</strong> (contrato, múltipla implementação) × <strong>classes abstratas</strong> (reuso + contrato, herança única); <strong>exceptions</strong> (checked × unchecked — <code>RuntimeException</code>); <strong>generics</strong> (tipagem segura em collections), <strong>collections</strong> (<code>List</code> ordenada/duplica, <code>Set</code> sem duplicatas, <code>Map</code> chave→valor), <strong>streams</strong> (Java 8+, processamento declarativo de coleções), <strong>lambda</strong> (funções anônimas).</li>
+<li><strong>Gerenciamento de memória</strong>: garbage collector (GC) libera memória automaticamente; sem ponteiros explícitos (diferente de C/C++).</li>
+</ul>
+<h2 id="2-spring-boot">2. Spring Boot</h2>
+<ul>
+<li>Framework que <strong>acelera</strong> o desenvolvimento Spring com <strong>autoconfiguração</strong> (deduz configuração a partir das dependências — "opinionated defaults"), servidor embarcado (Tomcat — não precisa instalar servidor de aplicação), convenções sobre configuração, <code>application.properties</code>/<code>yml</code>, <strong>starters</strong> (pacotes de dependências prontos, ex.: <code>spring-boot-starter-web</code>, <code>spring-boot-starter-data-jpa</code>).</li>
+<li><strong>Anotações essenciais</strong>: <code>@SpringBootApplication</code>, <code>@RestController</code> (REST + serialização JSON), <code>@Service</code> (regra de negócio), <code>@Repository</code> (acesso a dados), <code>@Component</code>, <code>@Autowired</code> (injeção), <code>@RequestMapping</code>/<code>@GetMapping</code> etc., <code>@Entity</code> (JPA), <code>@Configuration</code>, <code>@Bean</code>.</li>
+<li><strong>Injeção de dependência (IoC)</strong>: o <strong>container Spring</strong> instancia e injeta dependências (o programador <strong>não</strong> faz <code>new</code> de serviços) — desacopla classes e facilita testes (mock de dependências).</li>
+</ul>
+<h2 id="3-spring-cloud">3. Spring Cloud</h2>
+<ul>
+<li>Conjunto de projetos para <strong>sistemas distribuídos</strong>: <strong>Spring Cloud Netflix Eureka</strong> (service discovery — servidor de registro + clientes <code>@EnableEurekaClient</code>), <strong>Zuul/Spring Cloud Gateway</strong> (API Gateway), <strong>Spring Cloud Config</strong> (configuração central versionada, ex.: no Git), <strong>OpenFeign</strong> (clientes HTTP declarativos — "interface Java vira chamada REST"), <strong>Hystrix/Resilience4j</strong> (circuit breaker), <strong>Spring Cloud Stream</strong> (mensageria sobre RabbitMQ/Kafka).</li>
+</ul>
+<h2 id="4-mapstruct-swagger">4. MapStruct, Swagger</h2>
+<ul>
+<li><strong>MapStruct</strong>: biblioteca de <strong>mapeamento objeto-objeto</strong> (DTO ↔ entidade) que <strong>gera código em tempo de compilação</strong> (o compilador escreve o mapper; rápido, sem reflexão, erros de mapeamento pegos no build).</li>
+<li><strong>Swagger (OpenAPI)</strong>: especificação + ferramentas para <strong>documentar e testar APIs REST</strong> — <code>springdoc-openapi</code>/<code>springfox</code> gera a <strong>UI interativa</strong> (Swagger UI, com botão "Try it out"); o contrato <strong>OpenAPI</strong> (YAML/JSON) é a <strong>fonte do contrato da API</strong> — base para testes e integração em microsserviços.</li>
+</ul>
+<h2 id="5-comparacao-tecnologias-similares-do-ecossistema-java">5. Comparação: tecnologias similares do ecossistema Java</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>MapStruct</strong></th>
+<th><strong>ModelMapper / BeanUtils</strong></th>
+<th><strong>Dozer</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quando mapeia</td>
+<td><strong>compilação</strong> (código gerado)</td>
+<td><strong>execução</strong> (reflexão)</td>
+<td>execução (reflexão)</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>alta</td>
+<td>média/baixa</td>
+<td>baixa</td>
+</tr>
+<tr>
+<td>Erros de mapeamento</td>
+<td>pego no <strong>build</strong></td>
+<td>só em <strong>runtime</strong></td>
+<td>só em runtime</td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td>DTO↔entidade em alta escala</td>
+<td>casos simples</td>
+<td>legado</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>Swagger/OpenAPI</strong></th>
+<th><strong>WSDL (SOAP)</strong></th>
+<th><strong>Javadoc</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O que documenta</td>
+<td><strong>API REST</strong> (contrato executável)</td>
+<td>serviço SOAP</td>
+<td>código Java</td>
+</tr>
+<tr>
+<td>Formato</td>
+<td>OpenAPI (YAML/JSON)</td>
+<td>XML</td>
+<td>HTML</td>
+</tr>
+<tr>
+<td>Testável</td>
+<td>sim (UI interativa)</td>
+<td>via cliente SOAP</td>
+<td>não</td>
+</tr>
+<tr>
+<td>Papel em microsserviços</td>
+<td><strong>contrato entre serviços</strong></td>
+<td>legado corporativo</td>
+<td>documentação interna</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Spring Boot × Spring Framework "puro"</strong>: Boot = autoconfiguração + servidor embarcado + starters (projeto sobe com uma classe); o Framework puro exige configuração XML/Java extensa e servidor de aplicação externo (Tomcat/WildFly instalado à parte).</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-api-restful-json-e-formatos-de-dados">MÓDULO III — API RESTFUL, JSON E FORMATOS DE DADOS</h1>
+<h2 id="1-rest-conceito-aprofundado">1. REST (conceito aprofundado)</h2>
+<ul>
+<li><strong>REST (Representational State Transfer)</strong>: <strong>estilo arquitetural</strong> (não protocolo!) para APIs sobre HTTP em que tudo é um <strong>recurso</strong> identificado por <strong>URI</strong>, manipulado por <strong>métodos HTTP</strong> com <strong>representações</strong> (JSON/XML) — comunicação <strong>stateless</strong> (cada requisição carrega tudo o que é necessário; o servidor <strong>não guarda sessão</strong>).</li>
+<li><strong>Restrições de REST</strong> (o que faz uma API ser "RESTful"): cliente-servidor, <strong>stateless</strong>, cacheável, interface uniforme (URI + métodos + representações), sistema em camadas.</li>
+<li><strong>Métodos HTTP</strong>: <code>GET</code> (ler — idempotente e cacheável), <code>POST</code> (criar — não idempotente), <code>PUT</code> (atualizar por <strong>substituição completa</strong> — idempotente), <code>PATCH</code> (atualização <strong>parcial</strong>), <code>DELETE</code> (remover — idempotente).</li>
+<li><strong>Códigos de status</strong>: <code>200 OK</code>, <code>201 Created</code>, <code>204 No Content</code>, <code>400 Bad Request</code> (requisição inválida), <code>401 Unauthorized</code> (<strong>não autenticado</strong>), <code>403 Forbidden</code> (autenticado <strong>sem permissão</strong>), <code>404 Not Found</code>, <code>409 Conflict</code>, <code>500 Internal Server Error</code>.</li>
+<li><strong>Boas práticas</strong>: versionamento da API (<code>/v1/...</code>), paginação, HATEOAS (links de navegação — nível mais "puro" de REST, raramente exigido), autenticação OAuth2/JWT, tratamento de erros consistente.</li>
+</ul>
+<h2 id="2-comparacao-estilos-de-api-similares">2. Comparação: estilos de API similares</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>REST</strong></th>
+<th><strong>SOAP</strong></th>
+<th><strong>GraphQL</strong></th>
+<th><strong>gRPC</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Natureza</td>
+<td><strong>estilo</strong> arquitetural</td>
+<td><strong>protocolo</strong> (WSDL, XML)</td>
+<td>linguagem de consultas</td>
+<td>framework RPC (Google)</td>
+</tr>
+<tr>
+<td>Formato</td>
+<td><strong>JSON</strong> (comum)</td>
+<td>XML</td>
+<td>JSON</td>
+<td><strong>binário (protobuf)</strong></td>
+</tr>
+<tr>
+<td>Contrato</td>
+<td>OpenAPI (opcional)</td>
+<td><strong>WSDL (obrigatório)</strong></td>
+<td>Schema (SDL)</td>
+<td><code>.proto</code> (obrigatório)</td>
+</tr>
+<tr>
+<td>Transporte</td>
+<td>HTTP</td>
+<td>HTTP/SMTP etc.</td>
+<td>HTTP</td>
+<td>HTTP/2</td>
+</tr>
+<tr>
+<td>Peso</td>
+<td>leve</td>
+<td>verboso</td>
+<td>leve (só o pedido)</td>
+<td><strong>muito leve/rápido</strong></td>
+</tr>
+<tr>
+<td>Caso típico</td>
+<td>APIs web públicas/internas</td>
+<td>sistemas corporativos legados, WS-Security</td>
+<td>clientes com necessidades variadas (mobile)</td>
+<td>microsserviço↔microsserviço de alta performance</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Pegadinha clássica</strong>: "REST substitui SOAP" é simplificação — REST é <strong>estilo</strong>, SOAP é <strong>protocolo</strong>; JSON não "substitui" SOAP (REST é que é o estilo leve que se popularizou no lugar de WS-*).</li>
+</ul>
+<h2 id="3-json-conceito-aprofundado">3. JSON (conceito aprofundado)</h2>
+<ul>
+<li><strong>JSON (JavaScript Object Notation)</strong>: formato <strong>leve, texto puro</strong> de troca de dados — <strong>objetos</strong> (<code>{ "chave": valor }</code>), <strong>arrays</strong> (<code>[...]</code>), tipos: string, number (inteiros e decimais), boolean, null, object, array.</li>
+<li><strong>Independente de linguagem</strong> (nasceu do JavaScript, mas todo idioma tem parser); padrão de facto de APIs REST por ser legível, leve e nativo em navegadores.</li>
+<li>No Java: serialização/desserialização com <strong>Jackson</strong> (padrão do Spring Boot) ou Gson.</li>
+</ul>
+<h2 id="4-comparacao-formatos-de-dados-similares">4. Comparação: formatos de dados similares</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>JSON</strong></th>
+<th><strong>XML</strong></th>
+<th><strong>YAML</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sintaxe</td>
+<td><code>{"chave": valor}</code></td>
+<td><code>&lt;tag&gt;valor&lt;/tag&gt;</code></td>
+<td>indentação (chave: valor)</td>
+</tr>
+<tr>
+<td>Verbosidade</td>
+<td><strong>baixa</strong></td>
+<td>alta</td>
+<td>baixa</td>
+</tr>
+<tr>
+<td>Schema</td>
+<td>JSON Schema (opcional)</td>
+<td>XSD (formal)</td>
+<td>limitado</td>
+</tr>
+<tr>
+<td>Comentários</td>
+<td>não</td>
+<td>sim (<code>&lt;!-- --&gt;</code>)</td>
+<td>sim (<code>#</code>)</td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td><strong>APIs REST</strong></td>
+<td>SOAP, documentos, legado</td>
+<td><strong>arquivos de configuração</strong> (K8s, docker-compose)</td>
+</tr>
+<tr>
+<td>Parser em JS</td>
+<td>nativo (<code>JSON.parse</code>)</td>
+<td>via DOM</td>
+<td>via biblioteca</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>JSON × XML</strong> em prova: JSON é mais leve e nativo em JavaScript; XML é mais verboso, com esquemas (XSD), namespaces e suporte a comentários/atributos.</li>
+</ul>
+<hr />
+<h1 id="modulo-iv-persistencia-jpa-hibernate-flyway">MÓDULO IV — PERSISTÊNCIA: JPA, HIBERNATE, FLYWAY</h1>
+<h2 id="1-jpa-e-hibernate-conceito-aprofundado">1. JPA e Hibernate (conceito aprofundado)</h2>
+<ul>
+<li><strong>ORM (Object-Relational Mapping)</strong>: técnica que <strong>mapeia objetos Java ↔ tabelas relacionais</strong> — o programador trabalha com entidades/objetos; o ORM traduz para SQL (INSERT/UPDATE/SELECT). Elimina SQL manual repetitivo, mas exige entender o que o ORM gera (pegadinhas de performance).</li>
+<li><strong>JPA (Java Persistence API)</strong>: <strong>especificação</strong> (padrão Jakarta/Java — um conjunto de interfaces/anotações: <code>@Entity</code>, <code>EntityManager</code>, JPQL). <strong>Hibernate</strong> é a <strong>implementação</strong> mais usada (outra: EclipseLink). <em>Regra de prova: JPA define as regras; Hibernate as executa.</em></li>
+<li><strong>Anotações JPA</strong>: <code>@Entity</code>, <code>@Table</code>, <code>@Id</code>, <code>@GeneratedValue</code>, <code>@Column</code>, <code>@OneToMany</code>, <code>@ManyToOne</code>, <code>@ManyToMany</code>, <code>@JoinColumn</code>, <code>@Embedded</code>.</li>
+<li><strong>EntityManager</strong> (ciclo de vida/persistência) e <strong>JPQL</strong> (consulta orientada a objetos: <code>SELECT e FROM Entidade e WHERE ...</code> — consulta a <strong>entidades</strong>, não a tabelas).</li>
+<li><strong>Estados da entidade</strong>: <em>transient</em> (nunca persistida), <em>managed</em> (controlada pelo EntityManager), <em>detached</em> (foi persistida, mas saiu do contexto), <em>removed</em> (marcada para exclusão).</li>
+<li><strong>Lazy × eager loading</strong>: <em>eager</em> carrega o relacionamento junto; <em>lazy</em> carrega só quando acessado. Acessar lazy fora da sessão → <code>LazyInitializationException</code>; consultas com lazy mal planejadas → <strong>problema N+1</strong> (1 consulta + N consultas de relacionamento — pegadinha clássica de performance).</li>
+<li>Versões citadas no edital: <strong>JPA 2.0</strong> e <strong>Hibernate 4.3+</strong> (metamodelo, criteria API, cache de segundo nível).</li>
+</ul>
+<h2 id="2-comparacao-formas-de-acesso-a-dados-similares">2. Comparação: formas de acesso a dados similares</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>JPA/Hibernate (ORM)</strong></th>
+<th><strong>JDBC puro</strong></th>
+<th><strong>jOOQ / MyBatis</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nível</td>
+<td>alto (objetos)</td>
+<td>baixo (SQL manual)</td>
+<td>intermediário</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td>gerado pelo ORM</td>
+<td>escrito à mão</td>
+<td>escrito/referenciado</td>
+</tr>
+<tr>
+<td>Produtividade</td>
+<td>alta</td>
+<td>baixa</td>
+<td>média</td>
+</tr>
+<tr>
+<td>Controle do SQL</td>
+<td>indireto (JPQL/SQL nativo)</td>
+<td><strong>total</strong></td>
+<td>alto</td>
+</tr>
+<tr>
+<td>Risco típico</td>
+<td>N+1, consultas ineficientes</td>
+<td>boilerplate, SQL injection</td>
+<td>menor abstração</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>JPA × Hibernate</strong>: JPA = <strong>especificação</strong> (API de anotações); Hibernate = <strong>implementação</strong> (ferramenta que dá vida à especificação, com recursos extras como Envers).</li>
+</ul>
+<h2 id="3-hibernate-envers">3. Hibernate Envers</h2>
+<ul>
+<li><strong>Envers</strong>: módulo do Hibernate para <strong>auditoria e versionamento de entidades</strong> — mantém o <strong>histórico de alterações</strong> em tabelas <code>*_AUD</code> + tabela de revisões; permite consultas temporais ("como estava este processo em D?"). Anotações: <code>@Audited</code>, <code>@NotAudited</code>. <em>Não confundir: Envers audita <strong>dados</strong>; Git versiona <strong>código</strong>.</em></li>
+</ul>
+<h2 id="4-flyway-liquibase-migrations">4. Flyway × Liquibase (migrations)</h2>
+<ul>
+<li><strong>Migrations de banco</strong>: scripts versionados que evoluem o <strong>schema</strong> do banco de forma controlada e reprodutível entre ambientes (dev/test/prod) — sem "aquele campo que alguém criou à mão em produção".</li>
+<li><strong>Flyway</strong>: scripts <strong>SQL puro</strong> nomeados <code>V1__create_table.sql</code>, <code>V2__add_column.sql</code> — aplicados <strong>em ordem</strong>, com histórico registrado em <code>flyway_schema_history</code>. Simples e direto.</li>
+<li><strong>Liquibase</strong>: <strong>changelogs</strong> em XML/YAML/SQL com <strong>changesets</strong> — abstrai diferenças entre SGBDs (um changelog para Oracle e PostgreSQL), permite rollback lógico.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>Flyway</strong></th>
+<th><strong>Liquibase</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Formato do script</td>
+<td><strong>SQL</strong> (V1__desc.sql)</td>
+<td>XML/YAML/SQL (changesets)</td>
+</tr>
+<tr>
+<td>Aprendizado</td>
+<td>simples</td>
+<td>mais estruturado</td>
+</tr>
+<tr>
+<td>Multi-SGBD</td>
+<td>um script por banco</td>
+<td><strong>um changeset, vários bancos</strong></td>
+</tr>
+<tr>
+<td>Rollback</td>
+<td>limitado (SQL manual)</td>
+<td>suportado (lógico)</td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td>projetos Java/Spring</td>
+<td>ambientes heterogêneos</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-bancos-de-dados-do-edital">5. Bancos de dados do edital</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>PostgreSQL</strong></th>
+<th><strong>H2</strong></th>
+<th><strong>Oracle 19c</strong></th>
+<th><strong>MySQL 8</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipo</td>
+<td>relacional open source</td>
+<td><strong>em memória/arquivo</strong>, leve</td>
+<td>relacional comercial</td>
+<td>relacional open source</td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td><strong>produção</strong> (PDPJ)</td>
+<td><strong>testes automatizados/protótipos</strong></td>
+<td>corporativo/legado</td>
+<td>web</td>
+</tr>
+<tr>
+<td>Diferenciais</td>
+<td>ACID, JSON/JSONB, PostGIS</td>
+<td>sobe com a aplicação, JDBC</td>
+<td>robustez, recursos avançados</td>
+<td>simplicidade, ecossistema web</td>
+</tr>
+<tr>
+<td>Versões no edital</td>
+<td>15, 16, 17, 18</td>
+<td>—</td>
+<td>19c</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>H2</strong>: por ser em memória, o banco "nasce" a cada execução dos testes — ideal para testes rápidos; <strong>não</strong> é banco de produção.</li>
+</ul>
+<h1 id="modulo-v-autenticacao-sso-keycloak-e-oauth2">MÓDULO V — AUTENTICAÇÃO, SSO, KEYCLOAK E OAUTH2</h1>
+<h2 id="1-sso-e-keycloak-conceito-aprofundado">1. SSO e Keycloak (conceito aprofundado)</h2>
+<ul>
+<li><strong>SSO (Single Sign-On)</strong>: o usuário autentica <strong>uma vez</strong> e acessa <strong>vários sistemas</strong> sem novo login (ex.: login único do PDPJ para sistemas de tribunais). Ganho: menos senhas; risco: a sessão única deve ser bem protegida (se cai, cai tudo).</li>
+<li><strong>Keycloak</strong>: servidor de <strong>identidade e acesso</strong> open source (Red Hat) — SSO, gestão de usuários/papéis/realm, <strong>OIDC/OAuth2</strong>, SAML, login social, <strong>MFA</strong>, federation LDAP/AD. É a peça de identidade da arquitetura PDPJ.</li>
+</ul>
+<h2 id="2-autenticacao-autorizacao-nao-confundir">2. Autenticação × autorização (não confundir!)</h2>
+<ul>
+<li><strong>Autenticação</strong> = <strong>quem é você</strong> (login, credenciais, token de identidade). <strong>Autorização</strong> = <strong>o que você pode fazer</strong> (permissões, papéis, escopos). <em>Análogo: passaporte (autenticação) × visto (autorização).</em></li>
+</ul>
+<h2 id="3-oauth-20-rfc-6749-conceito-aprofundado">3. OAuth 2.0 (RFC 6749) — conceito aprofundado</h2>
+<ul>
+<li><strong>OAuth2</strong>: framework de <strong>autorização</strong> (<strong>não</strong> de autenticação!) para <strong>delegar acesso</strong>: o usuário concede a um aplicativo acesso <strong>limitado</strong> aos seus recursos <strong>sem compartilhar a senha</strong> (ex.: "este app pode ler seus processos, mas não peticionar").</li>
+<li><strong>Papéis</strong>: <strong>Resource Owner</strong> (usuário dono dos dados), <strong>Client</strong> (app que pede acesso), <strong>Authorization Server</strong> (emite tokens após consentimento), <strong>Resource Server</strong> (API protegida que valida o token).</li>
+<li><strong>Fluxos (grant types)</strong>:</li>
+<li><strong>Authorization Code</strong> (o mais seguro para apps com backend) — com <strong>PKCE</strong> (code verifier/challenge) obrigatório para SPAs e apps nativos.</li>
+<li><strong>Client Credentials</strong> (comunicação serviço↔serviço, <strong>sem usuário</strong> — ex.: microsserviços da PDPJ chamando uns aos outros).</li>
+<li><strong>Implicit</strong> (legado, desaconselhado — token exposto no navegador) e <strong>Password</strong> (desaconselhado — a senha vai ao client; RFC 9700).</li>
+<li><strong>Tokens</strong>: <strong>Access Token</strong> (curta duração, autoriza chamadas à API), <strong>Refresh Token</strong> (renova o access token sem novo login), <strong>ID Token</strong> (OIDC — diz <strong>quem é</strong> o usuário). <strong>JWT (JSON Web Token)</strong> = formato comum de token assinado (<strong>header.payload.signature</strong>) — o servidor da API valida a assinatura sem consultar o emissor a cada chamada.</li>
+</ul>
+<h2 id="4-comparacao-protocolos-de-identidade-similares">4. Comparação: protocolos de identidade similares</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>OAuth 2.0</strong></th>
+<th><strong>OpenID Connect (OIDC)</strong></th>
+<th><strong>SAML 2.0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Finalidade</td>
+<td><strong>autorização</strong> (delegar acesso)</td>
+<td><strong>autenticação/identidade</strong> sobre OAuth2</td>
+<td>autenticação federada (SSO corporativo)</td>
+</tr>
+<tr>
+<td>Token</td>
+<td>access token (JSON/JWT)</td>
+<td><strong>ID token</strong> + access token</td>
+<td>assertion XML</td>
+</tr>
+<tr>
+<td>Formato</td>
+<td>JSON</td>
+<td>JSON</td>
+<td><strong>XML</strong></td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td>APIs, delegação de acesso</td>
+<td><strong>login SSO moderno</strong> (Keycloak)</td>
+<td>SSO corporativo legado (AD/empresas)</td>
+</tr>
+<tr>
+<td>Mobile/SPA</td>
+<td>bom (com PKCE)</td>
+<td><strong>o recomendado</strong></td>
+<td>ruim (XML pesado)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Pegadinha rei</strong>: <strong>OAuth2 = autorização; OIDC = autenticação</strong>. Dizer "OAuth2 autentica o usuário" é errado — quem autentica é o OIDC (ou SAML) por cima do OAuth2.</li>
+</ul>
+<h2 id="5-comparacao-tipos-de-token">5. Comparação: tipos de token</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>JWT (token opaco/assinado)</strong></th>
+<th><strong>Token opaco (reference)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conteúdo</td>
+<td><strong>payload legível</strong> (claims) — só assinado, não cifrado</td>
+<td>string sem sentido; o servidor guarda o estado</td>
+</tr>
+<tr>
+<td>Validação</td>
+<td>local (verificar assinatura/exp)</td>
+<td><strong>chamar o servidor</strong> a cada requisição</td>
+</tr>
+<tr>
+<td>Revogação</td>
+<td>difícil (válido até expirar)</td>
+<td><strong>fácil (apagar no servidor)</strong></td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>alta</td>
+<td>menor (round-trip)</td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td>microsserviços (validação local)</td>
+<td>sessões centralizadas</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-boas-praticas-de-seguranca-rfc-9700-oauth-20-security-bcp">6. Boas práticas de segurança — RFC 9700 (OAuth 2.0 Security BCP)</h2>
+<p><em>(Complementar — atualização de segurança do OAuth 2.0.)</em>
+- Usar <strong>PKCE</strong> em todos os fluxos de authorization code; <strong>evitar</strong> os grants <strong>password</strong> e <strong>implicit</strong>.
+- <strong>Access tokens de curta duração</strong>; refresh tokens <strong>rotativos</strong> com <strong>detecção de reuso</strong> (se um refresh roubado for reusado, revoga-se a família inteira).
+- <strong>TLS obrigatório</strong>; restrição rigorosa de <strong>redirect URIs</strong> (lista exata, sem curingas perigosos); validar <code>state</code> (anti-CSRF) e <code>nonce</code> (anti-replay).
+- Não expor tokens em URLs (nem logs); limitar escopos (<strong>least privilege</strong>); monitorar e revogar tokens.
+- <strong>OIDC</strong>: camada de <strong>autenticação</strong> sobre o OAuth2 (login + identidade do usuário).</p>
+<hr />
+<h1 id="modulo-vi-mensageria-e-webhooks">MÓDULO VI — MENSAGERIA E WEBHOOKS</h1>
+<h2 id="1-message-broker-e-rabbitmq-conceito-aprofundado">1. Message Broker e RabbitMQ (conceito aprofundado)</h2>
+<ul>
+<li><strong>Message broker</strong>: intermediário <strong>assíncrono</strong> entre <strong>produtor</strong> (publica) e <strong>consumidor</strong> (assina) — <strong>desacopla</strong> serviços (não precisam se conhecer nem estar vivos ao mesmo tempo), <strong>absorve picos</strong> de carga (a fila cresce) e <strong>garante entrega</strong> (retry, dead-letter).</li>
+<li><strong>RabbitMQ</strong>: broker open source baseado no protocolo <strong>AMQP</strong> — o produtor envia a uma <strong>exchange</strong>; a exchange roteia para <strong>filas (queues)</strong> segundo <strong>bindings</strong>; consumidores pegam das filas com <strong>confirmação (ack)</strong> — se o consumidor cair, a mensagem volta/reprocessa; <strong>dead-letter queues</strong> guardam mensagens que falharam repetidamente.</li>
+<li><strong>Exchange types</strong>: <strong>direct</strong> (chave exata), <strong>topic</strong> (padrões com curinga <code>*</code>/<code>#</code>), <strong>fanout</strong> (broadcast para todas as filas), <strong>headers</strong> (por cabeçalhos).</li>
+<li><strong>Garantias de entrega</strong>: <strong>at-most-once</strong> (pode perder — sem confirmação), <strong>at-least-once</strong> (pode duplicar — confirma + retry; exige <strong>idempotência</strong> no consumidor), <strong>exactly-once</strong> (exatamente uma vez — mais caro/complexo).</li>
+<li><strong>Padrão</strong>: usar <strong>at-least-once + consumidor idempotente</strong> (chave de idempotência) — combinação mais cobrada em prova.</li>
+</ul>
+<h2 id="2-comparacao-brokers-e-padroes-de-integracao-similares">2. Comparação: brokers e padrões de integração similares</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>RabbitMQ</strong></th>
+<th><strong>Kafka</strong></th>
+<th><strong>ActiveMQ / SQS</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modelo</td>
+<td><strong>fila</strong> (broker tradicional, AMQP)</td>
+<td><strong>log distribuído</strong> (append-only, tópicos com retenção)</td>
+<td>filas (JPA/JMS / nuvem)</td>
+</tr>
+<tr>
+<td>Mensagem</td>
+<td>consumida e (em geral) removida</td>
+<td><strong>retida por tempo</strong> — vários consumidores relêem</td>
+<td>consumida e removida</td>
+</tr>
+<tr>
+<td>Ponto forte</td>
+<td>roteamento flexível (exchanges), ack</td>
+<td><strong>streaming</strong>, alto throughput, replay</td>
+<td>simplicidade / managed</td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td><strong>eventos negociais, filas de trabalho</strong></td>
+<td>telemetria, eventos em escala</td>
+<td>filas simples</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>Webhook (push)</strong></th>
+<th><strong>Polling (pull)</strong></th>
+<th><strong>WebSocket / SSE</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quem inicia</td>
+<td>o <strong>provedor chama</strong> sua URL</td>
+<td>você <strong>consulta</strong> periodicamente</td>
+<td>canal persistente</td>
+</tr>
+<tr>
+<td>Latência</td>
+<td>baixa (imediata)</td>
+<td>alta (intervalo do polling)</td>
+<td>baixa (tempo real)</td>
+</tr>
+<tr>
+<td>Custo</td>
+<td>baixo (só quando há evento)</td>
+<td>alto (consultas em vão)</td>
+<td>conexão mantida</td>
+</tr>
+<tr>
+<td>Riscos</td>
+<td>endpoint público, reentrega duplicada</td>
+<td>atraso + carga</td>
+<td>infra mais complexa</td>
+</tr>
+<tr>
+<td>Exemplo PDPJ</td>
+<td>"processo movimentado → callback"</td>
+<td>"a cada 5 min, houve movimento?"</td>
+<td>painéis em tempo real</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-evento-negocial-webhooks-e-api-reversa">3. Evento negocial, webhooks e API reversa</h2>
+<ul>
+<li><strong>Evento negocial</strong>: notificação de que <strong>algo de negócio aconteceu</strong> (ex.: processo movimentado, intimação publicada) — publicado para outros sistemas reagirem (padrão <strong>event-driven architecture</strong>). É o coração da integração da PDPJ com sistemas de tribunais.</li>
+<li><strong>Webhook</strong>: <strong>callback HTTP</strong> — quando o evento ocorre, o provedor faz uma requisição HTTP para a <strong>URL registrada do assinante</strong> (push), em vez de o consumidor ficar consultando (polling). Exige: endpoint público, <strong>assinatura do payload</strong> (HMAC — prova autenticidade), <strong>reentrega idempotente</strong> (o consumidor não pode duplicar efeitos), tratamento de falhas e timeouts.</li>
+<li><strong>API reversa / integração inversa</strong>: padrão em que um sistema interno expõe uma <strong>API de callback</strong> para receber notificações de sistemas externos (comum na integração do PDPJ com tribunais/órgãos externos).</li>
+<li><strong>Idempotência</strong>: chave única por evento — processar duas vezes o mesmo evento produz o <strong>mesmo efeito</strong> que processar uma (essencial com at-least-once e reentregas de webhook).</li>
+</ul>
+<hr />
+<h1 id="modulo-vii-git-docker-kubernetes-rancher-e-cicd">MÓDULO VII — GIT, DOCKER, KUBERNETES, RANCHER E CI/CD</h1>
+<h2 id="1-git">1. Git</h2>
+<p>Ver apostila T7 (DevOps): controle de versão <strong>distribuído</strong> (cada dev tem o repositório completo), branches, merge/rebase, pull requests, tags — usado em todos os projetos da PDPJ-Br. <strong>Distribuído × centralizado (SVN)</strong>: em SVN o histórico vive no servidor central; em Git cada clone é um repositório completo (trabalho offline, branches baratos).</p>
+<h2 id="2-docker-conceito-aprofundado">2. Docker (conceito aprofundado)</h2>
+<ul>
+<li><strong>Docker</strong>: plataforma de <strong>contêineres</strong> — empacota aplicação + dependências (runtime, bibliotecas) em <strong>imagem</strong> leve e portável. O contêiner <strong>compartilha o kernel do SO hospedeiro</strong> (diferente de VM, que tem SO próprio) — sobe em segundos e roda igual em dev/test/prod.</li>
+<li><strong>Conceitos</strong>: <strong>Dockerfile</strong> (receita/instruções da imagem), <strong>imagem</strong> (template somente-leitura), <strong>contêiner</strong> (instância em execução da imagem), <strong>registry</strong> (Docker Hub/privado — onde imagens ficam), <strong>volumes</strong> (dados persistentes fora do contêiner), <strong>redes</strong>.</li>
+<li><strong>Dockerfile</strong> comum: <code>FROM</code> (imagem base), <code>WORKDIR</code>, <code>COPY</code>, <code>RUN</code> (compila/instala), <code>EXPOSE</code> (porta), <code>CMD</code>/<code>ENTRYPOINT</code> (o que roda ao iniciar).</li>
+<li><strong>docker-compose</strong>: orquestra múltiplos contêineres em um host (típico de <strong>dev local</strong>: app + banco + fila com um comando).</li>
+</ul>
+<h2 id="3-comparacao-virtualizacao-conteineres">3. Comparação: virtualização × contêineres</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>VM (ex.: VMware, VirtualBox)</strong></th>
+<th><strong>Contêiner (Docker)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O que inclui</td>
+<td>SO completo + app</td>
+<td>só app + dependências</td>
+</tr>
+<tr>
+<td>Kernel</td>
+<td><strong>próprio</strong> por VM</td>
+<td><strong>compartilhado</strong> com o hospedeiro</td>
+</tr>
+<tr>
+<td>Tamanho</td>
+<td>GBs</td>
+<td>MBs</td>
+</tr>
+<tr>
+<td>Inicialização</td>
+<td>minutos</td>
+<td><strong>segundos</strong></td>
+</tr>
+<tr>
+<td>Isolamento</td>
+<td>mais forte (hardware)</td>
+<td>mais leve (namespaces/cgroups)</td>
+</tr>
+<tr>
+<td>Portabilidade</td>
+<td>média</td>
+<td><strong>alta</strong> ("roda igual em todo lugar")</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-kubernetes-k8s-e-rancher-conceito-aprofundado">4. Kubernetes (K8s) e Rancher (conceito aprofundado)</h2>
+<ul>
+<li><strong>Kubernetes</strong>: <strong>orquestrador de contêineres</strong> (padrão de mercado, nascido no Google) — automatiza deploy, <strong>escalabilidade automática</strong>, <strong>auto-recuperação</strong> (reinicia/reagenda contêiner morto), deploy sem downtime (rollouts/rollbacks), service discovery e balanceamento nativos. Responde: "como rodar <strong>milhares</strong> de contêineres em produção com confiança".</li>
+<li><strong>Conceitos</strong>: <strong>Pod</strong> (menor unidade de deploy — 1+ contêineres que compartilham rede/volumes; <strong>não</strong> é o contêiner isolado!), <strong>Deployment</strong> (replicação/rollouts/rollbacks de Pods), <strong>Service</strong> (exposição estável com IP — ClusterIP interno / NodePort / LoadBalancer externo), <strong>Ingress</strong> (roteamento HTTP/domínios/SSL), <strong>ConfigMap/Secret</strong> (configuração/credenciais — <strong>nunca</strong> senha em imagem), <strong>Namespace</strong> (isolamento lógico), <strong>HPA</strong> (autoscaling por CPU/métricas), <strong>StatefulSet</strong> (aplicações com estado, ex.: banco), <strong>DaemonSet</strong> (um Pod por nó), <strong>Helm</strong> (gerenciador de pacotes/charts).</li>
+<li><strong>Rancher</strong>: plataforma de <strong>gestão de clusters Kubernetes</strong> (multi-cluster, UI gráfica, RBAC, monitoramento, provisionamento) — <strong>gerencia</strong> o K8s; <strong>não</strong> é um orquestrador concorrente.</li>
+</ul>
+<h2 id="5-comparacao-orquestradores-e-ferramentas-similares">5. Comparação: orquestradores e ferramentas similares</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>Kubernetes</strong></th>
+<th><strong>Docker Swarm</strong></th>
+<th><strong>Rancher</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O que é</td>
+<td><strong>orquestrador</strong> de contêineres</td>
+<td>orquestrador simples do Docker</td>
+<td><strong>gestor</strong> de clusters K8s</td>
+</tr>
+<tr>
+<td>Escala/complexidade</td>
+<td>alta (padrão de mercado)</td>
+<td>baixa (fácil, menos recursos)</td>
+<td>UI multi-cluster, RBAC</td>
+</tr>
+<tr>
+<td>Autoscaling/self-heal</td>
+<td><strong>sim (HPA)</strong></td>
+<td>limitado</td>
+<td>provê gestão sobre K8s</td>
+</tr>
+<tr>
+<td>Uso típico</td>
+<td><strong>produção PDPJ</strong></td>
+<td>protótipos/micro deploys</td>
+<td>operar vários clusters K8s</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><strong>Docker</strong></th>
+<th><strong>Kubernetes</strong></th>
+<th><strong>Docker Compose</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Papel</td>
+<td>criar/rodar contêineres</td>
+<td><strong>orquestrar</strong> contêineres em cluster</td>
+<td>orquestrar contêineres <strong>em 1 host</strong></td>
+</tr>
+<tr>
+<td>Escopo</td>
+<td>um contêiner/imagem</td>
+<td>cluster de produção</td>
+<td>dev local</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-cicd-conceito-aprofundado">6. CI/CD (conceito aprofundado)</h2>
+<ul>
+<li><strong>Pipeline típico</strong>: commit Git → build (Maven) → testes → imagem Docker → push para registry → deploy no Kubernetes (Helm/manifests) → monitoramento.</li>
+<li><strong>Continuous Integration</strong> (integração automática + testes a cada commit, detectando quebra cedo) × <strong>Continuous Delivery</strong> (artefato <strong>pronto</strong> para deploy, mas o <strong>disparo é manual</strong>) × <strong>Continuous Deployment</strong> (deploy <strong>automático</strong> em produção sem aprovação humana) — ver apostila T7. <em>Deliver = pode deployar a qualquer momento; Deployment = deploya mesmo.</em></li>
+<li>Ferramentas comuns: <strong>Jenkins</strong>, <strong>GitLab CI/CD</strong>, <strong>GitHub Actions</strong>, ArgoCD (GitOps).</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>OAuth2 é de AUTORIZAÇÃO</strong>; <strong>OIDC</strong> é que adiciona autenticação/identidade (login). SAML = SSO legado (XML).</li>
+<li><strong>Grant password e implicit são desaconselhados</strong> (RFC 9700); usar <strong>authorization code + PKCE</strong>; <strong>Client Credentials</strong> é serviço↔serviço (sem usuário).</li>
+<li><strong>Autenticação</strong> (quem é) × <strong>autorização</strong> (o que pode) — nunca são sinônimos.</li>
+<li><strong>JPA é especificação; Hibernate é implementação</strong>.</li>
+<li><strong>MapStruct</strong> mapeia em <strong>tempo de compilação</strong> (sem reflexão); ModelMapper/BeanUtils = reflexão em runtime.</li>
+<li><strong>Zuul/Spring Cloud Gateway = API Gateway</strong> (entrada única); <strong>Eureka = Service Discovery</strong> (registro/localização de instâncias) — não confundir os papéis.</li>
+<li><strong>Hibernate Envers</strong> = <strong>auditoria/versionamento de dados</strong> (tabelas <code>*_AUD</code>); <strong>Git</strong> versiona <strong>código</strong>.</li>
+<li><strong>Flyway</strong> = migrations versionadas do <strong>schema</strong> (scripts SQL <code>V1__</code>); <strong>Liquibase</strong> = changesets multi-SGBD.</li>
+<li><strong>H2</strong> = banco <strong>em memória</strong>, típico de <strong>testes</strong>; PostgreSQL = produção.</li>
+<li><strong>Webhook</strong> = push (o provedor chama sua URL); <strong>polling</strong> = consulta periódica (pull).</li>
+<li><strong>REST é um estilo; SOAP é um protocolo</strong>. JSON é o formato comum do REST; XML é o do SOAP.</li>
+<li><strong>Stateless</strong> é restrição REST — sem estado de sessão no servidor.</li>
+<li><strong>Pod</strong> é a menor unidade do Kubernetes (1+ contêineres) — <strong>não</strong> é o Deployment (que gerencia réplicas/rollouts).</li>
+<li><strong>Microsserviços</strong>: <strong>database per service</strong> (base própria por serviço); consistência entre serviços = <strong>eventual</strong> (sagas/eventos), não ACID global.</li>
+<li><strong>JWT</strong> = header.payload.signature (token <strong>assinado</strong>, não cifrado); validação local × token opaco (validação no servidor).</li>
+<li><strong>401</strong> = não autenticado; <strong>403</strong> = autenticado sem permissão.</li>
+<li><strong>PUT</strong> = substituição completa (idempotente); <strong>PATCH</strong> = atualização parcial.</li>
+<li><strong>Container compartilha o kernel</strong> do hospedeiro; <strong>VM tem SO próprio</strong> (mais pesada, mais isolada).</li>
+<li><strong>Rancher gerencia clusters K8s</strong> — não é orquestrador alternativo.</li>
+<li><strong>Continuous Delivery</strong> = pronto para deploy (manual); <strong>Continuous Deployment</strong> = deploy automático.</li>
+<li><strong>Garantias de entrega</strong>: at-least-once pode <strong>duplicar</strong> — exige <strong>idempotência</strong> no consumidor.</li>
+<li><strong>RabbitMQ</strong> = filas/AMQP (roteamento por exchanges); <strong>Kafka</strong> = log distribuído (streaming/replay).</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) O protocolo OAuth 2.0 (RFC 6749) tem finalidade primordial de autenticação de usuários, sendo o OpenID Connect um complemento opcional de autorização.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> É o inverso: <strong>OAuth2 = autorização</strong> (delegar acesso); <strong>OpenID Connect = autenticação/identidade</strong> sobre o OAuth2. Autenticação × autorização são conceitos distintos.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) Na arquitetura de microsserviços da PDPJ-Br, o componente responsável por registrar as instâncias dos serviços e permitir que se localizem dinamicamente é:
+a) Zuul.
+b) Spring Eureka (Service Discovery).
+c) MapStruct.
+d) Flyway.
+e) Hibernate Envers.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Eureka</strong> = service discovery (registro + localização). <strong>Zuul</strong> é o <strong>API Gateway</strong> (roteamento/entrada única); MapStruct mapeia objetos; Flyway versiona schema; Envers audita entidades.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) O Hibernate Envers é utilizado para versionar o código-fonte das entidades JPA no repositório Git.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O Envers faz <strong>auditoria/versionamento de dados</strong> (histórico de alterações das entidades no banco — tabelas <code>*_AUD</code>). Versionamento de código é o <strong>Git</strong>.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) No padrão REST, a operação de atualização parcial de um recurso é tipicamente realizada com o método HTTP:
+a) GET.
+b) POST.
+c) PUT.
+d) PATCH.
+e) DELETE.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> <strong>PATCH</strong> = atualização <strong>parcial</strong>; <strong>PUT</strong> = substituição completa (idempotente); GET lê; POST cria; DELETE remove.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) O status HTTP 403 (Forbidden) indica que o cliente não se autenticou junto ao servidor.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>401 Unauthorized</strong> = não autenticado; <strong>403</strong> = autenticado, mas <strong>sem permissão</strong> (logado, mas não autorizado a essa operação).</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) A abordagem de persistência da PDPJ-Br que usa JPA com Hibernate para mapear entidades Java a tabelas de banco de dados exemplifica:
+a) programação funcional.
+b) ORM (Object-Relational Mapping).
+c) serialização de objetos em JSON.
+d) cache distribuído.
+e) virtualização de banco de dados.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> ORM converte objetos ↔ registros relacionais. <strong>JPA especifica</strong>; <strong>Hibernate implementa</strong>.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) A ferramenta Flyway tem como finalidade gerar imagens Docker a partir do código Java do projeto.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> <strong>Flyway</strong> gerencia <strong>migrations versionadas do schema do banco de dados</strong> (scripts <code>V1__...</code>). Imagens Docker vêm do <strong>Dockerfile</strong>.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) O fluxo (grant type) do OAuth 2.0 recomendado para aplicações web com backend próprio, e que com PKCE torna-se o padrão também para SPAs e apps nativos, é:
+a) Resource Owner Password Credentials.
+b) Implicit.
+c) Client Credentials.
+d) Authorization Code.
+e) Device Code.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> <strong>Authorization Code</strong> (com <strong>PKCE</strong>). Password e implicit são <strong>desaconselhados</strong> (RFC 9700); Client Credentials é para comunicação entre serviços (sem usuário).</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) No Kubernetes, a menor unidade de deploy que pode conter um ou mais contêineres é o Deployment.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A menor unidade é o <strong>Pod</strong> (1+ contêineres). O <strong>Deployment</strong> gerencia a <strong>replicação e os rollouts</strong> dos Pods.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O padrão de comunicação em que um sistema notifica outro via HTTP callback, quando um evento negocial ocorre, chama-se:
+a) polling.
+b) webhook.
+c) batch processing.
+d) shared database.
+e) ETL.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Webhook</strong> = push via callback HTTP (o provedor chama a URL do assinante). <strong>Polling</strong> = consulta periódica (o inverso).</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A biblioteca MapStruct realiza o mapeamento entre objetos (DTOs e entidades) por reflexão em tempo de execução, semelhantemente ao BeanUtils.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O MapStruct <strong>gera código em tempo de compilação</strong> (anotações → implementações geradas) — mais rápido que as soluções de reflexão em runtime (ModelMapper/BeanUtils).</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FCC-style) No Docker, o arquivo que contém as instruções para a construção de uma imagem é denominado:
+a) docker-compose.yml.
+b) Dockerfile.
+c) image.json.
+d) container.conf.
+e) registry.xml.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Dockerfile</strong> (FROM, WORKDIR, COPY, RUN, EXPOSE, CMD). O <strong>docker-compose.yml</strong> orquestra múltiplos contêineres em um host.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) O Zuul, no ecossistema Spring Cloud, atua como API Gateway, concentrando o roteamento de requisições e funcionalidades transversais como autenticação e rate limiting.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: a (Certo).</strong> Zuul (e o Spring Cloud Gateway) = <strong>API Gateway</strong> (entrada única). <strong>Eureka</strong> = service discovery (registro/localização).</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FGV-style) Sobre JSON, é correto afirmar:
+a) É um formato exclusivo do JavaScript, não podendo ser consumido por outras linguagens.
+b) Baseia-se em XML e requer parsing via XSD.
+c) É um formato leve de troca de dados baseado em pares chave/valor e arrays, amplamente usado em APIs REST.
+d) Não suporta tipos primitivos como boolean e null.
+e) É mais verboso que o XML e substitui o SOAP.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> JSON é <strong>independente de linguagem</strong>, leve (chave/valor, arrays), padrão de APIs REST. Suporta string, number, boolean, null, object e array. <strong>SOAP é protocolo</strong> (REST é o estilo; JSON não "substitui" SOAP).</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) A arquitetura de microsserviços da PDPJ-Br preconiza que todos os serviços compartilhem uma única base de dados, para garantir consistência transacional ACID entre os serviços.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Padrão de microsserviços: <strong>database per service</strong> (base própria por serviço). A consistência entre serviços é tratada por <strong>consistência eventual</strong> (sagas, mensageria), não por transações ACID globais.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Explique os papéis do OAuth 2.0 e cite duas boas práticas de segurança da RFC 9700.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O OAuth 2.0 é um framework de <strong>autorização</strong> (delegação de acesso sem compartilhar credenciais) com quatro papéis: <strong>Resource Owner</strong> (usuário dono dos dados), <strong>Client</strong> (aplicação que solicita acesso), <strong>Authorization Server</strong> (emite os tokens após consentimento) e <strong>Resource Server</strong> (API que protege os recursos). A autenticação/identidade fica a cargo do <strong>OpenID Connect</strong> (camada sobre o OAuth2). Boas práticas da RFC 9700: usar <strong>Authorization Code com PKCE</strong> (evitar os grants password e implicit) e manter <strong>access tokens de curta duração</strong> com <strong>refresh tokens rotativos</strong> e detecção de reuso (também válidos: TLS obrigatório, restrição rigorosa de redirect URIs e validação de <code>state</code>/<code>nonce</code>).</p></details>
+<p><strong>D2.</strong> Descreva o papel do Service Discovery (Eureka), do API Gateway (Zuul) e da mensageria (RabbitMQ) em uma arquitetura de microsserviços, explicando quando usar comunicação síncrona e assíncrona.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O <strong>Service Discovery</strong> (Eureka) mantém o registro das instâncias vivas dos serviços e permite a <strong>localização dinâmica</strong>, essencial quando instâncias sobem/descem por escala automática. O <strong>API Gateway</strong> (Zuul) é o <strong>ponto único de entrada</strong>, fazendo roteamento, autenticação, rate limiting e agregação de respostas, de modo que os clientes não precisam conhecer cada serviço. O <strong>RabbitMQ</strong> (message broker) viabiliza comunicação <strong>assíncrona</strong> (filas/exchanges, confirmações, dead-letter queues), desacoplando produtor e consumidor e absorvendo picos. Em geral, usa-se <strong>comunicação síncrona</strong> (REST) para consultas que precisam de resposta imediata e <strong>assíncrona</strong> (eventos negociais, webhooks) para notificações e processamento posterior — com garantias at-least-once e <strong>idempotência</strong> no consumidor.</p></details>
+<hr />
+<p><em>V2 de <code>Apostila_T8_PDPJ-Br_TRT8.md</code> (original mantido). Conteúdo técnico complementar (o material-base local não cobre a PDPJ-Br). Referências: documentação CNJ/PDPJ-Br, Spring Cloud Netflix, RFC 6749 e RFC 9700 (OAuth 2.0 Security BCP), documentação Hibernate/JPA, Docker e Kubernetes.</em></p>
+<script>
+(function () {
+  const key = 'apostila-t8-pdpj-br-trt8-v2-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>

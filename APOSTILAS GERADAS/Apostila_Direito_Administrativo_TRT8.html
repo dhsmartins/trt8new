@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noções de Direito Administrativo (TRT8)</title>
+<style>
+:root {
+  --bg: #f7f8fb; --card: #ffffff; --ink: #1c2333; --muted: #5b6472;
+  --accent: #2456c4; --accent-soft: #e8eefc; --border: #d9dfe8;
+  --ok: #1c7c45; --ok-soft: #e3f4ea; --warn: #9a5b00; --warn-soft: #fdf1dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14171d; --card: #1c2129; --ink: #e8ecf3; --muted: #a3adbd;
+    --accent: #7aa2f7; --accent-soft: #263248; --border: #323a47;
+    --ok: #7fd7a2; --ok-soft: #1e3328; --warn: #f0c674; --warn-soft: #3a2f1c;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 16px; line-height: 1.65;
+}
+.layout { display: flex; min-height: 100vh; }
+nav {
+  width: 285px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+  overflow-y: auto; padding: 20px 14px; border-right: 1px solid var(--border);
+  background: var(--card); font-size: 13.5px;
+}
+nav h1 { font-size: 15px; margin: 0 0 4px; color: var(--accent); }
+nav .sub { color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+nav ul { list-style: none; padding: 0; margin: 0; }
+nav li { margin: 2px 0; }
+nav a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 6px; }
+nav a:hover { background: var(--accent-soft); color: var(--accent); }
+.toc-h3 a { padding-left: 22px; font-size: 12.5px; color: var(--muted); }
+main { flex: 1; padding: 32px 44px 80px; max-width: 900px; }
+h1:first-child {
+  font-size: 26px; border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px; margin-top: 0;
+}
+h2 {
+  font-size: 21px; margin-top: 42px; padding: 8px 12px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent); border-left: 4px solid var(--accent);
+}
+h3 { font-size: 17px; margin-top: 28px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+table {
+  border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px;
+  background: var(--card); border-radius: 8px; overflow: hidden;
+}
+th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; }
+th { background: var(--accent-soft); color: var(--accent); }
+tr:nth-child(even) td { background: color-mix(in srgb, var(--accent-soft) 35%, transparent); }
+code {
+  background: var(--accent-soft); padding: 1px 6px; border-radius: 4px;
+  font-family: Consolas, "Cascadia Code", monospace; font-size: 13.5px;
+}
+blockquote {
+  border-left: 4px solid var(--warn); background: var(--warn-soft);
+  margin: 12px 0; padding: 10px 16px; border-radius: 0 8px 8px 0;
+}
+details.resposta {
+  border: 1px solid var(--ok); background: var(--ok-soft);
+  border-radius: 8px; margin: 10px 0; padding: 0;
+}
+details.resposta summary {
+  cursor: pointer; padding: 10px 16px; font-weight: 600; color: var(--ok);
+  user-select: none;
+}
+details.resposta > *:not(summary) { margin-left: 16px; margin-right: 16px; }
+hr { border: 0; border-top: 1px solid var(--border); margin: 30px 0; }
+strong { color: var(--ink); }
+a { color: var(--accent); }
+.progress-wrap { margin: 18px 0 26px; }
+.progress-bar {
+  height: 8px; border-radius: 99px; background: var(--border); overflow: hidden;
+}
+.progress-fill {
+  height: 100%; width: 0; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--ok));
+  transition: width .35s ease;
+}
+.progress-label { font-size: 12px; color: var(--muted); margin-top: 6px; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  main { padding: 20px 18px 60px; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>Noções de Direito Administrativo</h1>
+  <div class="sub">TRT8 · Analista de TI · Apostila de estudo</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="pf"></div></div>
+    <div class="progress-label" id="pl">Progresso do estudo: 0%</div>
+  </div>
+  <ul>
+    <li class="toc-h2"><a href="#trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</a></li>
+<li class="toc-h2"><a href="#1-regime-juridico-administrativo-rja">1. Regime jurídico administrativo (RJA)</a></li>
+<li class="toc-h2"><a href="#2-principios-expressos-art-37-caput-cf-limpe">2. Princípios expressos (art. 37, caput, CF — "LIMPE")</a></li>
+<li class="toc-h2"><a href="#3-principios-do-processo-administrativo-federal-art-2o-lei-978499">3. Princípios do processo administrativo federal (art. 2º, Lei 9.784/99)</a></li>
+<li class="toc-h2"><a href="#4-principios-implicitos">4. Princípios implícitos</a></li>
+<li class="toc-h2"><a href="#1-os-quatro-poderes">1. Os quatro poderes</a></li>
+<li class="toc-h2"><a href="#2-uso-e-abuso-do-poder">2. Uso e abuso do poder</a></li>
+<li class="toc-h2"><a href="#3-crimes-de-abuso-de-autoridade-lei-138692019">3. Crimes de abuso de autoridade — Lei 13.869/2019</a></li>
+<li class="toc-h2"><a href="#1-conceito-e-atributos-mnemonico-pati">1. Conceito e atributos (mnemônico PATI)</a></li>
+<li class="toc-h2"><a href="#2-elementosrequisitos-de-validade">2. Elementos/requisitos de validade</a></li>
+<li class="toc-h2"><a href="#3-classificacoes">3. Classificações</a></li>
+<li class="toc-h2"><a href="#4-extincao-invalidacao-e-convalidacao">4. Extinção, invalidação e convalidação</a></li>
+<li class="toc-h2"><a href="#1-classificacoes">1. Classificações</a></li>
+<li class="toc-h2"><a href="#2-tcu-cf-art-71">2. TCU (CF art. 71)</a></li>
+<li class="toc-h2"><a href="#1-tipos-classicos-lei-842992">1. Tipos clássicos (Lei 8.429/92)</a></li>
+<li class="toc-h2"><a href="#2-sancoes-redacao-classica">2. Sanções (redação clássica)</a></li>
+<li class="toc-h2"><a href="#3-lei-142302021-reforma-da-lia">3. Lei 14.230/2021 (reforma da LIA)</a></li>
+<li class="toc-h2"><a href="#1-conceito-natureza-e-finalidade">1. Conceito, natureza e finalidade</a></li>
+<li class="toc-h2"><a href="#2-modalidades-e-procedimentos-auxiliares">2. Modalidades e procedimentos auxiliares</a></li>
+<li class="toc-h2"><a href="#3-procedimento-fases-art-17">3. Procedimento (fases — art. 17)</a></li>
+<li class="toc-h2"><a href="#4-obrigatoriedade-dispensa-e-inexigibilidade">4. Obrigatoriedade, dispensa e inexigibilidade</a></li>
+<li class="toc-h2"><a href="#5-impugnacao-anulacao-revogacao-e-recursos">5. Impugnação, anulação, revogação e recursos</a></li>
+<li class="toc-h2"><a href="#6-sancoes-e-procedimento-sancionatorio-arts-155-163">6. Sanções e procedimento sancionatório (arts. 155-163)</a></li>
+<li class="toc-h2"><a href="#7-crimes-em-licitacoes-e-contratos-arts-337-a-a-337-j-do-cp">7. Crimes em licitações e contratos (arts. 337-A a 337-J do CP)</a></li>
+<li class="toc-h2"><a href="#1-conceito-e-caracteristicas">1. Conceito e características</a></li>
+<li class="toc-h2"><a href="#2-especies">2. Espécies</a></li>
+<li class="toc-h2"><a href="#3-formalizacao-arts-89-92">3. Formalização (arts. 89-92)</a></li>
+<li class="toc-h2"><a href="#4-execucao-prorrogacao-e-reajuste">4. Execução, prorrogação e reajuste</a></li>
+<li class="toc-h2"><a href="#5-inexecucao-extincao-e-rescisao-arts-137-139">5. Inexecução, extinção e rescisão (arts. 137-139)</a></li>
+<li class="toc-h2"><a href="#questoes-discursivas">Questões discursivas</a></li>
+<li class="toc-h2"><a href="#referencias-de-estudo-na-base-local-trt8-new">Referências de estudo na base local (trt8 new)</a></li>
+  </ul>
+</nav>
+<main>
+<h1 id="apostila-nocoes-de-direito-administrativo">APOSTILA — NOÇÕES DE DIREITO ADMINISTRATIVO</h1>
+<h2 id="trt8-analista-judiciario-analista-de-ti">TRT8 — Analista Judiciário — Analista de TI</h2>
+<blockquote>
+<p><strong>Edital:</strong> Administração Pública; regime jurídico administrativo; princípios; LINDB; poderes da AP; uso e abuso do poder; crimes de abuso de autoridade (Lei 13.869/2019); ato administrativo; processo administrativo federal (Lei 9.784/1999); controle da AP; improbidade administrativa (Lei 8.429/1992 e Lei 14.230/2021); licitações e contratos (Lei 14.133/2021).</p>
+<p><strong>Base de conhecimento:</strong> Estratégia Básico 2020 (Aulas 00, 04-08, 10, 16-17) + SEFA (LINDB, bizu e simulado). <strong>ATENÇÃO:</strong> o material de licitações ensina a Lei 8.666/93 (revogada pela Lei 14.133/2021) — os Módulos VII e VIII desta apostila seguem a <strong>Lei 14.133/2021</strong>, como exige o edital, com conteúdo complementar sinalizado.</p>
+</blockquote>
+<hr />
+<h1 id="modulo-i-administracao-publica-regime-juridico-e-principios">MÓDULO I — ADMINISTRAÇÃO PÚBLICA, REGIME JURÍDICO E PRINCÍPIOS</h1>
+<h2 id="1-regime-juridico-administrativo-rja">1. Regime jurídico administrativo (RJA)</h2>
+<p>Conjunto de regras que disciplinam a AP sobre <strong>duas colunas</strong>:
+- <strong>Prerrogativas</strong>: supremacia do interesse público (poderes, autoridade).
+- <strong>Sujeições</strong>: indisponibilidade do interesse público (legalidade estrita).</p>
+<p><strong>Supremacia</strong> e <strong>indisponibilidade</strong> são princípios <strong>implícitos</strong> (RE 253.885/MG reconhece a indisponibilidade).</p>
+<h2 id="2-principios-expressos-art-37-caput-cf-limpe">2. Princípios expressos (art. 37, caput, CF — "LIMPE")</h2>
+<table>
+<thead>
+<tr>
+<th>Princípio</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Legalidade</strong></td>
+<td>A AP só faz o que a lei autoriza (<strong>legalidade estrita</strong> — diferente do art. 5º, II, que é para o particular)</td>
+</tr>
+<tr>
+<td><strong>Impessoalidade</strong></td>
+<td>4 sentidos: finalidade pública; vedação a promoção pessoal; igualdade dos administrados; vedação a fins partidários</td>
+</tr>
+<tr>
+<td><strong>Moralidade</strong></td>
+<td>Honestidade, boa-fé, lealdade</td>
+</tr>
+<tr>
+<td><strong>Publicidade</strong></td>
+<td><strong>Duplo sentido</strong>: dever de divulgar (transparência) + requisito de eficácia (publicação oficial)</td>
+</tr>
+<tr>
+<td><strong>Eficiência</strong></td>
+<td>Incluída pela EC 19/1998</td>
+</tr>
+</tbody>
+</table>
+<p>Não há hierarquia entre princípios.</p>
+<h2 id="3-principios-do-processo-administrativo-federal-art-2o-lei-978499">3. Princípios do processo administrativo federal (art. 2º, Lei 9.784/99)</h2>
+<p>Legalidade, finalidade, motivação, razoabilidade, proporcionalidade, moralidade, ampla defesa, contraditório, segurança jurídica, interesse público, eficiência. P. único: adequação entre meios e fins (vedação de obrigações sem previsão legal); divulgação oficial; vedação ao retrocesso; formas simples; decisões escritas; impulso de ofício; interpretação da norma administrativa no melhor sentido do fim público.</p>
+<h2 id="4-principios-implicitos">4. Princípios implícitos</h2>
+<p><strong>Supremacia do interesse público</strong>; <strong>indisponibilidade do interesse público</strong>; <strong>razoabilidade e proporcionalidade</strong> (adequação — meio apto ao fim; necessidade — meio menos gravoso; proporcionalidade em sentido estrito — ponderação); <strong>tutela</strong> (supervisão ministerial sobre autarquias/fundações); <strong>autotutela</strong> (Súmulas 346 e 473 do STF: a AP pode <strong>anular</strong> seus atos ilegais e <strong>revogar</strong> os inconvenientes); <strong>motivação</strong> (também "aliunde"); <strong>continuidade dos serviços públicos</strong>; contraditório; segurança jurídica; hierarquia; precaução; presunção de legitimidade/veracidade.</p>
+<hr />
+<h1 id="modulo-ii-lindb-decreto-lei-46571942-alterado-pela-lei-136552018">MÓDULO II — LINDB (DECRETO-LEI 4.657/1942, ALTERADO PELA LEI 13.655/2018)</h1>
+<ul>
+<li><strong>Vigência (art. 1º)</strong>: 45 dias da publicação (3 meses para quem estiver no exterior). Correção de texto (§§3º-4º) ≠ norma interpretativa.</li>
+<li><strong>Art. 2º</strong>: revogação; <strong>repristinação vedada</strong> (§3º), salvo disposição expressa.</li>
+<li><strong>Art. 3º</strong>: "ninguém se escusa de cumprir a lei, alegando que não a conhece".</li>
+<li><strong>Arts. 4º-5º</strong>: lacunas (analogia, costumes, princípios gerais); interpretação conforme os <strong>fins sociais</strong> e as exigências do <strong>bem comum</strong>.</li>
+<li><strong>Título IV (Lei 13.655/2018) — regras de Direito Público</strong>:</li>
+<li><strong>Art. 20</strong>: nas esferas administrativa, controladora e judicial <strong>não se decide com base em valores jurídicos abstratos sem considerar as consequências práticas</strong>; a motivação deve demonstrar necessidade e adequação da medida face às alternativas.</li>
+<li><strong>Art. 21</strong>: decisão que invalidar ato/contrato/processo deve <strong>indicar expressamente as consequências</strong> jurídicas e administrativas (p. único: regularização proporcional e equânime, sem ônus anormais).</li>
+<li><strong>Art. 22</strong>: interpretação <strong>realística</strong> das normas de gestão pública (obstáculos reais do gestor, sem prejuízo dos administrados).</li>
+<li><strong>Art. 23</strong>: orientação nova sobre norma de conteúdo indeterminado exige <strong>regime de transição</strong> quando indispensável.</li>
+<li><strong>Art. 24</strong>: revisão de atos com produção já completada observa as <strong>orientações da época</strong>; vedado invalidar situações plenamente constituídas com base em mudança posterior de entendimento.</li>
+<li><strong>Art. 26</strong>: <strong>compromisso</strong> entre AP e interessados (oitiva do órgão jurídico; consulta pública; efeitos da publicação).</li>
+<li><strong>Art. 27</strong>: compensação por benefícios indevidos ou prejuízos anormais.</li>
+<li><strong>Art. 28</strong>: agente público responde pessoalmente por suas decisões/opiniões técnicas em caso de <strong>dolo ou erro grosseiro</strong> (<em>não confundir com "dolo ou culpa" da responsabilidade civil — CF art. 37, §6º</em>).</li>
+<li><strong>Art. 29</strong>: consulta pública antes de atos normativos (salvo organização interna); vigência diferida em 180 dias.</li>
+<li><strong>Art. 30</strong>: regulamentos, súmulas administrativas e respostas a consultas têm <strong>caráter vinculante</strong> para o órgão, até ulterior revisão.</li>
+</ul>
+<hr />
+<h1 id="modulo-iii-poderes-da-administracao-publica-uso-e-abuso-do-poder">MÓDULO III — PODERES DA ADMINISTRAÇÃO PÚBLICA; USO E ABUSO DO PODER</h1>
+<h2 id="1-os-quatro-poderes">1. Os quatro poderes</h2>
+<table>
+<thead>
+<tr>
+<th>Poder</th>
+<th>Fundamento</th>
+<th>Características</th>
+<th>Limites</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hierárquico</strong></td>
+<td>Subordinação interna</td>
+<td>Dar ordens, <strong>delegar</strong> (art. 13 Lei 9.784), <strong>avocar</strong>, rever atos inferiores</td>
+<td>Sem hierarquia: AP direta × indireta; entre Poderes; sobre funções típicas de outro Poder</td>
+</tr>
+<tr>
+<td><strong>Disciplinar</strong></td>
+<td>Vínculo especial (estatuto/contrato)</td>
+<td>Poder punitivo em sentido <strong>amplo</strong> (gênero; disciplinar é espécie); PAD</td>
+<td>Vinculado quanto à tipicidade; <strong>vedada "verdade sabida"</strong>; condescendência criminosa (CP art. 320)</td>
+</tr>
+<tr>
+<td><strong>Regulamentar</strong></td>
+<td>Art. 84, IV, CF</td>
+<td>Decretos para <strong>fiel execução</strong> da lei</td>
+<td><strong>Não cria deveres novos</strong>; × <strong>poder normativo</strong> (regulamentos autônomos — art. 84, VI, EC 32/2001)</td>
+</tr>
+<tr>
+<td><strong>Polícia</strong></td>
+<td>Limitação de liberdade/propriedade</td>
+<td>"<strong>DAC</strong>": Discricionariedade, Autoexecutoriedade, Coercibilidade</td>
+<td><strong>Licença</strong> (vinculada) × <strong>autorização</strong> (discricionária e precária)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Vinculado × discricionário</strong>: vinculado = lei predetermina competência, forma, motivo e objeto (uma solução possível); discricionário = margem de escolha (conveniência, oportunidade, motivo). <strong>Conceitos jurídicos indeterminados NÃO geram discricionariedade</strong> (são interpretação, não escolha).</p>
+<h2 id="2-uso-e-abuso-do-poder">2. Uso e abuso do poder</h2>
+<ul>
+<li><strong>Uso</strong>: conformidade com a finalidade legal.</li>
+<li><strong>Abuso</strong>: <strong>excesso de poder</strong> (ir além dos limites da competência/discricionariedade) × <strong>desvio de poder</strong> (desvio de finalidade — poder usado para fim diverso do previsto em lei). O Judiciário controla o abuso <strong>mesmo em atos discricionários</strong>.</li>
+</ul>
+<h2 id="3-crimes-de-abuso-de-autoridade-lei-138692019">3. Crimes de abuso de autoridade — Lei 13.869/2019</h2>
+<p><em>(Complemento — não coberto pelo material-base.)</em>
+- <strong>Conceito (art. 1º)</strong>: agente público que, no exercício de suas funções ou a pretexto de exercê-las, <strong>abusa do poder</strong>. Tipos penais próprios (arts. 2º-23): constrangimento ilegal, abuso contra preso/detido, violação de domicílio, violação de sigilo, divulgação de dados sigilosos, tortura processual (art. 22), decisão manifestamente ilegal (decretação de medidas restritivas sem justa causa), exigência de informação/obrigação sem base legal, recusa de informação a quem tem direito, perseguição a servidor/investigado.
+- <strong>Penas</strong>: detenção + multa (penas brandas; sem perda do cargo automática). Aplicação subsidiária do CP. <strong>Ação penal pública incondicionada</strong>; prescrição pela pena em concreto.
+- <strong>Pegadinha</strong>: a Lei 13.869 <strong>não revogou</strong> os crimes comuns do CP (abuso de autoridade é norma <strong>especial</strong>); o agente pode responder cumulativamente por crime comum (ex.: tortura do CP) <strong>ou</strong> pelo tipo especial, sem bis in idem quando houver consunção.</p>
+<hr />
+<h1 id="modulo-iv-ato-administrativo">MÓDULO IV — ATO ADMINISTRATIVO</h1>
+<h2 id="1-conceito-e-atributos-mnemonico-pati">1. Conceito e atributos (mnemônico <strong>PATI</strong>)</h2>
+<p>Declaração da AP no exercício de suas prerrogativas, em regime de direito público.
+- <strong>Presunção de legitimidade</strong> (relativa — <em>iuris tantum</em>; inverte o ônus da prova; exceções no PAD em favor do acusado).
+- <strong>Imperatividade</strong> (impõe obrigações a terceiros — ≠ exigibilidade).
+- <strong>Tipicidade</strong> (deve corresponder a figura legal; <strong>não alcança</strong> contratos inominados).
+- <strong>Autoexecutoriedade</strong> (execução sem ordem judicial — <strong>não alcança multas nem desapropriação</strong>; exceção: multa contratual).</p>
+<h2 id="2-elementosrequisitos-de-validade">2. Elementos/requisitos de validade</h2>
+<ul>
+<li><strong>Essenciais (ComFiForMOb)</strong>: <strong>Com</strong>petência (vinculada, improrrogável; vício insanável se exclusiva), <strong>Fi</strong>nalidade (pública; desvio = abuso), <strong>For</strong>ma (forma essencial não se convalida), <strong>Mo</strong>tivo (fato e direito; pode ser posterior à edição, mas contemporâneo à execução), <strong>Ob</strong>jeto (possível, lícito, determinado/determinável).</li>
+<li><strong>Acidentais (TeCoM)</strong>: <strong>Te</strong>rmo, <strong>Co</strong>ndição, <strong>Mo</strong>do — vícios não invalidam o ato.</li>
+</ul>
+<h2 id="3-classificacoes">3. Classificações</h2>
+<p>Vinculados × discricionários; individuais × gerais (normativos); ampliativos × restritivos; de império × de gestão; reais; complexos (vontades convergentes) × compostos (vontades autônomas) × coligados.</p>
+<h2 id="4-extincao-invalidacao-e-convalidacao">4. Extinção, invalidação e convalidação</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Revogação</strong></th>
+<th><strong>Anulação</strong></th>
+<th><strong>Cassação</strong></th>
+<th><strong>Caducidade</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Motivo</td>
+<td><strong>Mérito</strong> (inconveniência/oportunidade)</td>
+<td><strong>Ilegalidade</strong> (vício originário)</td>
+<td><strong>Descumprimento</strong> de dever/condição (ato era válido)</td>
+<td><strong>Nova lei</strong> tornou o ato incompatível</td>
+</tr>
+<tr>
+<td>Efeitos</td>
+<td><strong>Ex nunc</strong> (só efeitos próprios)</td>
+<td><strong>Ex tunc</strong> (salvo boa-fé de terceiros)</td>
+<td><strong>Ex nunc</strong></td>
+<td><strong>Ex nunc</strong> (só efeitos próprios)</td>
+</tr>
+<tr>
+<td>Quem faz</td>
+<td><strong>Só a AP</strong></td>
+<td>AP (autotutela) <strong>e</strong> Judiciário</td>
+<td>Só a AP (medida vinculada/sancionatória)</td>
+<td>Automático (ministério da lei)</td>
+</tr>
+<tr>
+<td>Limites</td>
+<td>Preclusão administrativa, direito adquirido, atos vinculados consumados, licitação homologada</td>
+<td>LINDB arts. 21 e 24</td>
+<td>Tipicidade legal</td>
+<td>Irretroatividade</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Ab-rogação</strong> (revogação total) × <strong>derrogação</strong> (parcial): alcançam só os <strong>efeitos próprios</strong> (nunca os impróprios: prescrição, usucapião etc.).</li>
+<li><strong>Convalidação</strong> (art. 55, Lei 9.784): 3 condições <strong>cumulativas</strong> — vício <strong>sanável</strong> (não essencial); não lesar o interesse público; não gerar prejuízo a terceiros. Regra "<strong>FoCo</strong>": sanáveis os vícios de <strong>For</strong>ma não essencial e <strong>Co</strong>mpetência não exclusiva; <strong>insanáveis</strong>: competência exclusiva, forma essencial, motivo e objeto. Efeitos <strong>ex tunc</strong>. <strong>O Judiciário não convalida</strong> (apenas anula ou deixa de anular).</li>
+</ul>
+<hr />
+<h1 id="modulo-v-processo-administrativo-federal-lei-97841999">MÓDULO V — PROCESSO ADMINISTRATIVO FEDERAL (LEI 9.784/1999)</h1>
+<ul>
+<li>Aplicação <strong>subsidiária</strong> aos processos específicos (art. 69).</li>
+<li><strong>Motivação (art. 50)</strong>: exigida em 8 hipóteses (I-VIII), incluindo imposição de deveres/sanções/restrições; anulação/revogação; recusa de informações; <strong>dispensa de licitação</strong>.</li>
+<li><strong>Decisão em 30 dias</strong> (art. 48), prorrogáveis por igual período (art. 49).</li>
+<li><strong>Desistência do interessado (art. 51) não impede o prosseguimento</strong> se houver interesse público.</li>
+<li><strong>Recursos (arts. 56-64)</strong>: dirigidos à <strong>própria autoridade</strong> (efeito devolutivo); <strong>5 dias</strong> para reconsideração; <strong>sem caução</strong> (Súmula 21 STJ); máx. <strong>3 instâncias</strong>; <strong>10 dias</strong> para interpor (preclusivo) × <strong>30 dias</strong> para a AP decidir (prazo impróprio); <strong>sem efeito suspensivo</strong>; <strong>reformatio in pejus</strong> só com <strong>ciência prévia</strong> ao recorrente.</li>
+<li><strong>Revisão (art. 65)</strong>: a qualquer tempo, a pedido ou de ofício, <strong>sem agravamento</strong> da situação.</li>
+<li><strong>Prazos contínuos</strong> (art. 66, §2º); intimação com 3 dias úteis de antecedência.</li>
+<li><strong>Sanções (art. 68)</strong>: advertência e multa (disciplinares — não confundir com sanções de licitação ou de improbidade).</li>
+</ul>
+<hr />
+<h1 id="modulo-vi-controle-da-administracao-publica">MÓDULO VI — CONTROLE DA ADMINISTRAÇÃO PÚBLICA</h1>
+<h2 id="1-classificacoes">1. Classificações</h2>
+<ul>
+<li>Quanto à <strong>Administração</strong>: <strong>interno</strong> (CF art. 74 — controle finalístico; responsabilidade solidária dos órgãos de controle interno) × <strong>externo</strong> (Legislativo + auxílio do TCU) × <strong>popular</strong> (arts. 37 §3º, 74 §2º, 5º XXXIII e LXXIII; LRF art. 49).</li>
+<li>Quanto ao <strong>órgão controlado</strong>: <strong>hierárquico</strong> (pleno, permanente, interno) × <strong>finalístico</strong> (tutela/supervisão ministerial; seletivo).</li>
+<li>Quanto ao <strong>momento</strong>: prévio, concomitante, posterior.</li>
+<li>Quanto ao <strong>objeto</strong>: <strong>legalidade</strong> (Judiciário e Legislativo) × <strong>mérito</strong> (Legislativo = controle político; <strong>Judiciário não invade mérito</strong>, salvo desvio de poder/finalidade).</li>
+</ul>
+<h2 id="2-tcu-cf-art-71">2. TCU (CF art. 71)</h2>
+<p><strong>Auxilia o Congresso Nacional</strong>, mas <strong>não é órgão do CN nem a ele subordinado</strong>. Competências: <strong>I</strong> — parecer prévio em <strong>60 dias</strong> sobre as contas do Presidente (<strong>quem julga é o Congresso</strong>); <strong>II</strong> — julga contas dos administradores; <strong>VI</strong> — recursos de licitações/convênios federais; <strong>IX</strong> — fixar prazos. <strong>Multa prescritível × ressarcimento ao erário imprescritível</strong> (CF art. 37, §5º).
+<strong>Instrumentos judiciais de controle</strong>: mandado de segurança, ação popular, ação civil pública.</p>
+<hr />
+<h1 id="modulo-vii-improbidade-administrativa-lei-84291992-e-lei-142302021">MÓDULO VII — IMPROBIDADE ADMINISTRATIVA (LEI 8.429/1992 E LEI 14.230/2021)</h1>
+<h2 id="1-tipos-classicos-lei-842992">1. Tipos clássicos (Lei 8.429/92)</h2>
+<ul>
+<li><strong>Art. 9º</strong> — enriquecimento ilícito (<strong>dolo sempre</strong>).</li>
+<li><strong>Art. 10</strong> — atos lesivos ao erário (na redação antiga: dolo <strong>ou culpa</strong>).</li>
+<li><strong>Art. 11</strong> — atos que atentam contra princípios da AP (dolo genérico). "<strong>E notadamente</strong>" = rol <strong>exemplificativo</strong>.</li>
+<li><em>Pegadinha clássica</em>: <strong>licitação irregular = art. 10</strong> (erário); <strong>concurso irregular = art. 11</strong> (princípios).</li>
+</ul>
+<h2 id="2-sancoes-redacao-classica">2. Sanções (redação clássica)</h2>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Suspensão DP</th>
+<th>Multa</th>
+<th>Proibição de contratar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enriquecimento (art. 9º)</td>
+<td>8-10 anos</td>
+<td>até 3x o proveito</td>
+<td>10 anos</td>
+</tr>
+<tr>
+<td>Lesão ao erário (art. 10)</td>
+<td>5-8 anos</td>
+<td>até 2x o dano</td>
+<td>5 anos</td>
+</tr>
+<tr>
+<td>Atentado a princípios (art. 11)</td>
+<td>3-5 anos</td>
+<td>até 100x a remuneração</td>
+<td>3 anos</td>
+</tr>
+</tbody>
+</table>
+<p>Todas com ressarcimento e perda de bens/valores. <strong>Perda da função pública e suspensão dos direitos políticos só com trânsito em julgado</strong> (art. 20); ação <strong>independe</strong> de dano/contas (art. 21); sucessor responde até o limite da herança (art. 8º).</p>
+<h2 id="3-lei-142302021-reforma-da-lia">3. Lei 14.230/2021 (reforma da LIA)</h2>
+<p><em>(Complemento — não coberto pelo material-base.)</em>
+- <strong>Dolo obrigatório em todos os tipos</strong> ("A ilegalidade sem a presença de dolo que a qualifique não configura ato de improbidade").
+- <strong>Lesão culposa</strong> → responsabilização <strong>apenas para ressarcimento</strong> (sem sanções pessoais).
+- Art. 11 passa a exigir <strong>dano relevante</strong> à AP (fim das "improbidades formais").
+- <strong>Gradação de sanções</strong> conforme circunstâncias (natureza, gravidade, vantagem, dano, reparação espontânea, reincidência, colaboração).
+- <strong>Prescrição</strong> expressa; <strong>perdão judicial</strong>; aplicação subsidiária do CPP; ação civil pública pelo MP (com <strong>ação privada subsidiária</strong> do lesado).
+- <strong>Demissão</strong> (sanção do PAD, administrativa) ≠ <strong>perda da função pública</strong> (sanção judicial da LIA).</p>
+<hr />
+<h1 id="modulo-viii-licitacoes-lei-141332021">MÓDULO VIII — LICITAÇÕES (LEI 14.133/2021)</h1>
+<p><em>(Complemento substancial — o material-base ensina a Lei 8.666/93, revogada pelo art. 193 da Lei 14.133/2021. Conteúdo a seguir segue a lei vigente exigida pelo edital.)</em></p>
+<h2 id="1-conceito-natureza-e-finalidade">1. Conceito, natureza e finalidade</h2>
+<ul>
+<li><strong>Licitação</strong>: procedimento administrativo destinado a <strong>selecionar a proposta mais vantajosa</strong> para a contratação de bens, serviços ou obras, assegurando <strong>isonomia, competitividade, economicidade e transparência</strong>.</li>
+<li><strong>Finalidade</strong>: obter propostas e escolher a melhor contratação para o interesse público; ato <strong>vinculado</strong> quanto à obrigatoriedade, discricionário quanto à conveniência.</li>
+<li><strong>Princípios (art. 5º, XXXI)</strong>: legalidade, impessoalidade, moralidade, publicidade, eficiência, vinculação ao edital, julgamento objetivo + <strong>segurança jurídica, interesse público, competitividade, planejamento, transparência, eficiência, desenvolvimento nacional sustentável, probidade administrativa</strong>.</li>
+</ul>
+<h2 id="2-modalidades-e-procedimentos-auxiliares">2. Modalidades e procedimentos auxiliares</h2>
+<ul>
+<li><strong>Modalidades (art. 28)</strong>: <strong>concorrência, concurso, leilão, pregão e diálogo competitivo</strong>.</li>
+<li><strong>Concorrência</strong>: regra geral para obras/serviços de engenharia de maior vulto e alienação de bens imóveis.</li>
+<li><strong>Pregão</strong>: bens e <strong>serviços comuns</strong> (padrão de mercado) e obras/serviços de engenharia <strong>comuns</strong>; critério de menor preço ou maior desconto.</li>
+<li><strong>Concurso</strong>: trabalhos técnicos/artísticos; prêmio/remuneração.</li>
+<li><strong>Leilão</strong>: venda de bens inservíveis ou apreendidos; <strong>maior lance</strong>.</li>
+<li><strong>Diálogo competitivo (arts. 32-33)</strong>: contratação de <strong>soluções inovadoras</strong>; consultas preliminares → diálogo → propostas finais (só os dialogantes podem propor).</li>
+<li><strong>Procedimentos auxiliares</strong> (não são modalidades): <strong>credenciamento</strong>, <strong>pré-qualificação</strong>, <strong>sistema de registro de preços (SRP)</strong>, <strong>registro cadastral</strong>.</li>
+<li><strong>Critérios de julgamento (art. 33)</strong>: menor preço; maior desconto; melhor técnica ou conteúdo artístico; técnica e preço; maior lance (leilão); maior retorno econômico.</li>
+</ul>
+<h2 id="3-procedimento-fases-art-17">3. Procedimento (fases — art. 17)</h2>
+<ol>
+<li><strong>Preparatória</strong> (estudos técnicos preliminares, plano de contratação, termo de referência);</li>
+<li>Divulgação do edital;</li>
+<li>Apresentação de propostas/lances;</li>
+<li><strong>Julgamento</strong> (INOVADOR: vem <strong>antes</strong> da habilitação);</li>
+<li>Habilitação;</li>
+<li>Recursal;</li>
+<li>
+<p>Homologação (com <strong>contratação direta em até 5 dias úteis</strong> após a autorização — art. 90).</p>
+</li>
+<li>
+<p><strong>Habilitação (arts. 62-70)</strong>: jurídica, técnica, fiscal/social e trabalhista, econômico-financeira. Súmula 252 TCU (notória especialização) continua relevante na inexigibilidade.</p>
+</li>
+<li><strong>Julgamento por itens</strong> é a regra; <strong>vedado o parcelamento</strong> que inviabilize a competitividade (art. 40).</li>
+</ol>
+<h2 id="4-obrigatoriedade-dispensa-e-inexigibilidade">4. Obrigatoriedade, dispensa e inexigibilidade</h2>
+<ul>
+<li><strong>Obrigatoriedade</strong>: regra geral; licitar é dever.</li>
+<li><strong>Dispensa (art. 75 — rol com hipóteses legais)</strong>: guerra/emergência/segurança nacional; <strong>obras/serviços de engenharia até R$ 100 mil</strong> e <strong>compras/serviços comuns até R$ 50 mil</strong> (inciso VIII); locação de imóvel para sede; contratação de pessoa física ou de profissional/entidade sem fins lucrativos para serviços técnicos; entre entes da AP (dispensa); prejuízo de continuidade de serviço técnico especializado; objetos de padronização; <strong>fornecedor exclusivo</strong> (inciso XX? — atenção: na Lei 14.133 o fornecedor exclusivo migrou para a <strong>inexigibilidade</strong>, art. 74, I); entre outros.</li>
+<li><strong>Inexigibilidade (art. 74)</strong>: <strong>inviabilidade de competição</strong>. Hipóteses: <strong>fornecedor exclusivo</strong> (I); serviços técnicos profissionais especializados de <strong>notória especialização</strong> (II — com trabalhos específicos e singulares, voto favorável motivado da autoridade); pessoa jurídica de direito privado para assistência técnica (III); contratação de pessoa física (IV); obras artísticas (V); gestão de documentos de arquivo (VI); entre outras.</li>
+<li><strong>Distinção-chave</strong>: dispensa = competência <strong>possível, mas desnecessária</strong> (hipótese legal); inexigibilidade = competição <strong>absolutamente inviável</strong>. Ambas exigem <strong>motivação</strong> e <strong>ratificação pela autoridade</strong>.</li>
+</ul>
+<h2 id="5-impugnacao-anulacao-revogacao-e-recursos">5. Impugnação, anulação, revogação e recursos</h2>
+<ul>
+<li><strong>Impugnação ao edital</strong>: até <strong>3 dias úteis</strong> antes da abertura.</li>
+<li><strong>Recursos administrativos (arts. 164-167)</strong>: <strong>3 dias úteis</strong> para interpor; decisão em <strong>3 dias úteis</strong>; efeito <strong>suspensivo apenas no julgamento</strong> (arts. 165, I e 168 — impede contratação); recurso não tem efeito suspensivo geral; nova rodada recursal após o julgamento da habilitação (duplo grau).</li>
+<li><strong>Anulação</strong> (art. 71): por <strong>ilegalidade</strong> (pode ser de ofício ou pelo Judiciário); <strong>revogação</strong>: por razões de <strong>interesse público</strong> (motivada) — <strong>indenização ao licitante vencedor</strong> por perdas comprovadas.</li>
+</ul>
+<h2 id="6-sancoes-e-procedimento-sancionatorio-arts-155-163">6. Sanções e procedimento sancionatório (arts. 155-163)</h2>
+<ul>
+<li><strong>Sanções</strong>: I — <strong>advertência</strong>; II — <strong>multa</strong> (até 10% do valor do contrato; 30% em caso de reiteração); III — <strong>impedimento de licitar e contratar</strong> (até <strong>3 anos</strong>); IV — <strong>declaração de inidoneidade</strong> (até <strong>6 anos</strong>).</li>
+<li><strong>Processo sancionatório</strong>: contraditório e ampla defesa; atenuantes (art. 156, §1º — indenização espontânea, colaboração); <strong>reabilitação</strong> (art. 162) mediante reparação e demonstração de capacidade.</li>
+<li><strong>Competência</strong>: declarar inidoneidade = autoridade de nível ministerial/secretário estadual/municipal (na Lei 8.666 era "exclusiva de Ministro de Estado/Secretário").</li>
+</ul>
+<h2 id="7-crimes-em-licitacoes-e-contratos-arts-337-a-a-337-j-do-cp">7. Crimes em licitações e contratos (arts. 337-A a 337-J do CP)</h2>
+<p><em>(Complemento.)</em> Inseridos pela Lei 14.133/2021: <strong>fraude em licitação/contrato</strong> (337-A); <strong>contratação direta irregular</strong> (337-B); <strong>patrocínio de contratação irregular</strong> (337-C); <strong>violação de sigilo em licitação</strong> (337-E); <strong>fraude na execução de contrato</strong> (337-F); <strong>modificação irregular de contrato</strong> (337-H); <strong>aumento irregular do valor</strong> (337-I); <strong>atuação de agente público</strong> (337-J). Penas de <strong>reclusão/detenção + multa</strong>; cabem <strong>bribery corruption</strong> (corrupção ativa/passiva, CP 333/317) em concurso de normas (aplica-se o tipo mais grave).</p>
+<hr />
+<h1 id="modulo-ix-contrato-administrativo-lei-141332021">MÓDULO IX — CONTRATO ADMINISTRATIVO (LEI 14.133/2021)</h1>
+<h2 id="1-conceito-e-caracteristicas">1. Conceito e características</h2>
+<ul>
+<li><strong>Contrato administrativo</strong>: ajuste firmado pela AP com particulares (ou entre entes públicos) para execução de obra, serviço, fornecimento, locação, concessão, permissão etc., sob regime de direito público.</li>
+<li><strong>Características</strong>: <strong>desigualdade jurídica</strong> (cláusulas exorbitantes); <strong>supremacia da vontade da AP</strong> (alterar/rescindir unilateralmente); <strong>finalidade pública</strong>; <strong>formalismo</strong>; <strong>mutabilidade</strong> (interesse público).</li>
+</ul>
+<h2 id="2-especies">2. Espécies</h2>
+<ul>
+<li><strong>Contratos de fornecimento, serviços, obras, gestão; concessão e permissão de serviço público</strong> (concessão onerosa com risco do concessionário; permissão precária, regra geral gratuita); <strong>concessão de uso</strong>; <strong>empréstimo de uso</strong>; <strong>arranjo de colaboração</strong> e <strong>fomento</strong> (parcerias com OSCIP — Lei 13.019/2014).</li>
+</ul>
+<h2 id="3-formalizacao-arts-89-92">3. Formalização (arts. 89-92)</h2>
+<ul>
+<li><strong>Instrumento de contrato</strong> é a regra; admitido <strong>documento equivalente</strong> (carta contrato, termo de contrato, autorização de compra) quando dispensada a forma escrita.</li>
+<li><strong>Cláusulas necessárias (art. 92)</strong>: objeto; prazo; preço; regime de execução; garantias (até <strong>5%</strong> do valor — art. 96); obrigações; penalidades; hipóteses de rescisão; reajuste; foro.</li>
+</ul>
+<h2 id="4-execucao-prorrogacao-e-reajuste">4. Execução, prorrogação e reajuste</h2>
+<ul>
+<li><strong>Execução</strong>: sempre dirigida por <strong>servidor designado</strong> (art. 117); fiscalização; possibilidade de <strong>reequilíbrio econômico-financeiro</strong> (art. 124 — fato do príncipe, fato da Administração, força maior, caso fortuito, <strong>teoria da imprevisão</strong>).</li>
+<li><strong>Vigência</strong>: determinada, conforme a natureza do objeto; <strong>prorrogações sucessivas</strong> com limite total de <strong>10 anos</strong> (serviços contínuos; exceções legais), mediante justificativa e autorização.</li>
+<li><strong>Reajuste × revisão</strong>:</li>
+<li><strong>Reajuste</strong> = <strong>cláusula necessária</strong>; reposição da inflação após <strong>periodicidade mínima</strong> (anual, salvo índice inferior — art. 92, XVIII, e art. 25, §8º? — o novo texto admite periodicidade inferior desde que proporcional).</li>
+<li><strong>Revisão</strong> = <strong>reequilíbrio</strong> por fatos extraordinários (teoria da imprevisão).</li>
+<li><strong>Nenhum dos dois altera o valor inicial</strong> (atualização apenas).</li>
+</ul>
+<h2 id="5-inexecucao-extincao-e-rescisao-arts-137-139">5. Inexecução, extinção e rescisão (arts. 137-139)</h2>
+<ul>
+<li><strong>Extinção (art. 137)</strong>: acordo entre as partes; conclusão do objeto; <strong>revogação</strong> (interesse público); <strong>anulação</strong> (ilegalidade); <strong>rescisão</strong> (inadimplência); <strong>caducidade</strong> (inexecução por culpa do contratado); <strong>falecimento/instituição</strong> do contratado.</li>
+<li><strong>Rescisão unilateral</strong>: a AP pode rescindir quando o contratado descumprir obrigações; <strong>direito do contratado de boa-fé</strong> à execução do saldo e à indenização por perdas e danos quando a rescisão não lhe for imputável.</li>
+<li><strong>Sanções por inexecução</strong>: multa; impedimento; inidoneidade (Módulo VIII).</li>
+</ul>
+<hr />
+<h1 id="resumo-de-pegadinhas-de-prova">RESUMO DE PEGADINHAS DE PROVA</h1>
+<ol>
+<li><strong>Cassação × caducidade</strong>: cassação = ato válido + descumprimento (sanção); caducidade = nova lei. Nenhuma é anulação (que exige vício originário).</li>
+<li><strong>Conceito jurídico indeterminado NÃO gera discricionariedade</strong> (é interpretação).</li>
+<li><strong>Reajuste (inflação) × revisão (equilíbrio)</strong>: nenhum altera o valor inicial.</li>
+<li><strong>Revogação</strong> (só AP, ex nunc, mérito) × <strong>anulação</strong> (AP ou Judiciário, ex tunc, ilegalidade). <strong>Judiciário nunca revoga</strong>.</li>
+<li><strong>Licença</strong> (vinculada) × <strong>autorização</strong> (discricionária, precária) no poder de polícia.</li>
+<li><strong>Poder regulamentar</strong> (executa a lei) × <strong>poder normativo</strong> (cria normas — art. 84, VI).</li>
+<li><strong>Excesso</strong> (além dos limites) × <strong>desvio de poder</strong> (fim diverso).</li>
+<li><strong>Demissão</strong> (PAD, administrativa) ≠ <strong>perda da função pública</strong> (LIA, judicial, trânsito em julgado).</li>
+<li><strong>Improbidade</strong>: licitação irregular = art. 10 (erário); concurso irregular = art. 11 (princípios). Lei 14.230: <strong>dolo obrigatório</strong>; lesão culposa = só ressarcimento.</li>
+<li><strong>Multa prescritível × ressarcimento imprescritível</strong> (art. 37, §5º).</li>
+<li><strong>TCU auxilia o Congresso, mas não é subordinado</strong>; quem julga as contas do Presidente é o <strong>Congresso</strong> (o TCU dá parecer prévio em 60 dias).</li>
+<li><strong>Recursos na Lei 9.784</strong>: 10 dias interpor × 30 decidir; sem efeito suspensivo; reformatio in pejus com ciência prévia; sem caução.</li>
+<li><strong>LINDB art. 28</strong>: dolo ou <strong>erro grosseiro</strong> (não "dolo ou culpa").</li>
+<li><strong>Presunção de legitimidade é relativa</strong>; <strong>autoexecutoriedade não alcança multas/desapropriação</strong>.</li>
+<li><strong>"Verdade sabida" é vedada</strong> no PAD.</li>
+<li><strong>Convalidação</strong>: Judiciário não convalida; efeitos ex tunc; só Forma não essencial e Competência não exclusiva ("FoCo").</li>
+<li><strong>Desistência do interessado não encerra o PA</strong> havendo interesse público.</li>
+<li><strong>Prazos da Lei 9.784 são contínuos</strong>; intimação com 3 dias úteis.</li>
+<li><strong>Lei 14.133</strong>: julgamento <strong>antes</strong> da habilitação; <strong>fornecedor exclusivo migrou da dispensa para a inexigibilidade</strong>; sanções = advertência, multa, impedimento (3 anos), inidoneidade (6 anos).</li>
+<li><strong>Inexigibilidade = inviabilidade de competição; dispensa = competência desnecessária</strong> (hipótese legal). Ambas exigem motivação.</li>
+</ol>
+<hr />
+<h1 id="caderno-de-questoes-comentadas-15-objetivas-2-discursivas">CADERNO DE QUESTÕES COMENTADAS (15 objetivas + 2 discursivas)</h1>
+<p><strong>Questão 1.</strong> (CESPE-style) A Administração Pública pode revogar seus atos por razões de interesse público, e o Poder Judiciário, ao invalidar ato administrativo ilegal, pratica ato equivalente à revogação.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A <strong>revogação</strong> é exclusiva da AP (mérito, efeitos ex nunc); o Judiciário apenas <strong>anula</strong> (ilegalidade, efeitos ex tunc) — nunca revoga.</p></details>
+<hr />
+<p><strong>Questão 2.</strong> (FCC-style) O ato administrativo que concede licença para o exercício de atividade sujeita a poder de polícia:
+a) é discricionário e precário.
+b) é vinculado: preenchidos os requisitos legais, nasce o direito do particular.
+c) pode ser revogado a qualquer tempo sem indenização.
+d) independe de motivação.
+e) é exemplo de autoexecutoriedade.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Licença</strong> = ato <strong>vinculado</strong> (preenchidos os requisitos, o particular tem direito subjetivo). <strong>Autorização</strong> é que é discricionária e precária.</p></details>
+<hr />
+<p><strong>Questão 3.</strong> (CESPE-style) Nos termos da LINDB (Lei 13.655/2018), o agente público responde pessoalmente por suas decisões ou opiniões técnicas quando presentes dolo ou culpa.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Art. 28 da LINDB: <strong>dolo ou erro grosseiro</strong>. "Dolo ou culpa" é da responsabilidade civil do art. 37, §6º, da CF — não confundir.</p></details>
+<hr />
+<p><strong>Questão 4.</strong> (FCC-style) A convalidação de ato administrativo com vício sanável depende, cumulativamente, de:
+a) vício de competência exclusiva, ausência de prejuízo a terceiros e retroatividade dos efeitos.
+b) vício de forma ou competência não essenciais, não lesão ao interesse público e não geração de prejuízo a terceiros.
+c) vício de motivo, aprovação judicial e efeitos ex nunc.
+d) vício de objeto, anuência dos administrados e publicidade.
+e) vício de finalidade, ausência de dano e ratificação pelo Legislativo.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Regra "<strong>FoCo</strong>": sanáveis só <strong>For</strong>ma não essencial e <strong>Co</strong>mpetência não exclusiva, cumulados com não lesão ao interesse público e não prejuízo a terceiros. Efeitos <strong>ex tunc</strong>.</p></details>
+<hr />
+<p><strong>Questão 5.</strong> (CESPE-style) No processo administrativo federal (Lei 9.784/99), o recurso administrativo tem efeito suspensivo obrigatório, e a decisão recursal pode agravar a situação do recorrente independentemente de prévia ciência.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O recurso <strong>não tem</strong> efeito suspensivo (regra), e a <strong>reformatio in pejus</strong> exige <strong>ciência prévia</strong> ao recorrente (audiência prévia). Outros detalhes: 10 dias para interpor; 30 para decidir; sem caução; máx. 3 instâncias.</p></details>
+<hr />
+<p><strong>Questão 6.</strong> (FCC-style) Sobre o Tribunal de Contas da União, é correto afirmar:
+a) É órgão do Congresso Nacional e a ele subordinado.
+b) Julga as contas anuais do Presidente da República, cabendo ao Congresso Nacional apenas homologá-las.
+c) Auxilia o Congresso Nacional no controle externo, e o parecer prévio sobre as contas do Presidente é emitido em até 60 dias.
+d) Sua competência para aplicar multas é imprescritível.
+e) Não aprecia recursos relativos a licitações federais.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: c.</strong> (a) o TCU <strong>auxilia</strong> o CN, sem subordinação; (b) quem <strong>julga</strong> as contas do Presidente é o <strong>Congresso</strong> (o TCU emite parecer prévio em 60 dias); (d) <strong>multa prescritível</strong> — só o ressarcimento ao erário é imprescritível; (e) o TCU aprecia recursos de licitações/convênios federais.</p></details>
+<hr />
+<p><strong>Questão 7.</strong> (CESPE-style) Após a Lei 14.230/2021, o ato de improbidade administrativa por lesão ao erário pode ser configurado na modalidade culposa, com aplicação de todas as sanções do art. 12 da Lei 8.429/1992.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> A Lei 14.230 exige <strong>dolo</strong> para as sanções de improbidade; na <strong>lesão culposa</strong>, a responsabilização destina-se <strong>apenas ao ressarcimento</strong>.</p></details>
+<hr />
+<p><strong>Questão 8.</strong> (FCC-style) Na Lei 14.133/2021, as modalidades de licitação são:
+a) convite, tomada de preços, concorrência, concurso e leilão.
+b) concorrência, concurso, leilão, pregão e diálogo competitivo.
+c) pregão, concorrência, consulta, tomada de preços e leilão.
+d) concurso, leilão, pregão, credenciamento e diálogo competitivo.
+e) concorrência, pregão, pré-qualificação, concurso e leilão.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Art. 28: <strong>concorrência, concurso, leilão, pregão e diálogo competitivo</strong>. Convite e tomada de preços foram extintos; <strong>credenciamento e pré-qualificação são procedimentos auxiliares</strong>, não modalidades.</p></details>
+<hr />
+<p><strong>Questão 9.</strong> (CESPE-style) Na Lei 14.133/2021, o fornecedor exclusivo é hipótese de licitação dispensada, aplicando-se o rito da dispensa quando houver apenas um fabricante do objeto no mercado.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Houve <strong>migração</strong>: fornecedor exclusivo é hipótese de <strong>inexigibilidade</strong> (art. 74, I) — inviabilidade absoluta de competição —, não de dispensa.</p></details>
+<hr />
+<p><strong>Questão 10.</strong> (FCC-style) O diálogo competitivo, modalidade prevista na Lei 14.133/2021, destina-se à contratação de:
+a) bens comuns de padrão de mercado.
+b) trabalhos técnicos ou artísticos com prêmio.
+c) bens inservíveis ou apreendidos.
+d) soluções inovadoras, com consultas preliminares e diálogo com os licitantes selecionados.
+e) obras de engenharia acima do limite da concorrência.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: d.</strong> (a) pregão; (b) concurso; (c) leilão; (e) concorrência. O diálogo competitivo (arts. 32-33) é para <strong>soluções inovadoras</strong>; apenas os dialogantes podem apresentar propostas finais.</p></details>
+<hr />
+<p><strong>Questão 11.</strong> (CESPE-style) A regra na Lei 14.133/2021 é a realização da fase de habilitação antes do julgamento das propostas, como ocorria na Lei 8.666/1993.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> Inovação da Lei 14.133: o <strong>julgamento das propostas precede a habilitação</strong> (e o licitante melhor classificado é quem se habilita primeiro), o que acelera o procedimento e reduz custos.</p></details>
+<hr />
+<p><strong>Questão 12.</strong> (FGV-style) Na Lei 14.133/2021, as sanções administrativas aplicáveis ao contratado inadimplente são: advertência, multa, suspensão temporária de licitar e contratar, impedimento de licitar e declaração de inidoneidade.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> O rol do art. 155 é: <strong>advertência, multa, impedimento de licitar e contratar (até 3 anos) e declaração de inidoneidade (até 6 anos)</strong> — <strong>não há</strong> "suspensão temporária" como sanção autônoma na nova lei.</p></details>
+<hr />
+<p><strong>Questão 13.</strong> (CESPE-style) O contrato administrativo pode ser prorrogado quantas vezes forem necessárias, desde que justificadas, sem qualquer limite de vigência total.
+a) Certo. b) Errado.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b (Errado).</strong> As prorrogações são sucessivas e iguais, com <strong>limite total de vigência (10 anos</strong>, salvo exceções legais), mediante justificativa e autorização.</p></details>
+<hr />
+<p><strong>Questão 14.</strong> (FCC-style) O reajustamento do preço do contrato administrativo:
+a) tem natureza de reequilíbrio econômico-financeiro e pressupõe fato extraordinário e imprevisível.
+b) é atualização monetária periódica prevista em cláusula necessária e não altera o valor inicial do contrato.
+c) depende sempre de licitação específica.
+d) pode ser negado unilateralmente pela Administração mesmo com prévisão editalícia.
+e) é sinônimo de revisão contratual.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> <strong>Reajuste</strong> = atualização inflacionária (cláusula necessária, periodicidade mínima). <strong>Revisão/reequilíbrio</strong> = fato extraordinário (teoria da imprevisão). Nenhum altera o valor inicial.</p></details>
+<hr />
+<p><strong>Questão 15.</strong> (CESPE-style) Sobre os crimes em licitações e contratos administrativos tipificados no Código Penal pela Lei 14.133/2021 (arts. 337-A a 337-J), é correto afirmar:
+a) Foram revogados os crimes de corrupção e de fraude de licitação do CP comum.
+b) Tipificam condutas como fraude em licitação ou contrato, contratação direta irregular e violação de sigilo de licitação.
+c) São crimes de ação penal privada.
+d) Aplicam-se apenas a particulares, jamais a agentes públicos.
+e) Não admitem concurso com os crimes do CP comum.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Resposta: b.</strong> Os tipos 337-A a 337-J tipificam fraude em licitação/contrato, contratação direta irregular, patrocínio de contratação irregular, violação de sigilo, fraude na execução, alteração irregular etc. São de <strong>ação pública incondicionada</strong>, alcançam <strong>agentes públicos e particulares</strong>, e convivem com os crimes comuns (corrupção, peculato) — aplicando-se o tipo específico quando houver.</p></details>
+<hr />
+<h2 id="questoes-discursivas">Questões discursivas</h2>
+<p><strong>D1.</strong> Diferencie poder regulamentar e poder normativo da Administração Pública, e explique o abuso do poder sob as formas de excesso e desvio de poder.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> O <strong>poder regulamentar</strong> (art. 84, IV, CF) autoriza a edição de decretos para a <strong>fiel execução da lei</strong>, sem criar deveres novos ou invadir a reserva de lei. Já o <strong>poder normativo</strong> é a capacidade de a AP editar normas gerais com fundamento direto na Constituição (regulamentos autônomos — art. 84, VI, incluído pela EC 32/2001). O <strong>abuso do poder</strong> ocorre de duas formas: <strong>excesso de poder</strong>, quando a autoridade age além dos limites legais da competência ou da discricionariedade; e <strong>desvio de poder</strong> (desvio de finalidade), quando usa o poder para fim diverso do previsto em lei — nesse caso o Judiciário pode invalidar o ato mesmo sendo discricionário.</p></details>
+<p><strong>D2.</strong> Cite as quatro modalidades sanatórias do art. 155 da Lei 14.133/2021 e os respectivos prazos máximos do impedimento de licitar e da declaração de inidoneidade.</p>
+<details class="resposta"><summary>Ver resposta e comentário</summary><p><strong>Modelo de resposta:</strong> São sanções: <strong>advertência</strong>; <strong>multa</strong> (até 10% do valor do contrato, elevável em caso de reiteração); <strong>impedimento de licitar e contratar</strong> (até <strong>3 anos</strong>); e <strong>declaração de inidoneidade para licitar ou contratar</strong> (até <strong>6 anos</strong>). O processo sancionatório observa o contraditório e a ampla defesa, admite atenuantes (indenização espontânea, colaboração) e prevê <strong>reabilitação</strong> mediante reparação do dano e comprovação de capacidade para licitar.</p></details>
+<hr />
+<h2 id="referencias-de-estudo-na-base-local-trt8-new">Referências de estudo na base local (trt8 new)</h2>
+<ul>
+<li><code>APOSTILAS ESTRATEGIA MD\02.Básico.para.Concursos.2020\06.Direito Administrativo\</code> — Aula00 (RJA/princípios), Aula04 (poderes), Aula05 (ato administrativo), Aula06/08 (licitações — <strong>Lei 8.666/93, revogada</strong>), Aula07 (contratos), Aula10 (controle), Aula16 (Lei 9.784/99), Aula17 (improbidade — redação anterior).</li>
+<li><code>APOSTILAS SEFA MD\direito civil\curso-369407-aula-00-5eeb-simplificado.md</code> — LINDB completa (Lei 13.655/2018).</li>
+<li><code>APOSTILAS SEFA MD\bizu diversos cargos\curso-370029-aula-06...</code> — revisão/estatística de incidência (FADESP: Licitações ~25% das questões; Agentes ~12%; Atos ~8%).</li>
+<li>Complementos (<strong>Lei 14.133/2021, Lei 13.869/2019, Lei 14.230/2021</strong>): redigidos com base em conhecimento jurídico atual — <strong>obrigatórios para o edital</strong>, pois não estão na base de 2020.</li>
+</ul>
+<script>
+(function () {
+  const key = 'apostila-direito-administrativo-trt8-progresso';
+  let done = JSON.parse(localStorage.getItem(key) || '{}');
+  const hs = [...document.querySelectorAll('main h2')];
+  const fill = document.getElementById('pf');
+  const label = document.getElementById('pl');
+  function render() {
+    const n = hs.filter(h => done[h.textContent.trim()]).length;
+    const pct = hs.length ? Math.round(n / hs.length * 100) : 0;
+    fill.style.width = pct + '%';
+    label.textContent = 'Progresso do estudo: ' + pct + '% (' + n + '/' + hs.length + ' módulos)';
+    hs.forEach(h => {
+      const ok = done[h.textContent.trim()];
+      h.style.borderLeftColor = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.background = ok ? 'var(--ok-soft)' : 'var(--accent-soft)';
+      h.style.color = ok ? 'var(--ok)' : 'var(--accent)';
+      h.style.cursor = 'pointer';
+      h.title = 'Clique para marcar/desmarcar como estudado';
+    });
+  }
+  hs.forEach(h => h.addEventListener('click', () => {
+    const t = h.textContent.trim();
+    done[t] = !done[t];
+    if (!done[t]) delete done[t];
+    localStorage.setItem(key, JSON.stringify(done));
+    render();
+  }));
+  render();
+})();
+</script>
+</main>
+</div>
+</body>
+</html>
