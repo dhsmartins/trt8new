@@ -2,8 +2,3 @@
   base = "APOSTILAS_GERADAS"
   command = ""
   publish = "."
-
-[[redirects]]
-  from = "/*"
-  to = "/Portal_de_Estudos_TRT8.html"
-  status = 200
