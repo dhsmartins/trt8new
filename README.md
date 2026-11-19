@@ -28,7 +28,7 @@ O `python -I` é intencional: impede que módulos locais sombreados sejam carreg
 
 ## Portal de estudos
 
-Abra `APOSTILAS_GERADAS/Portal_de_Estudos_TRT8.html` no navegador:
+Abra `APOSTILAS_GERADAS/index.html` no navegador:
 
 - Menu lateral com categorias e submenus suspensos por apostila
 - Checkbox para marcar subtópicos como estudados (salvo no `localStorage`)

@@ -3,7 +3,7 @@
 """Gera o Portal de Estudos TRT8 (layout SPA com menu lateral).
 
 Uso:  python -I make_portal.py
-Saida: Portal_de_Estudos_TRT8.html (na mesma pasta)
+Saida: index.html (na mesma pasta)
 
 Layout: menu lateral com categorias > apostilas > subtopicos (checkboxes).
 A apostila abre no conteudo a direita (iframe). As marcacoes de "lido"
@@ -15,7 +15,7 @@ import os
 import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "Portal_de_Estudos_TRT8.html")
+OUT = os.path.join(HERE, "index.html")
 
 TI = [
     ("T1", "T1 — Processo de Desenvolvimento de Software", "Apostila_T1_Processo_de_Desenvolvimento_de_Software_TRT8"),
