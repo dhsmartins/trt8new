@@ -13,5 +13,5 @@ Thumbs.db
 .env
 
 # --- Segredos locais (não versionar) ---
-supabase-config.js
-**/supabase-config.js
+# supabase-config.js  (chave pública anon - seguro versionar)
+# **/supabase-config.js
